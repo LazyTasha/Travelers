@@ -28,24 +28,48 @@ public class AdmListHandler {
 	public ModelAndView admDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("adm/default");
 	}
-	@RequestMapping("/adm/main")
-	public ModelAndView admMainListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+	@RequestMapping("/adminMain")
+	public ModelAndView adminMainHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+	
+		String pageName=request.getParameter("pageName");
+		if(pageName==null) {
+			pageName="Trip";
+		}
+		pageName="admin"+pageName;
+		request.setAttribute("pageName", pageName);
 		return new ModelAndView("adm/main");
+		
 	}
-	@RequestMapping("/adm/user")
-	public ModelAndView admUserProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("adm/user");
-	}
-	@RequestMapping("/adm/trip")
-	public ModelAndView admTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+	
+	@RequestMapping("adm/adminTrip")
+	public ModelAndView adminTripHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+
 		return new ModelAndView("adm/trip");
 	}
-	@RequestMapping("/adm/album")
-	public ModelAndView admAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+	@RequestMapping("adm/adminComment")
+	public ModelAndView adminContentHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("adm/comment");
+	}
+	@RequestMapping("adm/adminUser")
+	public ModelAndView adminUserHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		//int count=userDao.getCount();
+		
+		//if(count>0) {
+				//List<LogonDataBean>users=userDao.getUsers();
+				//request.setAttribute("users", users);
+		//}
+		return new ModelAndView("adm/user");
+	}
+	@RequestMapping("adm/adminTag")
+	public ModelAndView adminTagHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+
+		return new ModelAndView("adm/tag");
+	}
+	
+	@RequestMapping("adm/adminAlbum")
+	public ModelAndView adminPhotoHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+
 		return new ModelAndView("adm/album");
 	}
-	@RequestMapping("/adm/cmt")
-	public ModelAndView admCmtProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("adm/cmt");
-	}
+	
 }
