@@ -15,16 +15,16 @@ public class AdmTagHandler {
 	@Resource
 	private TagDBBean tagDao;
 	
-	@RequestMapping("/adm/tagMng")
+	@RequestMapping("/adminTagMng")
 	public ModelAndView admTagMngProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("adm/tagMng");
 	}
-	@RequestMapping("/adm/tagMng")
+	@RequestMapping("/adminTagAdd")
 	public ModelAndView admTagAddProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("adm/tagMng");
+		return new ModelAndView("adm/tagAdd");
 	}
-	@RequestMapping("/adm/tagMng")
+	@RequestMapping("/adminTagMod")
 	public ModelAndView admTagModProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("adm/tagMng");
+		return new ModelAndView("adm/tagMod");
 	}
 }
