@@ -13,6 +13,7 @@ import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
 import db.TripDBBean;
+import db.UserDBBean;
 
 @Controller
 public class SvcDelHandler {
@@ -26,6 +27,27 @@ public class SvcDelHandler {
 	private LocDBBean locDao;
 	@Resource
 	private TagDBBean tagDao;
+	@Resource
+	private UserDBBean userDao;
+	
+	@RequestMapping( "member/deletePro" )
+	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+
+		String id = (String) request.getSession().getAttribute( "memid" );
+		String passwd = request.getParameter( "passwd" );
+
+		int resultCheck = userDao.check( id, passwd );
+
+		request.setAttribute( "resultCheck", resultCheck );
+		
+		if( resultCheck == 1 ) {
+			int result =userDao.deleteMember( id );
+			request.setAttribute( "result", result );
+		}
+		
+		return new ModelAndView( "svc/deletePro" );
+	}
+	/////////로그인
 	
 	@RequestMapping("/svc/regDel")
 	public ModelAndView svcRegDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {

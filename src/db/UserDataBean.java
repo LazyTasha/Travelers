@@ -9,7 +9,7 @@ public class UserDataBean {
 	private String email;
 	private int gender;
 	private Timestamp reg_date;
-	private int level;
+	/*private int level;*/
 	
 	public String getId() {
 		return id;
@@ -47,10 +47,10 @@ public class UserDataBean {
 	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
 	}
-	public int getLevel() {
+	/*public int getLevel() {
 		return level;
 	}
 	public void setLevel(int level) {
 		this.level = level;
-	}
+	}*/
 }

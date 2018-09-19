@@ -1,3 +1,8 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<h2>Out of order</h2>
+
+<%@ include file="setting.jsp" %>
+<link rel="stylesheet" type="text/css" href="${project}style_member.css">
+
+${result} <br>    
