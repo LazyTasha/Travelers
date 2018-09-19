@@ -1,20 +1,19 @@
 package db;
 
 public class TagDataBean {
-	private int tag_id;
-	private String tag_value;
-	public int getTag_id() {
-		return tag_id;
+	private int id;
+	private String value;
+	public int getId() {
+		return id;
 	}
-	public void setTag_id(int tag_id) {
-		this.tag_id = tag_id;
+	public void setId(int id) {
+		this.id = id;
 	}
-	public String getTag_value() {
-		return tag_value;
+	public String getValue() {
+		return value;
 	}
-	public void setTag_value(String tag_value) {
-		this.tag_value = tag_value;
+	public void setValue(String value) {
+		this.value = value;
 	}
-	
 	
 }
