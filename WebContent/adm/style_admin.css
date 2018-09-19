@@ -35,6 +35,9 @@ body
 	color: #696969;
 	padding:5px;
 }
+p{
+	color:black;
+}
 header,aside,article,section{
 		
 	/* border:1px black solid; */
@@ -121,9 +124,11 @@ table input{
 
 
 .input {
-	background-color: #E8FFFF;
+	background-color: #f8f8f8;
+	color:black;
 	border: 1px solid #6A84B7;
-	width: 150px;
+	width: 100%;
+	hight:100%;
 }
 .listbutton{
 	background-color: #558ffb;
@@ -219,4 +224,16 @@ img{
 	height:100px;
 	width:100px;
 	outline:1px solid gray;
+}
+button{
+	background-color: transparent !important;
+	border-color: transparent;
+    border: none;
+
+출처: http://devnauts.tistory.com/17 [devnauts]
+}
+button img{
+	height:30px;
+	width:30px;
+	outline:none;
 }

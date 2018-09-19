@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<script src="/Travelers/jquery-3.3.1.js"></script>
 <c:set var="project" value="/Travelers/adm/"/>
 
 <c:set var="str_logout" value="로그아웃"/>
@@ -21,10 +22,8 @@
 <c:set var="str_photo_m" value="사진관리"/>
 <c:set var="str_photo_v" value="사진보기"/>
 
-<c:set var="str_select_w" value="선택한  글"/>
-<c:set var="str_select_member" value="선택한  회원"/>
-<c:set var="str_select_tag" value="선택한  태그"/>
-<c:set var="str_select_photo" value="선택한  사진"/>
+
+<c:set var="str_select_all" value="전체 선택"/>
 
 <c:set var="str_num" value="글번호"/>
 <c:set var="str_country" value="국가"/>
@@ -47,10 +46,16 @@
 <c:set var="str_tagid" value="태그id"/>
 <c:set var="str_tag" value="태그"/>
 
+<c:set var="str_tag_add" value="태그 추가"/>
+<c:set var="str_tag_mod" value="태그 수정"/>
+
+
 <c:set var="btn_delete" value="삭제"/>
 <c:set var="btn_modify" value="수정"/>
 <c:set var="btn_notice" value="공지"/>
 <c:set var="btn_add" value="추가"/>
+<c:set var="btn_cancel" value="취소"/>
+<c:set var="btn_check" value="확인"/>
 
 <c:set var="page_list" value="글 목 록"/>
 
