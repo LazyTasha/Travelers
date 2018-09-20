@@ -19,12 +19,4 @@ public class AdmTagHandler {
 	public ModelAndView admTagMngProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("adm/tagMng");
 	}
-	@RequestMapping("/adm/tagMng")
-	public ModelAndView admTagAddProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("adm/tagMng");
-	}
-	@RequestMapping("/adm/tagMng")
-	public ModelAndView admTagModProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("adm/tagMng");
-	}
 }

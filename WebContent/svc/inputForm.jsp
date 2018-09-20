@@ -4,11 +4,12 @@
 <%@ include file="setting.jsp" %>
 <link rel="stylesheet" type="text/css" href="${project}style_member.css">
 <script src="${project}script.js"></script>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
 <h2> ${page_input} </h2>
 
 <body onload="inputfocus()">
-	<form name="inputform" method="post" action="inputPro.go" onsubmit="return inputcheck()">
+	<form name="inputform" id="inputform" method="post" action="inputPro.go" onsubmit="return inputcheck()">
 		<table>
 			<tr>
 				<th colspan="2">
@@ -18,9 +19,10 @@
 			<tr>
 				<th> * ${str_id} </th>
 				<td>
-					<input class="input" type="text" name="id" maxlength="15" id="id">
-					<input class="inputbutton" type="button" value="중복확인" onclick="overlapCheck()" >
+					<input class="input" type="text" name="user_id" maxlength="15" id="id_val">
+					<input class="inputbutton" type="button" value="중복확인" onclick="overlapCheck()">
 						<h4 style="color: red;" id="passwordCheckMessagegg"></h4>
+						<!-- <div id="divInputId"></div> -->
 				</td>
 			</tr>
 			<tr>
@@ -40,7 +42,7 @@
 			<tr>
 				<th> * ${str_n_name} </th>
 				<td>
-					<input class="input" type="text" name="n_name" maxlength="20" id="jjj">
+					<input class="input" type="text" name="user_name" maxlength="20" id="name_val">
 					<input class="inputbutton" type="button" value="중복확인" onclick="over()" >
 						<h4 style="color: red;" id="passwordCheckMessageggg"></h4>
 				</td>

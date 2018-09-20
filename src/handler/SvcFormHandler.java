@@ -33,13 +33,8 @@ public class SvcFormHandler {
 		return new ModelAndView( "svc/inputForm" );
 	}
 	
-	@RequestMapping( "/member/main" )
-	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView( "svc/main" );
-	}
-	
 	@RequestMapping( "/member/modifyForm" ) 
-	public ModelAndView ModufyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+	public ModelAndView ModifyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/modifyForm" );
 	}
 	
@@ -53,10 +48,6 @@ public class SvcFormHandler {
 		return new ModelAndView( "svc/deleteForm" );
 	}
 	/////////////////////////////////// 로그인
-	@RequestMapping("/svc/loginForm")
-	public ModelAndView svcLoginFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/loginForm");
-	}
 	@RequestMapping("/svc/regForm")
 	public ModelAndView svcRegFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/regForm");

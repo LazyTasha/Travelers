@@ -20,7 +20,7 @@
 				</tr>
 				<tr>
 					<th> ${str_id} </th>
-					<td> &nbsp;${UserDto.id} </td>
+					<td> &nbsp;${UserDto.user_id} </td>
 				</tr>
 				<tr>
 					<th rowspan="2"> 
@@ -40,8 +40,8 @@
 				<tr>
 					<th> 닉네임 </th>
 					<td> 
-					<input class="input" type="text" name="n_name" maxlength="15"
-							value="${UserDto.n_name}">
+					<input class="input" type="text" name="user_name" maxlength="15"
+							value="${UserDto.user_name}">
 					</td>
 				</tr>
 

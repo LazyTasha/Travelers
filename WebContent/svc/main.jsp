@@ -19,7 +19,7 @@
 				<tr>
 					<th> ${str_id} </th>
 					<td>
-						<input class="input" type="text" name="id" maxlength="15"> 
+						<input class="input" type="text" name="user_id" maxlength="15"> 
 					</td>
 				</tr>
 				<tr>

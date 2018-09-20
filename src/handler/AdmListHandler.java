@@ -11,7 +11,6 @@ import org.springframework.web.servlet.ModelAndView;
 import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.TripDBBean;
-import db.UserDBBean;
 
 @Controller
 public class AdmListHandler {
@@ -21,8 +20,6 @@ public class AdmListHandler {
 	private AlbumDBBean albumDao;
 	@Resource
 	private CmtDBBean cmtDao;
-	@Resource
-	private UserDBBean userDao;
 	
 	@RequestMapping("/adm/*")
 	public ModelAndView admDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {

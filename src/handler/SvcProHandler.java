@@ -2,13 +2,20 @@ package handler;
 
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
@@ -46,10 +53,14 @@ public class SvcProHandler {
 		}
 		
 		UserDataBean UserDto = new UserDataBean();
-		UserDto.setId( request.getParameter( "id" ) );
+		UserDto.setUser_id( request.getParameter( "user_id" ) );
 		UserDto.setPasswd( request.getParameter( "passwd" ) );
-		UserDto.setN_name( request.getParameter( "n_name" ) );
-	
+		UserDto.setUser_name( request.getParameter( "user_name" ) );
+		
+		
+		//user_level
+		
+		
 		//gender
 		int gender1 = 0;
 		int gender = Integer.parseInt(request.getParameter("gender"));
@@ -91,7 +102,7 @@ public class SvcProHandler {
 		
 		UserDataBean memberDto = new UserDataBean();
 		memberDto.setPasswd( request.getParameter( "passwd" ) );
-		memberDto.setN_name( request.getParameter( "n_name" ) );
+		memberDto.setUser_name( request.getParameter( "user_name" ) );
 		
 	
 
@@ -104,7 +115,7 @@ public class SvcProHandler {
 		}
 		memberDto.setEmail( email );*/
 	
-		memberDto.setId( (String) request.getSession().getAttribute( "memid" ) ); 
+		memberDto.setUser_id( (String) request.getSession().getAttribute( "memid" ) ); 
 	
 		int result = userDao.modifyMember( memberDto );
 
@@ -116,7 +127,7 @@ public class SvcProHandler {
 	@RequestMapping( "/member/loginPro" )
 	public ModelAndView Loginprocess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 
-		String id = request.getParameter( "id" );
+		String id = request.getParameter( "user_id" );
 		String passwd = request.getParameter( "passwd" );
 		
 		int result = userDao.check( id, passwd );
@@ -127,34 +138,54 @@ public class SvcProHandler {
 		return new ModelAndView( "svc/loginPro" );
 	}
 	
-	@RequestMapping( "/member/deletePro" )
-	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-
-		String id = (String) request.getSession().getAttribute( "memid" );
-		String passwd = request.getParameter( "passwd" );
-
-		int resultCheck = userDao.check( id, passwd );
-
-		request.setAttribute( "resultCheck", resultCheck );
-		
-		if( resultCheck == 1 ) {
-			int result = userDao.deleteMember( id );
-			request.setAttribute( "result", result );
-		}
-		
-		return new ModelAndView( "svc/deletePro" );
-	}
-	
 	@RequestMapping( "/member/logout" )	//logout 임
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		request.getSession().removeAttribute( "memid" );		
 		return new ModelAndView( "svc/main" );
 	}	
+		
+	//중복확인
+	 @RequestMapping(value="/member/idcheck.go",method = RequestMethod.POST,produces = "application/json")
+	 @ResponseBody
+	 public Map<Object, Object> idcheck(@RequestBody String user_id) {
+	        int count = 0;
+	        Map<Object, Object> map = new HashMap<Object, Object>();
+	 
+	        count = userDao.idcheck( user_id );
+	        map.put("cnt", count);
+	        
+	        return map;
+	    }
+	 
+	 @RequestMapping(value="/member/namecheck.go",method = RequestMethod.POST,produces = "application/json")
+	 @ResponseBody
+	 public Map<Object, Object> namecheck(@RequestBody String user_name) {
+	        int countt = 0;
+	        Map<Object, Object> map = new HashMap<Object, Object>();
+	 
+	        countt = userDao.namecheck( user_name );
+	        map.put("cntt", countt);
+	        
+	        return map;
+	    }
+	
+	
+	 
+	/* @RequestMapping("/duplication.go")
+	 @ResponseBody
+	 public int duplication( HttpServletRequest request ) {
+		 String duplicationId = request.getParameter("id_val");
+		 List<UserDataBean> list = userDao.idcheck(duplicationId);
+		 if(list.size()==0) {
+			 return -1;
+		 }else {
+			 return 1;
+		 }
+	 }*/
+	 
+	 
+
 	////////////로그인
-	@RequestMapping("/svc/loginPro")
-	public ModelAndView svcLoginProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/loginPro");
-	}
 	@RequestMapping("/svc/regPro")
 	public ModelAndView svcRegProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/regPro");

@@ -14,18 +14,26 @@ public class UserDBBean {
 private SqlSession session = SqlMapClient.getSession();
 	
 	public int insertMember( UserDataBean UserDto ) {
-		return session.insert("Travelers.insertMember", UserDto);
+		return session.insert("db.insertMember", UserDto);
 	}
 
-	public int check( String id ) {
-		return session.selectOne( "Travelers.checkId", id);
+	public int check( String user_id ) {
+		return session.selectOne( "db.checkId", user_id);
+	}
+	
+	public int namecheck( String user_name ) {
+		return session.selectOne( "db.checkname", user_name);
+	}
+	
+	public int idcheck( String user_id ) {
+		return session.selectOne( "db.idcheck", user_id);
 	}
 		
-	public int check( String id, String passwd ) {
+	public int check( String user_id, String passwd ) {
 		int result = 0;		
-		if( check( id ) > 0 ) {
+		if( check( user_id ) > 0 ) {
 			// 아이디가 있다
-			UserDataBean UserDto = getMember( id );
+			UserDataBean UserDto = getMember( user_id );
 			if( passwd.equals( UserDto.getPasswd() ) ) {
 				result = 1;
 			} else {
@@ -38,17 +46,17 @@ private SqlSession session = SqlMapClient.getSession();
 		return result;
 	}
 
-	public int deleteMember( String id ) {
-		return session.delete("Travelers.deleteMember", id);
+	public int deleteMember( String user_id ) {
+		return session.delete("db.deleteMember", user_id);
 	}
 	
-	public UserDataBean getMember( String id ) {
-		return session.selectOne( "Travelers.getMember", id );
+	public UserDataBean getMember( String user_id ) {
+		return session.selectOne( "db.getMember", user_id );
 		
 	}
 	
 	public int modifyMember( UserDataBean UserDto ) {
-		return session.update( "Travelers.modifyMember", UserDto );
+		return session.update( "db.modifyMember", UserDto );
 	}
 	
 }

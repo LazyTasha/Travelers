@@ -17,7 +17,7 @@
 			</tr>
 			<tr>
 				<th> ${str_id} </th>
-				<td> <input class="input" type="text" name="id" maxlength="15">
+				<td> <input class="input" type="text" name="user_id" maxlength="15">
 			</tr>
 			<tr>
 				<th> ${str_passwd} </th>

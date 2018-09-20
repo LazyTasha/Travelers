@@ -27,6 +27,7 @@ public class SvcDelHandler {
 	private LocDBBean locDao;
 	@Resource
 	private TagDBBean tagDao;
+	
 	@Resource
 	private UserDBBean userDao;
 	

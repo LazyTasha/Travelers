@@ -6,7 +6,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 
-<c:set var="project" value="/Travelers/member/"/>
+<c:set var="project" value="/Travelers/svc/"/>
 
 <c:set var="page_main" value="메인 페이지"/>
 <c:set var="page_input" value="회 원 가 입"/>

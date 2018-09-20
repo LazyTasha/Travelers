@@ -1,5 +1,4 @@
 /* 회원 관리 */
-
 var iderror = "아이디를 입력하세요";
 var passwderror = "비밀번호를 입력하세요";
 var repasswderror = "비밀번호가 다릅니다";
@@ -34,9 +33,9 @@ function modifycheck() {
 		return false;
 	}
 	
-	if(!modifyform.n_name.value){
+	if(!modifyform.user_name.value){
 		alert( nameerror );
-		modifyform.n_name.focus();
+		modifyform.user_name.focus();
 		return false;
 	}
 	
@@ -65,12 +64,12 @@ function passwdcheck() {
 
 // 로그인
 function loginfocus() {
-	loginform.id.focus();
+	loginform.user_id.focus();
 }
 function logincheck() {
-	if( ! loginform.id.value ) {
+	if( ! loginform.user_id.value ) {
 		alert( iderror );
-		loginform.id.focus();
+		loginform.user_id.focus();
 		return false;
 	} else if( ! loginform.passwd.value ) {
 		alert( passwderror );
@@ -83,59 +82,10 @@ function logincheck() {
 
 // 가입 페이지
 function inputfocus() {
-	inputform.id.focus();
+	inputform.user_id.focus();
 }
 
-function inputcheck(){
-	if( ! inputform.id.value ) {
-		alert( iderror );
-		inputform.id.focus();
-		return false;
-	} else if( ! inputform.passwd.value ) {
-		alert( passwderror );
-		inputform.passwd.focus();
-		return false;
-	} else if( inputform.passwd.value != inputform.repasswd.value ) {
-		alert( repasswderror );
-		inputform.repasswd.focus();
-		return false;
-	} else if( ! inputform.n_name.value ) {
-		alert( nameerror );
-		inputform.n_name.focus();
-		return false;
-	}else if ( ! inputform.gender.value ){
-		alert( gendererror );
-		inputform.gender.focus();
-		return false;
-	}else if ( ! inputform.email1.value ){
-		alert( emailerror );
-		inputform.email1.focus();
-		return false;
-	}else if ( ! inputform.email2.value ){
-		alert( emailerror );
-		inputform.email1.focus();
-		return false;
-	}
-	// 	1. null 인 경우			이동 가능
-	// 	2. 직접입력일 경우		email1 란에 @가 없으면 경고
-	// 	3. 선택입력일 경우		email1 란에 @가 있으면 경고
-	//	단 전화번호가 있건 없건 모두 가능해야 한다.
 	
-	if( inputform.email2.value == "0" ) {
-		if( inputform.email1.value.indexOf( "@" ) == -1 ) {
-			alert( emailerror );
-			return false;
-		}	
-	} else {
-		if( inputform.email1.value.indexOf( "@" ) != -1 ) {
-				alert( emailerror );
-				return false;
-		}
-	}
-}
-	
-
-
 
 function nextemail1() {
 	if( inputform.tel3.value.length == 4 ) {
@@ -146,12 +96,12 @@ function nextemail1() {
 
 // 메인 페이지
 function mainfocus() {
-	mainform.id.focus();	
+	mainform.user_id.focus();	
 }
 function maincheck() {
-	if( ! mainform.id.value ) {
+	if( ! mainform.user_id.value ) {
 		alert( iderror );
-		mainform.id.focus();
+		mainform.user_id.focus();
 		return false;
 	} else if( ! mainform.passwd.value ) {
 		alert( passwderror );
@@ -174,46 +124,144 @@ function passwordCheckFunction(){
     }
 }
 
-	function overlapCheck(){
-		var id = $('#id').val();
-		if( id ) {
-			$.ajax( {
-					type : "POST",
-					data : {
-						id : id									
-					},
-					url : 'idcheck.jsp',
-					dataType : 'xml',
-					success : function( data ) {									
-						$('#passwordCheckMessagegg').text( $(data).find('message').text() );	
-					}, 
-					error : function( e ) {									
-						$('#passwordCheckMessagegg').text( e );	
-					}								
-				}
-			);					
-		}
-	}
-	
-	function over(){
-		var n_name = $('#jjj').val();
-		if( n_name ) {
-			$.ajax( {
-					type : "POST",
-					data : {
-						n_name : n_name									
-					},
-					url : 'namecheck.jsp',
-					dataType : 'xml',
-					success : function( data ) {									
-						$('#passwordCheckMessageggg').text( $(data).find('message').text() );	
-					}, 
-					error : function( e ) {									
-						$('#passwordCheckMessageggg').text( e );	
-					}								
-				}
-			);					
-		}
-}
+		//아이디
+			var idck = 0;
+	        function overlapCheck(){
+	        var user_id =  $("#id_val").val(); 
+	        if( user_id ){
+	        $.ajax({
+	            async: true,
+	            type : 'POST',
+	            data : user_id,
+	            url : "idcheck.go",
+	            dataType : "json",
+	            contentType : "application/json",
+	            success : function(data) {
+	                if (data.cnt > 0) {
+	                	$('#passwordCheckMessagegg').html("아이디가 존재합니다. 다른 아이디를 입력해주세요.")
+	                  /*  alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+	                    $("#divInputId").addClass("has-error")
+	                    $("#divInputId").removeClass("has-success")
+	                    $("#id_val").focus();*/
+	                    
+	                
+	                } else {
+	                	$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
+	                	
+	                	/*alert("사용가능한 아이디입니다.");	                    
+	                    $("#divInputId").addClass("has-success")
+	                    $("#divInputId").removeClass("has-error")
+	                    $("#passwd").focus();*/
+	                    //아이디가 중복하지 않으면  idck = 1 
+	                    idck = 1;
+	                    
+	                }
+	            },
+	            error : function(error) {
+	                alert("error : " + error);
+	            }
+	        });
+	        }
+	        }
+	        ///////////
+	        
+	        
+	        //닉네임
+	        var genck = 0;
+	        function over(){
+	        var name_val =  $("#name_val").val(); 
+	        if( name_val ){
+	        $.ajax({
+	            async: true,
+	            type : 'POST',
+	            data : name_val,
+	            url : "idcheck.go",
+	            dataType : "json",
+	            contentType : "application/json",
+	            success : function(data) {
+	                if (data.cntt > 0) {
+	                	$('#passwordCheckMessageggg').html("닉네임이 존재합니다.")
+	                  /*  alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
+	                    $("#divInputId").addClass("has-error")
+	                    $("#divInputId").removeClass("has-success")
+	                    $("#id_val").focus();*/
+	                    
+	                
+	                } else {
+	                	$('#passwordCheckMessageggg').html("사용가능한 닉네임입니다.")
+	                	
+	                	/*alert("사용가능한 아이디입니다.");	                    
+	                    $("#divInputId").addClass("has-success")
+	                    $("#divInputId").removeClass("has-error")
+	                    $("#passwd").focus();*/
+	                    //아이디가 중복하지 않으면  idck = 1 
+	                    genck = 1;
+	                    
+	                }
+	            },
+	            error : function(error) {
+	                alert("error : " + error);
+	            }
+	        });
+	        }
+	        }
 
-
+	        function inputcheck(){
+	        	 if(confirm("회원가입을 하시겠습니까?")){
+                     if(idck==0){
+                         alert('아이디 중복체크를 해주세요');
+                         return false;
+                     }else if(genck==0){
+                    	 alert('닉네임 중복체크를 해주세요');
+                         return false;
+                     }else{
+                     alert("회원가입을 축하합니다");
+                     $("#inputform").button();
+                     }
+                 }
+	        	if( ! inputform.user_id.value ) {
+	        		alert( iderror );
+	        		inputform.user_id.focus();
+	        		return false;
+	        	} else if( ! inputform.passwd.value ) {
+	        		alert( passwderror );
+	        		inputform.passwd.focus();
+	        		return false;
+	        	} else if( inputform.passwd.value != inputform.repasswd.value ) {
+	        		alert( repasswderror );
+	        		inputform.repasswd.focus();
+	        		return false;
+	        	} else if( ! inputform.user_name.value ) {
+	        		alert( nameerror );
+	        		inputform.user_name.focus();
+	        		return false;
+	        	}else if ( ! inputform.gender.value ){
+	        		alert( gendererror );
+	        		inputform.gender.focus();
+	        		return false;
+	        	}else if ( ! inputform.email1.value ){
+	        		alert( emailerror );
+	        		inputform.email1.focus();
+	        		return false;
+	        	}else if ( ! inputform.email2.value ){
+	        		alert( emailerror );
+	        		inputform.email1.focus();
+	        		return false;
+	        	}
+	        	// 	1. null 인 경우			이동 가능
+	        	// 	2. 직접입력일 경우		email1 란에 @가 없으면 경고
+	        	// 	3. 선택입력일 경우		email1 란에 @가 있으면 경고
+	        	//	단 전화번호가 있건 없건 모두 가능해야 한다.
+	        	
+	        	if( inputform.email2.value == "0" ) {
+	        		if( inputform.email1.value.indexOf( "@" ) == -1 ) {
+	        			alert( emailerror );
+	        			return false;
+	        		}	
+	        	} else {
+	        		if( inputform.email1.value.indexOf( "@" ) != -1 ) {
+	        				alert( emailerror );
+	        				return false;
+	        		}
+	        	}
+	        }

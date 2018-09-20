@@ -32,6 +32,11 @@ public class SvcViewHandler {
 	@Resource
 	private UserDBBean userDao;
 	
+	@RequestMapping( "/member/main" )
+	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/main" );
+	}
+	
 	@RequestMapping( "/member/modifyView" )
 	public ModelAndView MemberProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		
@@ -53,10 +58,6 @@ public class SvcViewHandler {
 	@RequestMapping("/svc/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/default");
-	}
-	@RequestMapping("/svc/main")
-	public ModelAndView svcMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/main");
 	}
 	@RequestMapping("/svc/list")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {

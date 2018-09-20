@@ -3,19 +3,19 @@ package db;
 import java.sql.Timestamp;
 
 public class UserDataBean {
-	private String id;
+	private String user_id;
 	private String passwd;
-	private String n_name;
+	private String user_name;
 	private String email;
 	private int gender;
 	private Timestamp reg_date;
-	/*private int level;*/
+	private int user_level;
 	
-	public String getId() {
-		return id;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
 	public String getPasswd() {
 		return passwd;
@@ -23,11 +23,11 @@ public class UserDataBean {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
-	public String getN_name() {
-		return n_name;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setN_name(String n_name) {
-		this.n_name = n_name;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	public String getEmail() {
 		return email;
@@ -47,10 +47,12 @@ public class UserDataBean {
 	public void setReg_date(Timestamp reg_date) {
 		this.reg_date = reg_date;
 	}
-	/*public int getLevel() {
-		return level;
+	public int getUser_level() {
+		return user_level;
 	}
-	public void setLevel(int level) {
-		this.level = level;
-	}*/
+	public void setUser_level(int user_level) {
+		this.user_level = user_level;
+	}
+	
+	
 }
