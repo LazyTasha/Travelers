@@ -16,7 +16,7 @@
 	</script>		
 </c:if>
 <c:if test="${result eq 1}">
-	<c:redirect url="loginForm.go"/>
+	<c:redirect url="memberloginForm.go"/>
 </c:if>	
 
 

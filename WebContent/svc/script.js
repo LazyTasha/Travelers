@@ -179,7 +179,7 @@ function passwordCheckFunction(){
 	            dataType : "json",
 	            contentType : "application/json",
 	            success : function(data) {
-	                if (data.cntt > 0) {
+	                if (data.cnt > 0) {
 	                	$('#passwordCheckMessageggg').html("닉네임이 존재합니다.")
 	                  /*  alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 	                    $("#divInputId").addClass("has-error")

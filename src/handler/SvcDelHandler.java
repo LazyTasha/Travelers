@@ -31,7 +31,7 @@ public class SvcDelHandler {
 	@Resource
 	private UserDBBean userDao;
 	
-	@RequestMapping( "member/deletePro" )
+	@RequestMapping( "/memberdeletePro" )
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 
 		String id = (String) request.getSession().getAttribute( "memid" );

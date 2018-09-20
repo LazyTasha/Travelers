@@ -8,7 +8,7 @@
 <h2> ${page_login} </h2>
 
 <body onload="loginfocus()">
-	<form method="post" action="loginPro.go" name="loginform" onsubmit="return logincheck()">
+	<form method="post" action="memberloginPro.go" name="loginform" onsubmit="return logincheck()">
 		<table>
 			<tr>
 				<th colspan="2">

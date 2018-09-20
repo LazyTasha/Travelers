@@ -9,7 +9,7 @@
 <h2> ${page_input} </h2>
 
 <body onload="inputfocus()">
-	<form name="inputform" id="inputform" method="post" action="inputPro.go" onsubmit="return inputcheck()">
+	<form name="inputform" id="inputform" method="post" action="memberinputPro.go" onsubmit="return inputcheck()">
 		<table>
 			<tr>
 				<th colspan="2">
@@ -76,9 +76,10 @@
 					<input class="inputbutton" type="submit" value="${btn_join}">
 					<input class="inputbutton" type="reset" value="${btn_cancel}">
 					<input class="inputbutton" type="button" value="${btn_join_cancel}"
-						onclick="location='main.go'">					 
+						onclick="location='membermain.go'">					 
 				</th>
-			</tr>			
+			</tr>
+						
 		</table>
 	</form>
 </body>

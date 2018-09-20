@@ -8,7 +8,7 @@
 <h2> ${page_delete} </h2>
 
 <body onload="passwdfocus()">
-	<form name="passwdform" method="post" action="deletePro.go" onsubmit="return passwdcheck()">
+	<form name="passwdform" method="post" action="memberdeletePro.go" onsubmit="return passwdcheck()">
 		<table>
 			<tr>
 				<th colspan="2">
@@ -25,7 +25,7 @@
 				<th colspan="2">
 					<input class="inputbutton" type="submit" value="${btn_del}">
 					<input class="inputbutton" type="button" value="${btn_del_cancel}"
-						onclick="location='main.go'">
+						onclick="location='membermain.go'">
 				</th>
 			</tr>
 		</table>

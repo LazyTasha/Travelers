@@ -9,7 +9,7 @@
 
 <c:if test="${sessionScope.memid eq null}">	
 	<body onload="mainfocus()">
-		<form name="mainform" method="post" action="loginPro.go" onsubmit="return maincheck()">
+		<form name="mainform" method="post" action="memberloginPro.go" onsubmit="return maincheck()">
 			<table>
 				<tr>
 					<th colspan="2">
@@ -33,7 +33,7 @@
 						<input class="inputbutton" type="submit" value="${btn_login}">
 						<input class="inputbutton" type="reset" value="${btn_cancel}">
 						<input class="inputbutton" type="button" value="${btn_join}"
-							onclick="location='inputForm.go'">
+							onclick="location='memberinputForm.go'">
 					</th>
 				</tr>
 			</table>
@@ -50,11 +50,11 @@
 		<tr>
 			<th>
 				<input class="inputbutton" type="button" value="${btn_modify}"
-					onclick="location='modifyForm.go'">
+					onclick="location='membermodifyForm.go'">
 				<input class="inputbutton" type="button" value="${btn_delete}"
-					onclick="location='deleteForm.go'">
+					onclick="location='memberdeleteForm.go'">
 				<input class="inputbutton" type="button" value="${btn_logout}"
-					onclick="location='logout.go'">
+					onclick="location='memberlogout.go'">
 			</th>
 		</tr>		
 	</table>		

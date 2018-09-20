@@ -13,11 +13,11 @@
 				alert( deleteerror );
 				//-->
 			</script>
-			<meta http-equiv="refresh" content="0; url=main.go">
+			<meta http-equiv="refresh" content="0; url=membermain.go">
 	</c:if>
 	<c:if test="${result eq 1}">
 		${sessionScope.memid = null}
-		<c:redirect url="main.go"/>
+		<c:redirect url="membermain.go"/>
 	</c:if>		
 </c:if>		
 <c:if test="${resultCheck eq 0}">

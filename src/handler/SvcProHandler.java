@@ -3,14 +3,12 @@ package handler;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.javassist.compiler.ast.Member;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,7 +42,7 @@ public class SvcProHandler {
 	
 	
 	/////////////////로그인
-	@RequestMapping( "/member/inputPro" )
+	@RequestMapping( "/memberinputPro" )
 	public ModelAndView UserInputProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		try {
 			request.setCharacterEncoding( "utf-8" );
@@ -97,15 +95,13 @@ public class SvcProHandler {
 		return new ModelAndView( "svc/inputPro" );
 	}
 	
-	@RequestMapping( "/member/modifyPro" )
+	@RequestMapping( "/membermodifyPro" )
 	public ModelAndView UserModifyprocess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		
 		UserDataBean memberDto = new UserDataBean();
 		memberDto.setPasswd( request.getParameter( "passwd" ) );
 		memberDto.setUser_name( request.getParameter( "user_name" ) );
 		
-	
-
 		// 이메일
 		/*String email = null;
 		String email1 = request.getParameter( "email1" );
@@ -124,7 +120,7 @@ public class SvcProHandler {
 		return new ModelAndView( "svc/modifyPro" );
 	}
 	
-	@RequestMapping( "/member/loginPro" )
+	@RequestMapping( "/memberloginPro" )
 	public ModelAndView Loginprocess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 
 		String id = request.getParameter( "user_id" );
@@ -138,14 +134,14 @@ public class SvcProHandler {
 		return new ModelAndView( "svc/loginPro" );
 	}
 	
-	@RequestMapping( "/member/logout" )	//logout 임
+	@RequestMapping( "/memberlogout" )	//logout 임
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		request.getSession().removeAttribute( "memid" );		
 		return new ModelAndView( "svc/main" );
 	}	
 		
 	//중복확인
-	 @RequestMapping(value="/member/idcheck.go",method = RequestMethod.POST,produces = "application/json")
+	 @RequestMapping(value="/idcheck.go",method = RequestMethod.POST,produces = "application/json")
 	 @ResponseBody
 	 public Map<Object, Object> idcheck(@RequestBody String user_id) {
 	        int count = 0;
@@ -157,34 +153,18 @@ public class SvcProHandler {
 	        return map;
 	    }
 	 
-	 @RequestMapping(value="/member/namecheck.go",method = RequestMethod.POST,produces = "application/json")
+	 @RequestMapping(value="/namecheck.go",method = RequestMethod.POST,produces = "application/json")
 	 @ResponseBody
 	 public Map<Object, Object> namecheck(@RequestBody String user_name) {
 	        int countt = 0;
 	        Map<Object, Object> map = new HashMap<Object, Object>();
 	 
 	        countt = userDao.namecheck( user_name );
-	        map.put("cntt", countt);
+	        map.put("cnt", countt);
 	        
 	        return map;
 	    }
 	
-	
-	 
-	/* @RequestMapping("/duplication.go")
-	 @ResponseBody
-	 public int duplication( HttpServletRequest request ) {
-		 String duplicationId = request.getParameter("id_val");
-		 List<UserDataBean> list = userDao.idcheck(duplicationId);
-		 if(list.size()==0) {
-			 return -1;
-		 }else {
-			 return 1;
-		 }
-	 }*/
-	 
-	 
-
 	////////////로그인
 	@RequestMapping("/svc/regPro")
 	public ModelAndView svcRegProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {

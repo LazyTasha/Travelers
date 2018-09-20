@@ -32,12 +32,12 @@ public class SvcViewHandler {
 	@Resource
 	private UserDBBean userDao;
 	
-	@RequestMapping( "/member/main" )
+	@RequestMapping( "/membermain" )
 	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/main" );
 	}
 	
-	@RequestMapping( "/member/modifyView" )
+	@RequestMapping( "/membermodifyView" )
 	public ModelAndView MemberProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		
 		String id = (String) request.getSession().getAttribute( "memid" );
@@ -54,7 +54,7 @@ public class SvcViewHandler {
 		
 		return new ModelAndView( "svc/modifyView" );
 	}
-	
+	///////로그인
 	@RequestMapping("/svc/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/default");
