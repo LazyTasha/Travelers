@@ -7,7 +7,7 @@
 <c:if test="${state eq 1}">
 	<c:if test="${result eq 0}">
 		<script type="text/javascript">
-			//<!--
+			<!--
 				erroralert(taginserterror);
 				
 			//-->
@@ -15,8 +15,7 @@
 	</c:if>
 	<c:if test="${result eq 1}">
 		<script type="text/javascript">
-			//<!--
-				alert(result);
+			<!--
 				window.opener.location.href=window.opener.document.URL;
 				self.close();
 			//-->

@@ -32,9 +32,9 @@
 				<c:if test="${count ne 0}">	
 					<c:forEach var="tag" items="${tags}">
 						<tr>
-							<td class="check" align="center"><input type="checkbox"></td>
-							<td>${tag.tag_id}</td>
-							<td>${tag.tag_value}</td>
+							<td class="check" align="center"><input type="checkbox" name=check1></td>
+							<td name="tag_id">${tag.tag_id}</td>
+							<td name="tag_value">${tag.tag_value}</td>
 						</tr>
 					</c:forEach>
 				</c:if>

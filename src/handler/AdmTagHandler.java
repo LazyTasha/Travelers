@@ -23,6 +23,7 @@ public class AdmTagHandler {
 	@RequestMapping("/adminTagMng")
 	public ModelAndView admTagMngProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//tag 추가 및 수정
+		//if state=1 then insert/if state=2 then update
 		int result=0;
 		int resultcheck=-1;
 		try {
@@ -62,6 +63,10 @@ public class AdmTagHandler {
 	@RequestMapping("/adminTagMod")
 	public ModelAndView admTagModProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		int state=tagmod;
+		String[] ids=request.getParameterValues("ids");
+		System.out.println(ids);
+		System.out.println(ids[0]);
+		
 		request.setAttribute("state", state);
 		return new ModelAndView("adm/tagMod");
 	}
