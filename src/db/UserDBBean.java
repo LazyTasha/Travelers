@@ -17,9 +17,9 @@ public class UserDBBean {
 	private SqlSession session=SqlMapClient.getSession();
 	
 	public List<UserDataBean> getUsers(Map<String, Integer> map) {
-		return session.selectList("DB.getUsers",map);
+		return session.selectList("Member.getUsers",map);
 	}
 	public int getCount() {
-		return session.selectOne("DB.getUCount");
+		return session.selectOne("Member.getUCount");
 	}
 }
