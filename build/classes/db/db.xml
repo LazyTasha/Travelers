@@ -2,17 +2,37 @@
 <!DOCTYPE mapper
   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="Member">
-	<insert id="insertMember" parameterType="member.LogonDataBean">
-		insert into member values(#{id}, #{passwd}, #{name}, #{jumin1}, #{jumin2}, #{tel, jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}, #{reg_date})
-	</insert>
-	<select id="check" parameterType="String" resultType="int">
-		select count(*) from member where id=#{id}
+<mapper namespace="db">
+	<select id="getCount" parameterType="int" resultType="int">
+		select count(*) from gg_trip_board
 	</select>
-	<delete id="deleteMember" parameterType="String">
-		delete from member where id=#{id}
-	</delete>
-	<update id="modifyMember" parameterType="member.LogonDataBean">
-		update member set passwd=#{passwd}, tel=#{tel, jdbcType=VARCHAR}, email=#{email, jdbcType=VARCHAR} where id=#{id}
+	<select id="getTrip" parameterType="int" resultType="db.TripDataBean">
+		select * from gg_trip_board where tb_no=#{tb_no}
+	</select>
+	<select id="getTripTags" parameterType="int" resultType="java.util.List">
+		select tag_value from gg_tag t, gg_trip_tag tr where t.tag_id=tr.tag_id and tr.tb_no=#{num}
+	</select>
+	<update id="addViewCount" parameterType="int">
+		update gg_tb_board set tb_v_count=tb_v_count+1 where tb_no=#{tb_no}
 	</update>
+	<insert id="writeTrip" parameterType="db.TbDataBean">
+		insert into gg_trip_board 
+		(tb_no, user_id, tb_title, tb_content, tb_reg_date, tb_v_count, tb_m_num, tb_notice, tb_talk) 
+		values(SEQ_GG_TRIP_BOARD_TB_NO.nextval, #{user_id}, #{tb_title}, #{tb_content}, sysdate, #{tb_v_count}, #{tb_m_num}, #{tb_notice}, #{tb_talk})
+	</insert>
+	<insert id="setTripTags" parameterType="java.util.Map">
+		insert into gg_trip_tag (tb_no, tag_id) values
+		<foreach item="item" collection="list" separator=",">
+			(#{item.tb_no}, #{item.tag_id})
+		</foreach>
+	</insert>
+	<select id="getUserName" parameterType="String">
+		select user_name from gg_user where user_id=#{id}
+	</select>
+	<select id="getTagList" resultType="java.util.Map">
+		select * from gg_tag
+	</select>
+	<select id="getUserId" parameterType="String" resultType="String">
+		select user_id from gg_user where user_name=#{user_name}
+	</select>
 </mapper>

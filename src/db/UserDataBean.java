@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class UserDataBean {
 	private String id;
 	private String passwd;
-	private String n_name;
+	private String user_name;
 	private String email;
 	private int gender;
 	private Timestamp reg_date;
@@ -23,11 +23,11 @@ public class UserDataBean {
 	public void setPasswd(String passwd) {
 		this.passwd = passwd;
 	}
-	public String getN_name() {
-		return n_name;
+	public String getUser_name() {
+		return user_name;
 	}
-	public void setN_name(String n_name) {
-		this.n_name = n_name;
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
 	}
 	public String getEmail() {
 		return email;

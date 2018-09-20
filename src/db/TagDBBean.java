@@ -1,14 +1,21 @@
 /*
- * !!! ÁÖÀÇ»çÇ× !!!
- * ÀüºÎ void, ÀÎÀÚ ¾øÀ½À¸·Î ¸Þ¼Òµå ÀÌ¸§¸¸ Á¤ÀÇÇØµÐ »óÅÂ.
- * ¸Þ¼Òµå¸¶´Ù ¸®ÅÏ °ª, ÀÎÀÚ ¾Ë¾Æ¼­ Ã¤¿ö ³ÖÀ» °Í.
+ * !!! ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ !!!
+ * ï¿½ï¿½ï¿½ï¿½ void, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½.
+ * ï¿½Þ¼Òµå¸¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¾Æ¼ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
  */
 
 package db;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
+import bean.SqlMapClient;
+
 public class TagDBBean {
-	SqlSession session;
+	SqlSession session=SqlMapClient.getSession();
 	
+	public List<TagDataBean> getTagList() {
+		return session.selectList("db.getTagList");
+	}
 }
