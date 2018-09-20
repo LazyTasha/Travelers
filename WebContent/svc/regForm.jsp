@@ -14,7 +14,7 @@
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- Custom style for this template -->
-<link rel="stylesheet" href="style_loginForm.css">
+<link rel="stylesheet" href="${project}style_loginForm.css">
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요한) -->
 <script src="//code.jquery.com/jquery.js"></script>
 </head>
@@ -22,13 +22,14 @@
 
  
 <body>
-	<div class="container">
-		
+	
+	<div class="container" style="width:600px">
 		<div class="text-center">
 			<a href="${project}list.go">
 				<img class="mb-4" src="img/logo_c.png" alt="" width="100" height="100">
 			</a>
 			<h1>${page_input}</h1>
+			<br>
 		</div>
 		
 		 <form class="form-horizontal" action="/action_page.php" method="post" action="loginPro.go" name="loginform" onsubmit="">
@@ -60,7 +61,7 @@
 			<div class="form-group row">
 				<label for="inputNickname" class="col-sm-2 col-form-label">${str_nickname}</label>
 				<div class="col-sm-8">
-					<input type="text" class="form-control" id="inputNickname" 
+					<input type="text" name="n_name" class="form-control" id="inputNickname" 
 						placeholder="Nickname" required>					
 				</div>
 				<div class="col-sm-2">
@@ -75,28 +76,27 @@
 						<div class="form-check">
 						
 							<input class="form-check-input" type="radio" name="gridRadios"
-								id="gridRadios1" value="option1" checked> <label
-								class="form-check-label" for="gridRadios1"> ${str_gender_f} </label>
+								id="gridRadios1" value="female" checked> 
+							<label class="form-check-label" for="gridRadios1"> ${str_gender_f} </label>
 						</div>
 
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="gridRadios"
-								id="gridRadios2" value="option2"> <label
-								class="form-check-label" for="gridRadios2"> ${str_gender_m} </label>
+								id="gridRadios2" value="male"> 
+							<label class="form-check-label" for="gridRadios2"> ${str_gender_m} </label>						
 						</div>
 					</div>
 				</div>
 			</fieldset>
 
-
 			<div class="form-group">
 			 	<div class="row">
 		    		 <label for="email" class="control-label col-sm-2" >${str_email} </label>
 		     	 		<div class="col-sm-8">
-		      	  		<input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+		      	  		<input type="email" name="email" class="form-control" id="email" placeholder="Enter email" required>
 		      	    	</div>
 		      	    	<div class="col-sm-2">
-							<button type="button" class="btn btn-md btn-secondary" onclick="">본인 인증</button>			
+							<button type="button" class="btn btn-md btn-secondary" onclick="">${btn_confirm_smtp}</button>			
 					</div>
 		      	</div>
 		    </div>

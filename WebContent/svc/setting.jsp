@@ -43,6 +43,7 @@
 <c:set var="btn_join_cancel" value="가입취소"/>
 <c:set var="btn_confirm" value="중복확인"/>
 <c:set var="btn_confirm_cancel" value="확인취소"/>
+<c:set var="btn_confirm_smtp" value="본인인증"/>
 <c:set var="btn_ok" value="확인"/>
 <c:set var="btn_modify" value="정보수정"/>
 <c:set var="btn_delete" value="회원탈퇴"/>
