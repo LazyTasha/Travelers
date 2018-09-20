@@ -1,84 +1,83 @@
 package db;
 
 import java.sql.Timestamp;
-import java.util.Map;
 
 public class TbDataBean extends TripDataBean {
-	public int num;
-	public String writer;
-	public String title;
-	public String content;
-	public Timestamp reg_date;
-	public int viewcount;
-	public int memberNum;
-	public int notice;
-	public String talk;
-	public Map<Integer, Integer> locs;
-	public Map<Integer, String> tags;
-	public int getNum() {
-		return num;
+	public int tb_no;
+	public String user_id;
+	public String tb_title;
+	public String tb_content;
+	public Timestamp tb_reg_date;
+	public int tb_v_count;
+	public int tb_m_num;
+	public int tb_notice;
+	public String tb_talk;
+	public String[] locs;
+	public String[] tags;
+	public int getTb_no() {
+		return tb_no;
 	}
-	public void setNum(int num) {
-		this.num = num;
+	public void setTb_no(int tb_no) {
+		this.tb_no = tb_no;
 	}
-	public String getWriter() {
-		return writer;
+	public String getUser_id() {
+		return user_id;
 	}
-	public void setWriter(String writer) {
-		this.writer = writer;
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
 	}
-	public String getTitle() {
-		return title;
+	public String getTb_title() {
+		return tb_title;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setTb_title(String tb_title) {
+		this.tb_title = tb_title;
 	}
-	public String getContent() {
-		return content;
+	public String getTb_content() {
+		return tb_content;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setTb_content(String tb_content) {
+		this.tb_content = tb_content;
 	}
-	public Timestamp getReg_date() {
-		return reg_date;
+	public Timestamp getTb_reg_date() {
+		return tb_reg_date;
 	}
-	public void setReg_date(Timestamp reg_date) {
-		this.reg_date = reg_date;
+	public void setTb_reg_date(Timestamp tb_reg_date) {
+		this.tb_reg_date = tb_reg_date;
 	}
-	public int getViewcount() {
-		return viewcount;
+	public int getTb_v_count() {
+		return tb_v_count;
 	}
-	public void setViewcount(int viewcount) {
-		this.viewcount = viewcount;
+	public void setTb_v_count(int tb_v_count) {
+		this.tb_v_count = tb_v_count;
 	}
-	public int getMemberNum() {
-		return memberNum;
+	public int getTb_m_num() {
+		return tb_m_num;
 	}
-	public void setMemberNum(int memberNum) {
-		this.memberNum = memberNum;
+	public void setTb_m_num(int tb_m_num) {
+		this.tb_m_num = tb_m_num;
 	}
-	public int getNotice() {
-		return notice;
+	public int getTb_notice() {
+		return tb_notice;
 	}
-	public void setNotice(int notice) {
-		this.notice = notice;
+	public void setTb_notice(int tb_notice) {
+		this.tb_notice = tb_notice;
 	}
-	public String getTalk() {
-		return talk;
+	public String getTb_talk() {
+		return tb_talk;
 	}
-	public void setTalk(String talk) {
-		this.talk = talk;
+	public void setTb_talk(String tb_talk) {
+		this.tb_talk = tb_talk;
 	}
-	public Map<Integer, Integer> getLocs() {
+	public String[] getLocs() {
 		return locs;
 	}
-	public void setLocs(Map<Integer, Integer> locs) {
+	public void setLocs(String[] locs) {
 		this.locs = locs;
 	}
-	public Map<Integer, String> getTags() {
+	public String[] getTags() {
 		return tags;
 	}
-	public void setTags(Map<Integer, String> tags) {
+	public void setTags(String[] tags) {
 		this.tags = tags;
 	}
 }
