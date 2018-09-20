@@ -16,7 +16,7 @@
   </head>
   <body class="text-center">
   	<form class="form-signin">
-  		<img class="mb-4" src="img/logo.jpg" alt="" width="400" height="250">
+  		<a href="list.jsp"><img class="mb-4" src="img/logo.jpg" alt="" width="400" height="250"></a>
      	<input type="text" id="inputId" class="form-control" placeholder="아이디" required autofocus>
  	 	<input type="password" id="inputPassword" class="form-control" placeholder="비밀번호" required>
   		<button class="btn btn-lg btn-secondary btn-block" type="submit">로그인</button>
