@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="Member">
+	<mapper namespace="db">
 		<!-- user DB -->
 		<select id="getUsers" parameterType="java.util.Map" resultType="db.UserDataBean">
 			select user_id,user_name,email,gender,reg_date,r 
@@ -16,6 +16,22 @@
 		</select>
 		
 		<!-- tag DB-->
+		<insert id="insertTag" parameterType="String">
+			insert into gg_tag(tag_id,tag_value) values( SEQ_gg_tag_tag_id.nextval,#{tag_value})
+		</insert>
+		<select id="getTCount" resultType="int">
+			select count(*) from gg_tag
+		</select>
+		<select id="getTags" parameterType="java.util.Map" resultType="db.TagDataBean">
+			select tag_id,tag_value,r 
+			from (
+				select tag_id,tag_value,rownum r from (
+					select tag_id,tag_value from gg_tag order by tag_id desc) 
+					order by tag_id desc)where r &gt;= #{start} and r &lt;=#{end}
+		</select>
+		<select id="checkTag" parameterType="String" resultType="int">
+			select count(*) from gg_tag where tag_value=#{tag_value}
+		</select>
 	</mapper>
 <!-- 	<mapper namespace="Member">
 		<insert id="insertMember" parameterType="member.LogonDataBean">

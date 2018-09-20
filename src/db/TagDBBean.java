@@ -1,14 +1,35 @@
 /*
- * !!! ÁÖÀÇ»çÇ× !!!
- * ÀüºÎ void, ÀÎÀÚ ¾øÀ½À¸·Î ¸Þ¼Òµå ÀÌ¸§¸¸ Á¤ÀÇÇØµÐ »óÅÂ.
- * ¸Þ¼Òµå¸¶´Ù ¸®ÅÏ °ª, ÀÎÀÚ ¾Ë¾Æ¼­ Ã¤¿ö ³ÖÀ» °Í.
+ * !!! ï¿½ï¿½ï¿½Ç»ï¿½ï¿½ï¿½ !!!
+ * ï¿½ï¿½ï¿½ï¿½ void, ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼Òµï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ ï¿½ï¿½ï¿½ï¿½.
+ * ï¿½Þ¼Òµå¸¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ ï¿½Ë¾Æ¼ï¿½ Ã¤ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
  */
 
 package db;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 
+import bean.SqlMapClient;
+
 public class TagDBBean {
-	SqlSession session;
+	SqlSession session=SqlMapClient.getSession();
 	
+	//add tag
+	public int insertTag(String tag_value) {
+		return session.insert("db.insertTag",tag_value);
+	}
+	//tag list
+	public  List<TagDataBean> getTags(Map<String, Integer> map){
+		return session.selectList("db.getTags",map);	
+	}
+	//total tag
+	public int getCount() {
+		return session.selectOne("db.getTCount");
+	}
+	//check tag
+	public int checkTag(String tag_value) {
+		return session.selectOne("db.checkTag",tag_value);
+	}
 }
