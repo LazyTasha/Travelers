@@ -15,7 +15,7 @@ import db.TagDBBean;
 import db.TripDBBean;
 
 @Controller
-public class ServiceViewHandler {
+public class SvcViewHandler {
 	@Resource
 	private TripDBBean tripDao;
 	@Resource
