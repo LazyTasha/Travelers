@@ -12,10 +12,7 @@ import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
-import db.TbDBBean;
-import db.TbDataBean;
 import db.TripDBBean;
-import db.TripDataBean;
 
 @Controller
 public class SvcViewHandler {
@@ -29,8 +26,6 @@ public class SvcViewHandler {
 	private LocDBBean locDao;
 	@Resource
 	private TagDBBean tagDao;
-	@Resource
-	private TbDBBean tbDao;
 	
 	@RequestMapping("/svc/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
@@ -56,14 +51,8 @@ public class SvcViewHandler {
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/myPage");
 	}
-	@RequestMapping("/tripView")
-	public ModelAndView SvcTripViewProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		int num = Integer.parseInt(request.getParameter("num"));
-		TripDataBean tripDto = tripDao.getTrip(num);
-		tripDao.addViewCount(num);
-		TbDataBean tbDto=tbDao.getTb(num);
-		request.setAttribute("tbDto", tbDto);
-		
-		return new ModelAndView("svc/tripView");
+	@RequestMapping("/svc/myTrip")
+	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/myTrip");
 	}
 }
