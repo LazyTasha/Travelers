@@ -32,13 +32,14 @@
 				<c:if test="${count ne 0}">	
 					<c:forEach var="tag" items="${tags}">
 						<tr>
-							<td class="check" align="center"><input type="checkbox" name=check1></td>
+							<td class="check" align="center"><input type="checkbox" name="check1"></td>
 							<td name="tag_id">${tag.tag_id}</td>
-							<td name="tag_value">${tag.tag_value}</td>
+							<td>${tag.tag_value}</td>
 						</tr>
 					</c:forEach>
 				</c:if>
 			</table>
+		</form>
 			<br>
 				<c:if test="${count ne 0}">
 					<c:if test="${startPage gt pageBlock}">
@@ -58,6 +59,5 @@
 						<a href ="adminTag.go?pageNum=${pageCount}">[▶▶]</a>
 					</c:if>	
 				</c:if>
-			</form>
 	</section>
 </article>

@@ -16,6 +16,7 @@ import bean.SqlMapClient;
 public class TagDBBean {
 	SqlSession session=SqlMapClient.getSession();
 	
+
 	//add tag
 	public int insertTag(String tag_value) {
 		return session.insert("db.insertTag",tag_value);
@@ -31,5 +32,13 @@ public class TagDBBean {
 	//check tag
 	public int checkTag(String tag_value) {
 		return session.selectOne("db.checkTag",tag_value);
+	}
+	//show tag info
+	public TagDataBean getTag(int tag_id) {
+		return session.selectOne("db.getTag",tag_id);
+	}
+	//modify tag
+	public int modifyTag(TagDataBean tagDao) {
+		return session.update("db.modifyTag",tagDao);
 	}
 }

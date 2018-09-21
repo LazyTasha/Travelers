@@ -53,7 +53,28 @@
 		<select id="getTagList" resultType="java.util.Map">
 			select * from gg_tag
 		</select>
-		
+		<insert id="insertTag" parameterType="String">
+			insert into gg_tag(tag_id,tag_value) values( SEQ_gg_tag_tag_id.nextval,#{tag_value})
+		</insert>
+		<select id="getTCount" resultType="int">
+			select count(*) from gg_tag
+		</select>
+		<select id="getTags" parameterType="java.util.Map" resultType="db.TagDataBean">
+			select tag_id,tag_value,r 
+			from (
+				select tag_id,tag_value,rownum r from (
+					select tag_id,tag_value from gg_tag order by tag_id desc) 
+					order by tag_id desc)where r &gt;= #{start} and r &lt;=#{end}
+		</select>
+		<select id="checkTag" parameterType="String" resultType="int">
+			select count(*) from gg_tag where tag_value=#{tag_value}
+		</select>
+		<select id="getTag" parameterType="int" resultType="db.TagDataBean">
+			select * from gg_tag where tag_id=#{tag_id} 
+		</select>
+		<select id="modifyTag" parameterType="db.TagDataBean">
+			update gg_tag set tag_value=#{tag_value} where tag_id=#{tag_id}
+		</select>
 		<!-- board DB-->
 		<select id="getCount" parameterType="int" resultType="int">
 			select count(*) from gg_trip_board
