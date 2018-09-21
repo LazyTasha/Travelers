@@ -26,7 +26,31 @@ public class SvcViewHandler {
 	private LocDBBean locDao;
 	@Resource
 	private TagDBBean tagDao;
+	@Resource
+	private UserDBBean userDao;
 	
+	@RequestMapping( "/memberMain" )
+	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/main" );
+	}
+	
+	@RequestMapping( "/memberModifyView" )
+	public ModelAndView MemberProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		
+		String id = (String) request.getSession().getAttribute( "memid" );
+		String passwd = request.getParameter( "passwd" );
+	
+		int result = userDao.check( id, passwd );
+	
+		request.setAttribute( "result", result );
+		
+		if( result == 1 ) {
+			UserDataBean UserDto = userDao.getMember( id );
+			request.setAttribute( "UserDto", UserDto );
+		}
+		
+		return new ModelAndView( "svc/modifyView" );
+	}
 	@RequestMapping("/svc/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/default");

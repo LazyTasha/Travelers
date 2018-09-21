@@ -35,4 +35,21 @@ public class SvcDelHandler {
 	public ModelAndView svcTripDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripDel");
 	}
+	@Resource
+	private UserDBBean userDao;
+	
+	@RequestMapping( "/memberDeletePro" )
+	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+ 		String id = (String) request.getSession().getAttribute( "memid" );
+		String passwd = request.getParameter( "passwd" );
+ 		int resultCheck = userDao.check( id, passwd );
+ 		request.setAttribute( "resultCheck", resultCheck );
+		
+		if( resultCheck == 1 ) {
+			int result =userDao.deleteMember( id );
+			request.setAttribute( "result", result );
+		}
+		
+		return new ModelAndView( "svc/deletePro" );
+	}
 }
