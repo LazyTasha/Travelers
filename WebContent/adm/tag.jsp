@@ -11,25 +11,53 @@
 		<br>
 		<input id="on" class="listbutton" type="button" value="${str_tag_v}">
 	</section>
-	<form name="tagForm" method="post" action="adminTagMng.go">
 	<section>
 		<p><input type="checkbox" id="checkAll">${str_select_all}</p>
 	
 			<div class="buttonarea">
 				<input class="inputbutton" type="submit" value="${btn_delete}">
-				<input class="inputbutton" type="button" value="${btn_modify}" onclick="modTag()">
-				<input class="inputbutton" type="button" value="${btn_add}" onclick="addTag()">
+				<input class="inputbutton" type="button" value="${btn_modify}" onclick="goModTag()">
+				<input class="inputbutton" type="button" value="${btn_add}" onclick="goAddTag()">
 			</div>
 
 	</section>
 	<section>
+		<form id="tagForm">
 			<table>
 				<tr>
 					<th class="check"><input type="checkbox" disabled="disabled" ></th>
 					<th>${str_tagid}</th>
 					<th>${str_tag}</th>
 				</tr>
+				<c:if test="${count ne 0}">	
+					<c:forEach var="tag" items="${tags}">
+						<tr>
+							<td class="check" align="center"><input type="checkbox" name=check1></td>
+							<td name="tag_id">${tag.tag_id}</td>
+							<td name="tag_value">${tag.tag_value}</td>
+						</tr>
+					</c:forEach>
+				</c:if>
 			</table>
-		</form>
+			<br>
+				<c:if test="${count ne 0}">
+					<c:if test="${startPage gt pageBlock}">
+						<a href="adminTag.go">[◀◀] </a>
+						<a href="adminTag.go?pageNum=${startPage-pageBlock}">[◀] </a>
+					</c:if>
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<c:if test="${i eq currentPage}">
+							<p>[${i}]<p>
+						</c:if>
+						<c:if test="${i ne currentPage}">					
+							<a href="adminTag.go?pageNum=${i}">[${i}] </a>
+						</c:if>	
+					</c:forEach>
+					<c:if test="${pageCount gt endPage}">
+						<a href ="adminTag.go?pageNum=${startPage+pageBlock}">[▶]</a>
+						<a href ="adminTag.go?pageNum=${pageCount}">[▶▶]</a>
+					</c:if>	
+				</c:if>
+			</form>
 	</section>
 </article>
