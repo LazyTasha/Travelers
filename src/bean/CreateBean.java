@@ -6,6 +6,14 @@ import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+import db.AlbumDBBean;
+import db.CmtDBBean;
+import db.LocDBBean;
+import db.TagDBBean;
+import db.TbDBBean;
+import db.TripDBBean;
+import db.UserDBBean;
+
 @Configuration
 public class CreateBean {
 	@Bean

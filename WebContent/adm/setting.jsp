@@ -48,6 +48,7 @@
 
 <c:set var="str_tag_add" value="태그 추가"/>
 <c:set var="str_tag_mod" value="태그 수정"/>
+<c:set var="str_mod_tag" value="변경할 내용"/>
 
 
 <c:set var="btn_delete" value="삭제"/>

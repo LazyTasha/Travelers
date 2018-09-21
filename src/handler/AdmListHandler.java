@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
 import db.CmtDBBean;
+import db.TagDBBean;
+import db.TagDataBean;
 import db.TripDBBean;
 import db.UserDBBean;
 import db.UserDataBean;
@@ -32,6 +34,8 @@ public class AdmListHandler {
 	private CmtDBBean cmtDao;
 	@Resource
 	private UserDBBean userDao;
+	@Resource
+	private TagDBBean tagDao;
 	@RequestMapping("/adm/*")
 	public ModelAndView admDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("adm/default");
@@ -91,7 +95,44 @@ public class AdmListHandler {
 	}
 	@RequestMapping("adminTag")
 	public ModelAndView adminTagHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-
+		int count=tagDao.getCount();//list row num
+		
+		String pageNum=request.getParameter("pageNum");
+		if(pageNum==null || pageNum.equals("")){
+			pageNum = "1";
+		}
+		int currentPage=Integer.parseInt(pageNum);
+		int pageCount=count/pageSize+(count % pageSize>0 ? 1:0 );
+		if( currentPage > pageCount ) currentPage = pageCount;
+		int start = ( currentPage - 1 )*pageSize + 1;					// (5-1)*10 +1   =41
+		int end = start + pageSize - 1;	
+		
+		if(end > count) end = count;
+		
+		int number = count - (currentPage - 1) * pageSize;				//	50-(5-1)*10 
+			
+		int startPage = (currentPage / pageBlock)*pageBlock+1;  		//(5/10)*10+1 = 1
+		if(currentPage % pageBlock == 0) startPage-=pageBlock;
+		int endPage =startPage + pageBlock - 1;							//11+10-1	=20
+		if(endPage > pageCount ) endPage = pageCount;
+	
+		request.setAttribute( "count", count );
+		request.setAttribute( "pageNum", pageNum );
+		request.setAttribute( "currentPage", currentPage );
+		request.setAttribute( "number", number );
+		request.setAttribute( "startPage", startPage );
+		request.setAttribute( "endPage", endPage );
+		request.setAttribute( "pageCount", pageCount );
+		request.setAttribute( "pageBlock", pageBlock );
+		
+		if(count>0) {
+				Map<String, Integer> map=new HashMap<String,Integer>();
+				map.put("start", start);
+				map.put("end", end);
+				
+				List<TagDataBean>tags=tagDao.getTags(map);
+				request.setAttribute("tags", tags);
+		}
 		return new ModelAndView("adm/tag");
 	}
 	
