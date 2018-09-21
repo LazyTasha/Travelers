@@ -14,6 +14,7 @@ import db.LocDBBean;
 import db.TagDBBean;
 import db.TripDBBean;
 import db.UserDBBean;
+import db.UserDataBean;
 
 @Controller
 public class SvcViewHandler {
@@ -27,15 +28,16 @@ public class SvcViewHandler {
 	private LocDBBean locDao;
 	@Resource
 	private TagDBBean tagDao;
+	
 	@Resource
 	private UserDBBean userDao;
 	
-	@RequestMapping( "/memberMain" )
+	@RequestMapping( "/membermain" )
 	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/main" );
 	}
 	
-	@RequestMapping( "/memberModifyView" )
+	@RequestMapping( "/membermodifyView" )
 	public ModelAndView MemberProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		
 		String id = (String) request.getSession().getAttribute( "memid" );
