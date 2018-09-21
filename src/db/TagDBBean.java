@@ -7,6 +7,7 @@
 package db;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -15,7 +16,20 @@ import bean.SqlMapClient;
 public class TagDBBean {
 	SqlSession session=SqlMapClient.getSession();
 	
-	public List<TagDataBean> getTagList() {
-		return session.selectList("db.getTagList");
+	//add tag
+	public int insertTag(String tag_value) {
+		return session.insert("db.insertTag",tag_value);
+	}
+	//tag list
+	public  List<TagDataBean> getTags(Map<String, Integer> map){
+		return session.selectList("db.getTags",map);	
+	}
+	//total tag
+	public int getCount() {
+		return session.selectOne("db.getTCount");
+	}
+	//check tag
+	public int checkTag(String tag_value) {
+		return session.selectOne("db.checkTag",tag_value);
 	}
 }
