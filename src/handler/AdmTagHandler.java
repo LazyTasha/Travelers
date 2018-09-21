@@ -22,7 +22,7 @@ public class AdmTagHandler {
 	
 	@RequestMapping("/adminTagMng")
 	public ModelAndView admTagMngProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		//tag 추가 및 수정
+		//tag 異붽� 諛� �닔�젙
 		//if state=1 then insert/if state=2 then update
 		int result=0;
 		int resultcheck=-1;
@@ -36,11 +36,11 @@ public class AdmTagHandler {
 		
 		TagDataBean tagDto=new TagDataBean();
 		if(state==tagadd) {
-			//tag추가
+			//tag異붽�
 			String values=request.getParameter("values");
 			String[] v=values.split(",");
 			for(int i=0;i<v.length;i++) {
-				//insert하기	
+				//insert�븯湲�	
 				tagDto.setTag_value(v[i]);
 				resultcheck=tagDao.checkTag(tagDto.getTag_value());
 				if(resultcheck==0) {
@@ -48,7 +48,7 @@ public class AdmTagHandler {
 				}
 			}
 		}else if(state==tagmod) {
-			//tag수정
+			//tag�닔�젙
 		}
 		request.setAttribute( "result", result );
 		request.setAttribute( "state", state );
