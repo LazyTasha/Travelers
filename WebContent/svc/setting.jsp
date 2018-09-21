@@ -13,6 +13,8 @@
 <c:set var="page_login" value="로 그 인"/> <!-- o -->
 <c:set var="page_delete" value="회 원 탈 퇴"/>
 <c:set var="page_modify" value="회원 정보 수정"/>
+<c:set var="page_mypage1" value="회 원 정 보"/>
+<c:set var="page_mypage2" value="회원 정보"/>
 
 <c:set var="msg_main" value="비회원이시면 회원가입을 해주세요"/>
 <c:set var="msg_input" value="회원정보를 입력하세요"/> <!-- x -->
@@ -31,6 +33,8 @@
 <c:set var="str_gender_m" value="남성"/>
 <c:set var="str_email" value="이메일"/>
 <c:set var="str_reg_date" value="가입일자"/>
+<c:set var="str_tag" value="#태 그"/>
+
 
 <c:set var="str_manual" value="직접입력"/>
 <c:set var="str_name" value="이름"/>
@@ -45,7 +49,7 @@
 <c:set var="btn_confirm_cancel" value="확인취소"/>
 <c:set var="btn_confirm_smtp" value="본인인증"/>
 <c:set var="btn_ok" value="확인"/>
-<c:set var="btn_modify" value="정보수정"/>
+<c:set var="btn_modify" value="프로필 수정"/>
 <c:set var="btn_delete" value="회원탈퇴"/>
 <c:set var="btn_logout" value="로그아웃"/>
 <c:set var="btn_mod" value="수정"/>
