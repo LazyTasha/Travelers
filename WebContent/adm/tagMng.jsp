@@ -41,4 +41,4 @@
 </c:if>
 <c:if test="${result eq 1}">
 	<c:redirect url="boardList.do?pageNum=${pageNum}"/>
-</c:if>	 --%>
+</c:if>	 --%> 
