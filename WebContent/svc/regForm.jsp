@@ -20,8 +20,7 @@
 </head>
 
 
- 
-<body>
+ <body>
 	<div class="container">
 		
 		<div class="text-center">

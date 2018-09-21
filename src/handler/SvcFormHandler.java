@@ -27,10 +27,27 @@ public class SvcFormHandler {
 	@Resource
 	private TagDBBean tagDao;
 	
-	@RequestMapping("/svc/loginForm")
-	public ModelAndView svcLoginFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/loginForm");
+	////////////////로그인
+	@RequestMapping( "/memberinputForm" )
+	public ModelAndView UserInputProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/inputForm" );
 	}
+	
+	@RequestMapping( "/membermodifyForm" ) 
+	public ModelAndView ModifyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/modifyForm" );
+	}
+	
+	@RequestMapping( "/memberloginForm" )
+	public ModelAndView LoginProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/loginForm" );
+	}
+	
+	@RequestMapping( "/memberdeleteForm" )
+	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/deleteForm" );
+	}
+	/////////////////////////////////// 로그인
 	@RequestMapping("/svc/regForm")
 	public ModelAndView svcRegFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/regForm");

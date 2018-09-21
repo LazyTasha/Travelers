@@ -40,10 +40,12 @@ public class CreateBean {
 	public TripDBBean tripDao() {
 		return new TripDBBean();
 	}
+	
 	@Bean
 	public UserDBBean userDao() {
 		return new UserDBBean();
 	}
+	
 	@Bean
 	public ViewResolver viewResolver() {
 		UrlBasedViewResolver viewResolver=new UrlBasedViewResolver();

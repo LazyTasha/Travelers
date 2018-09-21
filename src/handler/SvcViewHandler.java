@@ -13,9 +13,11 @@ import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
 import db.TripDBBean;
+import db.UserDBBean;
+import db.UserDataBean;
 
 @Controller
-public class ServiceViewHandler {
+public class SvcViewHandler {
 	@Resource
 	private TripDBBean tripDao;
 	@Resource
@@ -27,13 +29,35 @@ public class ServiceViewHandler {
 	@Resource
 	private TagDBBean tagDao;
 	
+	@Resource
+	private UserDBBean userDao;
+	
+	@RequestMapping( "/membermain" )
+	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/main" );
+	}
+	
+	@RequestMapping( "/membermodifyView" )
+	public ModelAndView MemberProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		
+		String id = (String) request.getSession().getAttribute( "memid" );
+		String passwd = request.getParameter( "passwd" );
+	
+		int result = userDao.check( id, passwd );
+	
+		request.setAttribute( "result", result );
+		
+		if( result == 1 ) {
+			UserDataBean UserDto = userDao.getMember( id );
+			request.setAttribute( "UserDto", UserDto );
+		}
+		
+		return new ModelAndView( "svc/modifyView" );
+	}
+	///////로그인
 	@RequestMapping("/svc/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/default");
-	}
-	@RequestMapping("/svc/main")
-	public ModelAndView svcMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/main");
 	}
 	@RequestMapping("/svc/list")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
