@@ -13,6 +13,7 @@ import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
 import db.TripDBBean;
+import db.UserDBBean;
 
 @Controller
 public class SvcDelHandler {
@@ -26,6 +27,8 @@ public class SvcDelHandler {
 	private LocDBBean locDao;
 	@Resource
 	private TagDBBean tagDao;
+	@Resource
+	private UserDBBean userDao;
 	
 	@RequestMapping("/svc/regDel")
 	public ModelAndView svcRegDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
@@ -35,9 +38,6 @@ public class SvcDelHandler {
 	public ModelAndView svcTripDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripDel");
 	}
-	@Resource
-	private UserDBBean userDao;
-	
 	@RequestMapping( "/memberDeletePro" )
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
  		String id = (String) request.getSession().getAttribute( "memid" );

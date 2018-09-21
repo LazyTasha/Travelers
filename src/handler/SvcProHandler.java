@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
@@ -52,7 +55,6 @@ public class SvcProHandler {
 	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripModPro");
 	}
-	/////////////////로그인
 	@RequestMapping( "/memberinputPro" )
 	public ModelAndView UserInputProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		try {
@@ -66,9 +68,7 @@ public class SvcProHandler {
 		UserDto.setPasswd( request.getParameter( "passwd" ) );
 		UserDto.setUser_name( request.getParameter( "user_name" ) );
 		
-		
 		//user_level
-		
 		
 		//gender
 		int gender1 = 0;
@@ -87,10 +87,10 @@ public class SvcProHandler {
 		String email2 = request.getParameter( "email2" );
 		if( ! email1.equals( "" ) ) {
 			if( email2.equals( "0" ) ) {
-				// 직접입력
+				// 吏곸젒�엯�젰
 				email = email1;
 			} else {
-				// 선택입력
+				// �꽑�깮�엯�젰
 				email = email1 + "@" + email2; 
 			}
 		}
@@ -111,15 +111,6 @@ public class SvcProHandler {
 		UserDataBean memberDto = new UserDataBean();
 		memberDto.setPasswd( request.getParameter( "passwd" ) );
 		memberDto.setUser_name( request.getParameter( "user_name" ) );
-		
-		// 이메일
-		/*String email = null;
-		String email1 = request.getParameter( "email1" );
-		String email2 = request.getParameter( "email2" );
-		if( ! email1.equals( "" ) && ! email2.equals( "" ) ) {
-			email = email1 + "@" + email2;
-		}
-		memberDto.setEmail( email );*/
 	
 		memberDto.setUser_id( (String) request.getSession().getAttribute( "memid" ) ); 
 	
@@ -141,13 +132,13 @@ public class SvcProHandler {
 		return new ModelAndView( "svc/loginPro" );
 	}
 	
-	@RequestMapping( "/memberlogout" )	//logout 임
+	@RequestMapping( "/memberlogout" )	//logout �엫
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		request.getSession().removeAttribute( "memid" );		
 		return new ModelAndView( "svc/main" );
 	}	
 		
-	//중복확인
+	//以묐났�솗�씤
 	 @RequestMapping(value="/idcheck.go",produces = "application/json")
 	 @ResponseBody
 	 public Map<Object, Object> idcheck(@RequestBody String user_id) {

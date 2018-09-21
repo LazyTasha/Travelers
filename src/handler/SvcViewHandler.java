@@ -13,6 +13,7 @@ import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
 import db.TripDBBean;
+import db.UserDBBean;
 
 @Controller
 public class SvcViewHandler {
