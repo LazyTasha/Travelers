@@ -43,4 +43,20 @@ public class SvcFormHandler {
 	public ModelAndView svcTripModFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripModForm");
 	}
+	@RequestMapping( "/memberinputForm" )
+	public ModelAndView UserInputProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/inputForm" );
+	}
+	@RequestMapping( "/membermodifyForm" ) 
+	public ModelAndView ModifyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/modifyForm" );
+	}
+	@RequestMapping( "/memberloginForm" )
+	public ModelAndView LoginProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/loginForm" );
+	}
+	@RequestMapping( "/memberdeleteForm" )
+	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView( "svc/deleteForm" );
+	}
 }
