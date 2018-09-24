@@ -20,6 +20,7 @@ import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
+import db.TbDBBean;
 import db.TripDBBean;
 import db.UserDBBean;
 import db.UserDataBean;
@@ -38,6 +39,8 @@ public class SvcProHandler {
 	private TagDBBean tagDao;
 	@Resource
 	private UserDBBean userDao;
+	@Resource
+	private TbDBBean tbDao;
 	
 	@RequestMapping("/svc/loginPro")
 	public ModelAndView svcLoginProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
@@ -55,6 +58,17 @@ public class SvcProHandler {
 	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripModPro");
 	}
+	
+	//if fail to delete, we should show user an alert
+	//so we need this result parameter
+	@RequestMapping("/svc/tripDelPro")
+	public ModelAndView svcTripDelProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		int result=tbDao.deleteTrip(tb_no);
+		request.setAttribute("result", result);
+		return new ModelAndView("svc/tripDel");
+	}
+		
 	@RequestMapping( "/memberinputPro" )
 	public ModelAndView UserInputProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		try {
