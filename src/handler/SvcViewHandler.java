@@ -12,6 +12,8 @@ import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
+import db.TbDBBean;
+import db.TbDataBean;
 import db.TripDBBean;
 import db.UserDBBean;
 import db.UserDataBean;
@@ -28,9 +30,10 @@ public class SvcViewHandler {
 	private LocDBBean locDao;
 	@Resource
 	private TagDBBean tagDao;
-	
 	@Resource
 	private UserDBBean userDao;
+	@Resource
+	private TbDBBean tbDao;
 	
 	@RequestMapping( "/membermain" )
 	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
@@ -81,5 +84,16 @@ public class SvcViewHandler {
 	@RequestMapping("/svc/myTrip")
 	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/myTrip");
+	}
+	@RequestMapping("trip")
+	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		//get tb_no of the post
+		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		//get the content of the post
+		//TripDataBean has a part of contents of board
+		//TbDataBean has every content of board
+		TbDataBean tbDto=tbDao.getTb(tb_no);
+		request.setAttribute("tbDto", tbDto);
+		return new ModelAndView("svc/trip");
 	}
 }
