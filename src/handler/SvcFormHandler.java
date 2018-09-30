@@ -27,7 +27,7 @@ public class SvcFormHandler {
 	@Resource
 	private TagDBBean tagDao;
 	
-	@RequestMapping("/svc/loginForm")
+	@RequestMapping("/loginForm")
 	public ModelAndView svcLoginFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/loginForm");
 	}

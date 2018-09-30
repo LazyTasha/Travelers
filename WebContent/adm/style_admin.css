@@ -92,6 +92,7 @@ article{
 }
 p{
 	display:inline-block;
+	margin-top:12px;
 	margin-left:5px;
 }
 section{
@@ -99,7 +100,6 @@ section{
 	width:95%;
 	min-width:500px;
 	height:auto;
-	mind-height:150px;
 	margin:8px;
 	margin-bttom:auto;
 	border:1px black solid;	
@@ -179,7 +179,8 @@ th {
 	margin : 0px;
 	padding : 3px;
 	height: 40px;
-	width: 500px;
+	min-width:10px;
+	text-align:center;
 	
 	
 }
@@ -192,9 +193,13 @@ td {
 	border : 1px solid gray;	
 	margin : 0px;
 	padding : 3px;
-	height: 35px;
-	width: 300px;
+	max-height:40px;
+	max-width: 250px;
+	overflow:hidden;
+	text-overflow;
+	ellipsis;
 }
+
 .check{
 	width:10px;
 }
@@ -205,7 +210,6 @@ td {
 	margin: 10px;
 	float:left;
 }
-
 
 .photo{
 	display:inline-block;
@@ -229,11 +233,17 @@ button{
 	background-color: transparent !important;
 	border-color: transparent;
     border: none;
-
-출처: http://devnauts.tistory.com/17 [devnauts]
 }
 button img{
 	height:30px;
 	width:30px;
 	outline:none;
+}
+td img{
+	height:20px;
+	width:20px;
+	outline:none;
+}
+#page{
+	text-align:center;
 }

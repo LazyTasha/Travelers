@@ -15,14 +15,14 @@
 		<p><input type="checkbox" id="checkAll">${str_select_all}</p>
 	
 			<div class="buttonarea">
-				<input class="inputbutton" type="submit" value="${btn_delete}">
+				<input class="inputbutton" type="submit" value="${btn_delete}" onclick="deleteList('${page}')">
 				<input class="inputbutton" type="button" value="${btn_modify}" onclick="goModTag()">
 				<input class="inputbutton" type="button" value="${btn_add}" onclick="goAddTag()">
 			</div>
 
 	</section>
 	<section>
-		<form id="tagForm">
+		<form name="tagForm" id="tagForm">
 			<table>
 				<tr>
 					<th class="check"><input type="checkbox" disabled="disabled" ></th>
@@ -33,7 +33,7 @@
 					<c:forEach var="tag" items="${tags}">
 						<tr>
 							<td class="check" align="center"><input type="checkbox" name="check1"></td>
-							<td name="tag_id">${tag.tag_id}</td>
+							<td name="key">${tag.tag_id}</td>
 							<td>${tag.tag_value}</td>
 						</tr>
 					</c:forEach>
@@ -41,6 +41,7 @@
 			</table>
 		</form>
 			<br>
+			<div id="page">
 				<c:if test="${count ne 0}">
 					<c:if test="${startPage gt pageBlock}">
 						<a href="adminTag.go">[◀◀] </a>
@@ -59,5 +60,6 @@
 						<a href ="adminTag.go?pageNum=${pageCount}">[▶▶]</a>
 					</c:if>	
 				</c:if>
+			</div>
 	</section>
 </article>

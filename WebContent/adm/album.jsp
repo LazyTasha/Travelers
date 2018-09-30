@@ -16,9 +16,9 @@
 	</section>
 	<section>
 		<form>
-			<c:forEach var="i" begin="1" end="6" step="1"> 
+			<c:forEach var="i" begin="1" end="20" step="1"> 
 				<div class="photoarea">
-					<input type="checkbox">
+					<input type="checkbox" name='check1'>
 					<span class="photo">
 						<img class="img" src="/Travelers/adm/images/image.JPG"/>
 					</span>

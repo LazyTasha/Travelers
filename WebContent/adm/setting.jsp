@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <script src="/Travelers/jquery-3.3.1.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <c:set var="project" value="/Travelers/adm/"/>
 
 <c:set var="str_logout" value="로그아웃"/>
@@ -53,7 +55,7 @@
 
 <c:set var="btn_delete" value="삭제"/>
 <c:set var="btn_modify" value="수정"/>
-<c:set var="btn_notice" value="공지"/>
+<c:set var="btn_notice" value=" 공  지 "/>
 <c:set var="btn_add" value="추가"/>
 <c:set var="btn_cancel" value="취소"/>
 <c:set var="btn_check" value="확인"/>

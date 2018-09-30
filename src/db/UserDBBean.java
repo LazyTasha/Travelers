@@ -15,7 +15,7 @@ import bean.SqlMapClient;
 
 public class UserDBBean {
 	private SqlSession session=SqlMapClient.getSession();
-	
+
 	public List<UserDataBean> getUsers(Map<String, Integer> map) {
 		return session.selectList("db.getUsers",map);
 	}
@@ -58,5 +58,8 @@ public class UserDBBean {
 	}
 	public int modifyMember( UserDataBean UserDto ) {
 		return session.update( "db.modifyMember", UserDto );
+	}
+	public int getUserLevel(String user_id) {
+		return session.selectOne("db.getUserLevel",user_id);
 	}
 }

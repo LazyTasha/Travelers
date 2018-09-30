@@ -84,7 +84,7 @@ public class AdmTagHandler {
 		TagDataBean tagDto=new TagDataBean();
 		ArrayList<TagDataBean> tags=new ArrayList<TagDataBean>();
 		try {
-			String num=request.getParameter("num");//여기서 parseInt못하는 중..
+			String num=request.getParameter("num");
 			if(num!=null) {
 				for(int i=0;i<Integer.parseInt(num);i++) {
 					int tag_id=Integer.parseInt(request.getParameter("id"+i+""));

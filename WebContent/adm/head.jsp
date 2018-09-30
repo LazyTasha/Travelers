@@ -10,6 +10,6 @@
 <header>
 	<h2>ADMIN PAGE</h2>
 	<div id="logout">
-		<h4><a href="">${str_logout}</a></h4>
+		<h4><a href="adminLogout.go">${str_logout}</a></h4>
 	</div>
 </header>
