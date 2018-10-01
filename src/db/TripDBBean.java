@@ -14,4 +14,16 @@ public class TripDBBean {
 	public void addViewCount(int tb_no) {
 		session.update("db.addViewCount", tb_no);
 	}
+	//delete trip board-게시물 삭제
+	public int deleteTrip(int tb_no) {
+		return session.delete("db.deleteTrip",tb_no);
+	}
+	//notice
+	public void notice(int tb_no) {
+		session.update("db.notice",tb_no);
+	}
+	//notice cancel
+	public void noticeX(int tb_no) {
+		session.update("db.noticeX",tb_no);
+	}
 }

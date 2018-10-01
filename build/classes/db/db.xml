@@ -41,7 +41,7 @@
 		</update>
 
 		<select id="getMember" parameterType="String" resultType="db.UserDataBean">
-				select * from gg_user where user_id=#{user_id}
+			select * from gg_user where user_id=#{user_id}
 		 </select>
 
 		 <select id="idcheck" parameterType="String" resultType="Integer">
@@ -50,6 +50,9 @@
 
 		<select id="namecheck" parameterType="String" resultType="Integer">
 		select count(*) from gg_user where user_name=#{user_name}
+		</select>
+		<select id="getUserLevel" parameterType="String" resultType="Integer">
+		select user_level from gg_user where user_id=#{user_id}
 		</select>
 		
 		<!-- tag DB-->
@@ -78,7 +81,10 @@
 		<select id="modifyTag" parameterType="db.TagDataBean">
 			update gg_tag set tag_value=#{tag_value} where tag_id=#{tag_id}
 		</select>
-		
+		<delete id="deleteTag" parameterType="String">
+			delete from gg_tag where tag_id=#{tag_id}
+		</delete>
+    
 		<!-- board DB-->
 		<select id="getCount" parameterType="int" resultType="int">
 			select count(*) from gg_trip_board
@@ -109,6 +115,39 @@
 				(#{item.tb_no}, #{item.locs})
 			</foreach>
 		</insert>
+   
+		<!--trip DB-->
+    <select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">
+			select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r 
+			from (
+				select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,rownum r from (
+					select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice from gg_trip_board order by tb_reg_date desc) 
+					order by tb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+		</select>
+		<delete id="deleteTrip" parameterType="int">
+			delete from gg_trip_board where tb_no=#{tb_no}
+		</delete>
+		<update id="notice" parameterType="int">
+			update gg_trip_board set tb_notice=1 where tb_no=#{tb_no}
+		</update>
+		<update id="noticeX" parameterType="int">
+			update gg_trip_board set tb_notice=0 where tb_no=#{tb_no}
+		</update>
+    
+		<!--cmt DB-->
+		<select id="getCmtCount" resultType="int">
+			select count(*) from gg_comment
+		</select>
+		<select id="getComments" parameterType="java.util.Map" resultType="db.CmtDataBean">
+			select c_id,tb_no,user_id,c_content,c_reg_date,r 
+			from (
+				select c_id,tb_no,user_id,c_content,c_reg_date,rownum r from (
+					select c_id,tb_no,user_id,c_content,c_reg_date from gg_comment order by c_reg_date desc) 
+					order by c_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+		</select>
+		<delete id="delComment" parameterType="int">
+			delete from gg_comment where c_id=#{c_id}
+		</delete>
 		<delete id="deleteTrip" parameterType="int">
 			delete from gg_trip_board where tb_no=#{tb_no}
 		</delete>
@@ -116,5 +155,4 @@
 		<select id="getLocs" parameterType="int" resultType="java.util.list">
 			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
 		</select>
-		
 	</mapper>

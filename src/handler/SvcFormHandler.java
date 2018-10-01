@@ -35,7 +35,7 @@ public class SvcFormHandler {
 	@Resource
 	private TbDBBean tbDao;
 	
-	@RequestMapping("/svc/loginForm")
+	@RequestMapping("/loginForm")
 	public ModelAndView svcLoginFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/loginForm");
 	}

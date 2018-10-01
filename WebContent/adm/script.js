@@ -1,30 +1,117 @@
 var taginserterror="겹치는 tag명이 존재합니다.";
 var valueerror="값을 입력하세요";
 var checkerror="추가할 값을 선택하세요";
+var notice_can="공지취소";
+var str_notice=" 공  지 ";
 var m="수정";
-var d="삭제"
+var d="삭제";
+var n="공지";
 var nocheckerror="할 값을 체크해주세요";
+var deleteerror=" 삭제에러입니다.";
+var deletesuccess="삭제를 성공했습니다."
 $(document).ready(
 	function(){
+		var check1=$('input[name=check1]');
+		var n=check1.length;
 		//전체 선택 체크시 모든 체크 박스 check
 		$('#checkAll').change(function(){
-			if($('#checkAll').is(":checked")){
-				$("input:checkbox").each(function() {
-					$(this).attr("checked", true);
-				});
-
+			if($('#checkAll').prop("checked")){
+				check1.prop("checked",true);
 			}else{
-				$("input:checkbox").each(function() {
-					$(this).attr("checked", false);
-				});
+				check1.prop("checked",false);
 			}
-		});	
+		});
+		
+		check1.click(function(){
+			if($(this).prop('checked')){
+			}else{
+				$('#checkAll').prop("checked",false);
+			}
+		});
+		
+		$('span[name=notice]').mouseover(
+				function(event){
+					$(this).html(notice_can);
+					
+					$(this).click(function(){
+						var tb_no=$(this).parent().parent().find('td[name=key]').text();
+						
+						$.ajax({
+							type:'POST',
+							url:'adminTrip.go',
+							data:{
+								yn:'no',
+								tb_no:tb_no
+							},
+							success:function(data){
+								location.reload();
+							},
+						
+						});
+						
+					});
+				}
+		).mouseout(
+				function(event){
+					$(this).html(str_notice);	
+				}
+		);
+		
+/*		setTimeout(
+				function(){
+					if(!$('input:checkbox').is(':checked')){
+						location.reload();
+					}
+				},2000
+			);
+*/	
 	}		
 );
 
 function erroralert(msg){
 	alert(msg);
 	history.back();
+}
+//first letter->capital첫글자 대문자로 변경
+function UpperFirstLetter(string){
+	return string.charAt(0).toUpperCase()+string.slice(1);
+}
+//delete
+function deleteList(page){
+	if($("input[name=check1]:checked").length==0){
+		alert(d+nocheckerror);
+	}else{
+		var form=document.getElementById(page+'Form');
+		
+		form.setAttribute("charset", "UTF-8");
+		form.setAttribute("method","Post");
+		form.setAttribute("action", "admin"+UpperFirstLetter(page)+"Del.go");
+		form.setAttribute("target","del");
+		
+		var input;
+		var checkbox=$("input[name=check1]:checked");
+		checkbox.each(function(i){//i=0 start
+			var tr = checkbox.parent().parent().eq(i);	
+			if(page=="comment"){
+				tag_id=tr.find('input[name=key]').val();
+			}else{
+				tag_id=tr.find('td[name=key]').text();//수정(태그 id로)
+			}
+			input=document.createElement('input');
+			input.type="hidden";
+			input.name="key"+i;
+			input.value=tag_id;
+			form.appendChild(input);
+		});
+		input=document.createElement('input');
+		input.type="hidden";
+		input.name="num";
+		input.value=checkbox.length;
+		form.appendChild(input);
+	
+		form.submit();
+		
+	}
 }
 
 //tag 추가
@@ -72,7 +159,7 @@ function goModTag(){
 		var checkbox=$("input[name=check1]:checked");
 		checkbox.each(function(i){
 			var tr = checkbox.parent().parent().eq(i);	
-			tag_id=tr.find('td[name=tag_id]').text();//수정(태그 id로)
+			tag_id=tr.find('td[name=key]').text();//수정(태그 id로)
 				//ids.push(tag_id);
 			input=document.createElement('input');
 			input.type="hidden";
@@ -89,8 +176,8 @@ function goModTag(){
 		window.open("adminTagMod.go","tag_mod","confirm window","scrollbar=yes,status=no,menubar=no,width=500,height=200");
 		form.submit();
 
-		document.createElement("input").setAttribute("id",tag_id);
-		form.submit();
+		//document.createElement("input").setAttribute("id",tag_id);
+		//form.submit();
 			
 	}
 }
@@ -118,7 +205,33 @@ function addRow(){
 		}
 	}	
 }
-
+//공지글로 올리기
+function notice(){
+	if($("input[name=check1]:checked").length==0){
+		alert(n+nocheckerror);
+	}else{
+		var checkbox=$("input[name=check1]:checked");
+		checkbox.each(function(i){//i=0 start
+			var tr = checkbox.parent().parent().eq(i);	
+			var tb_no=tr.find('td[name=key]').text();
+			
+			$.ajax({
+				type:'POST',
+				url:'adminTrip.go',
+				data:{
+					yn:'yes',
+					tb_no:tb_no
+				},
+				success:function(data){
+					location.reload();
+				},
+				error:function(e){
+					alert('fail');
+				}
+			});
+		});
+	}	
+}
 
 
 

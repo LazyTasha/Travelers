@@ -26,7 +26,8 @@ import db.UserDBBean;
 import db.UserDataBean;
 
 @Controller
-public class SvcProHandler {
+public class SvcProHandler {  
+	static private final int admin=9;
 	@Resource
 	private TripDBBean tripDao;
 	@Resource
@@ -134,15 +135,21 @@ public class SvcProHandler {
 		return new ModelAndView( "svc/modifyPro" );
 	}
 	
-	@RequestMapping( "/memberloginPro" )
+	@RequestMapping( "memberloginPro" )
 	public ModelAndView Loginprocess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
- 		String id = request.getParameter( "user_id" );
+ 		int userType=0;
+		String id = request.getParameter( "user_id" );
 		String passwd = request.getParameter( "passwd" );
 		
 		int result = userDao.check( id, passwd );
  		request.setAttribute( "result", result );
 		request.setAttribute( "id", id );
 		
+		int user_level=userDao.getUserLevel(id);
+		if(user_level==admin) {
+			userType=1;
+			request.setAttribute("userType", userType);
+		}
 		return new ModelAndView( "svc/loginPro" );
 	}
 	
@@ -178,4 +185,5 @@ public class SvcProHandler {
 	        
 	        return map;
 	    }
+
 }

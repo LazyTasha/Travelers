@@ -41,4 +41,8 @@ public class TagDBBean {
 	public int modifyTag(TagDataBean tagDao) {
 		return session.update("db.modifyTag",tagDao);
 	}
+	//delete tag
+	public int deleteTag(String tag_id) {
+		return session.delete("db.deleteTag",tag_id);
+	}
 }

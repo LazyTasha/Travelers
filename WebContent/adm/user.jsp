@@ -8,17 +8,17 @@
 <article>
 	<h3>|${str_member_m}</h3>
 	<section>
-		<br>
+		<br> 
 		<input id="on" class="listbutton" type="button" value="${str_member_v}">
 	</section>
 	<section>
 		<p><input type="checkbox" id="checkAll">${str_select_all}</p>
 		<div class="buttonarea">
-			<input class="inputbutton" type="button" value="${btn_delete}">
+			<input class="inputbutton" type="button" value="${btn_delete}" onclick="deleteList('${page}')"/>
 		</div>
 	</section>
 	<section>
-		<form id="user_table">
+		<form id="userForm">
 			<table>
 				<tr>
 					<th class="check"><input type="checkbox" disabled="disabled" ></th>
@@ -31,8 +31,8 @@
 				<c:if test="${count ne 0}">	
 					<c:forEach var="user" items="${users}">
 						<tr>
-							<td class="check" align="center"><input type="checkbox"></td>
-							<td>${user.user_id}</td>
+							<td class="check" align="center"><input type="checkbox" name="check1"></td>
+							<td name="key">${user.user_id}</td>
 							<td>${user.user_name}</td>
 							<td>${user.email}</td>
 							<td>${user.gender}</td>
@@ -41,7 +41,9 @@
 					</c:forEach>
 				</c:if>
 			</table>
+		</form>
 			<br>
+			<div id="page">
 				<c:if test="${count ne 0}">
 					<c:if test="${startPage gt pageBlock}">
 						<a href="adminUser.go">[◀◀] </a>
@@ -60,6 +62,6 @@
 						<a href ="adminUser.go?pageNum=${pageCount}">[▶▶]</a>
 					</c:if>	
 				</c:if>
-		</form>
+			</div>
 	</section>
 </article>

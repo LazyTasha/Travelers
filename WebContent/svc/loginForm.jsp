@@ -21,14 +21,14 @@
    
   </head>
   <body class="text-center">
-  	<form class="form-signin" method="post" action="${project}loginPro.go" name="loginform" onsubmit="" >
+  	<form class="form-signin" method="post" action="memberloginPro.go" name="loginform" onsubmit="" >
   	
   		<a href="${project}list.jsp">
-  			<img class="mb-4" src="img/logo.jpg" alt="logo" width="400" height="250">
+  			<img class="mb-4" src="${project}img/logo.jpg" alt="logo" width="400" height="250">
   		</a>
-     	<input type="text" id="inputId" class="form-control" 
+     	<input type="text" name="user_id" id="inputId" class="form-control" 
      		placeholder="${str_id}" required autofocus>
- 	 	<input type="password" id="inputPassword" class="form-control" 
+ 	 	<input type="password" name="passwd" id="inputPassword" class="form-control" 
  	 		placeholder="${str_passwd}" required>
   		<button class="btn btn-lg btn-secondary btn-block" type="submit">${btn_login}</button>
   		

@@ -7,6 +7,7 @@
 package db;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -78,6 +79,11 @@ public class TbDBBean {
 	public String getUserId(String user_name) {
 		return session.selectOne("db.getUserId", user_name);
 	}
+
+	//trip board list
+	public List<TbDataBean> getTrips(Map<String,Integer> map){
+		return session.selectList("db.getTrips",map);
+
 	public int deleteTrip(int tb_no) {
 		return session.selectOne("db.deleteTrip", tb_no);
 	}
