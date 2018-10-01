@@ -12,6 +12,7 @@ import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
+import db.TbDBBean;
 import db.TripDBBean;
 import db.UserDBBean;
 
@@ -29,15 +30,15 @@ public class SvcDelHandler {
 	private TagDBBean tagDao;
 	@Resource
 	private UserDBBean userDao;
+	@Resource
+	private TbDBBean tbDao;
 	
 	@RequestMapping("/svc/regDel")
 	public ModelAndView svcRegDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/regDel");
 	}
-	@RequestMapping("/svc/tripDel")
-	public ModelAndView svcTripDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/tripDel");
-	}
+	
+	//why Pro is here?
 	@RequestMapping( "/memberDeletePro" )
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
  		String id = (String) request.getSession().getAttribute( "memid" );
