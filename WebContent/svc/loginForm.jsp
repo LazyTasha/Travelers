@@ -17,9 +17,11 @@
 	
     <title>${page_login}</title>
 
+	
+
   </head>
+  <c:if test="${sessionScope.memid eq null}">	   
   
-  <c:if test="${sessionScope.memid eq null}">	
   <body class="text-center">
   	<form class="form-signin" method="post" action="userLoginPro.go" name="loginform" onsubmit="return logincheck()" >
   	
@@ -28,13 +30,37 @@
   		</a>
      	<input type="text" id="inputId" name="user_id" class="form-control" 
      		placeholder="${str_id}" required autofocus>
+ 	 	
  	 	<input type="password" id="inputPassword" name="passwd" class="form-control" 
  	 		placeholder="${str_passwd}" required>
+  		
   		<button class="btn btn-lg btn-secondary btn-block" type="submit">${btn_login}</button>
   		<a href="userInputForm.go"><u>${page_input}</u></a>
   		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
   		
   	</form>
+  
   </body>
-  </c:if>
+</c:if>
+
+ <c:if test="${sessionScope.memid ne null}">
+	<table>
+		<tr>
+			<td align="center">
+				<span>${sessionScope.memid}</span>${msg_main_login}
+			</td>
+		</tr>
+		<tr>
+			<th>
+				<input class="inputbutton" type="button" value="${btn_modify}"
+					onclick="location='membermodifyForm.go'">
+				<input class="inputbutton" type="button" value="${btn_delete}"
+					onclick="location='memberdeleteForm.go'">
+				<input class="inputbutton" type="button" value="${btn_logout}"
+					onclick="location='userLogout.go'">
+			</th>
+		</tr>		
+	</table>		
+</c:if>
 </html>
+   

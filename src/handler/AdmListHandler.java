@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
+import db.AlbumDataBean;
 import db.CmtDBBean;
 import db.CmtDataBean;
 import db.TagDBBean;
@@ -238,12 +239,17 @@ public class AdmListHandler {
 	@RequestMapping("adminAlbum")
 	public ModelAndView adminPhotoHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		request.setAttribute("page", albumP);
+		int count=albumDao.getCount();//list row num
+		if(count>0) {
+			List<AlbumDataBean> album=albumDao.getAlbum();
+			request.setAttribute("album", album);
+		}
 		return new ModelAndView("adm/album");
 	}
 	@RequestMapping("adminLogout")
 	public ModelAndView adminLogoutHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		request.getSession().removeAttribute( "memid" );
-		return new ModelAndView("redirect:loginForm.go");
+		return new ModelAndView("redirect:userLoginForm.go");
 	}
 	
 	

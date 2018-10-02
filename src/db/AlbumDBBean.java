@@ -1,22 +1,28 @@
-/*
- * !!! 주의사항 !!!
- * 전부 void, 인자 없음으로 메소드 이름만 정의해둔 상태.
- * 메소드마다 리턴 값, 인자 알아서 채워 넣을 것.
- */
-
 package db;
+
+import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import bean.SqlMapClient;
+
 public class AlbumDBBean {
-	SqlSession session;
+	SqlSession session=SqlMapClient.getSession();
 	
-	public void addPhoto() {
+	public int addPhoto(AlbumDataBean albumDto) {
+		return session.insert("db.addPhoto",albumDto);
 	}
-	public void delPhoto() {
+	public void delPhoto(int photo_id) {
+		session.delete("db.delPhoto",photo_id);
 	}
 	public void addPhotos() {
 	}
 	public void delPhotos() {
+	}
+	public List<AlbumDataBean> getAlbum(){
+		return session.selectList("db.getAlbum");
+	}
+	public int getCount() {
+		return session.selectOne("db.getPCount");
 	}
 }

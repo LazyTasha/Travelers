@@ -120,7 +120,18 @@ public class AdmDelHandler {
 	}
 	@RequestMapping("/adminAlbumDel")
 	public ModelAndView albumDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("adm/albumDel");
+		int num;
+
+		try {
+			num=Integer.parseInt(request.getParameter("num"));
+			for(int i=0;i<num;i++) {
+				String photo_id=request.getParameter("photo_id").trim();
+				albumDao.delPhoto(Integer.parseInt(photo_id));	
+			}
+		}catch(NumberFormatException e) {
+			e.printStackTrace();
+		}
+		return new ModelAndView("redirect:adminAlbum.go");
 	}
 
 }

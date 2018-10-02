@@ -2,17 +2,13 @@ package handler;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.TagDBBean;
@@ -81,7 +77,6 @@ public class AdmTagHandler {
 	public ModelAndView admTagModProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		int state=tagmod;
 		
-		TagDataBean tagDto=new TagDataBean();
 		ArrayList<TagDataBean> tags=new ArrayList<TagDataBean>();
 		try {
 			String num=request.getParameter("num");

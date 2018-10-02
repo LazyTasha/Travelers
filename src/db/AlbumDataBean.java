@@ -3,27 +3,27 @@ package db;
 import java.sql.Timestamp;
 
 public class AlbumDataBean {
-	private int id;
-	private String url;
-	private Timestamp reg_date;
+	private int photo_id;
+	private String photo_url;
+	private Timestamp alb_reg_date;
 	private int tb_no;
-	public int getId() {
-		return id;
+	public int getPhoto_id() {
+		return photo_id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setPhoto_id(int photo_id) {
+		this.photo_id = photo_id;
 	}
-	public String getUrl() {
-		return url;
+	public String getPhoto_url() {
+		return photo_url;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setPhoto_url(String photo_url) {
+		this.photo_url = photo_url;
 	}
-	public Timestamp getReg_date() {
-		return reg_date;
+	public Timestamp getAlb_reg_date() {
+		return alb_reg_date;
 	}
-	public void setReg_date(Timestamp reg_date) {
-		this.reg_date = reg_date;
+	public void setAlb_reg_date(Timestamp alb_reg_date) {
+		this.alb_reg_date = alb_reg_date;
 	}
 	public int getTb_no() {
 		return tb_no;
