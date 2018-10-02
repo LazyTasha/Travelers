@@ -38,7 +38,7 @@ public class AdmDelHandler {
 			num=Integer.parseInt(request.getParameter("num"));
 			for(int i=0;i<num;i++) {
 				String user_id=request.getParameter("key"+i+"").trim();
-				result=userDao.deleteMember(user_id);
+				result=userDao.deleteUser(user_id);
 				results.add(result);
 			}
 			if(results.contains(0)) {

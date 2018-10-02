@@ -7,7 +7,7 @@
 <h2> ${page_modify} </h2>
 
 <body onload="passwdfocus()">
-	<form name="passwdform" method="post" action="membermodifyView.go" onsubmit="return passwdcheck()">
+	<form name="passwdform" method="post" action="userModifyView.go" onsubmit="return passwdcheck()">
 		<table>
 			<tr>
 				<th colspan="2">
@@ -24,7 +24,7 @@
 				<th colspan="2">
 					<input class="inputbutton" type="submit" value="${btn_mod}">
 					<input class="inputbutton" type="button" value="${btn_mod_cancel}"
-						onclick="location='membermain.go'">
+						onclick="location='list.go'">
 				</th>
 			</tr>
 		</table>

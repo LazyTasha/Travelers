@@ -12,10 +12,10 @@
 		alert( modifyerror );
 		//-->
 	</script>
-	<meta http-equiv="refresh" content="0; url=membermain.go">
+	<meta http-equiv="refresh" content="0; url=list.go">
 </c:if>
 <c:if test="${result eq 1}">
-	<c:redirect url="membermain.go"/>	
+	<c:redirect url="list.go"/>	
 </c:if>
 
 

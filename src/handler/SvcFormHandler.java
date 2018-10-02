@@ -35,14 +35,6 @@ public class SvcFormHandler {
 	@Resource
 	private TbDBBean tbDao;
 	
-	@RequestMapping("/loginForm")
-	public ModelAndView svcLoginFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/loginForm");
-	}
-	@RequestMapping("/svc/regForm")
-	public ModelAndView svcRegFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/regForm");
-	}
 	@RequestMapping("/svc/tripWriteForm")
 	public ModelAndView svcTripWriteFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//need to know who is writing
@@ -66,19 +58,19 @@ public class SvcFormHandler {
 		request.setAttribute("tbDto", tbDto);
 		return new ModelAndView("svc/tripModForm");
 	}
-	@RequestMapping( "/memberinputForm" )
-	public ModelAndView UserInputProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView( "svc/inputForm" );
+	@RequestMapping("/userInputForm")
+	public ModelAndView svcRegFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/regForm");
 	}
-	@RequestMapping( "/membermodifyForm" ) 
+	@RequestMapping( "/userModifyForm" ) 
 	public ModelAndView ModifyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/modifyForm" );
 	}
-	@RequestMapping( "/memberloginForm" )
+	@RequestMapping( "/userLoginForm" )
 	public ModelAndView LoginProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/loginForm" );
 	}
-	@RequestMapping( "/memberdeleteForm" )
+	@RequestMapping( "/userDeleteForm" )
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/deleteForm" );
 	}

@@ -39,7 +39,7 @@ public class SvcDelHandler {
 	}
 	
 	//why Pro is here?
-	@RequestMapping( "/memberDeletePro" )
+	@RequestMapping( "/userDeletePro" )
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
  		String id = (String) request.getSession().getAttribute( "memid" );
 		String passwd = request.getParameter( "passwd" );
@@ -47,7 +47,7 @@ public class SvcDelHandler {
  		request.setAttribute( "resultCheck", resultCheck );
 		
 		if( resultCheck == 1 ) {
-			int result =userDao.deleteMember( id );
+			int result =userDao.deleteUser( id );
 			request.setAttribute( "result", result );
 		}
 		

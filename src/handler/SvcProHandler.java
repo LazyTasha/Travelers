@@ -70,7 +70,7 @@ public class SvcProHandler {
 		return new ModelAndView("svc/tripDel");
 	}
 		
-	@RequestMapping( "/memberinputPro" )
+	@RequestMapping( "/userInputPro" )
 	public ModelAndView UserInputProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		try {
 			request.setCharacterEncoding( "utf-8" );
@@ -82,7 +82,7 @@ public class SvcProHandler {
 		UserDto.setUser_id( request.getParameter( "user_id" ) );
 		UserDto.setPasswd( request.getParameter( "passwd" ) );
 		UserDto.setUser_name( request.getParameter( "user_name" ) );
-		
+		UserDto.setEmail(request.getParameter( "email1" ));
 		//user_level
 		
 		//gender
@@ -97,7 +97,7 @@ public class SvcProHandler {
 		UserDto.setGender( gender1 );
 		
 		// email
-		String email = null;
+		/*String email = null;
 		String email1 = request.getParameter( "email1" );
 		String email2 = request.getParameter( "email2" );
 		if( ! email1.equals( "" ) ) {
@@ -109,18 +109,18 @@ public class SvcProHandler {
 				email = email1 + "@" + email2; 
 			}
 		}
-		UserDto.setEmail( email );
+		UserDto.setEmail( email );*/
  		// reg_date 
 		UserDto.setReg_date( new Timestamp( System.currentTimeMillis() ) );
 		
-		int result = userDao.insertMember( UserDto );
+		int result = userDao.insertUser( UserDto );
 		
 		request.setAttribute( "result", result );
 		
-		return new ModelAndView( "svc/inputPro" );
+		return new ModelAndView( "svc/regPro" );
 	}
 	
-	@RequestMapping( "/membermodifyPro" )
+	@RequestMapping( "/userModifyPro" )
 	public ModelAndView UserModifyprocess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		
 		UserDataBean memberDto = new UserDataBean();
@@ -129,13 +129,13 @@ public class SvcProHandler {
 	
 		memberDto.setUser_id( (String) request.getSession().getAttribute( "memid" ) ); 
 	
-		int result = userDao.modifyMember( memberDto );
+		int result = userDao.modifyUser( memberDto );
  		request.setAttribute( "result", result );	
 		
 		return new ModelAndView( "svc/modifyPro" );
 	}
 	
-	@RequestMapping( "memberloginPro" )
+	@RequestMapping( "userLoginPro" )
 	public ModelAndView Loginprocess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
  		int userType=0;
 		String id = request.getParameter( "user_id" );
@@ -153,34 +153,34 @@ public class SvcProHandler {
 		return new ModelAndView( "svc/loginPro" );
 	}
 	
-	@RequestMapping( "/memberlogout" )	//logout �엫
+	@RequestMapping( "/userLogout" )	//logout �엫
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		request.getSession().removeAttribute( "memid" );		
 		return new ModelAndView( "svc/main" );
 	}	
 		
 	//以묐났�솗�씤
-	 @RequestMapping(value="/idcheck.go",produces = "application/json")
+	 @RequestMapping(value="/idCheck.go",produces = "application/json")
 	 @ResponseBody
-	 public Map<Object, Object> idcheck(@RequestBody String user_id) {
+	 public Map<Object, Object> idCheck(@RequestBody String user_id) {
 		 	user_id = user_id.split("=")[0];
 	        int count = 0;
 	        Map<Object, Object> map = new HashMap<Object, Object>();
 	 
-	        count = userDao.idcheck( user_id );
+	        count = userDao.idCheck( user_id );
 	        map.put("cnt", count);
 	        
 	        return map;
 	    }
 	 
-	 @RequestMapping(value="/namecheck.go",method = RequestMethod.POST,produces = "application/json")
+	 @RequestMapping(value="/nameCheck.go",method = RequestMethod.POST,produces = "application/json")
 	 @ResponseBody
-	 public Map<Object, Object> namecheck(@RequestBody String user_name) {
+	 public Map<Object, Object> nameCheck(@RequestBody String user_name) {
 		 	user_name = user_name.split("=")[0];
 	        int countt = 0;
 	        Map<Object, Object> map = new HashMap<Object, Object>();
 	 
-	        countt = userDao.namecheck( user_name );
+	        countt = userDao.nameCheck( user_name );
 	        map.put("cnt", countt);
 	        
 	        return map;

@@ -11,7 +11,7 @@
 
 <c:if test="${result eq 1}">
 	<body onload="modifyfocus()">
-		<form method="post" id="modifyform" action="membermodifyPro.go" name="modifyform" onsubmit="return modifycheck()">
+		<form method="post" id="modifyform" action="userModifyPro.go" name="modifyform" onsubmit="return modifycheck()">
 			<table>
 				<tr>
 					<th colspan="2">
@@ -75,7 +75,7 @@
 						<input class="inputbutton" type="submit" value="${btn_mod}">
 						<input class="inputbutton" type="reset" value="${btn_cancel}">
 						<input class="inputbutton" type="button" value="${btn_mod_cancel}"
-							onclick="location='membermain.go'">
+							onclick="location='list.go'">
 					</th>
 				</tr>				
 			</table>

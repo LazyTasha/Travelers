@@ -1,9 +1,4 @@
 /* 회원 관리 */
-var iderror = "아이디를 입력하세요";
-var passwderror = "비밀번호를 입력하세요";
-var repasswderror = "비밀번호가 다릅니다";
-var nameerror = "이름을 입력하세요";
-var juminerror = "주민등록번호를 입력하세요";
 var emailerror = "이메일 형식에 맞지 않습니다";
 var confirmerror = "아이디 중복확인 해 주세요";
 var gendererror = "성별을 선택해 주세요";
@@ -78,38 +73,6 @@ function logincheck() {
 	}
 }
 
-
-
-// 가입 페이지
-function inputfocus() {
-	inputform.user_id.focus();
-}
-
-	
-
-function nextemail1() {
-	if( inputform.tel3.value.length == 4 ) {
-		inputform.email1.focus();
-	}
-}
-
-
-// 메인 페이지
-function mainfocus() {
-	mainform.user_id.focus();	
-}
-function maincheck() {
-	if( ! mainform.user_id.value ) {
-		alert( iderror );
-		mainform.user_id.focus();
-		return false;
-	} else if( ! mainform.passwd.value ) {
-		alert( passwderror );
-		mainform.passwd.focus();
-		return false;
-	}	
-}
-
 //AJAX 또는 DOM
 
 function passwordCheckFunction(){
@@ -133,7 +96,7 @@ function passwordCheckFunction(){
 	            async: true,
 	            type : 'POST',
 	            data : user_id,
-	            url : "idcheck.go",
+	            url : "idCheck.go",
 	            dataType : "json",
 	           /* contentType : "application/json",*/
 	            success : function(data) {
@@ -175,7 +138,7 @@ function passwordCheckFunction(){
 	            async: true,
 	            type : 'POST',
 	            data : name_val,
-	            url : "idcheck.go",
+	            url : "nameCheck.go",
 	            dataType : "json",
 	            /*contentType : "application/json",*/
 	            success : function(data) {
@@ -219,7 +182,7 @@ function passwordCheckFunction(){
                      $("#inputform").button();
                      }
                  }
-	        	if( ! inputform.user_id.value ) {
+	        	/*if( ! inputform.user_id.value ) {
 	        		alert( iderror );
 	        		inputform.user_id.focus();
 	        		return false;
@@ -247,18 +210,17 @@ function passwordCheckFunction(){
 	        		alert( emailerror );
 	        		inputform.email1.focus();
 	        		return false;
-	        	}
+	        	}*/
 	        	// 	1. null 인 경우			이동 가능
 	        	// 	2. 직접입력일 경우		email1 란에 @가 없으면 경고
 	        	// 	3. 선택입력일 경우		email1 란에 @가 있으면 경고
 	        	//	단 전화번호가 있건 없건 모두 가능해야 한다.
 	        	
-	        	if( inputform.email2.value == "0" ) {
+	        	
 	        		if( inputform.email1.value.indexOf( "@" ) == -1 ) {
 	        			alert( emailerror );
 	        			return false;
-	        		}	
-	        	} else {
+	        		}else {
 	        		if( inputform.email1.value.indexOf( "@" ) != -1 ) {
 	        				alert( emailerror );
 	        				return false;
