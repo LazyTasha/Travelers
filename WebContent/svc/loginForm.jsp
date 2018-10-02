@@ -19,7 +19,7 @@
 
   </head>
   
-  <c:if test="${sessionScope.memid eq null}">	   
+  <c:if test="${sessionScope.memid eq null}">	
   <body class="text-center">
   	<form class="form-signin" method="post" action="userLoginPro.go" name="loginform" onsubmit="return logincheck()" >
   	

@@ -5,7 +5,6 @@
 	<mapper namespace="db">
 		<!-- for Admin SQL, don't touch, Maknae! -->
 		
-	
 		<!-- user DB -->
 		<select id="getUsers" parameterType="java.util.Map" resultType="db.UserDataBean">
 			select user_id,user_name,email,gender,reg_date,r 
@@ -148,6 +147,7 @@
 		<delete id="delComment" parameterType="int">
 			delete from gg_comment where c_id=#{c_id}
 		</delete>
+		
 		<!-- location -->
 		<select id="getLocs" parameterType="int" resultType="java.util.List">
 			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
