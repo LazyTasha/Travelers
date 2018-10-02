@@ -22,23 +22,23 @@ public class UserDBBean {
 	public int getCount() {
 		return session.selectOne("db.getUCount");
 	}
-	public int insertMember( UserDataBean UserDto ) {
-		return session.insert("db.insertMember", UserDto);
+	public int insertUser( UserDataBean UserDto ) {
+		return session.insert("db.insertUser", UserDto);
 	}
 	public int check( String user_id ) {
 		return session.selectOne( "db.checkId", user_id);
 	}
-	public int namecheck( String user_name ) {
-		return session.selectOne( "db.namecheck", user_name);
+	public int nameCheck( String user_name ) {
+		return session.selectOne( "db.nameCheck", user_name);
 	}
-	public int idcheck( String user_id ) {
-		return session.selectOne( "db.idcheck", user_id);
+	public int idCheck( String user_id ) {
+		return session.selectOne( "db.idCheck", user_id);
 	}
 	public int check( String user_id, String passwd ) {
 		int result = 0;		
 		if( check( user_id ) > 0 ) {
 			// 아이디가 있다
-			UserDataBean UserDto = getMember( user_id );
+			UserDataBean UserDto = getUser( user_id );
 			if( passwd.equals( UserDto.getPasswd() ) ) {
 				result = 1;
 			} else {
@@ -50,14 +50,14 @@ public class UserDBBean {
 		}
 		return result;
 	}
-	public int deleteMember( String user_id ) {
-		return session.delete("db.deleteMember", user_id);
+	public int deleteUser( String user_id ) {
+		return session.delete("db.deleteUser", user_id);
 	}
-	public UserDataBean getMember( String user_id ) {
-		return session.selectOne( "db.getMember", user_id );
+	public UserDataBean getUser( String user_id ) {
+		return session.selectOne( "db.getUser", user_id );
 	}
-	public int modifyMember( UserDataBean UserDto ) {
-		return session.update( "db.modifyMember", UserDto );
+	public int modifyUser( UserDataBean UserDto ) {
+		return session.update( "db.modifyUser", UserDto );
 	}
 	public int getUserLevel(String user_id) {
 		return session.selectOne("db.getUserLevel",user_id);
