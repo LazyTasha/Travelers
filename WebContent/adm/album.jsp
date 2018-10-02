@@ -11,19 +11,22 @@
 	<section>
 		<p><input type="checkbox" id="checkAll">${str_select_all}</p>
 		<div class="buttonarea">
-			<input class="inputbutton" type="button" value="${btn_delete}">
+			<input class="inputbutton" type="button" value="${btn_delete}" onclick="deletePhoto()">
 		</div>
 	</section>
 	<section>
-		<form>
-			<c:forEach var="i" begin="1" end="20" step="1"> 
-				<div class="photoarea">
-					<input type="checkbox" name='check1'>
-					<span class="photo">
-						<img class="img" src="/Travelers/adm/images/image.JPG"/>
-					</span>
-				</div>
-			</c:forEach>
+		<form id="albumForm">
+			<c:if test="${count ne 0}">	
+				<c:forEach var="photo" items="${album}"> 
+					<div class="photoarea">
+						<input type="checkbox" name='check1'>
+						<input type="hidden" value="${photo.photo_id}" name="key">
+						<span class="photo">
+							<img class="img" src="${photo.photo_url}"/>
+						</span>
+					</div>
+				</c:forEach>
+			</c:if>
 		</form>
 	</section>
 </article>

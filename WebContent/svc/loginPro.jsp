@@ -26,8 +26,9 @@
 	<c:if test="${userType eq 1}">
 		<c:redirect url="adminTrip.go"/>	
 	</c:if>
-	<c:redirect url="list.go"/>	
+	<c:redirect url="userLoginForm.go"/>	
 </c:if>
+
 
 
 

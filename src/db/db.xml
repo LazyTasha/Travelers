@@ -23,7 +23,7 @@
 		<select id="getUserId" parameterType="String" resultType="String">
 			select user_id from gg_user where user_name=#{user_name}
 		</select>
-		<insert id="insertMember" parameterType="db.UserDataBean">
+		<insert id="insertUser" parameterType="db.UserDataBean">
 		insert into gg_user values(#{user_id}, #{passwd}, #{user_name},#{gender},#{email, jdbcType=VARCHAR}, #{reg_date})
 		</insert>
 
@@ -31,15 +31,15 @@
 			select count(*) from gg_user where user_id=#{user_id}
 		</select>
 
-		<delete id="deleteMember" parameterType="String">
+		<delete id="deleteUser" parameterType="String">
 			delete from gg_user where user_id=#{user_id}
 		</delete>
 
-		<update id="modifyMember" parameterType="db.UserDataBean">
+		<update id="modifyUser" parameterType="db.UserDataBean">
 			update gg_user set passwd=#{passwd}, user_name=#{user_name} where user_id=#{user_id}
 		</update>
 
-		<select id="getMember" parameterType="String" resultType="db.UserDataBean">
+		<select id="getUser" parameterType="String" resultType="db.UserDataBean">
 			select * from gg_user where user_id=#{user_id}
 		 </select>
 
@@ -116,12 +116,12 @@
 		</insert>
     
 		<!--trip DB-->
-    <select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">
+    	<select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">
 			select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r 
 			from (
 				select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,rownum r from (
-					select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice from gg_trip_board order by tb_reg_date desc) 
-					order by tb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+					select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice from gg_trip_board order by tb_reg_date desc,tb_notice desc) 
+					order by tb_reg_date desc,tb_notice desc)where r &gt;= #{start} and r &lt;=#{end}
 		</select>
 		<delete id="deleteTrip" parameterType="int">
 			delete from gg_trip_board where tb_no=#{tb_no}
@@ -152,4 +152,18 @@
 		<select id="getLocs" parameterType="int" resultType="java.util.List">
 			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
 		</select>
+		
+		<!--album DB -->
+		<insert id="addPhoto" parameterType="db.AlbumDataBean">
+			insert into gg_album values(SEQ_gg_album_photo_id.nextval,#{photo_url},sysdate,#{tb_no})
+		</insert>
+		<select id="getAlbum" resultType="db.AlbumDataBean">
+			select * from gg_album order by alb_reg_date desc	
+		</select>
+		<select id="getPCount" resultType="int">
+			select count(*) from gg_album
+		</select>
+		<delete id="delPhoto" parameterType="int">
+			delete from gg_album where photo_id=#{photo_id}
+		</delete>
 	</mapper>

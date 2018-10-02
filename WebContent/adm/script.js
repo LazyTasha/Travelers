@@ -6,6 +6,7 @@ var str_notice=" 공  지 ";
 var m="수정";
 var d="삭제";
 var n="공지";
+var p="사진";
 var nocheckerror="할 값을 체크해주세요";
 var deleteerror=" 삭제에러입니다.";
 var deletesuccess="삭제를 성공했습니다."
@@ -230,9 +231,33 @@ function notice(){
 				}
 			});
 		});
-	}	
+	}
 }
+//delete photo
+function deletePhoto(){
+	if($("input[name=check1]:checked").length==0){
+		alert(p+nocheckerror);
+	}else{
+		var checkbox=$("input[name=check1]:checked");
+		var num=checkbox.length;
+		checkbox.each(function(i){//i=0 start
+			var div = checkbox.parent().eq(i);	
+			photo_id=div.find('input[name=key]').val();
 
+			$.ajax({
+				type:'POST',
+				url:'adminAlbumDel.go',
+				data:{
+					photo_id:photo_id,
+					num:num
+				},
+				success:function(data){
+					location.reload();
+				}
+			});
+		});
+	}
+}
 
 
 

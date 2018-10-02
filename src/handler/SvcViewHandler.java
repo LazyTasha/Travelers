@@ -69,8 +69,11 @@ public class SvcViewHandler {
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/list");
 	}
-	@RequestMapping("/svc/album")
+	@RequestMapping("/album")
 	public ModelAndView svcAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		String tb_no=request.getParameter("tb_no");
+		tb_no="1";
+		request.setAttribute("tb_no", tb_no);
 		return new ModelAndView("svc/album");
 	}
 	@RequestMapping("/svc/reg")
@@ -85,7 +88,7 @@ public class SvcViewHandler {
 	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/myTrip");
 	}
-	@RequestMapping("trip")
+	@RequestMapping("/trip")
 	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
