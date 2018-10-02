@@ -35,12 +35,12 @@ public class SvcViewHandler {
 	@Resource
 	private TbDBBean tbDao;
 	
-	@RequestMapping( "/membermain" )
+	@RequestMapping( "/userMain" )
 	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/main" );
 	}
 	
-	@RequestMapping( "/membermodifyView" )
+	@RequestMapping( "/userModifyView" )
 	public ModelAndView MemberProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		
 		String id = (String) request.getSession().getAttribute( "memid" );
@@ -51,7 +51,7 @@ public class SvcViewHandler {
 		request.setAttribute( "result", result );
 		
 		if( result == 1 ) {
-			UserDataBean UserDto = userDao.getMember( id );
+			UserDataBean UserDto = userDao.getUser( id );
 			request.setAttribute( "UserDto", UserDto );
 		}
 		
