@@ -17,14 +17,12 @@
 	
     <title>${page_login}</title>
 
-	
-   
   </head>
   <body class="text-center">
   	<form class="form-signin" method="post" action="${project}loginPro.go" name="loginform" onsubmit="" >
   	
   		<a href="${project}list.jsp">
-  			<img class="mb-4" src="img/logo.jpg" alt="logo" width="400" height="250">
+  			<img class="mb-4" src="${project}img/logo.jpg" alt="logo" width="400" height="250">
   		</a>
      	<input type="text" id="inputId" class="form-control" 
      		placeholder="${str_id}" required autofocus>
