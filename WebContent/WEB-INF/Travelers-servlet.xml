@@ -40,5 +40,8 @@
          </bean>
       </mvc:message-converters>
    </mvc:annotation-driven>
-	
+   
+   <!-- MultipartResolver 설정 -->
+   <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+   </bean>
 </beans>
