@@ -133,6 +133,7 @@
 		<update id="noticeX" parameterType="int">
 			update gg_trip_board set tb_notice=0 where tb_no=#{tb_no}
 		</update>
+		
 		<!--cmt DB-->
 		<select id="getCmtCount" resultType="int">
 			select count(*) from gg_comment
@@ -146,9 +147,6 @@
 		</select>
 		<delete id="delComment" parameterType="int">
 			delete from gg_comment where c_id=#{c_id}
-		</delete>
-		<delete id="deleteTrip" parameterType="int">
-			delete from gg_trip_board where tb_no=#{tb_no}
 		</delete>
 		<!-- location -->
 		<select id="getLocs" parameterType="int" resultType="java.util.list">

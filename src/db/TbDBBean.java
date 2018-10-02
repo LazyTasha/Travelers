@@ -83,6 +83,7 @@ public class TbDBBean {
 	//trip board list
 	public List<TbDataBean> getTrips(Map<String,Integer> map){
 		return session.selectList("db.getTrips",map);
+	}
 
 	public int deleteTrip(int tb_no) {
 		return session.selectOne("db.deleteTrip", tb_no);

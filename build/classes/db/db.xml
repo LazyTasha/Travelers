@@ -84,7 +84,7 @@
 		<delete id="deleteTag" parameterType="String">
 			delete from gg_tag where tag_id=#{tag_id}
 		</delete>
-    
+		
 		<!-- board DB-->
 		<select id="getCount" parameterType="int" resultType="int">
 			select count(*) from gg_trip_board
@@ -115,7 +115,7 @@
 				(#{item.tb_no}, #{item.locs})
 			</foreach>
 		</insert>
-   
+    
 		<!--trip DB-->
     <select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">
 			select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r 
@@ -133,7 +133,7 @@
 		<update id="noticeX" parameterType="int">
 			update gg_trip_board set tb_notice=0 where tb_no=#{tb_no}
 		</update>
-    
+		
 		<!--cmt DB-->
 		<select id="getCmtCount" resultType="int">
 			select count(*) from gg_comment
@@ -147,9 +147,6 @@
 		</select>
 		<delete id="delComment" parameterType="int">
 			delete from gg_comment where c_id=#{c_id}
-		</delete>
-		<delete id="deleteTrip" parameterType="int">
-			delete from gg_trip_board where tb_no=#{tb_no}
 		</delete>
 		<!-- location -->
 		<select id="getLocs" parameterType="int" resultType="java.util.list">
