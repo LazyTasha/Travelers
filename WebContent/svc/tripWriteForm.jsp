@@ -39,7 +39,10 @@
 		</tr>
 		<tr>
 			<td colspan="2">
-				<input type="submit" value="${trip_write}">
+				<input class="inputbutton" type="submit" value="${trip_write}">
+				<input class="inputbutton" type="reset" value="${btn_cancel}">
+				<input class="inputbutton" type="button" value="${btn_list}"
+						onclick="location='list.go'">
 			</td>
 		</tr>
 	</table>

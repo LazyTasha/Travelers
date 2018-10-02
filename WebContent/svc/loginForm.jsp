@@ -31,7 +31,7 @@
  	 	<input type="password" id="inputPassword" class="form-control" 
  	 		placeholder="${str_passwd}" required>
   		<button class="btn btn-lg btn-secondary btn-block" type="submit">${btn_login}</button>
-  		
+  		<a href="regForm.go"><u>${page_input}</u></a>
   		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
   		
   	</form>
