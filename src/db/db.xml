@@ -120,8 +120,8 @@
 			select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r 
 			from (
 				select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,rownum r from (
-					select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice from gg_trip_board order by tb_reg_date desc,tb_notice desc) 
-					order by tb_reg_date desc,tb_notice desc)where r &gt;= #{start} and r &lt;=#{end}
+					select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice from gg_trip_board order by tb_notice desc,tb_reg_date desc) 
+					order by tb_notice desc,tb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
 		</select>
 		<delete id="deleteTrip" parameterType="int">
 			delete from gg_trip_board where tb_no=#{tb_no}
@@ -160,8 +160,14 @@
 		<select id="getAlbum" resultType="db.AlbumDataBean">
 			select * from gg_album order by alb_reg_date desc	
 		</select>
+		<select id="getBoardAlbum" parameterType="int"  resultType="db.AlbumDataBean">
+			select * from gg_album where tb_no=#{tb_no} order by alb_reg_date desc	
+		</select>
 		<select id="getPCount" resultType="int">
 			select count(*) from gg_album
+		</select>
+		<select id="getBoardPCount" parameterType="int" resultType="int">
+			select count(*) from gg_album where tb_no=#{tb_no}
 		</select>
 		<delete id="delPhoto" parameterType="int">
 			delete from gg_album where photo_id=#{photo_id}

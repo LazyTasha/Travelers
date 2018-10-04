@@ -1,5 +1,7 @@
 package handler;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
+import db.AlbumDataBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
@@ -71,9 +74,16 @@ public class SvcViewHandler {
 	}
 	@RequestMapping("/album")
 	public ModelAndView svcAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		String tb_no=request.getParameter("tb_no");
-		tb_no="1";
+		//int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		int tb_no=1;
 		request.setAttribute("tb_no", tb_no);
+		String user_id=(String) request.getSession().getAttribute( "memid" );
+		int count=albumDao.getBoardCount(tb_no);
+		request.setAttribute("count", count);
+		if(count>0) {
+			List<AlbumDataBean>album=albumDao.getBoardAlbum(tb_no);
+			request.setAttribute("album", album);
+		}
 		return new ModelAndView("svc/album");
 	}
 	@RequestMapping("/svc/reg")

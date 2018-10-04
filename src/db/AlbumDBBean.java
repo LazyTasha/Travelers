@@ -22,7 +22,13 @@ public class AlbumDBBean {
 	public List<AlbumDataBean> getAlbum(){
 		return session.selectList("db.getAlbum");
 	}
+	public List<AlbumDataBean> getBoardAlbum(int tb_no){
+		return session.selectList("db.getBoardAlbum",tb_no);
+	}
 	public int getCount() {
 		return session.selectOne("db.getPCount");
+	}
+	public int getBoardCount(int tb_no) {
+		return session.selectOne("db.getBoardPCount",tb_no);
 	}
 }
