@@ -138,7 +138,7 @@
 		</update>
 		<select id="getTripList" resultType="db.TripDataBean">
 			<![CDATA[
-			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual)
+			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual) order by tb_no desc
 			]]>
 		</select>
 		
@@ -162,10 +162,11 @@
 			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
 		</select>
 		<select id="getTripLoc" parameterType="int" resultType="java.util.List">
-			select c.country_name from gg_country where c.country_id=
-			(select cd.country_id from gg_coordinate where cd.coord_id=(select cl.coord_id from gg_calendar where cl.td_trip_id=
-			(select td.td_trip_id from gg_trip_detail where td.tb_no=#{tb_no})))
-			and c.country_name=			
+			select c.country_name from gg_country c where c.country_id=
+			(select cd.country_id from gg_coordinate cd where cd.coord_id=
+			(select cl.coord_id from gg_calendar cl where cl.td_trip_id=
+			(select td.td_trip_id from gg_trip_detail td where td.tb_no=#{tb_no})))
+			and c.country_name=	
 			(select t.tag_value from gg_tag t where t.tag_id=
 			(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
 		</select>
