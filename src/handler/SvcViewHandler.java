@@ -1,5 +1,7 @@
 package handler;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +17,7 @@ import db.TagDBBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
+import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
 
@@ -57,16 +60,20 @@ public class SvcViewHandler {
 		
 		return new ModelAndView( "svc/modifyView" );
 	}
-	@RequestMapping("/svc/*")
+	@RequestMapping("/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/default");
 	}
-	@RequestMapping("/svc/main")
+	@RequestMapping("/main")
 	public ModelAndView svcMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/main");
 	}
-	@RequestMapping("/svc/list")
+	@RequestMapping("/list")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		List<TripDataBean> tripList=tbDao.getTripList();
+		int count=tbDao.getCount();
+		request.setAttribute("tripList", tripList);
+		request.setAttribute("count", count);
 		return new ModelAndView("svc/list");
 	}
 	@RequestMapping("/album")
@@ -76,15 +83,15 @@ public class SvcViewHandler {
 		request.setAttribute("tb_no", tb_no);
 		return new ModelAndView("svc/album");
 	}
-	@RequestMapping("/svc/reg")
+	@RequestMapping("/reg")
 	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/reg");
 	}
-	@RequestMapping("/svc/myPage")
+	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/myPage");
 	}
-	@RequestMapping("/svc/myTrip")
+	@RequestMapping("/myTrip")
 	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/myTrip");
 	}
