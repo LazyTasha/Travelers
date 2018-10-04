@@ -70,8 +70,10 @@ public class SvcViewHandler {
 	}
 	@RequestMapping("/list")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TripDataBean> tripList=tbDao.getTripList();
 		int count=tbDao.getCount();
+		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
 		request.setAttribute("count", count);
 		return new ModelAndView("svc/list");
@@ -89,6 +91,8 @@ public class SvcViewHandler {
 	}
 	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
+		request.setAttribute("userDto", userDto);
 		return new ModelAndView("svc/myPage");
 	}
 	@RequestMapping("/myTrip")

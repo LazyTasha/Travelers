@@ -128,10 +128,8 @@ h1, h2, h3, h4, h5, h6 {
       </nav> 
 <!-- Category & Contents Box -->    
 	<div class="body-box">
-	  	<aside>
-	  		Category
-	  	</aside>
 	  	<div class="board-list">
+	  		<button type="button" class="btn btn-dark col-md-12" onclick="location='tripWriteForm.go'">Write new Trip!!!</button>
 	     	<c:if test="${count ne 0}">
 	    		<c:forEach var="i" items="${tripList}">
 		    		<div class="row">
@@ -146,11 +144,9 @@ h1, h2, h3, h4, h5, h6 {
 				             	      <hr size="1px" color="black" noshade>
 				              		  <p class="card-text mb-auto">${i.content}</p>
 				              		  <div class="justify-content-around">
-				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>
-				           			  	<div class="p-2">인원:${i.tb_m_num}</div>
-				           			  	<div class="p-2">조회수:${i.tb_v_count}</div>
+				           			  	<div class="p-2">일정:2019.02.11~2019.02.21&nbsp;인원:${i.tb_m_num}&nbsp;조회수:${i.tb_v_count}</div>
 				           			  </div>
-				           			  <a href="#">Continue reading</a>
+				           			  <a href="trip.go/?tb_no=${i.tb_no}">Continue reading</a>
 			           			  </div>
 			          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
 		         			 </div>

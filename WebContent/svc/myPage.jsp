@@ -73,6 +73,7 @@
 				<div class="col-sm-2"></div>
 				<div class="col-sm-8">
 					<button type="button" class="btn btn-lg btn-secondary btn-block">${btn_modify}</button>
+					<button type="button" class="btn btn-lg btn-secondary btn-block" onclick="location='userLogout.go'">${btn_logout}</button>
 				</div>
 			</div>
 		</form>
