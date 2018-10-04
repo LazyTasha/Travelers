@@ -85,18 +85,12 @@ public class SvcProHandler {
 		UserDto.setPasswd( request.getParameter( "passwd" ) );
 		UserDto.setUser_name( request.getParameter( "user_name" ) );
 		UserDto.setEmail(request.getParameter( "email1" ));
-		//user_level
+		
+		
 		
 		//gender
-		int gender1 = 0;
-		int gender = Integer.parseInt(request.getParameter("gender"));
-		
-		if( gender == 1) {
-			gender1 = 1;
-		}else {
-			gender1 = 2;
-		}
-		UserDto.setGender( gender1 );
+		int gender =  Integer.parseInt(request.getParameter("gender"));
+		UserDto.setGender( gender );
 		
 		// email
 		/*String email = null;
@@ -165,7 +159,7 @@ public class SvcProHandler {
 	}	
 		
 	//以묐났�솗�씤
-	 @RequestMapping(value="/idCheck.go", method = RequestMethod.POST, produces = "application/json")
+	 @RequestMapping(value="/idCheck.go", method = RequestMethod.POST,  produces = "application/json")
 	 @ResponseBody
 	 public Map<Object, Object> idCheck(@RequestBody String user_id) {
 		 	user_id = user_id.split("=")[0];
