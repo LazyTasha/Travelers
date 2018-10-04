@@ -142,7 +142,7 @@ h1, h2, h3, h4, h5, h6 {
 					              </h3>
 			              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
 				             	      <hr size="1px" color="black" noshade>
-				              		  <p class="card-text mb-auto">${i.content}</p>
+				              		  <p class="card-text mb-auto">${i.tb_content}</p>
 				              		  <div class="justify-content-around">
 				           			  	<div class="p-2">일정:2019.02.11~2019.02.21&nbsp;인원:${i.tb_m_num}&nbsp;조회수:${i.tb_v_count}</div>
 				           			  </div>
