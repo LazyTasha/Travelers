@@ -85,8 +85,8 @@ public class TbDBBean {
 		List<TripDataBean> originList=session.selectList("db.getTripList");
 		List<TbDataBean> tripList=new ArrayList<TbDataBean>();
 		
-		for(int i=originList.size(); i>=0; i--) {
-			TripDataBean tripDto=originList.get(i);
+		for(int i=originList.size(); i>0; i--) {
+			TripDataBean tripDto=originList.get(i-1);
 			TbDataBean tbDto=new TbDataBean();
 			tbDto.setTb_no(tripDto.getTb_no());
 			//set Nickname instead of id
