@@ -146,7 +146,7 @@ public class SvcProHandler {
 	@RequestMapping( "/userLogout" )	//logout �엫
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		request.getSession().removeAttribute( "memid" );	
-		return new ModelAndView( "svc/userLoginForm" );
+		return new ModelAndView( "svc/loginForm" );
 	}	
 		
 	//以묐났�솗�씤
