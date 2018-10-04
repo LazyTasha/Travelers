@@ -45,4 +45,7 @@ public class TagDBBean {
 	public int deleteTag(String tag_id) {
 		return session.delete("db.deleteTag",tag_id);
 	}
+	public List<String> getUserTags(String user_id) {
+		return session.selectList("db.getUserTags", user_id);
+	}
 }

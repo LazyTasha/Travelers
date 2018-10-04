@@ -49,22 +49,22 @@ public class SvcProHandler {
 	@Resource
 	private TbDBBean tbDao;
 	
-	@RequestMapping("/svc/regPro")
+	@RequestMapping("/regPro")
 	public ModelAndView svcRegProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/regPro");
 	}
-	@RequestMapping("/svc/tripWritePro")
+	@RequestMapping("/tripWritePro")
 	public ModelAndView svcTripWriteProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripWritePro");
 	}
-	@RequestMapping("/svc/tripModPro")
+	@RequestMapping("/tripModPro")
 	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripModPro");
 	}
 	
 	//if fail to delete, we should show user an alert
 	//so we need this result parameter
-	@RequestMapping("/svc/tripDelPro")
+	@RequestMapping("/tripDelPro")
 	public ModelAndView svcTripDelProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		int result=tbDao.deleteTrip(tb_no);
@@ -86,26 +86,10 @@ public class SvcProHandler {
 		UserDto.setUser_name( request.getParameter( "user_name" ) );
 		UserDto.setEmail(request.getParameter( "email1" ));
 		
-		
-		
 		//gender
 		int gender =  Integer.parseInt(request.getParameter("gender"));
 		UserDto.setGender( gender );
 		
-		// email
-		/*String email = null;
-		String email1 = request.getParameter( "email1" );
-		String email2 = request.getParameter( "email2" );
-		if( ! email1.equals( "" ) ) {
-			if( email2.equals( "0" ) ) {
-				// 吏곸젒�엯�젰
-				email = email1;
-			} else {
-				// �꽑�깮�엯�젰
-				email = email1 + "@" + email2; 
-			}
-		}
-		UserDto.setEmail( email );*/
  		// reg_date 
 		UserDto.setReg_date( new Timestamp( System.currentTimeMillis() ) );
 		
@@ -156,8 +140,8 @@ public class SvcProHandler {
 	
 	@RequestMapping( "/userLogout" )	//logout �엫
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		request.getSession().removeAttribute( "memid" );		
-		return new ModelAndView( "svc/main" );
+		request.getSession().removeAttribute( "memid" );	
+		return new ModelAndView( "svc/userLoginForm" );
 	}	
 		
 	//以묐났�솗�씤
