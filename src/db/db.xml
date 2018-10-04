@@ -16,7 +16,7 @@
 		<select id="getUCount" resultType="int">
 			select count(*) from gg_user
 		</select>
-		<select id="getUserName" parameterType="String">
+		<select id="getUserName" parameterType="String" resultType="String">
 			select user_name from gg_user where user_id=#{id}
 		</select>
 		
