@@ -114,6 +114,10 @@
 				(#{item.tb_no}, #{item.locs})
 			</foreach>
 		</insert>
+		<select id="isMember" parameterType="db.TbDataBean" resultType="int">
+			select count(*) from gg_member where user_id=#{user_id} and td_trip_id in(
+ 				select td_trip_id from gg_trip_detail where tb_no=#{tb_no})
+		</select>
     
 		<!--trip DB-->
     	<select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">

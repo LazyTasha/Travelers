@@ -77,12 +77,23 @@ public class SvcViewHandler {
 		//int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		int tb_no=1;
 		request.setAttribute("tb_no", tb_no);
+		
 		String user_id=(String) request.getSession().getAttribute( "memid" );
+		if(user_id==null)user_id="";
+		
 		int count=albumDao.getBoardCount(tb_no);
 		request.setAttribute("count", count);
 		if(count>0) {
+			//select board album
 			List<AlbumDataBean>album=albumDao.getBoardAlbum(tb_no);
 			request.setAttribute("album", album);
+			
+			//check user whether user is member or not
+			TbDataBean tbDto=new TbDataBean();
+			tbDto.setUser_id(user_id);
+			tbDto.setTb_no(tb_no);
+			boolean isMember=tbDao.isMember(tbDto);
+			request.setAttribute("isMember", isMember);
 		}
 		return new ModelAndView("svc/album");
 	}

@@ -150,7 +150,6 @@ public class SvcProHandler {
 		String passwd = request.getParameter( "passwd" );
 		
 		int result = userDao.check( id, passwd );
-		System.out.println(result);
  		request.setAttribute( "result", result );
 		request.setAttribute( "id", id );
 		

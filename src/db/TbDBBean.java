@@ -88,4 +88,10 @@ public class TbDBBean {
 	public int deleteTrip(int tb_no) {
 		return session.selectOne("db.deleteTrip", tb_no);
 	}
+	//member check
+	public boolean isMember(TbDataBean tbDto) {
+		int count=session.selectOne("db.isMember",tbDto);
+		if(count>0)return true;
+		else return false;
+	}
 }

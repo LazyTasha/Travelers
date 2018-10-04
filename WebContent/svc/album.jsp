@@ -47,7 +47,9 @@
           <h1 class="jumbotron-heading">Travelers Album</h1>
           <p class="lead text-muted">순간의 순간</p>
           <p>
-            <a class="btn btn-primary my-2" onclick="uploadPhotos()">사진 업로드</a>
+          	<c:if test="${isMember eq true}">
+           	 	<a class="btn btn-primary my-2" onclick="uploadPhotos()">사진 업로드</a>
+           	</c:if>
             <form id="uploadForm" action="albumPro.go" method="post" enctype="multipart/form-data">
                	<input type="file" name="files" multiple="multiple" id="file" accept=".gif, .jpg, .png" style="display:none"/>
                	<input type="hidden" name="tb_no" value="${tb_no}"/>
