@@ -132,82 +132,32 @@ h1, h2, h3, h4, h5, h6 {
 	  		Category
 	  	</aside>
 	  	<div class="board-list">
-     	<div class="row">
-        	<div class="col-md-12">
-          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-           			 <div class="card-body d-flex flex-column align-items-start">
-			              <strong class="d-inline-block mb-2">City, Country</strong>
-			              <h3 class="mb-0">
-			                <a class="text-dark" href="#">Title</a>
-			              </h3>
-	              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; Nickname</div>
-		             	      <div class="justify-content-around">
-		           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>
-		           			  	<div class="p-2">인원: 3</div>
-		           			  	<div class="p-2">조회수: 1</div>
-		           			  </div>
-	           			  </div>
-	          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-         			 </div>
-    		 </div>
-    	</div><!-- row 1 -->
-    	
-    	<c:if test="${count ne 0}">
-    		<c:forEach var="i" items="${tripList}">
-	    		<div class="row">
-		        	<div class="col-md-12">
-		          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-		           			 <div class="card-body d-flex flex-column align-items-start">
-				              <strong class="d-inline-block mb-2">${i.tb_title}</strong>
-				              <h3 class="mb-0">
-				                <a class="text-dark" href="#">${i.tb_title}</a>
-				              </h3>
-		              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
-			             	      <hr size="1px" color="black" noshade>
-			              		  <p class="card-text mb-auto">${i.content}</p>
-			           			  <a href="#">Continue reading</a>
-		           			  </div>
-		          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-	         			 </div>
-		    		 </div>
-		    	</div>
-    		</c:forEach>
-    	</c:if>
-    	
-    	<div class="row">
-        	<div class="col-md-12">
-          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-           			 <div class="card-body d-flex flex-column align-items-start">
-			              <strong class="d-inline-block mb-2">Barcelona, Spain</strong>
-			              <h3 class="mb-0">
-			                <a class="text-dark" href="#">Title : Anyone in Sitges?</a>
-			              </h3>
-	              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; Nickname</div>
-		             	      <hr size="1px" color="black" noshade>
-		              		  <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-		           			  <a href="#">Continue reading</a>
-	           			  </div>
-	          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-         			 </div>
-    		 </div>
-    	</div><!-- row 2 -->
-    	<div class="row">
-        	<div class="col-md-12">
-          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-           			 <div class="card-body d-flex flex-column align-items-start">
-			              <strong class="d-inline-block mb-2">Barcelona, Spain</strong>
-			              <h3 class="mb-0">
-			                <a class="text-dark" href="#">Title : Anyone in Sitges?</a>
-			              </h3>
-	              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; Nickname</div>
-		             	      <hr size="1px" color="black" noshade>
-		              		  <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-		           			  <a href="#">Continue reading</a>
-	           			  </div>
-	          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-         			 </div>
-    		 </div>
-    	</div><!-- row 3 -->
+	     	<c:if test="${count ne 0}">
+	    		<c:forEach var="i" items="${tripList}">
+		    		<div class="row">
+			        	<div class="col-md-12">
+			          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
+			           			 <div class="card-body d-flex flex-column align-items-start">
+					              <strong class="d-inline-block mb-2">${i.tb_title}</strong>
+					              <h3 class="mb-0">
+					                <a class="text-dark" href="#">${i.tb_title}</a>
+					              </h3>
+			              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
+				             	      <hr size="1px" color="black" noshade>
+				              		  <p class="card-text mb-auto">${i.content}</p>
+				              		  <div class="justify-content-around">
+				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>
+				           			  	<div class="p-2">인원:#{i.tb_m_num}</div>
+				           			  	<div class="p-2">조회수:#{i.tb_v_count}</div>
+				           			  </div>
+				           			  <a href="#">Continue reading</a>
+			           			  </div>
+			          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
+		         			 </div>
+			    		 </div>
+			    	</div>
+	    		</c:forEach>
+	    	</c:if>
     	<button type="button" class="btn btn-dark col-md-12">Load more...</button>
     </div><!-- board list -->	
 </div><!-- body box -->	
