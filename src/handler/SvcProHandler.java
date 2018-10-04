@@ -165,7 +165,7 @@ public class SvcProHandler {
 	}	
 		
 	//以묐났�솗�씤
-	 @RequestMapping(value="/idCheck.go",produces = "application/json")
+	 @RequestMapping(value="/idCheck.go", method = RequestMethod.POST, produces = "application/json")
 	 @ResponseBody
 	 public Map<Object, Object> idCheck(@RequestBody String user_id) {
 		 	user_id = user_id.split("=")[0];
@@ -186,7 +186,7 @@ public class SvcProHandler {
 	        Map<Object, Object> map = new HashMap<Object, Object>();
 	 
 	        countt = userDao.nameCheck( user_name );
-	        map.put("cnt", countt);
+	        map.put("cntt", countt);
 	        
 	        return map;
 	    }
