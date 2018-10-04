@@ -136,11 +136,13 @@ public class SvcProHandler {
  		int userType=0;
 		String id = request.getParameter( "user_id" );
 		String passwd = request.getParameter( "passwd" );
+		UserDataBean userDto=userDao.getUser(id);
 		
 		int result = userDao.check( id, passwd );
 		System.out.println(result);
  		request.setAttribute( "result", result );
 		request.setAttribute( "id", id );
+		request.setAttribute("userDto", userDto);
 		
 		if(result==1) {
 			int user_level=userDao.getUserLevel(id);

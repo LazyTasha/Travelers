@@ -84,6 +84,9 @@
 		<delete id="deleteTag" parameterType="String">
 			delete from gg_tag where tag_id=#{tag_id}
 		</delete>
+		<select id="getTbTag" parameterType="int" resultType="java.util.List">
+			select tag_value from gg_trip_tag where tb_no=#{tb_no}
+		</select>
 		
 		<!-- board DB-->
 		<select id="getCount" parameterType="int" resultType="int">
