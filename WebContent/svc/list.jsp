@@ -164,7 +164,7 @@ h1, h2, h3, h4, h5, h6 {
 				              </h3>
 		              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
 			             	      <hr size="1px" color="black" noshade>
-			              		  <p class="card-text mb-auto">${i.content}</p>
+			              		  <p class="card-text mb-auto">${i.tb_content}</p>
 			           			  <a href="#">Continue reading</a>
 		           			  </div>
 		          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
