@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
@@ -92,7 +93,8 @@ public class SvcViewHandler {
 	}
 	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
+		//I don't know why but it fails to get userDto, so here I try to get it.
+		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("memid"));
 		System.out.println(userDto.getUser_id());
 		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
 		String[] userTags=new String[userTagList.size()];
