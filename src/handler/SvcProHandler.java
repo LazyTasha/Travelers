@@ -245,8 +245,6 @@ public class SvcProHandler {
 			request.setAttribute("fileResult",fileResult);
 			return new ModelAndView("/svc/albumPro");
 		}
-	 
-	 
 		 private boolean isValidExtension(String originFileName) {
 		        String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1).toLowerCase();
 		        switch(fileExtension) {
