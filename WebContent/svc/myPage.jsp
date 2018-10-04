@@ -27,7 +27,7 @@
 <div class="container" style="width:600px">
 		<div class="text-center">
 			<a href="list.jsp">
-				<img class="mb-4" src="img/logo_c.png" alt="" width="100" height="100">
+				<img class="mb-4" src="${project}img/logo_c.png" alt="" width="100" height="100">
 			</a>
 			<h2>${userDto.user_id} &nbsp; ${msg_main_login}</h2>
 			<br>

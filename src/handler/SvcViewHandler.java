@@ -72,7 +72,6 @@ public class SvcViewHandler {
 	@RequestMapping("/list")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
-		System.out.println(userDto.getUser_id());
 		List<TbDataBean> tripList=tbDao.getTripList();
 		int count=tbDao.getCount();
 		request.setAttribute("userDto", userDto);
@@ -95,7 +94,6 @@ public class SvcViewHandler {
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//I don't know why but it fails to get userDto, so here I try to get it.
 		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("memid"));
-		System.out.println(userDto.getUser_id());
 		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
 		String[] userTags=new String[userTagList.size()];
 		for(int i=0; i<userTags.length; i++) {
