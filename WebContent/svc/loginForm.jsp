@@ -44,23 +44,7 @@
 </c:if>
 
  <c:if test="${sessionScope.memid ne null}">
-	<table>
-		<tr>
-			<td align="center">
-				<span>${sessionScope.memid}</span>${msg_main_login}
-			</td>
-		</tr>
-		<tr>
-			<th>
-				<input class="inputbutton" type="button" value="${btn_modify}"
-					onclick="location='membermodifyForm.go'">
-				<input class="inputbutton" type="button" value="${btn_delete}"
-					onclick="location='memberdeleteForm.go'">
-				<input class="inputbutton" type="button" value="${btn_logout}"
-					onclick="location='userLogout.go'">
-			</th>
-		</tr>		
-	</table>		
+	<c:redirect url="myPage.go"/>		
 </c:if>
 </html>
    

@@ -35,7 +35,7 @@
 			<br>
 		</div>
 		
-		 <form class="form-horizontal" method="post" action="/action_page.php" action="userInputPro.go" name="inputform" onsubmit="return inputcheck()">
+		 <form class="form-horizontal" method="post"  action="userInputPro.go" name="inputform" onsubmit="return inputcheck()">
 			<div class="form-group row">
 				<label for="inputID" class="col-sm-2 col-form-label">${str_id}</label>
 				<div class="col-sm-8">
@@ -84,13 +84,13 @@
 						<div class="form-check">
 						
 							<input class="form-check-input" type="radio" name="gender"
-								id="gridRadios1" value="female" checked> 
+								id="gridRadios1" value="1" checked> 
 							<label class="form-check-label" for="gridRadios1"> ${str_gender_f} </label>
 						</div>
 
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="gender"
-								id="gridRadios2" value="male"> 
+								id="gridRadios2" value="0"> 
 							<label class="form-check-label" for="gridRadios2"> ${str_gender_m} </label>						
 						</div>
 					</div>
