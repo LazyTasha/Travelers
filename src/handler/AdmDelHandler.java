@@ -44,7 +44,7 @@ public class AdmDelHandler {
 			if(results.contains(0)) {
 				result=0;	
 			}
-			
+			System.out.println(result);
 			request.setAttribute("result", result);
 		}catch(NumberFormatException e) {
 			e.printStackTrace();

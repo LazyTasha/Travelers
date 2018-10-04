@@ -74,10 +74,4 @@ public class SvcFormHandler {
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/deleteForm" );
 	}
-	@RequestMapping( "/albumForm" )
-	public ModelAndView albumFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		String tb_no=request.getParameter("tb_no");
-		request.setAttribute("tb_no", tb_no);
-		return new ModelAndView( "svc/albumForm" );
-	}
 }
