@@ -132,6 +132,11 @@
 		<update id="noticeX" parameterType="int">
 			update gg_trip_board set tb_notice=0 where tb_no=#{tb_no}
 		</update>
+		<select id="getTripList" resultType="db.TripDataBean">
+			<![CDATA[
+			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual)
+			]]>
+		</select>
 		
 		<!--cmt DB-->
 		<select id="getCmtCount" resultType="int">

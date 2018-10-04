@@ -84,6 +84,16 @@ public class TbDBBean {
 	public List<TbDataBean> getTrips(Map<String,Integer> map){
 		return session.selectList("db.getTrips",map);
 	}
+	
+	public List<TripDataBean> getTripList() {
+		//get 20 latest articles from db
+		return session.selectList("db.getTripList");
+	}
+	
+	public List<TbDataBean> getNextTrips(int latest) {
+		//get 20 previous articles 
+		return session.selectList("db.getNextTrips", latest);
+	}
 
 	public int deleteTrip(int tb_no) {
 		return session.selectOne("db.deleteTrip", tb_no);

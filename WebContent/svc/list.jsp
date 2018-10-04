@@ -151,6 +151,29 @@ h1, h2, h3, h4, h5, h6 {
          			 </div>
     		 </div>
     	</div><!-- row 1 -->
+    	
+    	<c:if test="${count ne 0}">
+    		<c:forEach var="i" items="${tripList}">
+	    		<div class="row">
+		        	<div class="col-md-12">
+		          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
+		           			 <div class="card-body d-flex flex-column align-items-start">
+				              <strong class="d-inline-block mb-2">${i.tb_title}</strong>
+				              <h3 class="mb-0">
+				                <a class="text-dark" href="#">${i.tb_title}</a>
+				              </h3>
+		              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
+			             	      <hr size="1px" color="black" noshade>
+			              		  <p class="card-text mb-auto">${i.content}</p>
+			           			  <a href="#">Continue reading</a>
+		           			  </div>
+		          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
+	         			 </div>
+		    		 </div>
+		    	</div>
+    		</c:forEach>
+    	</c:if>
+    	
     	<div class="row">
         	<div class="col-md-12">
           		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
