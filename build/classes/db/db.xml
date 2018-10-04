@@ -16,7 +16,7 @@
 		<select id="getUCount" resultType="int">
 			select count(*) from gg_user
 		</select>
-		<select id="getUserName" parameterType="String" resultType="String">
+		<select id="getUserName" parameterType="String">
 			select user_name from gg_user where user_id=#{id}
 		</select>
 		
@@ -24,7 +24,7 @@
 			select user_id from gg_user where user_name=#{user_name}
 		</select>
 		<insert id="insertUser" parameterType="db.UserDataBean">
-		insert into gg_user values(#{user_id}, #{passwd},#{email, jdbcType=VARCHAR}, #{gender}, #{reg_date},  #{user_name} , 1 )
+		insert into gg_user values(#{user_id}, #{passwd}, #{user_name},#{gender},#{email, jdbcType=VARCHAR}, #{reg_date})
 		</insert>
 
 		<select id="checkId" parameterType="String" resultType="int">
@@ -43,14 +43,13 @@
 			select * from gg_user where user_id=#{user_id}
 		 </select>
 
-		 <select id="idCheck" parameterType="String" resultType="Integer">
+		 <select id="idcheck" parameterType="String" resultType="Integer">
 		select count(*) from gg_user where user_id=#{user_id}
 		</select>
 
-		<select id="nameCheck" parameterType="String" resultType="Integer">
+		<select id="namecheck" parameterType="String" resultType="Integer">
 		select count(*) from gg_user where user_name=#{user_name}
 		</select>
-		
 		<select id="getUserLevel" parameterType="String" resultType="Integer">
 		select user_level from gg_user where user_id=#{user_id}
 		</select>
@@ -84,12 +83,6 @@
 		<delete id="deleteTag" parameterType="String">
 			delete from gg_tag where tag_id=#{tag_id}
 		</delete>
-		<select id="getTbTag" parameterType="int" resultType="java.util.List">
-			select tag_value from gg_trip_tag where tb_no=#{tb_no}
-		</select>
-		<select id="getUserTags" parameterType="String" resultType="java.util.List">
-			select t.tag_value from gg_tag t where t.tag_id=(select ut.tag_id from gg_user_tag ut where ut.user_id=#{user_id})
-		</select>
 		
 		<!-- board DB-->
 		<select id="getCount" parameterType="int" resultType="int">
@@ -143,11 +136,6 @@
 		<update id="noticeX" parameterType="int">
 			update gg_trip_board set tb_notice=0 where tb_no=#{tb_no}
 		</update>
-		<select id="getTripList" resultType="db.TripDataBean">
-			<![CDATA[
-			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual) order by tb_no desc
-			]]>
-		</select>
 		
 		<!--cmt DB-->
 		<select id="getCmtCount" resultType="int">
@@ -167,15 +155,6 @@
 		<!-- location -->
 		<select id="getLocs" parameterType="int" resultType="java.util.List">
 			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
-		</select>
-		<select id="getTripLoc" parameterType="int" resultType="java.util.List">
-			select c.country_name from gg_country c where c.country_id=
-			(select cd.country_id from gg_coordinate cd where cd.coord_id=
-			(select cl.coord_id from gg_calendar cl where cl.td_trip_id=
-			(select td.td_trip_id from gg_trip_detail td where td.tb_no=#{tb_no})))
-			and c.country_name=	
-			(select t.tag_value from gg_tag t where t.tag_id=
-			(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
 		</select>
 		
 		<!--album DB -->
