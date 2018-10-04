@@ -116,8 +116,8 @@ h1, h2, h3, h4, h5, h6 {
           </div>
           <div class="col-4 d-flex justify-content-end align-items-center">
             <!-- Header login/sign-up section -->	
-		 	<a href="loginForm.jsp" class="nav-item">${page_login}</a> &nbsp; 
-		 	| &nbsp; <a href="regForm.jsp">${page_input}</a>&nbsp;
+		 	<a href="userLoginForm.go" class="nav-item">${page_login}</a> &nbsp; 
+		 	| &nbsp; <a href="userInputForm.go">${page_input}</a>&nbsp;
           </div>
         </div>
       </header>
@@ -147,8 +147,8 @@ h1, h2, h3, h4, h5, h6 {
 				              		  <p class="card-text mb-auto">${i.content}</p>
 				              		  <div class="justify-content-around">
 				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>
-				           			  	<div class="p-2">인원:#{i.tb_m_num}</div>
-				           			  	<div class="p-2">조회수:#{i.tb_v_count}</div>
+				           			  	<div class="p-2">인원:${i.tb_m_num}</div>
+				           			  	<div class="p-2">조회수:${i.tb_v_count}</div>
 				           			  </div>
 				           			  <a href="#">Continue reading</a>
 			           			  </div>
