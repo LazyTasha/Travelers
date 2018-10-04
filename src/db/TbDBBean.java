@@ -6,6 +6,7 @@
 
 package db;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -85,9 +86,42 @@ public class TbDBBean {
 		return session.selectList("db.getTrips",map);
 	}
 	
-	public List<TripDataBean> getTripList() {
+	public List<TbDataBean> getTripList() {
 		//get 20 latest articles from db
-		return session.selectList("db.getTripList");
+		List<TripDataBean> originList=session.selectList("db.getTripList");
+		List<TbDataBean> tripList=new ArrayList<TbDataBean>();
+		
+		for(int i=originList.size(); i>0; i--) {
+			TripDataBean tripDto=originList.get(i);
+			TbDataBean tbDto=new TbDataBean();
+			tbDto.setTb_no(tripDto.getTb_no());
+			//set Nickname instead of id
+			tbDto.setUser_id((String) session.selectOne("db.getUserName", tripDto.getUser_id()));
+			tbDto.setTb_title(tripDto.getTb_title());
+			tbDto.setTb_content(tripDto.getTb_content());
+			tbDto.setTb_reg_date(tripDto.getTb_reg_date());
+			tbDto.setTb_v_count(tripDto.getTb_v_count());
+			tbDto.setTb_m_num(tripDto.getTb_m_num());
+			tbDto.setTb_notice(tripDto.getTb_notice());
+			tbDto.setTb_talk(tripDto.getTb_talk());
+			
+			//locations and tags 
+			List <String> originLocs=session.selectList("db.getTripLoc", tripDto.getTb_no());
+			String[] locs=new String[originLocs.size()];
+			for(int j=0; j<originLocs.size(); j++) {
+				locs[j]=originLocs.get(j);
+			}
+			tbDto.setLocs(locs);
+			List<String> originTags=session.selectList("db.getTripLoc", tripDto.getTb_no());
+			String[] tags=new String[originTags.size()];
+			for(int k=0; k<originTags.size(); k++) {
+				tags[k]=originTags.get(k);
+			}
+			tbDto.setTags(tags);
+			//put each TbDataBean into the List!
+			tripList.add(tbDto);
+		}
+		return tripList;
 	}
 	
 	public List<TbDataBean> getNextTrips(int latest) {

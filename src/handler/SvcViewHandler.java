@@ -71,7 +71,7 @@ public class SvcViewHandler {
 	@RequestMapping("/list")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
-		List<TripDataBean> tripList=tbDao.getTripList();
+		List<TbDataBean> tripList=tbDao.getTripList();
 		int count=tbDao.getCount();
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
