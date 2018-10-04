@@ -61,11 +61,11 @@
 		    	<label for="tag" class="control-label col-sm-2" >${str_tag} </label>
 		    	<div class="col-sm-8">
 		    		<div class="btn-group btn-group-sm" role="group" aria-label="...">
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#${tagDto.tag_value}</button>
+		    			<c:if test="${userTags} ne null">
+		    				<c:forEach var="i" items="${userTags}">
+		    					<button type="button" class="btn btn-default" disabled>#${i.value}&nbsp; </button>
+		    				</c:forEach>
+		    			</c:if>
 					</div>
 		     	 </div>	
 			</div>
