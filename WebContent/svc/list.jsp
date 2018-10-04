@@ -110,15 +110,23 @@ h1, h2, h3, h4, h5, h6 {
       <header class="board-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-4 pt-2 text-left">
-            <a href="${project}list.go">
+            <a href="list.go">
 			   <img src="img/logo_hz.png" width="200px" height="60px" class="d-inline-block align-top">    
 			</a>
           </div>
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <!-- Header login/sign-up section -->	
-		 	<a href="loginForm.jsp" class="nav-item">${page_login}</a> &nbsp; 
-		 	| &nbsp; <a href="regForm.jsp">${page_input}</a>&nbsp;
-          </div>
+          <c:if test="${sessionScope.memid eq null}">
+	          <div class="col-4 d-flex justify-content-end align-items-center">
+	            <!-- Header login/sign-up section -->	
+			 	<a href="userLoginForm.go" class="nav-item">${page_login}</a> &nbsp; 
+			 	| &nbsp; <a href="userInputForm.go">${page_input}</a>&nbsp;
+	          </div>
+        </c:if>
+        <c:if test="${sessionScope.memid ne null}">
+        	<div class="col-4 d-flex justify-content-end align-items-center">
+        		<!-- if user has been logged in -->
+			 	<a href="userLoginForm.go" class="nav-item">${page_mypage2}</a>
+			</div>
+        </c:if>
         </div>
       </header>
 <!-- navigation bar -->
@@ -128,65 +136,38 @@ h1, h2, h3, h4, h5, h6 {
       </nav> 
 <!-- Category & Contents Box -->    
 	<div class="body-box">
-	  	<aside>
-	  		Category
-	  	</aside>
 	  	<div class="board-list">
-     	<div class="row">
-        	<div class="col-md-12">
-          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-           			 <div class="card-body d-flex flex-column align-items-start">
-			              <strong class="d-inline-block mb-2">City, Country</strong>
-			              <h3 class="mb-0">
-			                <a class="text-dark" href="#">Title</a>
-			              </h3>
-	              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; Nickname</div>
-		             	      <div class="justify-content-around">
-		           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>
-		           			  	<div class="p-2">인원: 3</div>
-		           			  	<div class="p-2">조회수: 1</div>
-		           			  </div>
-	           			  </div>
-	          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-         			 </div>
-    		 </div>
-    	</div><!-- row 1 -->
-    	<div class="row">
-        	<div class="col-md-12">
-          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-           			 <div class="card-body d-flex flex-column align-items-start">
-			              <strong class="d-inline-block mb-2">Barcelona, Spain</strong>
-			              <h3 class="mb-0">
-			                <a class="text-dark" href="#">Title : Anyone in Sitges?</a>
-			              </h3>
-	              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; Nickname</div>
-		             	      <hr size="1px" color="black" noshade>
-		              		  <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-		           			  <a href="#">Continue reading</a>
-	           			  </div>
-	          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-         			 </div>
-    		 </div>
-    	</div><!-- row 2 -->
-    	<div class="row">
-        	<div class="col-md-12">
-          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
-           			 <div class="card-body d-flex flex-column align-items-start">
-			              <strong class="d-inline-block mb-2">Barcelona, Spain</strong>
-			              <h3 class="mb-0">
-			                <a class="text-dark" href="#">Title : Anyone in Sitges?</a>
-			              </h3>
-	              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; Nickname</div>
-		             	      <hr size="1px" color="black" noshade>
-		              		  <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-		           			  <a href="#">Continue reading</a>
-	           			  </div>
-	          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
-         			 </div>
-    		 </div>
-    	</div><!-- row 3 -->
+	  		<button type="button" class="btn btn-dark col-md-12" onclick="location='tripWriteForm.go'">Write new Trip!!!</button>
+	     	<c:if test="${count ne 0}">
+	    		<c:forEach var="i" items="${tripList}">
+		    		<div class="row">
+			        	<div class="col-md-12">
+			          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
+			           			 <div class="card-body d-flex flex-column align-items-start">
+					              <strong class="d-inline-block mb-2">
+					              	<c:forEach var="j" items="${i.locs}">
+					              		${j}
+					              	</c:forEach>
+					              </strong>
+					              <h3 class="mb-0">
+					                <a class="text-dark" href="#">${i.tb_title}</a>
+					              </h3>
+			              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
+				             	      <hr size="1px" color="black" noshade>
+				              		  <p class="card-text mb-auto">${i.tb_content}</p>
+				              		  <div class="justify-content-around">
+				           			  	<div class="p-2">일정:2019.02.11~2019.02.21&nbsp;인원:${i.tb_m_num}&nbsp;조회수:${i.tb_v_count}</div>
+				           			  </div>
+				           			  <a href="trip.go?tb_no=${i.tb_no}">Continue reading</a>
+			           			  </div>
+			          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
+		         			 </div>
+			    		 </div>
+			    	</div>
+	    		</c:forEach>
+	    	</c:if>
     	<button type="button" class="btn btn-dark col-md-12">Load more...</button>
-    </div><!-- board list -->	
+    </div><!-- board list -->
 </div><!-- body box -->	
 		
 <!-- Footer -->   
