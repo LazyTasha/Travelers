@@ -92,7 +92,13 @@ public class SvcViewHandler {
 	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
+		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
+		String[] userTags=new String[userTagList.size()];
+		for(int i=0; i<userTags.length; i++) {
+			userTags[i]=userTagList.get(i);
+		}
 		request.setAttribute("userDto", userDto);
+		request.setAttribute("userTags", userTags);
 		return new ModelAndView("svc/myPage");
 	}
 	@RequestMapping("/myTrip")
