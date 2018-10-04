@@ -1,9 +1,3 @@
-/*
- * !!! ���ǻ��� !!!
- * ���� void, ���� �������� �޼ҵ� �̸��� �����ص� ����.
- * �޼ҵ帶�� ���� ��, ���� �˾Ƽ� ä�� ���� ��.
- */
-
 package db;
 
 import java.util.ArrayList;
@@ -91,7 +85,7 @@ public class TbDBBean {
 		List<TripDataBean> originList=session.selectList("db.getTripList");
 		List<TbDataBean> tripList=new ArrayList<TbDataBean>();
 		
-		for(int i=originList.size(); i>0; i--) {
+		for(int i=originList.size(); i>=0; i--) {
 			TripDataBean tripDto=originList.get(i);
 			TbDataBean tbDto=new TbDataBean();
 			tbDto.setTb_no(tripDto.getTb_no());
