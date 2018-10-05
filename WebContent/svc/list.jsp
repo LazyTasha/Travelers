@@ -40,8 +40,8 @@ aside {
 }
 .body-box { 
    padding-top: 20px;
-   padding-right: 50px;
-   padding-left: 50px;
+   padding-right: 80px;
+   padding-left: 80px;
 
 }
 h1, h2, h3, h4, h5, h6 {
@@ -107,11 +107,11 @@ h1, h2, h3, h4, h5, h6 {
 
 <body>
 <!-- header -->
-      <header class="board-header py-3">
+     <header class="board-header py-2">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-4 pt-2 text-left">
             <a href="list.go">
-			   <img src="img/logo_hz.png" width="200px" height="60px" class="d-inline-block align-top">    
+			   <img src="${project}img/logo_hz.png" width="200px" height="100px" class="d-inline-block align-top">    
 			</a>
           </div>
           <c:if test="${sessionScope.memid eq null}">
@@ -136,13 +136,18 @@ h1, h2, h3, h4, h5, h6 {
       </nav> 
 <!-- Category & Contents Box -->    
 	<div class="body-box">
+		<div class="d-flex justify-content-end">
+			<a href="${project}tripWriteForm.go">
+				<img src="${project}img/compose_icon.png" width="120" height="40">
+			</a> 
+     		</div>
 	  	<div class="board-list">
 	  		<button type="button" class="btn btn-dark col-md-12" onclick="location='tripWriteForm.go'">Write new Trip!!!</button>
 	     	<c:if test="${count ne 0}">
 	    		<c:forEach var="i" items="${tripList}">
 		    		<div class="row">
 			        	<div class="col-md-12">
-			          		<div class="card flex-md-row mb-4 shadow-sm h-md-250">
+			          		<div class="card flex-md-row mb-3 shadow-sm h-md-250">
 			           			 <div class="card-body d-flex flex-column align-items-start">
 					              <strong class="d-inline-block mb-2">
 					              	<c:forEach var="j" items="${i.locs}">
@@ -155,8 +160,11 @@ h1, h2, h3, h4, h5, h6 {
 			              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
 				             	      <hr size="1px" color="black" noshade>
 				              		  <p class="card-text mb-auto">${i.tb_content}</p>
-				              		  <div class="justify-content-around">
-				           			  	<div class="p-2">일정:2019.02.11~2019.02.21&nbsp;인원:${i.tb_m_num}&nbsp;조회수:${i.tb_v_count}</div>
+				              		  	 <hr style="width: 100%"> 
+								 <div class="d-flex justify-content-center">
+				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;
+									<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;
+									<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;
 				           			  </div>
 				           			  <a href="trip.go?tb_no=${i.tb_no}">Continue reading</a>
 			           			  </div>
