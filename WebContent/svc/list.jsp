@@ -113,11 +113,19 @@ h1, h2, h3, h4, h5, h6 {
 			   <img src="img/logo_hz.png" width="200px" height="100px" class="d-inline-block align-top">    
 			</a>
           </div>
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <!-- Header login/sign-up section -->	
-		 	<a href="loginForm.jsp" class="nav-item">${page_login}</a> &nbsp; 
-		 	| &nbsp; <a href="regForm.jsp">${page_input}</a>&nbsp;
-          </div>
+	  <c:if test="${sessionScope.memid eq null}">
+		  <div class="col-4 d-flex justify-content-end align-items-center">
+		    <!-- Header login/sign-up section -->	
+				<a href="loginForm.jsp" class="nav-item">${page_login}</a> &nbsp; 
+				| &nbsp; <a href="regForm.jsp">${page_input}</a>&nbsp;
+		  </div>
+	 </c:if>
+         <c:if test="${sessionScope.memid ne null}">
+        	<div class="col-4 d-flex justify-content-end align-items-center">
+        		<!-- if user has been logged in -->
+			 	<a href="userLoginForm.go" class="nav-item">${page_mypage2}</a>
+		</div>
+         </c:if>
         </div>
       </header>
 <!-- navigation bar -->
@@ -134,6 +142,7 @@ h1, h2, h3, h4, h5, h6 {
      	</div>
 	  	<div class="board-list">
      	<br>
+	
      	<div class="row">
         	<div class="col-md-12">
           		<div class="card flex-md-row mb-3 shadow-sm h-md-250">
