@@ -20,7 +20,6 @@ function erroralert( msg ) {
 	history.back();
 }
 //Initialize and add the map
-
 function initMap() {
 	
 	var lat=parseFloat(document.getElementById("lat").value);
@@ -84,6 +83,18 @@ function showMap(){
 function showAlbum(){
 	$('#albumTab').show();
 	$('#mapTab').hide();
+}
+//trip-album-nextPage
+function next(start,size){
+	start=start+size;
+	var tab=1;
+	location.href="trip.go?start="+start+"&tab="+tab;
+}
+//trip-album-prePage
+function previous(start,size){
+	if(start>size)start=start-size;
+	var tab=1;
+	location.href="trip.go?start="+start+"&tab="+tab;
 }
 // 회원 정보 수정
 function modifyfocus() {
@@ -176,9 +187,9 @@ function overlapCheck() {
 							"아이디가 존재합니다. 다른 아이디를 입력해주세요.")
 				} else {
 					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
-
+				} else {
+					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
 					idck = 1;
-
 				}
 			},
 			error : function(error) {
@@ -187,7 +198,6 @@ function overlapCheck() {
 		});
 	}
 }
-// /////////
 
 // 닉네임
 var genck = 0;

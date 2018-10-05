@@ -42,7 +42,6 @@ public class SvcProHandler {
 	private static final int SUCCESS=1;
 	private static final long LIMIT_SIZE = 5* 1024 * 1024;//image max size=5M;
 	
-	
 	@Resource
 	private TripDBBean tripDao;
 	@Resource

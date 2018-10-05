@@ -3,12 +3,14 @@
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="${project}script.js"></script>
 <style>
+
    #map {
    		position:relative;
         height: 400px;  /* The height is 400 pixels */
         width: 100%;  /* The width is the width of the web page */
         border:1px black solid;
        }
+
 </style>
 <article>
 	<section>
@@ -36,15 +38,35 @@
 	</section>
 	
 	<!--boardAlbum영역  -->
-	<section id="albumTab" style="display:none">
-		<jsp:include page='boardAlbum.go?tb_no=${tb_no}' flush="false"/>
+	<c:if test="${tab eq '0'}">
+		<section id="albumTab" style="display:none">
+	</c:if>
+	<c:if test="${tab eq '1'}">
+		<section id="albumTab">
+	</c:if>
+		<div class="row">
+		<c:if test="${start gt size}">
+			<button onclick="previous(${start},${size})">◀</button>
+		</c:if>
+			<jsp:include page='boardAlbum.go?tb_no=${tb_no}&start=${start}&end=${end}&tab=${tab}' flush="false"/>
+		<c:if test="${start lt count}">
+			<button onclick="next(${start},${size})">▶</button>
+		</c:if>
+		</div>
 	</section>
+
 	<!--ㅡMap영역  -->
-	<div id="mapTab">
+		<c:if test="${tab eq 0}">
+		<div id="mapTab">
+	</c:if>
+	<c:if test="${tab eq 1}">
+		<div id="mapTab" style="display:none">
+	</c:if>
 		<div id="map">지도</div>
 		<input type="hidden" value="${lat}" id="lat"/>
 		<input type="hidden" value="${lng}" id="lng"/>
 	</div>
+
 </article>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=initMap">
