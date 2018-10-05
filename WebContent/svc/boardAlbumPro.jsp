@@ -6,7 +6,7 @@
 <c:if test="${fileResult eq 1}">
 	<script type="text/javascript">
 		<!--
-			<c:redirect url="trip.go"/>
+			<c:redirect url="trip.go?tab=1"/>
 		//-->
 	</script>
 </c:if>

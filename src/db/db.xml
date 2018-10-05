@@ -185,8 +185,15 @@
 		<select id="getAlbum" resultType="db.AlbumDataBean">
 			select * from gg_album order by alb_reg_date desc	
 		</select>
-		<select id="getBoardAlbum" parameterType="int"  resultType="db.AlbumDataBean">
+<!-- 		<select id="getBoardAlbum" parameterType="int"  resultType="db.AlbumDataBean">
 			select * from gg_album where tb_no=#{tb_no} order by alb_reg_date desc	
+		</select> -->
+		<select id="getBoardAlbum" parameterType="java.util.Map"  resultType="db.AlbumDataBean">
+			select photo_id,photo_url,alb_reg_date,tb_no,r 
+			from (
+				select photo_id,photo_url,alb_reg_date,tb_no,rownum r from (
+					select photo_id,photo_url,alb_reg_date,tb_no from gg_album where tb_no=#{tb_no} order by alb_reg_date desc) 
+					order by alb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
 		</select>
 		<select id="getPCount" resultType="int">
 			select count(*) from gg_album

@@ -1,6 +1,7 @@
 package db;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,8 +23,8 @@ public class AlbumDBBean {
 	public List<AlbumDataBean> getAlbum(){
 		return session.selectList("db.getAlbum");
 	}
-	public List<AlbumDataBean> getBoardAlbum(int tb_no){
-		return session.selectList("db.getBoardAlbum",tb_no);
+	public List<AlbumDataBean> getBoardAlbum(Map<String,Integer>map){
+		return session.selectList("db.getBoardAlbum",map);
 	}
 	public int getCount() {
 		return session.selectOne("db.getPCount");

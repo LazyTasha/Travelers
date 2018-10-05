@@ -38,22 +38,21 @@
       <div class="album py-5 bg-light">
         <div class="container">
 			<c:if test="${count gt 0}">
-	          <div class="row">
-		          <c:forEach var="photo" items="${album}">
-
-		           <div class="col-md-4" id="photoArea">
-		           <input type="checkbox" name='check1' style="display:none">
-		              <div class="card mb-4 shadow-sm">
-		                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap" src="${photo.photo_url}">
-
-		                  <div class="d-flex justify-content-between align-items-center">
-		                    <small class="text-muted"><fmt:formatDate value="${photo.alb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></small>
-		                  </div>
-		              </div>
-		            </div>
-	             </c:forEach>
-	          </div>
-	         
+		          <div class="row">
+			          <c:forEach var="photo" items="${album}">
+			           <div class="col-md-4" id="photoArea">
+			           <input type="checkbox" name='check1' style="display:none">
+			              <div class="card mb-4 shadow-sm">
+			                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap" src="${photo.photo_url}">
+		
+			                  <div class="d-flex justify-content-between align-items-center">
+			                    <small class="text-muted"><fmt:formatDate value="${photo.alb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></small>
+			                  </div>
+			              </div>
+			            </div>
+		             </c:forEach>
+		          </div>
+	        
           </c:if>
         </div>
       </div>
