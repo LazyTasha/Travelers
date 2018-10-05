@@ -142,7 +142,6 @@ h1, h2, h3, h4, h5, h6 {
 			</a> 
      		</div>
 	  	<div class="board-list">
-	  		<button type="button" class="btn btn-dark col-md-12" onclick="location='tripWriteForm.go'">Write new Trip!!!</button>
 	     	<c:if test="${count ne 0}">
 	    		<c:forEach var="i" items="${tripList}">
 		    		<div class="row">
