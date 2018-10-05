@@ -20,17 +20,20 @@ function erroralert( msg ) {
 	history.back();
 }
 //Initialize and add the map
+
 function initMap() {
+	
 	var lat=parseFloat(document.getElementById("lat").value);
 	var lng=parseFloat(document.getElementById("lng").value);
 	
-  // The location of Uluru
-  var position = {lat:lat,lng:lng};
-  // The map, centered at Uluru
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 8, center: position});
-  // The marker, positioned at Uluru
-  var marker = new google.maps.Marker({position: position, map: map});
+	  // The location of Uluru
+	  var uluru = {lat: lat, lng: lng};
+	  // The map, centered at Uluru
+
+	  var map = new google.maps.Map(
+	      document.getElementById('map'), {zoom: 8, center: uluru});
+	  // The marker, positioned at Uluru
+	  var marker = new google.maps.Marker({position: uluru, map: map});
 
 }
 //지도 주소검색
@@ -71,8 +74,17 @@ function searchMap() {
         alert('Geocode was not successful for the following reason: ' + status);
       }
     });
-    
   }
+//trip view-button event-map
+function showMap(){
+	$('#albumTab').hide();
+	$('#mapTab').show();
+}
+//trip view-button event-boardAlbum
+function showAlbum(){
+	$('#albumTab').show();
+	$('#mapTab').hide();
+}
 // 회원 정보 수정
 function modifyfocus() {
 	modifyform.passwd.focus();
