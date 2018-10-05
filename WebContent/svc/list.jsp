@@ -42,6 +42,10 @@ aside {
    padding-top: 20px;
    padding-right: 80px;
    padding-left: 80px;
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
 }
 h1, h2, h3, h4, h5, h6 {
 	font-family: "Playfair Display", Georgia, "Times New Roman", serif;
@@ -106,11 +110,19 @@ h1, h2, h3, h4, h5, h6 {
 
 <body>
 <!-- header -->
+<<<<<<< HEAD
       <header class="board-header py-2">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-4 pt-2 text-left">
             <a href="${project}list.go">
 			   <img src="img/logo_hz.png" width="200px" height="100px" class="d-inline-block align-top">    
+=======
+     <header class="board-header py-2">
+        <div class="row flex-nowrap justify-content-between align-items-center">
+          <div class="col-4 pt-2 text-left">
+            <a href="list.go">
+			   <img src="${project}img/logo_hz.png" width="200px" height="100px" class="d-inline-block align-top">    
+>>>>>>> master
 			</a>
           </div>
 	  <c:if test="${sessionScope.memid eq null}">
@@ -135,6 +147,7 @@ h1, h2, h3, h4, h5, h6 {
       </nav> 
 <!-- Category & Contents Box -->    
 	<div class="body-box">
+<<<<<<< HEAD
      	<div class="d-flex justify-content-end">
 	     	<a href="${project}tripWriteForm.go">
 	     		<img src="img/compose_icon.png" width="120" height="40">
@@ -197,6 +210,46 @@ h1, h2, h3, h4, h5, h6 {
          			 </div>
     		 </div>
     	</div><!-- row 3 -->
+=======
+		<div class="d-flex justify-content-end">
+			<a href="${project}tripWriteForm.go">
+				<img src="${project}img/compose_icon.png" width="120" height="40">
+			</a> 
+     		</div>
+	  	<div class="board-list">
+	  		<button type="button" class="btn btn-dark col-md-12" onclick="location='tripWriteForm.go'">Write new Trip!!!</button>
+	     	<c:if test="${count ne 0}">
+	    		<c:forEach var="i" items="${tripList}">
+		    		<div class="row">
+			        	<div class="col-md-12">
+			          		<div class="card flex-md-row mb-3 shadow-sm h-md-250">
+			           			 <div class="card-body d-flex flex-column align-items-start">
+					              <strong class="d-inline-block mb-2">
+					              	<c:forEach var="j" items="${i.locs}">
+					              		${j}
+					              	</c:forEach>
+					              </strong>
+					              <h3 class="mb-0">
+					                <a class="text-dark" href="#">${i.tb_title}</a>
+					              </h3>
+			              		  <div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>
+				             	      <hr size="1px" color="black" noshade>
+				              		  <p class="card-text mb-auto">${i.tb_content}</p>
+				              		  	 <hr style="width: 100%"> 
+								 <div class="d-flex justify-content-center">
+				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;
+									<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;
+									<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;
+				           			  </div>
+				           			  <a href="trip.go?tb_no=${i.tb_no}">Continue reading</a>
+			           			  </div>
+			          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
+		         			 </div>
+			    		 </div>
+			    	</div>
+	    		</c:forEach>
+	    	</c:if>
+>>>>>>> master
     	<button type="button" class="btn btn-dark col-md-12">Load more...</button>
     </div><!-- board list -->	
 </div><!-- body box -->	
