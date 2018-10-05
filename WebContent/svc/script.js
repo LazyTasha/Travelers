@@ -244,39 +244,6 @@ function inputcheck() {
 			$("#inputform").button();
 		}
 	}
-	/*if( ! inputform.user_id.value ) {
-		alert( iderror );
-		inputform.user_id.focus();
-		return false;
-	} else if( ! inputform.passwd.value ) {
-		alert( passwderror );
-		inputform.passwd.focus();
-		return false;
-	} else if( inputform.passwd.value != inputform.repasswd.value ) {
-		alert( repasswderror );
-		inputform.repasswd.focus();
-		return false;
-	} else if( ! inputform.user_name.value ) {
-		alert( nameerror );
-		inputform.user_name.focus();
-		return false;
-	}else if ( ! inputform.gender.value ){
-		alert( gendererror );
-		inputform.gender.focus();
-		return false;
-	}else if ( ! inputform.email1.value ){
-		alert( emailerror );
-		inputform.email1.focus();
-		return false;
-	}else if ( ! inputform.email2.value ){
-		alert( emailerror );
-		inputform.email1.focus();
-		return false;
-	}*/
-	// 	1. null 인 경우			이동 가능
-	// 	2. 직접입력일 경우		email1 란에 @가 없으면 경고
-	// 	3. 선택입력일 경우		email1 란에 @가 있으면 경고
-	//	단 전화번호가 있건 없건 모두 가능해야 한다.
 
 	if (inputform.email1.value.indexOf("@") == -1) {
 		alert(emailerror);
@@ -359,4 +326,23 @@ function validation(fileName) {
 function sizeOver(size){
 	if(size>filesize)return true;
 	else return false;
+}
+
+function loadMoreList(last_tb_no) {
+	$('#append-list').load
+	$.ajax({
+		type : 'post',
+		data : last_tb_no,
+		url : "loadMoreList.go",
+		success : function(data) {
+			if(data){
+				request.send(last_tb_no);
+			} else {
+				alert('더 이상 불러올 글이 없습니다.');
+			}
+		},
+		error : function(error) {
+			alert('글 불러오기에 실패했습니다.');
+		}
+	});
 }
