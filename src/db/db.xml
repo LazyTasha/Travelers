@@ -174,8 +174,8 @@
 		insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content, jdbcType=VARCHAR}, SYSDATE)
 		</insert>
 		
-		<select id="getComment" resultType="db.CmtDataBean" >
-     	select * from gg_comment
+		<select id="getComment" parameterType="int" resultType="db.CmtDataBean" >
+     	select * from gg_comment where tb_no=#{tb_no}
      	</select>
      	
      	<update id="updateComment" parameterType="db.CmtDataBean">

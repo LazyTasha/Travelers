@@ -279,9 +279,10 @@ public class SvcProHandler {
 		@RequestMapping(value="/commentSelect.go", method=RequestMethod.GET, produces = "application/json")
 		@ResponseBody
 		public List<CmtDataBean> commentSelectProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-
-				CmtDataBean cmtDto = new CmtDataBean();
-				List<CmtDataBean>comemnt= cmtDao.getComment(cmtDto);
+				int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+				//CmtDataBean cmtDto = new CmtDataBean();
+				//cmtDto.setTb_no(tb_no);
+				List<CmtDataBean>comemnt= cmtDao.getComment(tb_no);
 				request.setAttribute("comemnt", comemnt);
 					
 				return comemnt;

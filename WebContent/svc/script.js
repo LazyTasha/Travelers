@@ -15,6 +15,12 @@ var nocheckerror="다운로드 받을 사진을 선택하세요";
 
 var filesize=5*1024*1024;
 
+$(document).ready(function(){
+	var tb_no=$('input[name=tb_no]').val();
+    commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
+});
+
+
 function erroralert( msg ) {
 	alert( msg );
 	history.back();
@@ -67,7 +73,6 @@ function searchMap() {
         $('#searchMap').html(msg);
         //alert($('#searchmap').html())
     
-        
         //alert(document.getElementById('lat').value);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -184,11 +189,9 @@ function overlapCheck() {
 			success : function(data) {
 				if (data.cnt > 0) {
 					$('#passwordCheckMessagegg').html(
-							"아이디가 존재합니다. 다른 아이디를 입력해주세요.")
+							"아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 				} else {
-					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
-				} else {
-					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
+					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.");
 					idck = 1;
 				}
 			},
@@ -331,10 +334,8 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 	 var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
 	 CmtInsert(insertData); //Insert 함수호출(아래)
 }
- 
- 
-var number = '${tbDto.tb_no}'; //게시글 번호
 
+var number = '${tbDto.tb_no}'; //게시글 번호
 //댓글 목록 
 function commentList(tb_no){
     $.ajax({
@@ -362,6 +363,7 @@ function commentList(tb_no){
 
 //댓글 등록
 function CmtInsert(insertData){
+	var tb_no=$('input[name=tb_no]');
     $.ajax({
         url : 'commentInsert.go',
         type : 'post',
@@ -370,7 +372,7 @@ function CmtInsert(insertData){
         	if(data == 1) {
         		/*오류메세지 작성*/
            }else{
-        	   commentList();
+        	   commentList(tb_no);
         	   $('[name=c_content]').val('');
            }
         },
@@ -424,11 +426,6 @@ function commentDelete(c_id){
         }
     });
 }
-
-$(document).ready(function(){
-    commentList(); //페이지 로딩시 댓글 목록 출력 
-});
-
 
 function loadMoreList(last_tb_no) {
 	$('#append-list').load
