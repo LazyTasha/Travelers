@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="setting.jsp" %>
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,19 +19,6 @@
   </head>
   <body id="album">
     <header>
-      <div class="bg-dark" id="navbarHeader">
-        <div class="container">
-          <div class="row">
-            <div class="col-sm-8 col-md-7 py-4">
-              <h4 class="text-white">Travelers</h4>
-              <ul class="list-unstyled">
-                <li><a href="main.jsp" class="text-white">Main</a></li>
-                <li><a href="list.jsp" class="text-white">Board</a></li>
-              </ul>            
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="navbar navbar-dark bg-dark shadow-sm">
         <div class="container d-flex justify-content-between">
           <a href="#" class="navbar-brand d-flex align-items-center">
