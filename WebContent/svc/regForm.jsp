@@ -60,7 +60,7 @@
 				<div class="col-sm-8">
 					<input type="password" class="form-control" id="userPassword2"
 						name="repasswd" placeholder="비밀번호 재입력" maxlength="30" required onkeyup="passwordCheckFunction()">
-					<h4 style="color: red;" id="passwordCheckMessage"></h4>
+					<h6 style="color: red;" id="passwordCheckMessage"></h6>
 				</div>
 			</div>
 			
@@ -79,7 +79,7 @@
 			
 			<fieldset class="form-group">
 				<div class="row">
-					<legend class="col-form-label col-sm-2 pt-0">${str_gender}</legend>
+					<label class="col-form-label col-sm-2 pt-0">${str_gender}</label>
 					<div class="col-sm-10">
 						<div class="form-check">
 						
