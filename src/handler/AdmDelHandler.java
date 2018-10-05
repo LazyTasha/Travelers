@@ -83,7 +83,7 @@ public class AdmDelHandler {
 			num=Integer.parseInt(request.getParameter("num"));
 			for(int i=0;i<num;i++) {
 				String c_id=request.getParameter("key"+i+"").trim();
-				result=cmtDao.delComment(Integer.parseInt(c_id));
+				result=cmtDao.deleteComment(Integer.parseInt(c_id));
 				results.add(result);
 			}
 			if(results.contains(0)) {
