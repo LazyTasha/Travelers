@@ -37,16 +37,16 @@ public class SvcFormHandler {
 	
 	@RequestMapping("/tripWriteForm")
 	public ModelAndView svcTripWriteFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		//need to know who is writing
-		String writer_id=((UserDataBean)request.getAttribute("userDto")).getUser_id();
-		String writer_name=((UserDataBean)request.getAttribute("userDto")).getUser_name();
-		//get tag list too so that user choose it
-		//but I don't know why should I put a map there...
-		//List<String> tags=tagDao.getTags();
-		//send them to set User Name on the form
-		request.setAttribute("writer_id", writer_id);
-		request.setAttribute("writer_name", writer_name);
-		//request.setAttribute("tags", tags);
+//		//need to know who is writing
+//		String writer_id=((UserDataBean)request.getAttribute("userDto")).getUser_id();
+//		String writer_name=((UserDataBean)request.getAttribute("userDto")).getUser_name();
+//		//get tag list too so that user choose it
+//		//but I don't know why should I put a map there...
+//		//List<String> tags=tagDao.getTags();
+//		//send them to set User Name on the form
+//		request.setAttribute("writer_id", writer_id);
+//		request.setAttribute("writer_name", writer_name);
+//		//request.setAttribute("tags", tags);
 		return new ModelAndView("svc/tripWriteForm");
 	}
 	@RequestMapping("/tripModForm")

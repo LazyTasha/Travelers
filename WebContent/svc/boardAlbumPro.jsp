@@ -6,7 +6,7 @@
 <c:if test="${fileResult eq 1}">
 	<script type="text/javascript">
 		<!--
-			<c:redirect url="album.go"/>
+			<c:redirect url="trip.go"/>
 		//-->
 	</script>
 </c:if>
