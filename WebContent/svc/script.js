@@ -232,6 +232,7 @@ function inputcheck() {
 			$("#inputform").button();
 		}
 	}
+
 	if (inputform.email1.value.indexOf("@") == -1) {
 		alert(emailerror);
 		return false;
@@ -314,7 +315,6 @@ function sizeOver(size){
 	if(size>filesize)return true;
 	else return false;
 }
-
 
 ////comment
 function commentInsert(){ //댓글 등록 버튼 클릭시 
@@ -419,3 +419,22 @@ $(document).ready(function(){
     commentList(); //페이지 로딩시 댓글 목록 출력 
 });
 
+=======
+function loadMoreList(last_tb_no) {
+	$('#append-list').load
+	$.ajax({
+		type : 'post',
+		data : last_tb_no,
+		url : "loadMoreList.go",
+		success : function(data) {
+			if(data){
+				request.send(last_tb_no);
+			} else {
+				alert('더 이상 불러올 글이 없습니다.');
+			}
+		},
+		error : function(error) {
+			alert('글 불러오기에 실패했습니다.');
+		}
+	});
+}
