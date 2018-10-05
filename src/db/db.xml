@@ -92,7 +92,7 @@
 		</select>
 		
 		<!-- board DB-->
-		<select id="getCount" parameterType="int" resultType="int">
+		<select id="getCount" resultType="int">
 			select count(*) from gg_trip_board
 		</select>
 		<select id="getTrip" parameterType="int" resultType="db.TripDataBean">

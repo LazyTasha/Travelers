@@ -64,6 +64,7 @@
 <c:set var="btn_del" value="탈퇴"/>
 <c:set var="btn_del_cancel" value="탈퇴취소"/>
 <c:set var="btn_list" value="목록"/>
+<c:set var="btn_search" value="검색"/>
 
 <c:set var="trip_title" value="제목"/>
 <c:set var="trip_writer" value="작성자"/>
@@ -72,3 +73,4 @@
 <c:set var="trip_talk_link" value="대화 링크"/>
 <c:set var="trip_tag" value="여행 태그"/>
 <c:set var="trip_write" value="등록"/>
+<c:set var="trip_location" value="장소"/>
