@@ -164,6 +164,23 @@
 			delete from gg_comment where c_id=#{c_id}
 		</delete>
 		
+		<insert id="insertComment" parameterType="db.CmtDataBean">
+		<!-- insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content}, #{c_reg_date}) -->
+		insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content, jdbcType=VARCHAR}, SYSDATE)
+		</insert>
+		
+		<select id="getComment" resultType="db.CmtDataBean" >
+     	select * from gg_comment
+     	</select>
+     	
+     	<update id="updateComment" parameterType="db.CmtDataBean">
+        update gg_comment set c_content = #{c_content} where c_id = #{c_id}
+    	</update>
+    
+    	<delete id="deleteComment" parameterType="int">
+        delete from gg_comment where c_id = #{c_id}
+    	</delete>
+		
 		<!-- location -->
 		<select id="getLocs" parameterType="int" resultType="java.util.List">
 			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
