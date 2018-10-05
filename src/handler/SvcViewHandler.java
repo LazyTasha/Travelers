@@ -90,9 +90,19 @@ public class SvcViewHandler {
 	}
 	
 	@RequestMapping("/album")
-	public ModelAndView svcAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		//int tb_no=Integer.parseInt(request.getParameter("tb_no"));
-		int tb_no=1;
+	public ModelAndView svcAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {	
+		int count=albumDao.getCount();
+		request.setAttribute("count", count);
+		if(count>0) {
+			//select album
+			List<AlbumDataBean>album=albumDao.getAlbum();
+			request.setAttribute("album", album);			
+		}
+		return new ModelAndView("svc/album");
+	}
+	@RequestMapping("/svc/boardAlbum")//svc/boardAlbum
+	public ModelAndView svcBoardAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
 		
 		String user_id=(String) request.getSession().getAttribute( "memid" );
@@ -112,7 +122,7 @@ public class SvcViewHandler {
 			boolean isMember=tbDao.isMember(tbDto);
 			request.setAttribute("isMember", isMember);
 		}
-		return new ModelAndView("svc/album");
+		return new ModelAndView("svc/boardAlbum");
 	}
 	@RequestMapping("/reg")
 	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
@@ -139,11 +149,20 @@ public class SvcViewHandler {
 	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		//int tb_no=1;//test용;
 		//get the content of the post
 		//TripDataBean has a part of contents of board
 		//TbDataBean has every content of board
 		TbDataBean tbDto=tbDao.getTb(tb_no);
 		request.setAttribute("tbDto", tbDto);
-		return new ModelAndView("svc/trip");
+		
+		//test용
+		double lat=37.554690;
+		double lng=126.970702;
+		//
+		request.setAttribute("lat",lat);
+		request.setAttribute("lng", lng);
+		request.setAttribute("tb_no", tb_no);
+		return new ModelAndView("svc/tripView");
 	}
 }

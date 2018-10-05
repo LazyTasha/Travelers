@@ -19,6 +19,7 @@
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
 <c:set var="page_calendar_eng" value="Calendar"/>
+<c:set var="page_write" value="글쓰기"/>
 
 
 <c:set var="msg_main" value="비회원이시면 회원가입을 해주세요"/>
