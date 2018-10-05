@@ -132,4 +132,49 @@ public class TbDBBean {
 		if(count>0)return true;
 		else return false;
 	}
+	
+	//load more Trip articles from db
+	//Loading starts from last number of current page
+	public List<TbDataBean> loadMoreList(int last_tb_no) {
+		List<TripDataBean> originMoreList=session.selectList("db.loadMoreList", last_tb_no);
+		List<TbDataBean> moreList;
+		if(originMoreList==null||originMoreList.size()==0) {
+			moreList=null;
+		} else {
+			moreList=new ArrayList<TbDataBean>(originMoreList.size());
+			moreList=new ArrayList<TbDataBean>(originMoreList.size());
+			for(int i=0; i<originMoreList.size(); i++) {
+				TbDataBean tempTb=new TbDataBean();
+				TripDataBean tripDto=originMoreList.get(i);
+				tempTb.setTb_no(tripDto.getTb_no());
+				tempTb.setUser_id((String) session.selectOne("db.getUserName", tripDto.getUser_id()));
+				tempTb.setTb_title(tripDto.getTb_title());
+				tempTb.setTb_content(tripDto.getTb_content());
+				tempTb.setTb_reg_date(tripDto.getTb_reg_date());
+				tempTb.setTb_v_count(tripDto.getTb_v_count());
+				tempTb.setTb_m_num(tripDto.getTb_m_num());
+				tempTb.setTb_notice(tripDto.getTb_notice());
+				tempTb.setTb_talk(tripDto.getTb_talk());
+				
+				//get location list
+				List<String> locList=session.selectList("db.getLocs", tempTb.getTb_no());
+				String[] locs = null;
+				for(int j=0; j<locList.size(); j++) {
+					locs[j]=locList.get(j);
+				}
+				//get tag list
+				List<String> tagList=session.selectList("db.getTripTags", tempTb.getTb_no());
+				String[] tags=null;
+				for(int k=0; k<tagList.size(); k++) {
+					tags[k]=tagList.get(k);
+				}
+				
+				tempTb.setLocs(locs);
+				tempTb.setTags(tags);
+				
+				moreList.set(i, tempTb);
+			}
+		}
+		return moreList;
+	}
 }

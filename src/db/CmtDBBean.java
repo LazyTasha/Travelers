@@ -7,27 +7,32 @@
 package db;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
 import bean.SqlMapClient;
 
+
+
 public class CmtDBBean {
 	SqlSession session=SqlMapClient.getSession();
 	//total comment
-	public int getCount() {
-		return session.selectOne("db.getCmtCount");
+	public int insertComment(CmtDataBean cmtDto) {
+		return session.insert("db.insertComment", cmtDto);
 	}
-	//
-	public List<CmtDataBean>getComments(Map<String,Integer>map){
-		return session.selectList("db.getComments",map);
+	
+	public List<CmtDataBean> getComment( CmtDataBean cmtDto ) {
+		return session.selectList("db.getComment", cmtDto);
 	}
-	public void addComment() {
+	
+	public int updateComment(CmtDataBean cmtDto) {
+		return session.update("db.updateComment", cmtDto);
 	}
-	public int delComment(int c_id) {
-		return session.delete("db.delComment",c_id);
+	
+	public int deleteComment( int c_id ) {
+		return session.delete("db.deleteComment", c_id);
 	}
-	public void modComment() {
-	}
+	
+	
+	
 }

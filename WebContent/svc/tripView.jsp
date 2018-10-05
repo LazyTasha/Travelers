@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/svc/setting.jsp"%>
+<script src="//code.jquery.com/jquery.js"></script>
 <script src="${project}script.js"></script>
 <style>
    #map {
@@ -28,6 +29,10 @@
 	<section>
 		<button onclick="showMap()">지도</button>
 		<button onclick="showAlbum()">사진</button>
+		<button onclick="attend()">참석</button><button onclick="attend()">불참</button>
+		<div class="sum">
+        <div class="sumsumList"></div>
+    </div>
 	</section>
 	
 	<!--boardAlbum영역  -->
@@ -44,4 +49,25 @@
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=initMap">
 </script>
-	
+
+<!-- comment -->
+<div class="container">
+        <label for="content">comment</label>
+        <form name="commentInsertForm" method="post">
+            <div class="input-group">
+            	<%-- <input type="hidden" name="number" id="number" value="${tbDto.tb_no}"> --%>
+            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
+            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
+               	<input type="text" class="input" id="c_content" name="c_content" placeholder="내용을 입력하세요.">
+               
+               <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="commentInsert()">등록</button>
+               </span>
+     		</div>
+		</form>
+	</div>
+    
+   	<div class="container">
+        <div class="commentList"></div>
+    </div>
+<!-- comment -->	
