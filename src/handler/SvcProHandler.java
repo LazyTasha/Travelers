@@ -195,7 +195,7 @@ public class SvcProHandler {
 	        
 	        return map;
 	    }
-	 @RequestMapping("/albumPro")
+	 @RequestMapping("/boardAlbumPro")
 		public ModelAndView svcAlbumProProcess(HttpServletRequest request, MultipartHttpServletRequest mtrequest) throws HandlerException {
 		 	int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		 	
@@ -243,7 +243,7 @@ public class SvcProHandler {
 	            }
 	        }
 			request.setAttribute("fileResult",fileResult);
-			return new ModelAndView("/svc/albumPro");
+			return new ModelAndView("/svc/boardAlbumPro");
 		}
 		 private boolean isValidExtension(String originFileName) {
 		        String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1).toLowerCase();
