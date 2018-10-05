@@ -96,7 +96,7 @@ public class AdmListHandler {
 		}
 		String tb_no=request.getParameter("tb_no");
 		String notice=request.getParameter("yn");
-		if(tb_no!=null||notice!=null) {
+		if(tb_no!=null&&notice!=null) {
 			if(notice.equals("yes"))
 				tripDao.notice(Integer.parseInt(tb_no));
 			else {

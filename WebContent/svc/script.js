@@ -8,14 +8,71 @@ var loginiderror = "입력하신 아이디가 없습니다.\n아이디를 다시
 var loginpasswderror = "입력하신 비밀번호가 다릅니다.\n비밀번호를 다시 확인하세요.";
 var deleteerror = "회원탈퇴에 실패했습니다.\n잠시 후 다시 시도하세요.";
 
-function uploadPhotos(tb_no){
-	open("albumForm.go?tb_no="+tb_no,"confirm window","scrollbar=yes,status=no,menubar=no,width=600,height=300");
-}
+var extensionerror="jpg, gif, png 확장자만 업로드 가능합니다.";
+var sizeerror="이미지 용량은 5M이하만 가능합니다.";
+
+var nocheckerror="다운로드 받을 사진을 선택하세요";
+
+var filesize=5*1024*1024;
+
 function erroralert( msg ) {
 	alert( msg );
 	history.back();
 }
+//Initialize and add the map
+function initMap() {
+	var lat=parseFloat(document.getElementById("lat").value);
+	var lng=parseFloat(document.getElementById("lng").value);
+	
+  // The location of Uluru
+  var position = {lat:lat,lng:lng};
+  // The map, centered at Uluru
+  var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 8, center: position});
+  // The marker, positioned at Uluru
+  var marker = new google.maps.Marker({position: position, map: map});
 
+}
+//지도 주소검색
+function searchMap() {
+    var map = new google.maps.Map(document.getElementById('searchmap'), {
+      zoom: 8,
+      center: {lat: -34.397, lng: 150.644}
+    });
+    var geocoder = new google.maps.Geocoder();
+
+    document.getElementById('submit').addEventListener('click', function() {
+     geocodeAddress(geocoder, map);
+    });
+  }
+//주소로 좌표 표시
+  function geocodeAddress(geocoder, resultsMap) {
+    var address = document.getElementById('address').value;
+    geocoder.geocode({'address': address}, function(results, status) {
+      if (status === 'OK') {
+        resultsMap.setCenter(results[0].geometry.location);
+        var marker = new google.maps.Marker({
+          map: resultsMap,
+          position: results[0].geometry.location
+        });
+        //좌표 받기
+        var lat=marker.position.lat();//위도 
+        var lng=marker.position.lng();//경도
+        
+        //lat,lng를 form에 보내주기
+        var msg="<input id='lat' type='hidden' value="+lat+"/>"
+        	+"<input id='lng' type='hidden' value="+lng+"/>";
+        $('#searchMap').html(msg);
+        //alert($('#searchmap').html())
+    
+        
+        //alert(document.getElementById('lat').value);
+      } else {
+        alert('Geocode was not successful for the following reason: ' + status);
+      }
+    });
+    
+  }
 // 회원 정보 수정
 function modifyfocus() {
 	modifyform.passwd.focus();
@@ -230,4 +287,76 @@ function inputcheck() {
 			return false;
 		}
 	}
+}
+//사진 선택click->create checkbox
+function selectPhotos(){
+	$('input[name=check1]').show();
+	$('#select').hide();
+	$('#download').show();
+}
+//사진 다운로드 click->photo download
+function downloadPhotos(){
+	var check1=$('input[name=check1]');
+	if($("input[name=check1]:checked").length==0){
+		alert(nocheckerror);
+	}else{
+		//download구현->downloadPhoto.go로 이동 해서 작업
+	}
+}
+//사진 업로드 click->photo upload
+function uploadPhotos(){
+	eventOccur(document.getElementById('file'),'click');
+	var error=0;
+	$('#file').change(function() {  
+	    if (this.files) { 
+	    	var form=document.getElementById('uploadForm');
+	    	var file= document.getElementById("file");
+	    	for(var i=0;i<file.files.length;i++){
+		    	var fileName=$('#file').get(0).files[i].name;
+		    	var size=$('#file').get(0).files[i].size;
+		    	if(validation(fileName)){
+		    		alert(extensionerror);
+		    		error++;
+		    		break;
+		    	}
+		    	if(sizeOver(size)){
+		    		alert(sizeerror);
+		    		error++;
+		    		break;
+		    	}
+	    	}
+	    	if(error==0)form.submit();
+	    }
+	});	
+}
+function eventOccur(evEle, evType){
+	 if (evEle.fireEvent) {
+		 evEle.fireEvent('on' + evType);
+	 } else {
+		 var mouseEvent = document.createEvent('MouseEvents');
+		 mouseEvent.initEvent(evType, true, false);
+		 var transCheck = evEle.dispatchEvent(mouseEvent);
+		 if (!transCheck) {
+			 //만약 이벤트에 실패했다면
+			 console.log("click event fail");
+		 }
+	 }
+}
+//client-side extension validation
+function validation(fileName) {
+    fileName = fileName + "";
+    var fileNameExtensionIndex = fileName.lastIndexOf('.') + 1;
+    var fileNameExtension = fileName.toLowerCase().substring(
+            fileNameExtensionIndex, fileName.length);
+    if (!((fileNameExtension === 'jpg')
+            || (fileNameExtension === 'gif') || (fileNameExtension === 'png'))) {
+        return true;
+    } else {
+        return false;
+    }
+}
+//size validation
+function sizeOver(size){
+	if(size>filesize)return true;
+	else return false;
 }

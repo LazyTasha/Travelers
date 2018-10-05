@@ -35,7 +35,7 @@ public class SvcFormHandler {
 	@Resource
 	private TbDBBean tbDao;
 	
-	@RequestMapping("/svc/tripWriteForm")
+	@RequestMapping("/tripWriteForm")
 	public ModelAndView svcTripWriteFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//need to know who is writing
 		String writer_id=((UserDataBean)request.getAttribute("userDto")).getUser_id();
@@ -49,7 +49,7 @@ public class SvcFormHandler {
 		//request.setAttribute("tags", tags);
 		return new ModelAndView("svc/tripWriteForm");
 	}
-	@RequestMapping("/svc/tripModForm")
+	@RequestMapping("/tripModForm")
 	public ModelAndView svcTripModFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//get the origin, it will also bring its tags and locs
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
@@ -73,11 +73,5 @@ public class SvcFormHandler {
 	@RequestMapping( "/userDeleteForm" )
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView( "svc/deleteForm" );
-	}
-	@RequestMapping( "/albumForm" )
-	public ModelAndView albumFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		String tb_no=request.getParameter("tb_no");
-		request.setAttribute("tb_no", tb_no);
-		return new ModelAndView( "svc/albumForm" );
 	}
 }

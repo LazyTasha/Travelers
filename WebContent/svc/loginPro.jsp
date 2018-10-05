@@ -24,19 +24,7 @@
 <c:if test="${result eq 1}">
 	${sessionScope.memid = id}
 	<c:if test="${userType eq 1}">
-		<c:redirect url="adminTrip.go"/>	
+		<c:redirect url="adminTrip.go"/>
 	</c:if>
-	<c:redirect url="userLoginForm.go"/>	
+	<c:redirect url="list.go"/>
 </c:if>
-
-
-
-
-
-
-
-
-
-
-
-

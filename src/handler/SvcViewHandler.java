@@ -1,20 +1,25 @@
 package handler;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
+import db.AlbumDataBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
+import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
 
@@ -57,34 +62,67 @@ public class SvcViewHandler {
 		
 		return new ModelAndView( "svc/modifyView" );
 	}
-	@RequestMapping("/svc/*")
+	@RequestMapping("/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/default");
 	}
-	@RequestMapping("/svc/main")
+	@RequestMapping("/main")
 	public ModelAndView svcMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/main");
 	}
-	@RequestMapping("/svc/list")
+	@RequestMapping("/list")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
+		List<TbDataBean> tripList=tbDao.getTripList();
+		int count=tbDao.getCount();
+		request.setAttribute("userDto", userDto);
+		request.setAttribute("tripList", tripList);
+		request.setAttribute("count", count);
 		return new ModelAndView("svc/list");
 	}
 	@RequestMapping("/album")
 	public ModelAndView svcAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		String tb_no=request.getParameter("tb_no");
-		tb_no="1";
+		//int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		int tb_no=1;
 		request.setAttribute("tb_no", tb_no);
+		
+		String user_id=(String) request.getSession().getAttribute( "memid" );
+		if(user_id==null)user_id="";
+		
+		int count=albumDao.getBoardCount(tb_no);
+		request.setAttribute("count", count);
+		if(count>0) {
+			//select board album
+			List<AlbumDataBean>album=albumDao.getBoardAlbum(tb_no);
+			request.setAttribute("album", album);
+			
+			//check user whether user is member or not
+			TbDataBean tbDto=new TbDataBean();
+			tbDto.setUser_id(user_id);
+			tbDto.setTb_no(tb_no);
+			boolean isMember=tbDao.isMember(tbDto);
+			request.setAttribute("isMember", isMember);
+		}
 		return new ModelAndView("svc/album");
 	}
-	@RequestMapping("/svc/reg")
+	@RequestMapping("/reg")
 	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/reg");
 	}
-	@RequestMapping("/svc/myPage")
+	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		//I don't know why but it fails to get userDto, so here I try to get it.
+		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("memid"));
+		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
+		String[] userTags=new String[userTagList.size()];
+		for(int i=0; i<userTags.length; i++) {
+			userTags[i]=userTagList.get(i);
+		}
+		request.setAttribute("userDto", userDto);
+		request.setAttribute("userTags", userTags);
 		return new ModelAndView("svc/myPage");
 	}
-	@RequestMapping("/svc/myTrip")
+	@RequestMapping("/myTrip")
 	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/myTrip");
 	}

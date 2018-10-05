@@ -33,7 +33,13 @@ import db.UserDataBean;
 
 @Controller
 public class SvcProHandler {  
-	static private final int admin=9;
+	private static final int ADMIN=9;
+	private static final int EXTENSION_ERROR=-1;
+	private static final int SIZE_ERROR=-2;
+	private static final int SUCCESS=1;
+	private static final long LIMIT_SIZE = 5* 1024 * 1024;//image max size=5M;
+	
+	
 	@Resource
 	private TripDBBean tripDao;
 	@Resource
@@ -144,13 +150,12 @@ public class SvcProHandler {
 		String passwd = request.getParameter( "passwd" );
 		
 		int result = userDao.check( id, passwd );
-		System.out.println(result);
  		request.setAttribute( "result", result );
 		request.setAttribute( "id", id );
 		
 		if(result==1) {
 			int user_level=userDao.getUserLevel(id);
-			if(user_level==admin) {
+			if(user_level==ADMIN) {
 				userType=1;
 			}
 			request.setAttribute("userType", userType);
@@ -160,8 +165,8 @@ public class SvcProHandler {
 	
 	@RequestMapping( "/userLogout" )	//logout �엫
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		request.getSession().removeAttribute( "memid" );		
-		return new ModelAndView( "svc/main" );
+		request.getSession().removeAttribute( "memid" );	
+		return new ModelAndView( "svc/loginForm" );
 	}	
 		
 	//以묐났�솗�씤
@@ -192,7 +197,8 @@ public class SvcProHandler {
 	    }
 	 @RequestMapping("/albumPro")
 		public ModelAndView svcAlbumProProcess(HttpServletRequest request, MultipartHttpServletRequest mtrequest) throws HandlerException {
-			int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		 	int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		 	
 			String uploadPath = request.getServletContext().getRealPath("/");
 			System.out.println(uploadPath);
 			String path=uploadPath+"save/";
@@ -203,9 +209,21 @@ public class SvcProHandler {
 			List<MultipartFile> fileList = mtrequest.getFiles("files");
 			//모든 파일 선택 가능->추후 사진 파일만 선택 할 필요 있음
 			AlbumDataBean albumDto;
+			
+			int fileResult=SUCCESS;//파일 입출력 결과
+			long imgSize;//이미지 파일 크기
 			for (MultipartFile mf : fileList) {
 	            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
-
+	            
+	            if(!isValidExtension(originFileName)) {
+	            	fileResult=EXTENSION_ERROR;
+	            	break;
+	            }
+	            
+	            imgSize=mf.getSize();
+	            if(imgSize>=LIMIT_SIZE) {
+	            	fileResult=SIZE_ERROR;break;
+	            }
 	            String safeFile = path + System.currentTimeMillis() + originFileName;
 	            String safeDBFile=DBpath+ System.currentTimeMillis() + originFileName;
 	            try {
@@ -224,7 +242,17 @@ public class SvcProHandler {
 	                e.printStackTrace();
 	            }
 	        }
-
-			return new ModelAndView("redirect:albumForm.go");
+			request.setAttribute("fileResult",fileResult);
+			return new ModelAndView("/svc/albumPro");
 		}
+		 private boolean isValidExtension(String originFileName) {
+		        String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1).toLowerCase();
+		        switch(fileExtension) {
+			        case "jpg":
+			        case "png":
+			        case "gif":
+		            return true;
+		        }
+		        return false;
+		    }
 }

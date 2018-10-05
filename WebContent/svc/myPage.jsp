@@ -27,7 +27,7 @@
 <div class="container" style="width:600px">
 		<div class="text-center">
 			<a href="list.jsp">
-				<img class="mb-4" src="img/logo_c.png" alt="" width="100" height="100">
+				<img class="mb-4" src="${project}img/logo_c.png" alt="" width="100" height="100">
 			</a>
 			<h2>${userDto.user_id} &nbsp; ${msg_main_login}</h2>
 			<br>
@@ -61,11 +61,11 @@
 		    	<label for="tag" class="control-label col-sm-2" >${str_tag} </label>
 		    	<div class="col-sm-8">
 		    		<div class="btn-group btn-group-sm" role="group" aria-label="...">
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#해시태그</button>
-					  <button type="button" class="btn btn-default" disabled>#${tagDto.tag_value}</button>
+		    			<c:if test="${userTags} ne null">
+		    				<c:forEach var="i" items="${userTags}">
+		    					<button type="button" class="btn btn-default" disabled>#${i.value}&nbsp; </button>
+		    				</c:forEach>
+		    			</c:if>
 					</div>
 		     	 </div>	
 			</div>
@@ -73,6 +73,7 @@
 				<div class="col-sm-2"></div>
 				<div class="col-sm-8">
 					<button type="button" class="btn btn-lg btn-secondary btn-block">${btn_modify}</button>
+					<button type="button" class="btn btn-lg btn-secondary btn-block" onclick="location='userLogout.go'">${btn_logout}</button>
 				</div>
 			</div>
 		</form>
