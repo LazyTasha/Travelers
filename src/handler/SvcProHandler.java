@@ -11,6 +11,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 import db.AlbumDBBean;
 import db.AlbumDataBean;
 import db.CmtDBBean;
+import db.CmtDataBean;
 import db.LocDBBean;
 import db.TagDBBean;
 import db.TbDBBean;
@@ -254,4 +257,58 @@ public class SvcProHandler {
 		        }
 		        return false;
 		    }
+		/////////comment
+		@RequestMapping(value="/commentInsert.go", method= RequestMethod.POST, produces = "application/json" )
+		@ResponseBody
+		public void commentInserProcess(HttpServletRequest request, HttpSession session) throws HandlerException {
+			try {
+				request.setCharacterEncoding( "utf-8" );
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+				/*String userid = (String)session.getAttribute("memid");*/
+				CmtDataBean cmtDto = new CmtDataBean();
+				cmtDto.setUser_id( "test" );	//jsp에서 히든으로 가져오면됨
+				cmtDto.setTb_no(Integer.parseInt("13"));
+				cmtDto.setC_content(request.getParameter("c_content"));
+				cmtDto.setC_reg_date( new Timestamp( System.currentTimeMillis() ) );	
+				  
+				cmtDao.insertComment(cmtDto);
+			}
+
+		@RequestMapping(value="/commentSelect.go", method=RequestMethod.GET, produces = "application/json")
+		@ResponseBody
+		public List<CmtDataBean> commentSelectProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+
+				CmtDataBean cmtDto = new CmtDataBean();
+				List<CmtDataBean>comemnt= cmtDao.getComment(cmtDto);
+				request.setAttribute("comemnt", comemnt);
+					
+				return comemnt;
+		}
+			 
+		@RequestMapping(value="/commentUpdate.go", method= RequestMethod.POST, produces = "application/json") //댓글 수정  
+		@ResponseBody
+		private void commentUpdateProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException{
+			 try {
+				request.setCharacterEncoding( "utf-8" );
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+				
+			 	CmtDataBean cmtDto = new CmtDataBean();
+			 		cmtDto.setC_id(Integer.parseInt(request.getParameter("c_id")));
+					cmtDto.setC_content(request.getParameter("c_content"));
+					  
+					cmtDao.updateComment(cmtDto);
+			}
+			 	
+		@RequestMapping(value="/commentDelete.go", method= RequestMethod.POST) //댓글 삭제  
+		@ResponseBody
+		private void commentDeleteProcess(HttpServletRequest request, HttpServletResponse response) throws Exception{
+			 		  
+			 	int c_id = Integer.parseInt(request.getParameter("c_id")); 
+			
+			 	cmtDao.deleteComment( c_id );
+		}
 }

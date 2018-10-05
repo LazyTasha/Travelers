@@ -181,26 +181,14 @@ function overlapCheck() {
 			data : user_id,
 			url : "idCheck.go",
 			dataType : "json",
-			/* contentType : "application/json", */
 			success : function(data) {
 				if (data.cnt > 0) {
 					$('#passwordCheckMessagegg').html(
 							"아이디가 존재합니다. 다른 아이디를 입력해주세요.")
-					/*
-					 * alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
-					 * $("#divInputId").addClass("has-error")
-					 * $("#divInputId").removeClass("has-success")
-					 * $("#id_val").focus();
-					 */
 				} else {
 					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
-					/*
-					 * alert("사용가능한 아이디입니다.");
-					 * $("#divInputId").addClass("has-success")
-					 * $("#divInputId").removeClass("has-error")
-					 * $("#passwd").focus();
-					 */
-					// 아이디가 중복하지 않으면 idck = 1
+				} else {
+					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
 					idck = 1;
 				}
 			},
@@ -210,7 +198,6 @@ function overlapCheck() {
 		});
 	}
 }
-// /////////
 
 // 닉네임
 var genck = 0;
@@ -227,19 +214,10 @@ function over() {
 			success : function(data) {
 				if (data.cntt > 0) {
 					$('#passwordCheckMessageggg').html("닉네임이 존재합니다.")
-					/*  alert("아이디가 존재합니다. 다른 아이디를 입력해주세요.");
-					  $("#divInputId").addClass("has-error")
-					  $("#divInputId").removeClass("has-success")
-					  $("#id_val").focus();*/
-
+				
 				} else {
 					$('#passwordCheckMessageggg').html("사용가능한 닉네임입니다.")
 
-					/*alert("사용가능한 아이디입니다.");	                    
-					$("#divInputId").addClass("has-success")
-					$("#divInputId").removeClass("has-error")
-					$("#passwd").focus();*/
-					//아이디가 중복하지 않으면  idck = 1 
 					genck = 1;
 
 				}
@@ -264,39 +242,6 @@ function inputcheck() {
 			$("#inputform").button();
 		}
 	}
-	/*if( ! inputform.user_id.value ) {
-		alert( iderror );
-		inputform.user_id.focus();
-		return false;
-	} else if( ! inputform.passwd.value ) {
-		alert( passwderror );
-		inputform.passwd.focus();
-		return false;
-	} else if( inputform.passwd.value != inputform.repasswd.value ) {
-		alert( repasswderror );
-		inputform.repasswd.focus();
-		return false;
-	} else if( ! inputform.user_name.value ) {
-		alert( nameerror );
-		inputform.user_name.focus();
-		return false;
-	}else if ( ! inputform.gender.value ){
-		alert( gendererror );
-		inputform.gender.focus();
-		return false;
-	}else if ( ! inputform.email1.value ){
-		alert( emailerror );
-		inputform.email1.focus();
-		return false;
-	}else if ( ! inputform.email2.value ){
-		alert( emailerror );
-		inputform.email1.focus();
-		return false;
-	}*/
-	// 	1. null 인 경우			이동 가능
-	// 	2. 직접입력일 경우		email1 란에 @가 없으면 경고
-	// 	3. 선택입력일 경우		email1 란에 @가 있으면 경고
-	//	단 전화번호가 있건 없건 모두 가능해야 한다.
 
 	if (inputform.email1.value.indexOf("@") == -1) {
 		alert(emailerror);
@@ -379,4 +324,127 @@ function validation(fileName) {
 function sizeOver(size){
 	if(size>filesize)return true;
 	else return false;
+}
+
+////comment
+function commentInsert(){ //댓글 등록 버튼 클릭시 
+	 var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
+	 CmtInsert(insertData); //Insert 함수호출(아래)
+}
+ 
+ 
+var number = '${tbDto.tb_no}'; //게시글 번호
+
+//댓글 목록 
+function commentList(tb_no){
+    $.ajax({
+        url : 'commentSelect.go',
+        type : 'get',
+        data : {tb_no : tb_no},
+        success : function(data){
+            var a =''; 
+            $.each(data, function(key, comemnt){ 
+            	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+                a += '<div class="commentInfo'+comemnt.c_id+'">'+'댓글번호 : '+comemnt.c_id+' / 작성자 : '+comemnt.user_id;
+                a += '<a onclick="commentUpdate('+comemnt.c_id+',\''+comemnt.c_content+'\');"> 수정 </a>';
+                a += '<a onclick="commentDelete('+comemnt.c_id+');"> 삭제 </a> </div>';
+                a += '<div class="commentContent'+comemnt.c_id+'"> <p> 내용 : '+comemnt.c_content +'</p>';
+                a += '</div></div>'
+            });
+            
+            $(".commentList").html(a);
+        },
+        error : function(error) {
+            alert("error : " + error + number);
+        }
+    });
+}
+
+//댓글 등록
+function CmtInsert(insertData){
+    $.ajax({
+        url : 'commentInsert.go',
+        type : 'post',
+        data : insertData,
+        success : function(data){
+        	if(data == 1) {
+        		/*오류메세지 작성*/
+           }else{
+        	   commentList();
+        	   $('[name=c_content]').val('');
+           }
+        },
+    	error : function(error) {
+        alert("error : " + error);
+    }
+    });
+}
+
+//댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
+function commentUpdate(c_id, c_content){
+    var a ='';
+    
+    a += '<div class="input-group">';
+    a += '<input type="text" class="form-control" name="c_content_'+c_id+'" value="'+c_content+'"/>';
+    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+c_id+');">수정</button> </span>';
+    a += '</div>';
+    
+    $('.commentContent'+c_id).html(a);
+    
+}
+ 
+//댓글 수정
+function commentUpdateProc(c_id){
+    var updateContent = $('[name=c_content_'+c_id+']').val();
+    
+    $.ajax({
+        url : 'commentUpdate.go',
+        type : 'post',
+        data : {'c_content' : updateContent, 'c_id' : c_id},
+        success : function(data){
+            commentList(number); //댓글 수정후 목록 출력 
+        }
+    });
+}
+ 
+//댓글 삭제 
+function commentDelete(c_id){
+	
+    $.ajax({
+        url : 'commentDelete.go',
+        type : 'post',
+        data : {
+        	c_id : c_id
+        },
+        success : function(data){
+            commentList(number); //댓글 삭제후 목록 출력 
+        },
+        error : function(error) {
+            alert("error : " + error);
+        }
+    });
+}
+
+$(document).ready(function(){
+    commentList(); //페이지 로딩시 댓글 목록 출력 
+});
+
+
+function loadMoreList(last_tb_no) {
+	$('#append-list').load
+	$.ajax({
+		type : 'post',
+		data : last_tb_no,
+		url : "loadMoreList.go",
+		success : function(data) {
+			if(data){
+				request.send(last_tb_no);
+			} else {
+				alert('더 이상 불러올 글이 없습니다.');
+			}
+		},
+		error : function(error) {
+			alert('글 불러오기에 실패했습니다.');
+		}
+	});
 }

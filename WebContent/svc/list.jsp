@@ -103,6 +103,7 @@ h1, h2, h3, h4, h5, h6 {
 	margin-bottom: 0;
 }
 </style>
+<script src="//code.jquery.com/jquery.js"></script>
 </head>
 
 <body>
@@ -172,8 +173,10 @@ h1, h2, h3, h4, h5, h6 {
 			    		 </div>
 			    	</div>
 	    		</c:forEach>
+	    		<div id="append-list">
+	    		</div>
 	    	</c:if>
-    	<button type="button" class="btn btn-dark col-md-12">Load more...</button>
+    	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList()">Load more...</button>
     </div><!-- board list -->
 </div><!-- body box -->	
 		

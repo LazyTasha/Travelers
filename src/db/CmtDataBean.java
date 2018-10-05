@@ -4,8 +4,8 @@ import java.sql.Timestamp;
 
 public class CmtDataBean {
 	private int c_id;
-	private String user_id;
 	private int tb_no;
+	private String user_id;
 	private String c_content;
 	private Timestamp c_reg_date;
 	public int getC_id() {

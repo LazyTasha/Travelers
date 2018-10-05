@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -86,6 +87,14 @@ public class SvcViewHandler {
 		request.setAttribute("count", count);
 		return new ModelAndView("svc/list");
 	}
+	@RequestMapping(value="/loadMoreList", produces = "application/json")
+	@ResponseBody
+	public List<TbDataBean> loadMoreList(int last_tb_no) {
+		List<TbDataBean> additionalList=tbDao.loadMoreList(last_tb_no);
+		
+		return additionalList;
+	}
+	
 	@RequestMapping("/album")
 	public ModelAndView svcAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {	
 		int count=albumDao.getCount();

@@ -5,6 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
+
+
 <c:set var="project" value="/Travelers/svc/"/> <!-- o -->
 
 <c:set var="page_main" value="메인 페이지"/>
@@ -19,6 +21,7 @@
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
 <c:set var="page_calendar_eng" value="Calendar"/>
+<c:set var="page_write" value="글쓰기"/>
 
 
 <c:set var="msg_main" value="비회원이시면 회원가입을 해주세요"/>
@@ -69,7 +72,7 @@
 <c:set var="trip_title" value="제목"/>
 <c:set var="trip_writer" value="작성자"/>
 <c:set var="trip_content" value="본문"/>
-<c:set var="trip_m_num" value="참여 인원"/>
+<c:set var="trip_m_num" value="인원"/>
 <c:set var="trip_talk_link" value="대화 링크"/>
 <c:set var="trip_tag" value="여행 태그"/>
 <c:set var="trip_write" value="등록"/>
