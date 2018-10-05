@@ -79,7 +79,7 @@
 			
 			<fieldset class="form-group">
 				<div class="row">
-					<legend class="col-form-label col-sm-2 pt-0">${str_gender}</legend>
+					<label class="col-form-label col-sm-2 pt-0">${str_gender}</label>
 					<div class="col-sm-10">
 						<div class="form-check">
 						
