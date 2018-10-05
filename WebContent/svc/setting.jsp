@@ -5,8 +5,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
-
 <c:set var="project" value="/Travelers/svc/"/> <!-- o -->
 
 <c:set var="page_main" value="메인 페이지"/>

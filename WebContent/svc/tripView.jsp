@@ -49,14 +49,14 @@
 			<button onclick="previous(${start},${size})">◀</button>
 		</c:if>
 			<jsp:include page='boardAlbum.go?tb_no=${tb_no}&start=${start}&end=${end}&tab=${tab}' flush="false"/>
-		<c:if test="${start lt count}">
+		<c:if test="${start lt last}">
 			<button onclick="next(${start},${size})">▶</button>
 		</c:if>
 		</div>
 	</section>
 
 	<!--ㅡMap영역  -->
-		<c:if test="${tab eq 0}">
+	<c:if test="${tab eq 0}">
 		<div id="mapTab">
 	</c:if>
 	<c:if test="${tab eq 1}">
@@ -66,30 +66,39 @@
 		<input type="hidden" value="${lat}" id="lat"/>
 		<input type="hidden" value="${lng}" id="lng"/>
 	</div>
-
+	
+	<!-- comment -->
+	<div class="container">
+	        <label for="content">comment</label>
+	        <form name="commentInsertForm" method="post">
+	            <div class="input-group">
+	            	<%-- <input type="hidden" name="number" id="number" value="${tbDto.tb_no}"> --%>
+	            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
+	            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
+	               	<input type="text" class="input" id="c_content" name="c_content" placeholder="내용을 입력하세요.">
+	               
+	               <span class="input-group-btn">
+	                    <button class="btn btn-default" type="button" onclick="commentInsert()">등록</button>
+	               </span>
+	     		</div>
+			</form>
+		</div>
+	    
+	   	<div class="container">
+	        <div class="commentList"></div>
+	        <input type="hidden" name="tb_no" value="${tb_no}"/>
+	    </div>
+	<!-- comment -->
 </article>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=initMap">
 </script>
 
-<!-- comment -->
-<div class="container">
-        <label for="content">comment</label>
-        <form name="commentInsertForm" method="post">
-            <div class="input-group">
-            	<%-- <input type="hidden" name="number" id="number" value="${tbDto.tb_no}"> --%>
-            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
-            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
-               	<input type="text" class="input" id="c_content" name="c_content" placeholder="내용을 입력하세요.">
-               
-               <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" onclick="commentInsert()">등록</button>
-               </span>
-     		</div>
-		</form>
-	</div>
-    
-   	<div class="container">
-        <div class="commentList"></div>
-    </div>
-<!-- comment -->	
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
+    <script src="../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../dist/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/vendor/holder.min.js"></script>
+	

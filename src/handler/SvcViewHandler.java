@@ -116,13 +116,12 @@ public class SvcViewHandler {
 		
 		int count=albumDao.getBoardCount(tb_no);
 		request.setAttribute("count", count);
-		//String tab=request.getParameter("tab");
 		
 		if(count>0) {
 			//page
 			int start=Integer.parseInt(request.getParameter("start"));
 			int end=Integer.parseInt(request.getParameter("end"));
-			System.out.println(start);
+
 			//select board album
 			Map<String, Integer>map=new HashMap<String,Integer>();
 			map.put("start", start);
@@ -194,7 +193,9 @@ public class SvcViewHandler {
 		request.setAttribute("end", end);
 		request.setAttribute("size", PHOTOSIZE);
 		int count=albumDao.getBoardCount(tb_no);
-		request.setAttribute("count", count);
+		//request.setAttribute("count", count);
+		int last=(count/PHOTOSIZE)*PHOTOSIZE+1;
+		request.setAttribute("last",last);
 		
 		return new ModelAndView("svc/tripView");
 	}

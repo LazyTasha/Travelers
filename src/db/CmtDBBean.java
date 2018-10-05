@@ -16,8 +16,8 @@ public class CmtDBBean {
 		return session.insert("db.insertComment", cmtDto);
 	}
 	
-	public List<CmtDataBean> getComment( CmtDataBean cmtDto ) {
-		return session.selectList("db.getComment", cmtDto);
+	public List<CmtDataBean> getComment( int tb_no ) {
+		return session.selectList("db.getComment", tb_no);
 	}
 	
 	public int updateComment(CmtDataBean cmtDto) {
