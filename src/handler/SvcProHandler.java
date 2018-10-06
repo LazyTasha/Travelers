@@ -266,8 +266,10 @@ public class SvcProHandler {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-				String user_id = (String)session.getAttribute("memid");
-				CmtDataBean cmtDto = new CmtDataBean();
+				/*String userid = (String)session.getAttribute("memid");*/                				
+				CmtDataBean cmtDto = new CmtDataBean();   
+				String user_id="test";
+			
 				cmtDto.setUser_id(user_id);	//jsp에서 히든으로 가져오면됨
 				cmtDto.setTb_no(Integer.parseInt(request.getParameter("tb_no")));
 				cmtDto.setC_content(request.getParameter("c_content"));
