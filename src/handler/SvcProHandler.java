@@ -266,12 +266,12 @@ public class SvcProHandler {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-				/*String userid = (String)session.getAttribute("memid");*/
+				String user_id = (String)session.getAttribute("memid");
 				CmtDataBean cmtDto = new CmtDataBean();
-				cmtDto.setUser_id( "test" );	//jsp에서 히든으로 가져오면됨
-				cmtDto.setTb_no(Integer.parseInt("13"));
+				cmtDto.setUser_id(user_id);	//jsp에서 히든으로 가져오면됨
+				cmtDto.setTb_no(Integer.parseInt(request.getParameter("tb_no")));
 				cmtDto.setC_content(request.getParameter("c_content"));
-				cmtDto.setC_reg_date( new Timestamp( System.currentTimeMillis() ) );	
+				//cmtDto.setC_reg_date( new Timestamp( System.currentTimeMillis() ) );	
 				  
 				cmtDao.insertComment(cmtDto);
 			}
@@ -295,8 +295,7 @@ public class SvcProHandler {
 				request.setCharacterEncoding( "utf-8" );
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-			}
-				
+			}			
 			 	CmtDataBean cmtDto = new CmtDataBean();
 			 		cmtDto.setC_id(Integer.parseInt(request.getParameter("c_id")));
 					cmtDto.setC_content(request.getParameter("c_content"));
