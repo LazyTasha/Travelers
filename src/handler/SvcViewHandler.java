@@ -120,16 +120,22 @@ public class SvcViewHandler {
 		if(count>0) {
 			//page
 			int start=Integer.parseInt(request.getParameter("start"));
-			int end=Integer.parseInt(request.getParameter("end"));
+			int end=start+PHOTOSIZE-1;
+			request.setAttribute("start", start);
+			request.setAttribute("end", end);
+			request.setAttribute("size", PHOTOSIZE);
+
+			int last=(count/PHOTOSIZE)*PHOTOSIZE+1;
+			request.setAttribute("last",last);
 
 			//select board album
 			Map<String, Integer>map=new HashMap<String,Integer>();
-			map.put("start", start);
+			map.put("start",start);
 			map.put("end", end);
 			map.put("tb_no", tb_no);
 			List<AlbumDataBean>album=albumDao.getBoardAlbum(map);
 			request.setAttribute("album", album);
-			
+
 			//check user whether user is member or not
 			TbDataBean tbDto=new TbDataBean();
 			tbDto.setUser_id(user_id);
@@ -174,6 +180,7 @@ public class SvcViewHandler {
 		//determine tab
 		String tab=request.getParameter("tab");
 		if(tab==null)tab=MAP;
+
 		request.setAttribute("tab", tab);
 		
 		//map data
@@ -185,18 +192,11 @@ public class SvcViewHandler {
 		request.setAttribute("lng", lng);
 		
 		//board album data	
-		request.setAttribute("tb_no", tb_no);
 		String start=request.getParameter("start");
 		if(start==null)start="1";
-		int end=Integer.parseInt(start)+PHOTOSIZE-1;
-		request.setAttribute("start", start);
-		request.setAttribute("end", end);
-		request.setAttribute("size", PHOTOSIZE);
-		int count=albumDao.getBoardCount(tb_no);
-		//request.setAttribute("count", count);
-		int last=(count/PHOTOSIZE)*PHOTOSIZE+1;
-		request.setAttribute("last",last);
-		
+		request.setAttribute("tb_no", tb_no);
+		request.setAttribute("start",start);
+
 		return new ModelAndView("svc/tripView");
 	}
 }

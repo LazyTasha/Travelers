@@ -44,16 +44,8 @@
 	<c:if test="${tab eq '1'}">
 		<section id="albumTab">
 	</c:if>
-		<div class="row">
-		<c:if test="${start gt size}">
-			<button onclick="previous(${start},${size})">◀</button>
-		</c:if>
-			<jsp:include page='boardAlbum.go?tb_no=${tb_no}&start=${start}&end=${end}&tab=${tab}' flush="false"/>
-		<c:if test="${start lt last}">
-			<button onclick="next(${start},${size})">▶</button>
-		</c:if>
-		</div>
-	</section>
+			<jsp:include page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}' flush='true'/>
+		</section>
 
 	<!--ㅡMap영역  -->
 	<c:if test="${tab eq 0}">
@@ -72,6 +64,7 @@
 	        <label for="content">comment</label>
 	        <form name="commentInsertForm" method="post">
 	            <div class="input-group">
+	            	<input type="hidden" name="tb_no" value="${tb_no}"/>
 	            	<%-- <input type="hidden" name="number" id="number" value="${tbDto.tb_no}"> --%>
 	            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
 	            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
@@ -86,7 +79,6 @@
 	    
 	   	<div class="container">
 	        <div class="commentList"></div>
-	        <input type="hidden" name="tb_no" value="${tb_no}"/>
 	    </div>
 	<!-- comment -->
 </article>

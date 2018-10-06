@@ -92,14 +92,18 @@ function showAlbum(){
 //trip-album-nextPage
 function next(start,size){
 	start=start+size;
-	var tab=1;
-	location.href="trip.go?start="+start+"&tab="+tab;
+	albumPaging(start);
 }
 //trip-album-prePage
 function previous(start,size){
 	if(start>size)start=start-size;
+	albumPaging(start);
+}
+function albumPaging(start){
+	var tb_no=$('input[name=tb_no]').val();
 	var tab=1;
-	location.href="trip.go?start="+start+"&tab="+tab;
+	location.href="trip.go?tb_no="+tb_no+"&start="+start+"&tab="+tab;
+
 }
 // 회원 정보 수정
 function modifyfocus() {
@@ -363,7 +367,7 @@ function commentList(tb_no){
 
 //댓글 등록
 function CmtInsert(insertData){
-	var tb_no=$('input[name=tb_no]');
+	var tb_no=$("input[name=tb_no").val();
     $.ajax({
         url : 'commentInsert.go',
         type : 'post',
@@ -397,21 +401,21 @@ function commentUpdate(c_id, c_content){
  
 //댓글 수정
 function commentUpdateProc(c_id){
-    var updateContent = $('[name=c_content_'+c_id+']').val();
-    
+    var updateContent = $('input[name=c_content_'+c_id+']').val();
+    var tb_no=$("input[name=tb_no").val();
     $.ajax({
         url : 'commentUpdate.go',
         type : 'post',
         data : {'c_content' : updateContent, 'c_id' : c_id},
         success : function(data){
-            commentList(number); //댓글 수정후 목록 출력 
+            commentList(tb_no); //댓글 수정후 목록 출력 
         }
     });
 }
  
 //댓글 삭제 
 function commentDelete(c_id){
-	
+	var tb_no=$("input[name=tb_no").val();
     $.ajax({
         url : 'commentDelete.go',
         type : 'post',
@@ -419,7 +423,7 @@ function commentDelete(c_id){
         	c_id : c_id
         },
         success : function(data){
-            commentList(number); //댓글 삭제후 목록 출력 
+            commentList(tb_no); //댓글 삭제후 목록 출력 
         },
         error : function(error) {
             alert("error : " + error);
