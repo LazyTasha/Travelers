@@ -102,8 +102,9 @@ function previous(start,size){
 function albumPaging(start){
 	var tb_no=$('input[name=tb_no]').val();
 	var tab=1;
-	location.href="trip.go?tb_no="+tb_no+"&start="+start+"&tab="+tab;
 
+	var page="svc/boardAlbum.go?tb_no="+tb_no+"&start="+start+"&tab="+tab;
+	$('#album').load(page);
 }
 // 회원 정보 수정
 function modifyfocus() {
