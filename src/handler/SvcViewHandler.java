@@ -28,7 +28,7 @@ import db.UserDataBean;
 
 @Controller
 public class SvcViewHandler {
-	private static final int PHOTOSIZE=5;//한 화면에 출력되는 사진 개수
+	private static final int PHOTOSIZE=6;//한 화면에 출력되는 사진 개수
 	
 	private static final String MAP="0";
 	
@@ -121,11 +121,10 @@ public class SvcViewHandler {
 			//page
 			int start=Integer.parseInt(request.getParameter("start"));
 			int end=start+PHOTOSIZE-1;
-			request.setAttribute("start", start);
-			request.setAttribute("end", end);
-			request.setAttribute("size", PHOTOSIZE);
+			int last=(count%PHOTOSIZE==0?count-PHOTOSIZE:(count/PHOTOSIZE)*PHOTOSIZE);//+(count%PHOTOSIZE==0?0:1));
 
-			int last=(count/PHOTOSIZE)*PHOTOSIZE+1;
+			request.setAttribute("start",start);
+			request.setAttribute("size", PHOTOSIZE);
 			request.setAttribute("last",last);
 
 			//select board album
@@ -171,6 +170,7 @@ public class SvcViewHandler {
 		//get tb_no of the post
 //		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		int tb_no=1;//test용;
+		request.setAttribute("tb_no", tb_no);
 		//get the content of the post
 		//TripDataBean has a part of contents of board
 		//TbDataBean has every content of board
@@ -180,7 +180,6 @@ public class SvcViewHandler {
 		//determine tab
 		String tab=request.getParameter("tab");
 		if(tab==null)tab=MAP;
-
 		request.setAttribute("tab", tab);
 		
 		//map data
@@ -194,7 +193,7 @@ public class SvcViewHandler {
 		//board album data	
 		String start=request.getParameter("start");
 		if(start==null)start="1";
-		request.setAttribute("tb_no", tb_no);
+
 		request.setAttribute("start",start);
 
 		return new ModelAndView("svc/tripView");

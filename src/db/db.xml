@@ -175,7 +175,7 @@
 		</insert>
 		
 		<select id="getComment" parameterType="int" resultType="db.CmtDataBean" >
-     	select * from gg_comment where tb_no=#{tb_no}
+     	select * from gg_comment where tb_no=#{tb_no} order by c_id desc
      	</select>
      	
      	<update id="updateComment" parameterType="db.CmtDataBean">
