@@ -174,7 +174,7 @@ h1, h2, h3, h4, h5, h6 {
 			    	</div>
 	    		</c:forEach>
 	    		<div id="append-list">
-	    			<c:if test=${additinalList ne null}>
+	    			<c:if test=${additionalList ne null}>
 	    				<c:forEach var="i" items="additinalList">
 	    					<div class="row">
 					        	<div class="col-md-12">
