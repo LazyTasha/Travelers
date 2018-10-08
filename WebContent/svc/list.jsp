@@ -173,7 +173,7 @@ h1, h2, h3, h4, h5, h6 {
 			    		 </div>
 			    	</div>
 	    		</c:forEach>
-	    		<div id="append-list">
+	    		<div class="row" id="board-append-list">
 	    		</div>
 	    	</c:if>
     	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList()">Load more...</button>

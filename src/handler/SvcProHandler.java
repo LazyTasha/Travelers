@@ -105,22 +105,6 @@ public class SvcProHandler {
 			gender1 = 2;
 		}
 		UserDto.setGender( gender1 );
-		
-		// email
-		/*String email = null;
-		String email1 = request.getParameter( "email1" );
-		String email2 = request.getParameter( "email2" );
-		if( ! email1.equals( "" ) ) {
-			if( email2.equals( "0" ) ) {
-				// 吏곸젒�엯�젰
-				email = email1;
-			} else {
-				// �꽑�깮�엯�젰
-				email = email1 + "@" + email2; 
-			}
-		}
-		UserDto.setEmail( email );*/
- 		// reg_date 
 		UserDto.setReg_date( new Timestamp( System.currentTimeMillis() ) );
 		
 		int result = userDao.insertUser( UserDto );
@@ -286,7 +270,7 @@ public class SvcProHandler {
 				//cmtDto.setTb_no(tb_no);
 				List<CmtDataBean>comemnt= cmtDao.getComment(tb_no);
 				request.setAttribute("comemnt", comemnt);
-					
+				//don't set the name of variable like this!
 				return comemnt;
 		}
 			 
