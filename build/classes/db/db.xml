@@ -174,8 +174,8 @@
 		insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content, jdbcType=VARCHAR}, SYSDATE)
 		</insert>
 		
-		<select id="getComment" resultType="db.CmtDataBean" >
-     	select * from gg_comment
+		<select id="getComment" parameterType="int" resultType="db.CmtDataBean" >
+     	select * from gg_comment where tb_no=#{tb_no} order by c_id desc
      	</select>
      	
      	<update id="updateComment" parameterType="db.CmtDataBean">
@@ -207,8 +207,15 @@
 		<select id="getAlbum" resultType="db.AlbumDataBean">
 			select * from gg_album order by alb_reg_date desc	
 		</select>
-		<select id="getBoardAlbum" parameterType="int"  resultType="db.AlbumDataBean">
+<!-- 		<select id="getBoardAlbum" parameterType="int"  resultType="db.AlbumDataBean">
 			select * from gg_album where tb_no=#{tb_no} order by alb_reg_date desc	
+		</select> -->
+		<select id="getBoardAlbum" parameterType="java.util.Map"  resultType="db.AlbumDataBean">
+			select photo_id,photo_url,alb_reg_date,tb_no,r 
+			from (
+				select photo_id,photo_url,alb_reg_date,tb_no,rownum r from (
+					select photo_id,photo_url,alb_reg_date,tb_no from gg_album where tb_no=#{tb_no} order by alb_reg_date desc) 
+					order by alb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
 		</select>
 		<select id="getPCount" resultType="int">
 			select count(*) from gg_album
