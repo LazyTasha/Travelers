@@ -1,12 +1,7 @@
-/*
- * !!! ���ǻ��� !!!
- * ���� void, ���� �������� �޼ҵ� �̸��� �����ص� ����.
- * �޼ҵ帶�� ���� ��, ���� �˾Ƽ� ä�� ���� ��.
- */
-
 package db;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -21,8 +16,8 @@ public class CmtDBBean {
 		return session.insert("db.insertComment", cmtDto);
 	}
 	
-	public List<CmtDataBean> getComment( CmtDataBean cmtDto ) {
-		return session.selectList("db.getComment", cmtDto);
+	public List<CmtDataBean> getComment( int tb_no ) {
+		return session.selectList("db.getComment", tb_no);
 	}
 	
 	public int updateComment(CmtDataBean cmtDto) {
@@ -33,6 +28,11 @@ public class CmtDBBean {
 		return session.delete("db.deleteComment", c_id);
 	}
 	
-	
-	
+	public int getCount() {
+		return session.selectOne("db.getCmtCount");
+	}
+	//
+	public List<CmtDataBean>getComments(Map<String,Integer>map){
+		return session.selectList("db.getComments",map);
+	}
 }

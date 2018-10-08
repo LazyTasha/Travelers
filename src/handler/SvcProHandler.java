@@ -42,7 +42,6 @@ public class SvcProHandler {
 	private static final int SUCCESS=1;
 	private static final long LIMIT_SIZE = 5* 1024 * 1024;//image max size=5M;
 	
-	
 	@Resource
 	private TripDBBean tripDao;
 	@Resource
@@ -267,12 +266,14 @@ public class SvcProHandler {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-				/*String userid = (String)session.getAttribute("memid");*/
-				CmtDataBean cmtDto = new CmtDataBean();
-				cmtDto.setUser_id( "test" );	//jsp에서 히든으로 가져오면됨
-				cmtDto.setTb_no(Integer.parseInt("13"));
+				/*String userid = (String)session.getAttribute("memid");*/                				
+				CmtDataBean cmtDto = new CmtDataBean();   
+				String user_id="test";
+			
+				cmtDto.setUser_id(user_id);	//jsp에서 히든으로 가져오면됨
+				cmtDto.setTb_no(Integer.parseInt(request.getParameter("tb_no")));
 				cmtDto.setC_content(request.getParameter("c_content"));
-				cmtDto.setC_reg_date( new Timestamp( System.currentTimeMillis() ) );	
+				//cmtDto.setC_reg_date( new Timestamp( System.currentTimeMillis() ) );	
 				  
 				cmtDao.insertComment(cmtDto);
 			}
@@ -280,9 +281,10 @@ public class SvcProHandler {
 		@RequestMapping(value="/commentSelect.go", method=RequestMethod.GET, produces = "application/json")
 		@ResponseBody
 		public List<CmtDataBean> commentSelectProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-
-				CmtDataBean cmtDto = new CmtDataBean();
-				List<CmtDataBean>comemnt= cmtDao.getComment(cmtDto);
+				int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+				//CmtDataBean cmtDto = new CmtDataBean();
+				//cmtDto.setTb_no(tb_no);
+				List<CmtDataBean>comemnt= cmtDao.getComment(tb_no);
 				request.setAttribute("comemnt", comemnt);
 					
 				return comemnt;
@@ -295,8 +297,7 @@ public class SvcProHandler {
 				request.setCharacterEncoding( "utf-8" );
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
-			}
-				
+			}			
 			 	CmtDataBean cmtDto = new CmtDataBean();
 			 		cmtDto.setC_id(Integer.parseInt(request.getParameter("c_id")));
 					cmtDto.setC_content(request.getParameter("c_content"));

@@ -15,12 +15,17 @@ var nocheckerror="다운로드 받을 사진을 선택하세요";
 
 var filesize=5*1024*1024;
 
+$(document).ready(function(){
+	var tb_no=$('input[name=tb_no]').val();
+    commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
+});
+
+
 function erroralert( msg ) {
 	alert( msg );
 	history.back();
 }
 //Initialize and add the map
-
 function initMap() {
 	
 	var lat=parseFloat(document.getElementById("lat").value);
@@ -68,7 +73,6 @@ function searchMap() {
         $('#searchMap').html(msg);
         //alert($('#searchmap').html())
     
-        
         //alert(document.getElementById('lat').value);
       } else {
         alert('Geocode was not successful for the following reason: ' + status);
@@ -84,6 +88,23 @@ function showMap(){
 function showAlbum(){
 	$('#albumTab').show();
 	$('#mapTab').hide();
+}
+//trip-album-nextPage
+function next(start,size){
+	start=start+size;
+	albumPaging(start);
+}
+//trip-album-prePage
+function previous(start,size){
+	if(start>size)start=start-size;
+	albumPaging(start);
+}
+function albumPaging(start){
+	var tb_no=$('input[name=tb_no]').val();
+	var tab=1;
+
+	var page="svc/boardAlbum.go?tb_no="+tb_no+"&start="+start+"&tab="+tab;
+	$('#album').load(page);
 }
 // 회원 정보 수정
 function modifyfocus() {
@@ -173,12 +194,10 @@ function overlapCheck() {
 			success : function(data) {
 				if (data.cnt > 0) {
 					$('#passwordCheckMessagegg').html(
-							"아이디가 존재합니다. 다른 아이디를 입력해주세요.")
+							"아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 				} else {
-					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.")
-
+					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.");
 					idck = 1;
-
 				}
 			},
 			error : function(error) {
@@ -187,7 +206,6 @@ function overlapCheck() {
 		});
 	}
 }
-// /////////
 
 // 닉네임
 var genck = 0;
@@ -321,10 +339,8 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 	 var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
 	 CmtInsert(insertData); //Insert 함수호출(아래)
 }
- 
- 
-var number = '${tbDto.tb_no}'; //게시글 번호
 
+var number = '${tbDto.tb_no}'; //게시글 번호
 //댓글 목록 
 function commentList(tb_no){
     $.ajax({
@@ -352,6 +368,7 @@ function commentList(tb_no){
 
 //댓글 등록
 function CmtInsert(insertData){
+	var tb_no=$("input[name=tb_no").val();
     $.ajax({
         url : 'commentInsert.go',
         type : 'post',
@@ -360,7 +377,7 @@ function CmtInsert(insertData){
         	if(data == 1) {
         		/*오류메세지 작성*/
            }else{
-        	   commentList();
+        	   commentList(tb_no);
         	   $('[name=c_content]').val('');
            }
         },
@@ -385,21 +402,21 @@ function commentUpdate(c_id, c_content){
  
 //댓글 수정
 function commentUpdateProc(c_id){
-    var updateContent = $('[name=c_content_'+c_id+']').val();
-    
+    var updateContent = $('input[name=c_content_'+c_id+']').val();
+    var tb_no=$("input[name=tb_no").val();
     $.ajax({
         url : 'commentUpdate.go',
         type : 'post',
         data : {'c_content' : updateContent, 'c_id' : c_id},
         success : function(data){
-            commentList(number); //댓글 수정후 목록 출력 
+            commentList(tb_no); //댓글 수정후 목록 출력 
         }
     });
 }
  
 //댓글 삭제 
 function commentDelete(c_id){
-	
+	var tb_no=$("input[name=tb_no").val();
     $.ajax({
         url : 'commentDelete.go',
         type : 'post',
@@ -407,7 +424,7 @@ function commentDelete(c_id){
         	c_id : c_id
         },
         success : function(data){
-            commentList(number); //댓글 삭제후 목록 출력 
+            commentList(tb_no); //댓글 삭제후 목록 출력 
         },
         error : function(error) {
             alert("error : " + error);
@@ -415,11 +432,6 @@ function commentDelete(c_id){
     });
 }
 
-$(document).ready(function(){
-    commentList(); //페이지 로딩시 댓글 목록 출력 
-});
-
-=======
 function loadMoreList(last_tb_no) {
 	$('#append-list').load
 	$.ajax({

@@ -174,6 +174,7 @@ h1, h2, h3, h4, h5, h6 {
 			    	</div>
 	    		</c:forEach>
 	    		<div id="append-list">
+<<<<<<< HEAD
 	    			<c:if test=${additionalList ne null}>
 	    				<c:forEach var="i" items="additinalList">
 	    					<div class="row">
@@ -205,6 +206,8 @@ h1, h2, h3, h4, h5, h6 {
 						    </div>
 	    				</c:forEach>
 	    			</c:if>
+=======
+>>>>>>> master
 	    		</div>
 	    	</c:if>
     	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList()">Load more...</button>

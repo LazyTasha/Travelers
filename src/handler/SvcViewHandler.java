@@ -1,6 +1,8 @@
 package handler;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +28,10 @@ import db.UserDataBean;
 
 @Controller
 public class SvcViewHandler {
+	private static final int PHOTOSIZE=6;//한 화면에 출력되는 사진 개수
+	
+	private static final String MAP="0";
+	
 	@Resource
 	private TripDBBean tripDao;
 	@Resource
@@ -110,11 +116,25 @@ public class SvcViewHandler {
 		
 		int count=albumDao.getBoardCount(tb_no);
 		request.setAttribute("count", count);
+		
 		if(count>0) {
+			//page
+			int start=Integer.parseInt(request.getParameter("start"));
+			int end=start+PHOTOSIZE-1;
+			int last=(count%PHOTOSIZE==0?count-PHOTOSIZE:(count/PHOTOSIZE)*PHOTOSIZE);//+(count%PHOTOSIZE==0?0:1));
+
+			request.setAttribute("start",start);
+			request.setAttribute("size", PHOTOSIZE);
+			request.setAttribute("last",last);
+
 			//select board album
-			List<AlbumDataBean>album=albumDao.getBoardAlbum(tb_no);
+			Map<String, Integer>map=new HashMap<String,Integer>();
+			map.put("start",start);
+			map.put("end", end);
+			map.put("tb_no", tb_no);
+			List<AlbumDataBean>album=albumDao.getBoardAlbum(map);
 			request.setAttribute("album", album);
-			
+
 			//check user whether user is member or not
 			TbDataBean tbDto=new TbDataBean();
 			tbDto.setUser_id(user_id);
@@ -148,21 +168,34 @@ public class SvcViewHandler {
 	@RequestMapping("/trip")
 	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//get tb_no of the post
-		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
-		//int tb_no=1;//test용;
+//		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		int tb_no=1;//test용;
+		request.setAttribute("tb_no", tb_no);
 		//get the content of the post
 		//TripDataBean has a part of contents of board
 		//TbDataBean has every content of board
-		TbDataBean tbDto=tbDao.getTb(tb_no);
-		request.setAttribute("tbDto", tbDto);
+//		TbDataBean tbDto=tbDao.getTb(tb_no);
+//		request.setAttribute("tbDto", tbDto);
 		
+		//determine tab
+		String tab=request.getParameter("tab");
+		if(tab==null)tab=MAP;
+		request.setAttribute("tab", tab);
+		
+		//map data
 		//test용
 		double lat=37.554690;
 		double lng=126.970702;
 		//
 		request.setAttribute("lat",lat);
 		request.setAttribute("lng", lng);
-		request.setAttribute("tb_no", tb_no);
+		
+		//board album data	
+		String start=request.getParameter("start");
+		if(start==null)start="1";
+
+		request.setAttribute("start",start);
+
 		return new ModelAndView("svc/tripView");
 	}
 }

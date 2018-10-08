@@ -17,8 +17,6 @@
 	
     <title>${page_login}</title>
 
-	
-
   </head>
   <c:if test="${sessionScope.memid eq null}">	   
   
