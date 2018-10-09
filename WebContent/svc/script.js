@@ -273,16 +273,17 @@ function downloadPhotos(){
 		alert(nocheckerror);
 	}else{
 		//download구현->downloadPhoto.go로 이동 해서 작업
-		 download();
+		var form=$('#downloadForm');
+		 download(form);
 		 var check1=$('input[name=check1]');
+		 form.html('');
 		 $('#download').hide();	
 		 check1.prop("checked",false);
 		 check1.hide();
 		 $('#select').show();
 	}
 }
-function download(){
-	var form=$('#downloadForm');
+function download(form){
 	var check=$('input[name=check1]:checked');
 	var photo_url;
 	var input;
