@@ -192,8 +192,9 @@ public class SvcViewHandler {
 		//board album data	
 		String start=request.getParameter("start");
 		if(start==null)start="1";
-
 		request.setAttribute("start",start);
+		
+		//where are the comments?
 
 		return new ModelAndView("svc/tripView");
 	}
