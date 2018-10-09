@@ -16,12 +16,14 @@
 	      	 	<a class="btn btn-primary my-2" onclick="uploadPhotos()">사진 업로드</a>
 	      	 	<a id="select" class="btn btn-primary my-2" onclick="selectPhotos()">사진 선택 </a>
 	      	 	<a id="download" class="btn btn-primary my-2" onclick="downloadPhotos()" style="display:none">사진 다운로드</a>
+	     </p>	 	
 	      	<%-- </c:if> --%>
-	       <form id="uploadForm" action="boardAlbumPro.go" method="post" enctype="multipart/form-data">
+	        <form id="uploadForm" action="boardAlbumPro.go" method="post" enctype="multipart/form-data">
 	          	<input type="file" name="files" multiple="multiple" id="file" accept=".gif, .jpg, .png" style="display:none"/>
 	          	<input type="hidden" name="tb_no" value="${tb_no}"/>
 			</form>
-	     </p>
+			<form id="downloadForm" action="download.go" method="post">
+			</form>
 	   </div>
 	 </section>
 	
@@ -31,12 +33,12 @@
 	       <div class="row">
 	        <c:forEach var="photo" items="${album}">
 	         <div class="col-md-4" id="photoArea">
-	         <input type="checkbox" name='check1' style="display:none">
-	            <div class="card mb-4 shadow-sm">
-	              <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap" src="${photo.photo_url}">
-	
-	                <div class="d-flex justify-content-between align-items-center">
-	                  <small class="text-muted"><fmt:formatDate value="${photo.alb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></small>
+		         <input type="checkbox" name='check1' style="display:none">
+		         <input type="hidden" name="photo_url" value="${photo.photo_url}"/>
+		            <div class="card mb-4 shadow-sm">
+		              <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap" src="${photo.photo_url}">
+		                <div class="d-flex justify-content-between align-items-center">
+		                  <small class="text-muted"><fmt:formatDate value="${photo.alb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></small>
 	                </div>
 	            </div>
 	          </div>

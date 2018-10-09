@@ -26,7 +26,7 @@
 						<tr>
 							<td>${tag.tag_id}</td>
 							<td>${tag.tag_value}</td>
-							<td><input class="input" type="text" value="${tag.tag_value}" name="tag_value${i}" autofocus="autofocus"/></td>
+							<td><input class="input" type="text" value="${tag.tag_value}" name="tag_value${i}" autofocus="autofocus" maxlength="10"/></td>
 						</tr>
  				</c:forEach> 
 			</table>

@@ -269,13 +269,33 @@ function selectPhotos(){
 }
 //사진 다운로드 click->photo download
 function downloadPhotos(){
-	var check1=$('input[name=check1]');
 	if($("input[name=check1]:checked").length==0){
 		alert(nocheckerror);
 	}else{
 		//download구현->downloadPhoto.go로 이동 해서 작업
+		 download();
+		 var check1=$('input[name=check1]');
+		 $('#download').hide();	
+		 check1.prop("checked",false);
+		 check1.hide();
+		 $('#select').show();
 	}
 }
+function download(){
+	var form=$('#downloadForm');
+	var check=$('input[name=check1]:checked');
+	var photo_url;
+	var input;
+	check.each(function(i){//i=0 start
+		var div = check.parent().eq(i);	
+		photo_url=div.find('input[name=photo_url]').val();	
+		input+='<input type="hidden" name="photo'+i+'" value="'+photo_url+'">';
+	});
+	input+='<input type="hidden" name="num" value="'+check.length+'">';	
+	form.html(input);
+	form.submit();
+}
+
 //사진 업로드 click->photo upload
 function uploadPhotos(){
 	eventOccur(document.getElementById('file'),'click');

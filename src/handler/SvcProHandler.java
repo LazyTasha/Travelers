@@ -1,18 +1,23 @@
 package handler;
 
+import java.io.BufferedInputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +45,7 @@ public class SvcProHandler {
 	private static final int EXTENSION_ERROR=-1;
 	private static final int SIZE_ERROR=-2;
 	private static final int SUCCESS=1;
-	private static final long LIMIT_SIZE = 5* 1024 * 1024;//image max size=5M;
+	private static final int LIMIT_SIZE = 5* 1024 * 1024;//image max size=5M;
 	
 	@Resource
 	private TripDBBean tripDao;
@@ -159,6 +164,7 @@ public class SvcProHandler {
 			int user_level=userDao.getUserLevel(id);
 			if(user_level==ADMIN) {
 				userType=1;
+				request.setAttribute("user_level",user_level);
 			}
 			request.setAttribute("userType", userType);
 		}
@@ -200,6 +206,7 @@ public class SvcProHandler {
 	 @RequestMapping("/boardAlbumPro")
 		public ModelAndView svcAlbumProProcess(HttpServletRequest request, MultipartHttpServletRequest mtrequest) throws HandlerException {
 		 	int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		 	request.setAttribute("tb_no", tb_no);
 		 	
 			String uploadPath = request.getServletContext().getRealPath("/");
 			System.out.println(uploadPath);
@@ -216,18 +223,18 @@ public class SvcProHandler {
 			long imgSize;//이미지 파일 크기
 			for (MultipartFile mf : fileList) {
 	            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
-	            
+            
 	            if(!isValidExtension(originFileName)) {
-	            	fileResult=EXTENSION_ERROR;
-	            	break;
+	            	fileResult=EXTENSION_ERROR;break;
 	            }
 	            
 	            imgSize=mf.getSize();
 	            if(imgSize>=LIMIT_SIZE) {
 	            	fileResult=SIZE_ERROR;break;
 	            }
-	            String safeFile = path + System.currentTimeMillis() + originFileName;
-	            String safeDBFile=DBpath+ System.currentTimeMillis() + originFileName;
+	            originFileName=System.currentTimeMillis()+getRandomString()+originFileName.substring(originFileName.lastIndexOf(".")).toLowerCase();
+	            String safeFile = path +originFileName;
+	            String safeDBFile=DBpath+originFileName;
 	            try {
 	                mf.transferTo(new File(safeFile));
 	                //db insert
@@ -237,10 +244,8 @@ public class SvcProHandler {
 	            	int result=albumDao.addPhoto(albumDto);
 	               
 	            } catch (IllegalStateException e) {
-	                // TODO Auto-generated catch block
 	                e.printStackTrace();
 	            } catch (IOException e) {
-	                // TODO Auto-generated catch block
 	                e.printStackTrace();
 	            }
 	        }
@@ -248,15 +253,57 @@ public class SvcProHandler {
 			return new ModelAndView("/svc/boardAlbumPro");
 		}
 		 private boolean isValidExtension(String originFileName) {
-		        String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1).toLowerCase();
-		        switch(fileExtension) {
-			        case "jpg":
-			        case "png":
-			        case "gif":
-		            return true;
+	        String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1).toLowerCase();
+	        switch(fileExtension) {
+		        case "jpg":
+		        case "png":
+		        case "gif":
+	            return true;
+	        }
+	        return false;
+	    }
+		 @RequestMapping("/download.go")
+		 public void downloadFile(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+			String realFolder = request.getServletContext().getRealPath("/")+"save/";
+			int bufferSize = LIMIT_SIZE;
+			int n=Integer.parseInt(request.getParameter("num"));
+			ZipOutputStream zos=null;
+			String zipName="Travelers_Album";
+		   // page의 ContentType등을 동적으로 바꾸기 위해 초기화시킴
+		   response.reset();
+		   response.setHeader("Content-Disposition", "attachment; filename=" + zipName + ".zip" + ";");
+		   
+		   response.setHeader("Content-Transfer-Encoding", "binary");
+
+		    OutputStream os = response.getOutputStream();
+		    zos = new ZipOutputStream(os); // ZipOutputStream
+		    zos.setLevel(8); // 압축 레벨 - 최대 압축률은 9, 디폴트 8
+		    BufferedInputStream bis = null;
+
+			 for(int i=0;i<n;i++) {
+				String path[]=request.getParameter("photo"+i).split("/");
+				String fileName=path[path.length-1];
+				String filePath=realFolder+fileName;
+				
+				File sourceFile=new File(filePath);
+				
+				bis=new BufferedInputStream(new FileInputStream(sourceFile));
+				ZipEntry zentry=new ZipEntry(fileName);
+				zentry.setTime(sourceFile.lastModified());
+				zos.putNextEntry(zentry);
+				
+				byte[] buffer = new byte[bufferSize];
+
+			    int cnt = 0;
+
+		        while ((cnt = bis.read(buffer, 0, bufferSize)) != -1) {
+		            zos.write(buffer, 0, cnt);
 		        }
-		        return false;
-		    }
+			    zos.closeEntry();
+			    }        
+			    zos.close();
+			    bis.close();
+		 }
 		/////////comment
 		@RequestMapping(value="/commentInsert.go", method= RequestMethod.POST, produces = "application/json" )
 		@ResponseBody
@@ -313,4 +360,9 @@ public class SvcProHandler {
 			
 			 	cmtDao.deleteComment( c_id );
 		}
+
+	    public static String getRandomString(){
+	        return UUID.randomUUID().toString().replaceAll("-", "");
+	    }
+
 }

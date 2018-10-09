@@ -168,14 +168,13 @@ public class SvcViewHandler {
 	@RequestMapping("/trip")
 	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//get tb_no of the post
-//		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
-		int tb_no=1;//test용;
+		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
 		//get the content of the post
 		//TripDataBean has a part of contents of board
 		//TbDataBean has every content of board
-//		TbDataBean tbDto=tbDao.getTb(tb_no);
-//		request.setAttribute("tbDto", tbDto);
+		//TbDataBean tbDto=tbDao.getTb(tb_no);
+		//request.setAttribute("tbDto", tbDto);
 		
 		//determine tab
 		String tab=request.getParameter("tab");
