@@ -18,7 +18,7 @@
     <title>${page_login}</title>
 
   </head>
-  <c:if test="${sessionScope.memid eq null}">	   
+  <c:if test="${sessionScope.user_id eq null}">	   
   
   <body class="text-center">
   	<form class="form-signin" method="post" action="loginPro.go" name="loginform" onsubmit="return logincheck()" >
@@ -41,7 +41,7 @@
   </body>
 </c:if>
 
- <c:if test="${sessionScope.memid ne null}">
+ <c:if test="${sessionScope.user_id ne null}">
 	<c:redirect url="myPage.go"/>		
 </c:if>
 </html>

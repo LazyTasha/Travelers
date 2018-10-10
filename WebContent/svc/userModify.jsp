@@ -20,7 +20,7 @@
 				</tr>
 				<tr>
 					<th> ${str_id} </th>
-					<td> &nbsp;${UserDto.user_id} </td>
+					<td> &nbsp;${userDto.user_id} </td>
 				</tr>
 				<tr>
 					<th rowspan="2"> 
@@ -28,20 +28,20 @@
 					</th>
 					<td>
 						<input class="input" type="password" name="passwd" maxlength="15"
-							value="${UserDto.passwd}">
+							value="${userDto.passwd}">
 					</td>
 				</tr>
 				<tr>
 					<td>
 						<input class="input" type="password" name="repasswd" maxlength="15"
-							value="${UserDto.passwd}">
+							value="${userDto.passwd}">
 					</td>
 				</tr>
 				<tr>
-					<th> 닉네임 </th>
+					<th> ${str_nickname} </th>
 					<td> 
 					<input class="input" type="text" name="user_name" maxlength="15"
-							value="${UserDto.user_name}" id="val_name2">
+							value="${userDto.user_name}" id="val_name2">
 					<input class="inputbutton" type="button" value="중복확인" onclick="namecheck()">
 					<h4 style="color: red;" id="passwordCheckMessageggggg"></h4>
 					</td>
@@ -50,34 +50,23 @@
 				<tr>	
 					<th> ${str_email} </th>
 					<td>
-					&nbsp;${UserDto.email}
-						<%-- <c:if test="${UserDto.email eq null or UserDto.email eq ''}">	
-							<input class="input" type="text" name="email1" maxlength="15" style="width: 100px">
-							@ <input class="input" type="text" name="email2" maxlength="15" style="width: 100px">
-						</c:if>
-						<c:if test="${UserDto.email ne null and UserDto.email ne ''}">
-							<c:set var="e" value="${fn:split(UserDto.email, '@')}"/>
-							<input class="input" type="text" name="email1" maxlength="15" style="width: 100px"
-								value="${e[0]}">
-							@ <input class="input" type="text" name="email2" maxlength="15" style="width: 100px"
-								value="${e[1]}">								
-						</c:if>		 --%>
+					&nbsp;${userDto.email}
 					</td>
 				</tr>
 				<tr>
 					<th> ${str_reg_date} </th>
 					<td>	
-						<fmt:formatDate value="${UserDto.reg_date}" pattern="yyyy-MM-dd HH:mm"/>
+						<fmt:formatDate value="${userDto.reg_date}" pattern="yyyy-MM-dd HH:mm"/>
 					</td>
-				</tr>	
+				</tr>
 				<tr>
 					<th colspan="2">
 						<input class="inputbutton" type="submit" value="${btn_mod}">
 						<input class="inputbutton" type="reset" value="${btn_cancel}">
 						<input class="inputbutton" type="button" value="${btn_mod_cancel}"
-							onclick="location='list.go'">
+							onclick="location='tripList.go'">
 					</th>
-				</tr>				
+				</tr>
 			</table>
 		</form>		
 	</body>
@@ -88,15 +77,4 @@
 		erroralert( loginpasswderror );
 		//-->
 	</script>
-</c:if>	
-
-
-
-
-
-
-
-
-
-
-
+</c:if>

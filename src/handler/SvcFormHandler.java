@@ -49,18 +49,27 @@ public class SvcFormHandler {
 		return new ModelAndView( "svc/login" );
 	}
 	
-	@RequestMapping( "/userModify" )
-	public ModelAndView userModifyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		String id = (String) request.getSession().getAttribute( "memid" );
+	@RequestMapping( "/userModPassCheck" )
+	public ModelAndView userModPassCheckProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		String user_id = (String) request.getSession().getAttribute( "user_id" );
 		String passwd = request.getParameter( "passwd" );
 		
-		int result = userDao.check( id, passwd );
+		int result = userDao.check( user_id, passwd );
 		request.setAttribute( "result", result );
 		
 		if( result == 1 ) {
-			UserDataBean UserDto = userDao.getUser( id );
-			request.setAttribute( "UserDto", UserDto );
+			UserDataBean userDto = userDao.getUser( user_id );
+			request.setAttribute( "userDto", userDto );
 		}
+		
+		return new ModelAndView( "svc/userModPassCheck" );
+	}
+	
+	@RequestMapping( "/userModify" )
+	public ModelAndView userModifyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		UserDataBean userDto=userDao.getUser(user_id);
+		request.setAttribute("userDto", userDto);
 		
 		return new ModelAndView( "svc/userModify" );
 	}
@@ -79,7 +88,7 @@ public class SvcFormHandler {
 		String writer_name=((UserDataBean)request.getAttribute("userDto")).getUser_name();
 		//get tag list too so that user choose it
 		//but I don't know why should I put a map there...
-		Map<Integer, String> tags=tagDao.getAllTags();
+		Map<Integer, String> tags=tagDao.getStyleTags();
 		//send them to set User Name on the form
 		request.setAttribute("writer_id", writer_id);
 		request.setAttribute("writer_name", writer_name);
