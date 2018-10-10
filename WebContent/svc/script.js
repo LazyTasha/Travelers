@@ -275,13 +275,17 @@ function downloadPhotos(){
 		//download구현->downloadPhoto.go로 이동 해서 작업
 		var form=$('#downloadForm');
 		 download(form);
-		 var check1=$('input[name=check1]');
+		 endDownload();
 		 form.html('');
-		 $('#download').hide();	
-		 check1.prop("checked",false);
-		 check1.hide();
-		 $('#select').show();
 	}
+} 
+//download가 끝난 후 처리
+function endDownload(){
+	var check1=$('input[name=check1]');
+	$('#download').hide();	
+	check1.prop("checked",false);
+	check1.hide();
+	$('#select').show();
 }
 function download(form){
 	var check=$('input[name=check1]:checked');
@@ -295,6 +299,13 @@ function download(form){
 	input+='<input type="hidden" name="num" value="'+check.length+'">';	
 	form.html(input);
 	form.submit();
+}
+//board게시판 전체 사진 다운로드
+function downloadAlbum(){
+	var form=$('#downloadAlbumForm');
+	form.submit();
+	endDownload();
+	form.html('');
 }
 
 //사진 업로드 click->photo upload
