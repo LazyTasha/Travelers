@@ -35,7 +35,12 @@
 							<td name="key">${user.user_id}</td>
 							<td>${user.user_name}</td>
 							<td>${user.email}</td>
-							<td>${user.gender}</td>
+							<c:if test="${user.gender eq 0}">
+								<td>${str_male}</td>
+							</c:if>
+							<c:if test="${user.gender eq 1}">
+								<td>${str_female}</td>
+							</c:if>
 							<td><fmt:formatDate value="${user.reg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
 						</tr>
 					</c:forEach>

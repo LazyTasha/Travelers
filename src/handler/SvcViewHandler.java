@@ -65,7 +65,7 @@ public class SvcViewHandler {
 	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//I don't know why but it fails to get userDto, so here I try to get it.
-		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("memid"));
+		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("user_id"));
 		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
 		String[] userTags=new String[userTagList.size()];
 		for(int i=0; i<userTags.length; i++) {
@@ -111,7 +111,7 @@ public class SvcViewHandler {
 		request.setAttribute("tab", tab);
 		
 		//map data
-		//test�슜
+		//test
 		double lat=37.554690;
 		double lng=126.970702;
 		//
@@ -122,8 +122,6 @@ public class SvcViewHandler {
 		String start=request.getParameter("start");
 		if(start==null)start="1";
 		request.setAttribute("start",start);
-		
-		//where are the comments?
 
 		return new ModelAndView("svc/trip");
 	}
@@ -147,7 +145,7 @@ public class SvcViewHandler {
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
 		
-		String user_id=(String) request.getSession().getAttribute( "memid" );
+		String user_id=(String) request.getSession().getAttribute( "user_id" );
 		if(user_id==null)user_id="";
 		
 		int count=albumDao.getBoardCount(tb_no);

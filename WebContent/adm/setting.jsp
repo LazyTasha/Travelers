@@ -11,7 +11,7 @@
 <c:if test="${sessionScope.user_level ne 9}">
 	<script type="text/javascript">
 		<!--
-			<c:redirect url="userLoginForm.go"/>
+			<c:redirect url="login.go"/>
 		//-->
 	</script>
 </c:if>
@@ -50,6 +50,8 @@
 <c:set var="str_email" value="이메일"/>
 <c:set var="str_gender" value="성별"/>
 <c:set var="str_join_date" value="가입일"/>
+<c:set var="str_male" value="남성"/>
+<c:set var="str_female" value="여성"/>
 
 
 <c:set var="str_comment" value="댓글"/>

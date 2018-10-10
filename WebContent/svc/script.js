@@ -12,6 +12,7 @@ var extensionerror="jpg, gif, png 확장자만 업로드 가능합니다.";
 var sizeerror="이미지 용량은 5M이하만 가능합니다.";
 
 var nocheckerror="다운로드 받을 사진을 선택하세요";
+var locationerror="장소를 선택하세요";
 
 var filesize=5*1024*1024;
 
@@ -21,7 +22,6 @@ $(document).ready(function(){
 		commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
 		}
 });
-
 
 function erroralert( msg ) {
 	alert( msg );
@@ -41,7 +41,10 @@ function initMap() {
 	      document.getElementById('map'), {zoom: 8, center: uluru});
 	  // The marker, positioned at Uluru
 	  var marker = new google.maps.Marker({position: uluru, map: map});
-
+	  
+	  var infowindow = new google.maps.InfoWindow;
+	  var geocoder = new google.maps.Geocoder;
+	  geocodeLatLng(uluru,geocoder, map, infowindow)
 }
 //지도 주소검색
 function searchMap() {
@@ -50,9 +53,9 @@ function searchMap() {
       center: {lat: -34.397, lng: 150.644}
     });
     var geocoder = new google.maps.Geocoder();
-
+    
     document.getElementById('submit').addEventListener('click', function() {
-     geocodeAddress(geocoder, map);
+      geocodeAddress(geocoder, map);
     });
   }
 //주소로 좌표 표시
@@ -64,23 +67,53 @@ function searchMap() {
         var marker = new google.maps.Marker({
           map: resultsMap,
           position: results[0].geometry.location
-        });
+        });	
         //좌표 받기
         var lat=marker.position.lat();//위도 
         var lng=marker.position.lng();//경도
+       
+        //lat,lng를 form에 붙여주기
+        var input="<input name='lat' type='hidden' value='"+lat+"'/>"
+        	+"<input name='lng' type='hidden' value='"+lng+"'/>";
+       
+        //국가-jason 값 가져오기
+        var country=results[0].address_components.filter(
+        		function(component){
+        			return component.types[0]=="country"
+        		});
+        var country_name=country[0].long_name;
         
-        //lat,lng를 form에 보내주기
-        var msg="<input id='lat' type='hidden' value="+lat+"/>"
-        	+"<input id='lng' type='hidden' value="+lng+"/>";
-        $('#searchMap').html(msg);
-        //alert($('#searchmap').html())
-    
-        //alert(document.getElementById('lat').value);
+        input+="<input name='country_name' type='hidden' value='"+country_name+"'/>";
+        $('#searchmap').append(input);
+        
+        var infowindow = new google.maps.InfoWindow;
+       
+        geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap, infowindow) 
       } else {
-        alert('Geocode was not successful for the following reason: ' + status);
+        alert(locationerror);
       }
     });
   }
+ //좌표로 주소 띄우기(coordinate->address)
+ function geocodeLatLng(latlng,geocoder, map, infowindow) {
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === 'OK') {
+      if (results[0]) {
+        map.setZoom(8);
+        var marker = new google.maps.Marker({
+          position: latlng,
+          map: map
+        });
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+}
 //trip view-button event-map
 function showMap(){
 	$('#albumTab').hide();
@@ -101,6 +134,7 @@ function previous(start,size){
 	if(start>size)start=start-size;
 	albumPaging(start);
 }
+//page넘기기
 function albumPaging(start){
 	var tb_no=$('input[name=tb_no]').val();
 	var tab=1;
