@@ -199,6 +199,9 @@
 			(select t.tag_value from gg_tag t where t.tag_id=
 			(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
 		</select>
+		<insert id="insertLocation" parameterType="">
+			insert into gg_coordinate values(SEQ_gg_coordinate_coord_id.nextval,#{coord_long},#{coord_lat},#{order},#{country_id});
+		</insert>
 		
 		<!--album DB -->
 		<insert id="addPhoto" parameterType="db.AlbumDataBean">

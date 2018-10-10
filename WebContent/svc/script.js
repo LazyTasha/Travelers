@@ -68,9 +68,9 @@ function searchMap() {
         var lng=marker.position.lng();//경도
         
         //lat,lng를 form에 보내주기
-        var msg="<input id='lat' type='hidden' value="+lat+"/>"
-        	+"<input id='lng' type='hidden' value="+lng+"/>";
-        $('#searchMap').html(msg);
+        var position="<input name='lat' type='hidden' value='"+lat+"'/>"
+        	+"<input name='lng' type='hidden' value='"+lng+"'/>";
+        $('#searchmap').append(position);
         //alert($('#searchmap').html())
     
         //alert(document.getElementById('lat').value);

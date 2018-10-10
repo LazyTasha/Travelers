@@ -67,8 +67,11 @@ public class SvcProHandler {
 	public ModelAndView svcRegProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/regPro");
 	}
-	@RequestMapping("/svc/tripWritePro")
+	@RequestMapping("/tripWritePro")
 	public ModelAndView svcTripWriteProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		double lat=Double.parseDouble(request.getParameter("lat"));
+		double lng=Double.parseDouble(request.getParameter("lng"));
+		
 		return new ModelAndView("svc/tripWritePro");
 	}
 	@RequestMapping("/svc/tripModPro")
