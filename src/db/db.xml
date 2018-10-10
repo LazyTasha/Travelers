@@ -5,7 +5,7 @@
 <mapper namespace="db">
 
 	<!-- user DB -->
-
+	
 	<select id="getUsers" parameterType="java.util.Map" resultType="db.UserDataBean">
 		select user_id,user_name,email,gender,reg_date,r
 		from (
