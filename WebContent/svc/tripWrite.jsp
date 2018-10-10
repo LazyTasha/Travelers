@@ -89,7 +89,7 @@
             <div class="form-group row">
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
-                     onclick="location='list.go'">
+                     onclick="location='boardList.go'">
             </div>      
       </div><!-- input box -->
    </form>
@@ -139,6 +139,7 @@
 	      }
 		</style>
 </head>
+
 <body>
 <form class="form-horizontal" method="post" action="tripWritePro.go">
 <div class="container" style="width:800px;">
@@ -194,7 +195,7 @@
 				
 				<div class="form-group row">
 					<input class="btn btn-dark btn-md" type="submit" value="${trip_write}">
-					<button class="btn btn-dark btn-md" type="button" value="${btn_list}" onclick="location='list.go'"></button>
+					<button class="btn btn-dark btn-md" type="button" value="${btn_list}" onclick="location='boardList.go'"></button>
 				</div>	
 			</div><!-- input box -->
 	

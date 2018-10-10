@@ -16,7 +16,6 @@ import bean.SqlMapClient;
 public class TagDBBean {
 	SqlSession session=SqlMapClient.getSession();
 	
-
 	//add tag
 	public int insertTag(String tag_value) {
 		return session.insert("db.insertTag",tag_value);
@@ -47,5 +46,11 @@ public class TagDBBean {
 	}
 	public List<String> getUserTags(String user_id) {
 		return session.selectList("db.getUserTags", user_id);
+	}
+	public List<String> getTripTags(int tb_no) {
+		return session.selectList("db.getTripTags", tb_no);
+	}
+	public Map<Integer, String> getAllTags() {
+		return session.selectOne("db.getAllTags");
 	}
 }

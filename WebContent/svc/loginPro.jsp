@@ -22,10 +22,11 @@
 	</script>
 </c:if>
 <c:if test="${result eq 1}">
+	${sessionScope.userDto=userDto}
 	${sessionScope.memid = id}
 	<c:if test="${userType eq 1}">
 		${sessionScope.user_level = user_level}
 		<c:redirect url="adminTrip.go"/>
 	</c:if>
-	<c:redirect url="list.go"/>
+	<c:redirect url="tripList.go"/>
 </c:if>

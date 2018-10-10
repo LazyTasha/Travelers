@@ -39,19 +39,19 @@
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="${project}list.go">${page_main_eng} <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="${project}boardList.go">${page_main_eng} <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="${project}list.go">${page_board_eng}</a>
+            <a class="nav-link" href="${project}boardList.go">${page_board_eng}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">${page_calendar_eng}</a>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0 login-section">
-          <a href="${project}loginForm.go" class="nav-item">${page_login}</a> 
+          <a href="${project}login.go" class="nav-item">${page_login}</a> 
           &nbsp;|&nbsp; 
-          <a href="${project}regForm.go" class="nav-item">${page_input}</a>
+          <a href="${project}registration.go" class="nav-item">${page_input}</a>
         </form>
       </div>
     </nav>

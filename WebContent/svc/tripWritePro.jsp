@@ -6,5 +6,7 @@
 	</script>
 </c:if>
 <c:if test="${result ne 0}">
-	<c:redirect url="tripView.go"/>
+	<c:if test="${tb_no ne 0}">
+		<c:redirect url="boardList.go"/>
+	</c:if>
 </c:if>
