@@ -226,4 +226,7 @@
 		<delete id="delPhoto" parameterType="int">
 			delete from gg_album where photo_id=#{photo_id}
 		</delete>
+		<select id="getPhoto_urls" parameterType="int" resultType="String">
+			select photo_url from gg_album where tb_no=#{tb_no}
+		</select>
 	</mapper>

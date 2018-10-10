@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -246,26 +247,27 @@ public class SvcProHandler {
 	        }
 	        return false;
 	    }
-		 @RequestMapping("/download.go")
-		 public void downloadFile(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+		 @RequestMapping("/downloadAlbum.go")
+		 public void downloadAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+			 int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+			 List<String>photo_urls=albumDao.getPhoto_urls(tb_no);
+			 
 			String realFolder = request.getServletContext().getRealPath("/")+"save/";
 			int bufferSize = LIMIT_SIZE;
-			int n=Integer.parseInt(request.getParameter("num"));
 			ZipOutputStream zos=null;
-			String zipName="Travelers_Album";
-		   // page의 ContentType등을 동적으로 바꾸기 위해 초기화시킴
-		   response.reset();
-		   response.setHeader("Content-Disposition", "attachment; filename=" + zipName + ".zip" + ";");
+			String zipName="Travelers_Album"+tb_no;
+			
+			response.reset();
+			response.setHeader("Content-Disposition", "attachment; filename=" + zipName + ".zip" + ";");
 		   
-		   response.setHeader("Content-Transfer-Encoding", "binary");
-
+		    response.setHeader("Content-Transfer-Encoding", "binary");
 		    OutputStream os = response.getOutputStream();
 		    zos = new ZipOutputStream(os); // ZipOutputStream
 		    zos.setLevel(8); // 압축 레벨 - 최대 압축률은 9, 디폴트 8
 		    BufferedInputStream bis = null;
-
-			 for(int i=0;i<n;i++) {
-				String path[]=request.getParameter("photo"+i).split("/");
+		    
+		    for(String photo_url:photo_urls) {
+				String path[]=photo_url.split("/");
 				String fileName=path[path.length-1];
 				String filePath=realFolder+fileName;
 				
@@ -279,14 +281,74 @@ public class SvcProHandler {
 				byte[] buffer = new byte[bufferSize];
 
 			    int cnt = 0;
-
 		        while ((cnt = bis.read(buffer, 0, bufferSize)) != -1) {
 		            zos.write(buffer, 0, cnt);
 		        }
 			    zos.closeEntry();
 			    }        
+		    zos.close();
+		    bis.close();
+		   }
+		 @RequestMapping("/download.go")
+		 public void downloadProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+			 int n=Integer.parseInt(request.getParameter("num"));
+			 response.reset();
+		    if(n==1) {
+		    	downloadImgProcess(request,response);
+		    }else {
+				String realFolder = request.getServletContext().getRealPath("/")+"save/";
+				int bufferSize = LIMIT_SIZE;
+				ZipOutputStream zos=null;
+				String zipName="Travelers_Photos";
+			    response.setHeader("Content-Disposition", "attachment; filename=" + zipName + ".zip" + ";");
+			   
+			    response.setHeader("Content-Transfer-Encoding", "binary");
+			    OutputStream os = response.getOutputStream();
+			    zos = new ZipOutputStream(os); // ZipOutputStream
+			    zos.setLevel(8); // 압축 레벨 - 최대 압축률은 9, 디폴트 8
+			    BufferedInputStream bis = null;
+				for(int i=0;i<n;i++) {
+					String path[]=request.getParameter("photo"+i).split("/");
+					String fileName=path[path.length-1];
+					String filePath=realFolder+fileName;
+					
+					File sourceFile=new File(filePath);
+					
+					bis=new BufferedInputStream(new FileInputStream(sourceFile));
+					ZipEntry zentry=new ZipEntry(fileName);
+					zentry.setTime(sourceFile.lastModified());
+					zos.putNextEntry(zentry);
+					
+					byte[] buffer = new byte[bufferSize];
+	
+				    int cnt = 0;
+	
+			        while ((cnt = bis.read(buffer, 0, bufferSize)) != -1) {
+			            zos.write(buffer, 0, cnt);
+			        }
+				    zos.closeEntry();
+				    }        
 			    zos.close();
 			    bis.close();
+		    }
+		 }
+		 //download할 img가 한개인 경우-download one image
+		 public void downloadImgProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+			String realFolder = request.getServletContext().getRealPath("/")+"save/";
+			String path[]=request.getParameter("photo0").split("/");
+			String fileName=path[path.length-1];
+			String filePath=realFolder+fileName;
+			 
+		    byte fileByte[] = FileUtils.readFileToByteArray(new File(filePath));
+		     
+		    response.setContentType("application/octet-stream");
+		    response.setContentLength(fileByte.length);
+		    response.setHeader("Content-Disposition", "attachment; fileName=\"" +fileName+"\";");
+		    response.setHeader("Content-Transfer-Encoding", "binary");
+		    response.getOutputStream().write(fileByte);
+		     
+		    response.getOutputStream().flush();
+		    response.getOutputStream().close();
 		 }
 		/////////comment
 		@RequestMapping(value="/commentInsert.go", method= RequestMethod.POST, produces = "application/json" )
