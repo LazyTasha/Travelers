@@ -421,11 +421,11 @@ public class SvcProHandler {
 	@ResponseBody
 	public Map<Object, Object> idCheck(@RequestBody String user_id) {
 		user_id = user_id.split("=")[0];
-		int count = 0;
+		int countId = 0;
 		Map<Object, Object> map = new HashMap<Object, Object>();
 
-		count = userDao.idCheck(user_id);
-		map.put("cnt", count);
+		countId = userDao.idCheck(user_id);
+		map.put("countId", countId);
 
 		return map;
 	}
@@ -434,11 +434,11 @@ public class SvcProHandler {
 	@ResponseBody
 	public Map<Object, Object> nameCheck(@RequestBody String user_name) {
 		user_name = user_name.split("=")[0];
-		int countt = 0;
+		int countName = 0;
 		Map<Object, Object> map = new HashMap<Object, Object>();
 
-		countt = userDao.nameCheck(user_name);
-		map.put("cnt", countt);
+		countName = userDao.nameCheck(user_name);
+		map.put("countName", countName);
 
 		return map;
 	}
@@ -451,14 +451,12 @@ public class SvcProHandler {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		/* String userid = (String)session.getAttribute("memid"); */
+		String user_id = (String)session.getAttribute("memid");
 		CmtDataBean cmtDto = new CmtDataBean();
-		String user_id = "test";
 
 		cmtDto.setUser_id(user_id); // jsp에서 히든으로 가져오면됨
 		cmtDto.setTb_no(Integer.parseInt(request.getParameter("tb_no")));
 		cmtDto.setC_content(request.getParameter("c_content"));
-		// cmtDto.setC_reg_date( new Timestamp( System.currentTimeMillis() ) );
 
 		cmtDao.insertComment(cmtDto);
 	}
@@ -468,12 +466,10 @@ public class SvcProHandler {
 	public List<CmtDataBean> commentSelectProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
 		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
-		// CmtDataBean cmtDto = new CmtDataBean();
-		// cmtDto.setTb_no(tb_no);
-		List<CmtDataBean> comemnt = cmtDao.getComment(tb_no);
-		request.setAttribute("comemnt", comemnt);
+		List<CmtDataBean>comment= cmtDao.getComment(tb_no);
+		request.setAttribute("comment", comment);
 		// don't set the name of variable like this!
-		return comemnt;
+		return comment;
 	}
 
 	@RequestMapping(value = "/commentUpdate.go", method = RequestMethod.POST, produces = "application/json") // 댓글 수정
