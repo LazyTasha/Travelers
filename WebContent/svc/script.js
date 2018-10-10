@@ -450,3 +450,5 @@ function loadMoreList(last_tb_no) {
 		}
 	});
 }
+
+//글 작성
