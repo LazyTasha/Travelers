@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -190,7 +191,7 @@ public class SvcProHandler {
 	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/tripModPro");
 	}
-	
+
 	// if fail to delete, we should show user an alert
 	// so we need this result parameter
 	@RequestMapping("/tripDelPro")
@@ -240,6 +241,205 @@ public class SvcProHandler {
 					+ originFileName.substring(originFileName.lastIndexOf(".")).toLowerCase();
 			String safeFile = path + originFileName;
 			String safeDBFile = DBpath + originFileName;
+
+	@RequestMapping( "/userLogout" )	//logout �엫
+	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		request.getSession().removeAttribute( "memid" );	
+		return new ModelAndView( "svc/loginForm" );
+	}	
+		
+	//以묐났�솗�씤
+	 @RequestMapping(value="/idCheck.go",produces = "application/json")
+	 @ResponseBody
+	 public Map<Object, Object> idCheck(@RequestBody String user_id) {
+		 	user_id = user_id.split("=")[0];
+	        int count = 0;
+	        Map<Object, Object> map = new HashMap<Object, Object>();
+	 
+	        count = userDao.idCheck( user_id );
+	        map.put("cnt", count);
+	        
+	        return map;
+	    }
+	 
+	 @RequestMapping(value="/nameCheck.go",method = RequestMethod.POST,produces = "application/json")
+	 @ResponseBody
+	 public Map<Object, Object> nameCheck(@RequestBody String user_name) {
+		 	user_name = user_name.split("=")[0];
+	        int countt = 0;
+	        Map<Object, Object> map = new HashMap<Object, Object>();
+	 
+	        countt = userDao.nameCheck( user_name );
+	        map.put("cnt", countt);
+	        
+	        return map;
+	    }
+	 @RequestMapping("/boardAlbumPro")
+		public ModelAndView svcAlbumProProcess(HttpServletRequest request, MultipartHttpServletRequest mtrequest) throws HandlerException {
+		 	int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		 	request.setAttribute("tb_no", tb_no);
+		 	
+			String uploadPath = request.getServletContext().getRealPath("/");
+			System.out.println(uploadPath);
+			String path=uploadPath+"save/";
+			String DBpath=request.getContextPath()+"/save/";
+
+			new File(path).mkdir();
+			
+			List<MultipartFile> fileList = mtrequest.getFiles("files");
+			//모든 파일 선택 가능->추후 사진 파일만 선택 할 필요 있음
+			AlbumDataBean albumDto;
+			
+			int fileResult=SUCCESS;//파일 입출력 결과
+			long imgSize;//이미지 파일 크기
+			for (MultipartFile mf : fileList) {
+	            String originFileName = mf.getOriginalFilename(); // 원본 파일 명
+            
+	            if(!isValidExtension(originFileName)) {
+	            	fileResult=EXTENSION_ERROR;break;
+	            }
+	            
+	            imgSize=mf.getSize();
+	            if(imgSize>=LIMIT_SIZE) {
+	            	fileResult=SIZE_ERROR;break;
+	            }
+	            originFileName=System.currentTimeMillis()+getRandomString()+originFileName.substring(originFileName.lastIndexOf(".")).toLowerCase();
+	            String safeFile = path +originFileName;
+	            String safeDBFile=DBpath+originFileName;
+	            try {
+	                mf.transferTo(new File(safeFile));
+	                //db insert
+	                albumDto=new AlbumDataBean();
+	            	albumDto.setPhoto_url(safeDBFile);
+	            	albumDto.setTb_no(tb_no);
+	            	int result=albumDao.addPhoto(albumDto);
+	               
+	            } catch (IllegalStateException e) {
+	                e.printStackTrace();
+	            } catch (IOException e) {
+	                e.printStackTrace();
+	            }
+	        }
+			request.setAttribute("fileResult",fileResult);
+			return new ModelAndView("/svc/boardAlbumPro");
+		}
+		 private boolean isValidExtension(String originFileName) {
+	        String fileExtension = originFileName.substring(originFileName.lastIndexOf(".") + 1).toLowerCase();
+	        switch(fileExtension) {
+		        case "jpg":
+		        case "png":
+		        case "gif":
+	            return true;
+	        }
+	        return false;
+	    }
+		 @RequestMapping("/downloadAlbum.go")
+		 public void downloadAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+			 int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+			 List<String>photo_urls=albumDao.getPhoto_urls(tb_no);
+			 
+			String realFolder = request.getServletContext().getRealPath("/")+"save/";
+			int bufferSize = LIMIT_SIZE;
+			ZipOutputStream zos=null;
+			String zipName="Travelers_Album"+tb_no;
+			
+			response.reset();
+			response.setHeader("Content-Disposition", "attachment; filename=" + zipName + ".zip" + ";");
+		   
+		    response.setHeader("Content-Transfer-Encoding", "binary");
+		    OutputStream os = response.getOutputStream();
+		    zos = new ZipOutputStream(os); // ZipOutputStream
+		    zos.setLevel(8); // 압축 레벨 - 최대 압축률은 9, 디폴트 8
+		    BufferedInputStream bis = null;
+		    
+		    for(String photo_url:photo_urls) {
+				String path[]=photo_url.split("/");
+				String fileName=path[path.length-1];
+				String filePath=realFolder+fileName;
+				
+				File sourceFile=new File(filePath);
+				
+				bis=new BufferedInputStream(new FileInputStream(sourceFile));
+				ZipEntry zentry=new ZipEntry(fileName);
+				zentry.setTime(sourceFile.lastModified());
+				zos.putNextEntry(zentry);
+				
+				byte[] buffer = new byte[bufferSize];
+
+			    int cnt = 0;
+		        while ((cnt = bis.read(buffer, 0, bufferSize)) != -1) {
+		            zos.write(buffer, 0, cnt);
+		        }
+			    zos.closeEntry();
+			    }        
+		    zos.close();
+		    bis.close();
+		   }
+		 @RequestMapping("/download.go")
+		 public void downloadProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+			 int n=Integer.parseInt(request.getParameter("num"));
+			 response.reset();
+		    if(n==1) {
+		    	downloadImgProcess(request,response);
+		    }else {
+				String realFolder = request.getServletContext().getRealPath("/")+"save/";
+				int bufferSize = LIMIT_SIZE;
+				ZipOutputStream zos=null;
+				String zipName="Travelers_Photos";
+			    response.setHeader("Content-Disposition", "attachment; filename=" + zipName + ".zip" + ";");
+			   
+			    response.setHeader("Content-Transfer-Encoding", "binary");
+			    OutputStream os = response.getOutputStream();
+			    zos = new ZipOutputStream(os); // ZipOutputStream
+			    zos.setLevel(8); // 압축 레벨 - 최대 압축률은 9, 디폴트 8
+			    BufferedInputStream bis = null;
+				for(int i=0;i<n;i++) {
+					String path[]=request.getParameter("photo"+i).split("/");
+					String fileName=path[path.length-1];
+					String filePath=realFolder+fileName;
+					
+					File sourceFile=new File(filePath);
+					
+					bis=new BufferedInputStream(new FileInputStream(sourceFile));
+					ZipEntry zentry=new ZipEntry(fileName);
+					zentry.setTime(sourceFile.lastModified());
+					zos.putNextEntry(zentry);
+					
+					byte[] buffer = new byte[bufferSize];
+	
+				    int cnt = 0;
+	
+			        while ((cnt = bis.read(buffer, 0, bufferSize)) != -1) {
+			            zos.write(buffer, 0, cnt);
+			        }
+				    zos.closeEntry();
+				    }        
+			    zos.close();
+			    bis.close();
+		    }
+		 }
+		 //download할 img가 한개인 경우-download one image
+		 public void downloadImgProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, IOException{
+			String realFolder = request.getServletContext().getRealPath("/")+"save/";
+			String path[]=request.getParameter("photo0").split("/");
+			String fileName=path[path.length-1];
+			String filePath=realFolder+fileName;
+			 
+		    byte fileByte[] = FileUtils.readFileToByteArray(new File(filePath));
+		     
+		    response.setContentType("application/octet-stream");
+		    response.setContentLength(fileByte.length);
+		    response.setHeader("Content-Disposition", "attachment; fileName=\"" +fileName+"\";");
+		    response.setHeader("Content-Transfer-Encoding", "binary");
+		    response.getOutputStream().write(fileByte);
+		     
+		    response.getOutputStream().flush();
+		    response.getOutputStream().close();
+		 }
+		/////////comment
+		@RequestMapping(value="/commentInsert.go", method= RequestMethod.POST, produces = "application/json" )
+		@ResponseBody
+		public void commentInserProcess(HttpServletRequest request, HttpSession session) throws HandlerException {
 			try {
 				mf.transferTo(new File(safeFile));
 				// db insert

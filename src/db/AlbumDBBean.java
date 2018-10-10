@@ -32,4 +32,7 @@ public class AlbumDBBean {
 	public int getBoardCount(int tb_no) {
 		return session.selectOne("db.getBoardPCount",tb_no);
 	}
+	public List<String> getPhoto_urls(int tb_no){
+		return session.selectList("db.getPhoto_urls",tb_no);
+	}
 }

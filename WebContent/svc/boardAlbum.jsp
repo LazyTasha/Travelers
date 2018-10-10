@@ -11,11 +11,12 @@
 	 <section class="jumbotron text-center">
 	   <div class="container">
 	     <h1 class="jumbotron-heading">Album</h1>
+	      <%--	<c:if test="${isMember eq true}"> --%>
 	     <p>
-	    <%--	<c:if test="${isMember eq true}"> --%>
 	      	 	<a class="btn btn-primary my-2" onclick="uploadPhotos()">사진 업로드</a>
 	      	 	<a id="select" class="btn btn-primary my-2" onclick="selectPhotos()">사진 선택 </a>
 	      	 	<a id="download" class="btn btn-primary my-2" onclick="downloadPhotos()" style="display:none">사진 다운로드</a>
+	      	 	<a class="btn btn-primary my-2" onclick="downloadAlbum()">앨범 전체 다운로드</a>
 	     </p>	 	
 	      	<%-- </c:if> --%>
 	        <form id="uploadForm" action="boardAlbumPro.go" method="post" enctype="multipart/form-data">
@@ -23,6 +24,9 @@
 	          	<input type="hidden" name="tb_no" value="${tb_no}"/>
 			</form>
 			<form id="downloadForm" action="download.go" method="post">
+			</form>
+			<form id="downloadAlbumForm" action="downloadAlbum.go" method="post">
+				<input type="hidden" name="tb_no" value="${tb_no}"/>
 			</form>
 	   </div>
 	 </section>
