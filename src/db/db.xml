@@ -170,7 +170,6 @@
 		</delete>
 		
 		<insert id="insertComment" parameterType="db.CmtDataBean">
-		<!-- insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content}, #{c_reg_date}) -->
 		insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content, jdbcType=VARCHAR}, SYSDATE)
 		</insert>
 		
@@ -226,4 +225,5 @@
 		<delete id="delPhoto" parameterType="int">
 			delete from gg_album where photo_id=#{photo_id}
 		</delete>
+		
 	</mapper>

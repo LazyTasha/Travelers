@@ -88,9 +88,6 @@
 		        <form name="commentInsertForm" method="post">
 		            <div class="input-group">
 		            	<input type="hidden" name="tb_no" value="${tb_no}"/>
-		            	<%-- <input type="hidden" name="number" id="number" value="${tbDto.tb_no}"> --%>
-		            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
-		            	<%-- <input type="hidden" name="c_id" id="c_id" value="${c_id}"> --%>
 		               	<input type="text" class="input" id="c_content" name="c_content" placeholder="내용을 입력하세요.">
 		               
 		               <span class="input-group-btn">

@@ -17,7 +17,10 @@ var filesize=5*1024*1024;
 
 $(document).ready(function(){
 	var tb_no=$('input[name=tb_no]').val();
-    commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
+	if(tb_no){
+	commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
+	}
+	
 });
 
 
@@ -192,12 +195,12 @@ function overlapCheck() {
 			url : "idCheck.go",
 			dataType : "json",
 			success : function(data) {
-				if (data.cnt > 0) {
+				if (data.countId > 0) {
 					$('#passwordCheckMessagegg').html(
 							"아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 				} else {
 					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.");
-					idck = 1;
+					idck = 1; //아이디 중복체크시 1이됨
 				}
 			},
 			error : function(error) {
@@ -220,13 +223,13 @@ function over() {
 			dataType : "json",
 			/* contentType : "application/json", */
 			success : function(data) {
-				if (data.cntt > 0) {
+				if (data.countName > 0) {
 					$('#passwordCheckMessageggg').html("닉네임이 존재합니다.")
 				
 				} else {
 					$('#passwordCheckMessageggg').html("사용가능한 닉네임입니다.")
 
-					genck = 1;
+					genck = 1;// 닉네임 중복체크시 1이됨
 
 				}
 			},
@@ -323,6 +326,7 @@ function uploadPhotos(){
 	    }
 	});	
 }
+
 function eventOccur(evEle, evType){
 	 if (evEle.fireEvent) {
 		 evEle.fireEvent('on' + evType);
@@ -369,20 +373,20 @@ function commentList(tb_no){
         type : 'get',
         data : {tb_no : tb_no},
         success : function(data){
-            var a =''; 
-            $.each(data, function(key, comemnt){ 
-            	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                a += '<div class="commentInfo'+comemnt.c_id+'">'+'댓글번호 : '+comemnt.c_id+' / 작성자 : '+comemnt.user_id;
-                a += '<a onclick="commentUpdate('+comemnt.c_id+',\''+comemnt.c_content+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+comemnt.c_id+');"> 삭제 </a> </div>';
-                a += '<div class="commentContent'+comemnt.c_id+'"> <p> 내용 : '+comemnt.c_content +'</p>';
-                a += '</div></div>'
+            var commentView =''; 
+            $.each(data, function(key, comment){ 
+            	commentView += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+            	commentView += '<div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_id;
+            	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
+            	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a> </div>';
+            	commentView += '<div class="commentContent'+comment.c_id+'"> <p> 내용 : '+comment.c_content +'</p>';
+            	commentView += '</div></div>'
             });
             
-            $(".commentList").html(a);
+            $(".commentList").html(commentView);
         },
         error : function(error) {
-            alert("error : " + error + number);
+            alert("error : " + error );
         }
     });
 }
@@ -417,7 +421,7 @@ function commentUpdate(c_id, c_content){
     a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+c_id+');">수정</button> </span>';
     a += '</div>';
     
-    $('.commentContent'+c_id).html(a);
+    $('.commentContent'+c_id).html(commentModify);
     
 }
  
