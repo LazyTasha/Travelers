@@ -20,7 +20,7 @@
 				</tr>
 				<tr>
 					<td><input type="checkbox" name="check1" ></td>
-					<td><input class="input" type="text" autofocus="autofocus"></td>
+					<td><input class="input" type="text" autofocus="autofocus" maxlength="10"></td>
 				</tr>
 				<tbody id="t">
 				</tbody>

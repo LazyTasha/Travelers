@@ -62,4 +62,7 @@ public class UserDBBean {
 	public int getUserLevel(String user_id) {
 		return session.selectOne("db.getUserLevel",user_id);
 	}
+	public String getUserId(String user_name) {
+		return session.selectOne("db.getUserId", user_name);
+	}
 }

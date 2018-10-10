@@ -269,13 +269,45 @@ function selectPhotos(){
 }
 //사진 다운로드 click->photo download
 function downloadPhotos(){
-	var check1=$('input[name=check1]');
 	if($("input[name=check1]:checked").length==0){
 		alert(nocheckerror);
 	}else{
 		//download구현->downloadPhoto.go로 이동 해서 작업
+		var form=$('#downloadForm');
+		 download(form);
+		 endDownload();
+		 form.html('');
 	}
+} 
+//download가 끝난 후 처리
+function endDownload(){
+	var check1=$('input[name=check1]');
+	$('#download').hide();	
+	check1.prop("checked",false);
+	check1.hide();
+	$('#select').show();
 }
+function download(form){
+	var check=$('input[name=check1]:checked');
+	var photo_url;
+	var input;
+	check.each(function(i){//i=0 start
+		var div = check.parent().eq(i);	
+		photo_url=div.find('input[name=photo_url]').val();	
+		input+='<input type="hidden" name="photo'+i+'" value="'+photo_url+'">';
+	});
+	input+='<input type="hidden" name="num" value="'+check.length+'">';	
+	form.html(input);
+	form.submit();
+}
+//board게시판 전체 사진 다운로드
+function downloadAlbum(){
+	var form=$('#downloadAlbumForm');
+	form.submit();
+	endDownload();
+	form.html('');
+}
+
 //사진 업로드 click->photo upload
 function uploadPhotos(){
 	eventOccur(document.getElementById('file'),'click');
@@ -433,14 +465,42 @@ function commentDelete(c_id){
 }
 
 function loadMoreList(last_tb_no) {
-	$('#append-list').load
 	$.ajax({
 		type : 'post',
-		data : last_tb_no,
+		data : {last_tb_no : last_tb_no},
 		url : "loadMoreList.go",
 		success : function(data) {
+			var listForAppend="";
 			if(data){
-				request.send(last_tb_no);
+				$.each(data, function(key, additionalList){
+					listForAppend+='<div class="row">';
+					listForAppend+=		'<div class="col-md-12">';
+					listForAppend+=			'<div class="card flex-md-row mb-3 shadow-sm h-md-250">';
+					listForAppend+=				'<div class="card-body d-flex flex-column align-items-start">';
+					listForAppend+=					'<strong class="d-inline-block mb-2">';
+					listForAppend+=						'<c:forEach var="j" items="${additionalList.locs}">';
+					listForAppend+=							'${j}';
+					listForAppend+=						'</c:forEach>';
+					listForAppend+=					'</strong>';
+					listForAppend+=					'<h3 class="mb-0">';
+					listForAppend+=					'<a class="text-dark" href="#">${i.tb_title}</a>';
+					listForAppend+=					'</h3>';
+					listForAppend+=						'<div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>';
+					listForAppend+=							'<hr size="1px" color="black" noshade>';
+					listForAppend+=							'<p class="card-text mb-auto">${i.tb_content}</p>';
+					listForAppend+=							'<hr style="width: 100%">';
+					listForAppend+=								'<div class="d-flex justify-content-center">';
+					listForAppend+=								'<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;';
+					listForAppend+=								'<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;';
+					listForAppend+=								'<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;';
+					listForAppend+=						'</div>';
+					listForAppend+=					'<a href="trip.go?tb_no=${i.tb_no}">Continue reading</a>';
+					listForAppend+=				'</div>';
+					listForAppend+=			'<img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">';
+					listForAppend+='</div></div></div>';
+	            });
+	            
+	            $(".board-append-list").append(listForAppend);
 			} else {
 				alert('더 이상 불러올 글이 없습니다.');
 			}

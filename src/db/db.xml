@@ -2,204 +2,299 @@
 <!DOCTYPE mapper
   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-	<mapper namespace="db">
-		<!-- for Admin SQL, don't touch, Maknae! -->
-		
-		<!-- user DB -->
-		<select id="getUsers" parameterType="java.util.Map" resultType="db.UserDataBean">
-			select user_id,user_name,email,gender,reg_date,r 
-			from (
-				select user_id,user_name,email,gender,reg_date,rownum r from (
-					select user_id,user_name,email,gender,reg_date from gg_user order by reg_date desc) 
-					order by reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
-		</select>
-		<select id="getUCount" resultType="int">
-			select count(*) from gg_user
-		</select>
-		<select id="getUserName" parameterType="String" resultType="String">
-			select user_name from gg_user where user_id=#{id}
-		</select>
-		
-		<select id="getUserId" parameterType="String" resultType="String">
-			select user_id from gg_user where user_name=#{user_name}
-		</select>
-		<insert id="insertUser" parameterType="db.UserDataBean">
-		insert into gg_user values(#{user_id}, #{passwd},#{email, jdbcType=VARCHAR}, #{gender}, #{reg_date},  #{user_name} , 1 )
-		</insert>
+<mapper namespace="db">
 
-		<select id="checkId" parameterType="String" resultType="int">
-			select count(*) from gg_user where user_id=#{user_id}
-		</select>
+	<!-- user DB -->
+	
+	<select id="getUsers" parameterType="java.util.Map"
+		resultType="db.UserDataBean">
+		select user_id,user_name,email,gender,reg_date,r
+		from (
+		select user_id,user_name,email,gender,reg_date,rownum r from (
+		select user_id,user_name,email,gender,reg_date from gg_user order by
+		reg_date desc)
+		order by reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+	</select>
+	
+	<select id="getUCount" resultType="int">
+		select count(*) from gg_user
+	</select>
+	
+	<select id="getUserName" parameterType="String"
+		resultType="String">
+		select user_name from gg_user where user_id=#{id}
+	</select>
 
-		<delete id="deleteUser" parameterType="String">
-			delete from gg_user where user_id=#{user_id}
-		</delete>
+	<select id="getUserId" parameterType="String"
+		resultType="String">
+		select user_id from gg_user where user_name=#{user_name}
+	</select>
+	
+	<insert id="insertUser" parameterType="db.UserDataBean">
+		insert into gg_user
+		values(#{user_id}, #{passwd},#{email, jdbcType=VARCHAR}, #{gender},
+		#{reg_date}, #{user_name} , 1 )
+	</insert>
 
-		<update id="modifyUser" parameterType="db.UserDataBean">
-			update gg_user set passwd=#{passwd}, user_name=#{user_name} where user_id=#{user_id}
-		</update>
-
-		<select id="getUser" parameterType="String" resultType="db.UserDataBean">
-			select * from gg_user where user_id=#{user_id}
-		 </select>
-
-		 <select id="idCheck" parameterType="String" resultType="Integer">
+	<select id="checkId" parameterType="String" resultType="int">
 		select count(*) from gg_user where user_id=#{user_id}
-		</select>
+	</select>
 
-		<select id="nameCheck" parameterType="String" resultType="Integer">
+	<delete id="deleteUser" parameterType="String">
+		delete from gg_user where user_id=#{user_id}
+	</delete>
+
+	<update id="modifyUser" parameterType="db.UserDataBean">
+		update gg_user set passwd=#{passwd}, user_name=#{user_name} where
+		user_id=#{user_id}
+	</update>
+
+	<select id="getUser" parameterType="String" resultType="db.UserDataBean">
+		select * from gg_user where user_id=#{user_id}
+	</select>
+
+	<select id="idCheck" parameterType="String" resultType="Integer">
+		select
+		count(*) from gg_user where user_id=#{user_id}
+	</select>
+
+	<select id="nameCheck" parameterType="String" resultType="Integer">
 		select count(*) from gg_user where user_name=#{user_name}
-		</select>
-		
-		<select id="getUserLevel" parameterType="String" resultType="Integer">
+	</select>
+
+	<select id="getUserLevel" parameterType="String" resultType="Integer">
 		select user_level from gg_user where user_id=#{user_id}
-		</select>
-		
-		<!-- tag DB-->
-		<select id="getTagList" resultType="java.util.Map">
-			select * from gg_tag
-		</select>
-		<insert id="insertTag" parameterType="String">
-			insert into gg_tag(tag_id,tag_value) values( SEQ_gg_tag_tag_id.nextval,#{tag_value})
-		</insert>
-		<select id="getTCount" resultType="int">
-			select count(*) from gg_tag
-		</select>
-		<select id="getTags" parameterType="java.util.Map" resultType="db.TagDataBean">
-			select tag_id,tag_value,r 
-			from (
-				select tag_id,tag_value,rownum r from (
-					select tag_id,tag_value from gg_tag order by tag_id desc) 
-					order by tag_id desc)where r &gt;= #{start} and r &lt;=#{end}
-		</select>
-		<select id="checkTag" parameterType="String" resultType="int">
-			select count(*) from gg_tag where tag_value=#{tag_value}
-		</select>
-		<select id="getTag" parameterType="int" resultType="db.TagDataBean">
-			select * from gg_tag where tag_id=#{tag_id} 
-		</select>
-		<select id="modifyTag" parameterType="db.TagDataBean">
-			update gg_tag set tag_value=#{tag_value} where tag_id=#{tag_id}
-		</select>
-		<delete id="deleteTag" parameterType="String">
-			delete from gg_tag where tag_id=#{tag_id}
-		</delete>
-		<select id="getTbTag" parameterType="int" resultType="java.util.List">
-			select tag_value from gg_trip_tag where tb_no=#{tb_no}
-		</select>
-		<select id="getUserTags" parameterType="String" resultType="java.util.List">
-			select t.tag_value from gg_tag t where t.tag_id=(select ut.tag_id from gg_user_tag ut where ut.user_id=#{user_id})
-		</select>
-		
-		<!-- board DB-->
-		<select id="getCount" resultType="int">
-			select count(*) from gg_trip_board
-		</select>
-		<select id="getTrip" parameterType="int" resultType="db.TripDataBean">
-			select * from gg_trip_board where tb_no=#{tb_no}
-		</select>
-		<select id="getTripTags" parameterType="int" resultType="java.util.List">
-			select tag_value from gg_tag t, gg_trip_tag tr where t.tag_id=tr.tag_id and tr.tb_no=#{tb_no}
-		</select>
-		<update id="addViewCount" parameterType="int">
-			update gg_tb_board set tb_v_count=tb_v_count+1 where tb_no=#{tb_no}
-		</update>
-		<insert id="writeTrip" parameterType="db.TbDataBean">
-			insert into gg_trip_board 
-			(tb_no, user_id, tb_title, tb_content, tb_reg_date, tb_v_count, tb_m_num, tb_notice, tb_talk) 
-			values(SEQ_GG_TRIP_BOARD_TB_NO.nextval, #{user_id}, #{tb_title}, #{tb_content}, sysdate, #{tb_v_count}, #{tb_m_num}, #{tb_notice}, #{tb_talk})
-		</insert>
-		<insert id="setTripTags" parameterType="db.TbDataBean">
-			insert into gg_trip_tag (tb_no, tag_id) values
-			<foreach item="item" collection="list" separator=",">
-				(#{item.tb_no}, #{item.tags})
-			</foreach>
-		</insert>
-		<insert id="setTripDetails" parameterType="db.TbDataBean">
-			insert into gg_trip_detail (tb_no, td_trip_id) values
-			<foreach item="item" collection="list" separator=",">
-				(#{item.tb_no}, #{item.locs})
-			</foreach>
-		</insert>
-		<select id="isMember" parameterType="db.TbDataBean" resultType="int">
-			select count(*) from gg_member where user_id=#{user_id} and td_trip_id in(
- 				select td_trip_id from gg_trip_detail where tb_no=#{tb_no})
-		</select>
-    
-		<!--trip DB-->
-    	<select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">
-			select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r 
-			from (
-				select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,rownum r from (
-					select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice from gg_trip_board order by tb_notice desc,tb_reg_date desc) 
-					order by tb_notice desc,tb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
-		</select>
-		<delete id="deleteTrip" parameterType="int">
-			delete from gg_trip_board where tb_no=#{tb_no}
-		</delete>
-		<update id="notice" parameterType="int">
-			update gg_trip_board set tb_notice=1 where tb_no=#{tb_no}
-		</update>
-		<update id="noticeX" parameterType="int">
-			update gg_trip_board set tb_notice=0 where tb_no=#{tb_no}
-		</update>
-		<select id="getTripList" resultType="db.TripDataBean">
+	</select>
+
+	<!-- tag DB -->
+	<select id="getTagList" resultType="java.util.Map">
+		select * from gg_tag
+	</select>
+	
+	<insert id="insertTag" parameterType="String">
+		insert into gg_tag(tag_id,tag_value) values(
+		SEQ_gg_tag_tag_id.nextval,#{tag_value})
+	</insert>
+	
+	<select id="getTCount" resultType="int">
+		select count(*) from gg_tag
+	</select>
+	
+	<select id="getTags" parameterType="java.util.Map" resultType="db.TagDataBean">
+		select tag_id,tag_value,r
+		from (
+		select tag_id,tag_value,rownum r from (
+		select tag_id,tag_value from gg_tag order by tag_id desc)
+		order by tag_id desc)where r &gt;= #{start} and r &lt;=#{end}
+	</select>
+	
+	<select id="checkTag" parameterType="String" resultType="int">
+		select count(*) from gg_tag where tag_value=#{tag_value}
+	</select>
+	
+	<select id="getTag" parameterType="int" resultType="db.TagDataBean">
+		select * from gg_tag where tag_id=#{tag_id}
+	</select>
+	
+	<select id="modifyTag" parameterType="db.TagDataBean">
+		update gg_tag set tag_value=#{tag_value} where tag_id=#{tag_id}
+	</select>
+	
+	<delete id="deleteTag" parameterType="String">
+		delete from gg_tag where tag_id=#{tag_id}
+	</delete>
+	
+	<select id="getTbTag" parameterType="int" resultType="java.util.List">
+		select tag_value from gg_trip_tag where tb_no=#{tb_no}
+	</select>
+	
+	<select id="getUserTags" parameterType="String" resultType="java.util.List">
+		select t.tag_value from gg_tag t where t.tag_id=(select ut.tag_id from
+		gg_user_tag ut where ut.user_id=#{user_id})
+	</select>
+	
+	<select id="getAllTags" resultType="java.util.Map">
+		select * from gg_tag
+	</select>
+
+	<!-- board DB -->
+	<select id="getCount" resultType="int">
+		select count(*) from gg_trip_board
+	</select>
+	
+	<select id="getTrip" parameterType="int"
+		resultType="db.TripDataBean">
+		select * from gg_trip_board where tb_no=#{tb_no}
+	</select>
+	
+	<select id="getTripTags" parameterType="int" resultType="java.util.List">
+		select tag_value from gg_tag t, gg_trip_tag tr where t.tag_id=tr.tag_id and
+		tr.tb_no=#{tb_no}
+	</select>
+	
+	<update id="addViewCount" parameterType="int">
+		update gg_tb_board set tb_v_count=tb_v_count+1 where tb_no=#{tb_no}
+	</update>
+	
+	<insert id="writeTrip" parameterType="db.TbDataBean">
+		insert into gg_trip_board
+		(tb_no, user_id, tb_title, tb_content, tb_reg_date, tb_v_count, tb_m_num,
+		tb_notice, tb_talk)
+		values(SEQ_GG_TRIP_BOARD_TB_NO.nextval, #{user_id}, #{tb_title}, #{tb_content}, sysdate, 0,
+		#{tb_m_num}, 0, #{tb_talk})
+	</insert>
+	
+	<insert id="setTripTags" parameterType="db.TbDataBean">
+		insert into gg_trip_tag (tb_no, tag_id) values
+		<foreach item="item" collection="list" separator=",">
+			(#{item.tb_no}, #{item.tags})
+		</foreach>
+	</insert>
+	
+	<insert id="setTripDetails" parameterType="db.TbDataBean">
+		insert into gg_trip_detail (tb_no, td_trip_id) values
+		<foreach item="item" collection="list" separator=",">
+			(#{item.tb_no}, #{item.locs})
+		</foreach>
+	</insert>
+	
+	<select id="isMember" parameterType="db.TbDataBean" resultType="int">
+		select count(*) from gg_member where user_id=#{user_id} and td_trip_id in(
+		select td_trip_id from gg_trip_detail where tb_no=#{tb_no})
+	</select>
+
+	<!--trip DB -->
+	
+	<select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">
+		select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r
+		from (
+		select
+		tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,rownum
+		r from (
+		select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice
+		from gg_trip_board order by tb_notice desc,tb_reg_date desc)
+		order by tb_notice desc,tb_reg_date desc)where r &gt;= #{start} and r
+		&lt;=#{end}
+	</select>
+	
+	<delete id="deleteTrip" parameterType="int">
+		delete from gg_trip_board where tb_no=#{tb_no}
+	</delete>
+	
+	<update id="notice" parameterType="int">
+		update gg_trip_board set tb_notice=1 where tb_no=#{tb_no}
+	</update>
+	
+	<update id="noticeX" parameterType="int">
+		update gg_trip_board set tb_notice=0 where tb_no=#{tb_no}
+	</update>
+	
+	<select id="getTripList" resultType="db.TripDataBean">
 			<![CDATA[
 			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual) order by tb_no desc
 			]]>
-		</select>
-		<select id="loadMoreList" parameterType="int" resultType="db.TripDataBean">
+	</select>
+	
+	<select id="loadMoreList" parameterType="int"
+		resultType="db.TripDataBean">
 			<![CDATA[
 			select * from gg_trip_board where tb_no<#{last_tb_no} and tb_no<=(#{last_tb_no}-10) order by tb_no desc
 			]]>
-		</select>
+	</select>
+
+	<!--cmt DB -->
+	
+	<select id="getCmtCount" resultType="int">
+		select count(*) from gg_comment
+	</select>
+	
+	<select id="getComments" parameterType="java.util.Map" resultType="db.CmtDataBean">
+		select c_id,tb_no,user_id,c_content,c_reg_date,r
+		from (
+		select c_id,tb_no,user_id,c_content,c_reg_date,rownum r from (
+		select c_id,tb_no,user_id,c_content,c_reg_date from gg_comment order by
+		c_reg_date desc)
+		order by c_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+	</select>
+	
+	<delete id="delComment" parameterType="int">
+		delete from gg_comment where c_id=#{c_id}
+	</delete>
+
+	<insert id="insertComment" parameterType="db.CmtDataBean">
+		<!-- insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) 
+			values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content}, 
+			#{c_reg_date}) -->
+		insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date)
+		values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id},
+		#{c_content, jdbcType=VARCHAR}, SYSDATE)
+	</insert>
+
+	<select id="getComment" parameterType="int"
+		resultType="db.CmtDataBean">
+		select * from gg_comment where tb_no=#{tb_no} order by c_id desc
+	</select>
+
+	<update id="updateComment" parameterType="db.CmtDataBean">
+		update gg_comment set c_content = #{c_content} where c_id = #{c_id}
+	</update>
+
+	<delete id="deleteComment" parameterType="int">
+		delete from gg_comment where c_id = #{c_id}
+	</delete>
+
+	<!-- location -->
+	
+	<select id="getLocs" parameterType="int" resultType="java.util.List">
+		select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
+	</select>
+	
+	<select id="getTripLoc" parameterType="int" resultType="java.util.List">
+		select c.country_name from gg_country c where c.country_id=
+		(select cd.country_id from gg_coordinate cd where cd.coord_id=
+		(select cl.coord_id from gg_calendar cl where cl.td_trip_id=
+		(select td.td_trip_id from gg_trip_detail td where td.tb_no=#{tb_no})))
+		and c.country_name=
+		(select t.tag_value from gg_tag t where t.tag_id=
+		(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
+	</select>
+
+	<!--album DB -->
+	
+	<insert id="addPhoto" parameterType="db.AlbumDataBean">
+		insert into gg_album
+		values(SEQ_gg_album_photo_id.nextval,#{photo_url},sysdate,#{tb_no})
+	</insert>
+	
+	<select id="getAlbum" resultType="db.AlbumDataBean">
+		select * from gg_album order by alb_reg_date desc
+	</select>
+	
+	<!-- <select id="getBoardAlbum" parameterType="int" resultType="db.AlbumDataBean"> 
+		select * from gg_album where tb_no=#{tb_no} order by alb_reg_date desc </select> -->
 		
-		<!--cmt DB-->
-		<select id="getCmtCount" resultType="int">
-			select count(*) from gg_comment
-		</select>
-		<select id="getComments" parameterType="java.util.Map" resultType="db.CmtDataBean">
-			select c_id,tb_no,user_id,c_content,c_reg_date,r 
-			from (
-				select c_id,tb_no,user_id,c_content,c_reg_date,rownum r from (
-					select c_id,tb_no,user_id,c_content,c_reg_date from gg_comment order by c_reg_date desc) 
-					order by c_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
-		</select>
-		<delete id="delComment" parameterType="int">
-			delete from gg_comment where c_id=#{c_id}
-		</delete>
-		
-		<insert id="insertComment" parameterType="db.CmtDataBean">
-		<!-- insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content}, #{c_reg_date}) -->
-		insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content, jdbcType=VARCHAR}, SYSDATE)
-		</insert>
-		
-		<select id="getComment" parameterType="int" resultType="db.CmtDataBean" >
-     	select * from gg_comment where tb_no=#{tb_no} order by c_id desc
-     	</select>
-     	
-     	<update id="updateComment" parameterType="db.CmtDataBean">
-        update gg_comment set c_content = #{c_content} where c_id = #{c_id}
-    	</update>
-    
-    	<delete id="deleteComment" parameterType="int">
-        delete from gg_comment where c_id = #{c_id}
-    	</delete>
-		
-		<!-- location -->
-		<select id="getLocs" parameterType="int" resultType="java.util.List">
-			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
-		</select>
-		<select id="getTripLoc" parameterType="int" resultType="java.util.List">
-			select c.country_name from gg_country c where c.country_id=
-			(select cd.country_id from gg_coordinate cd where cd.coord_id=
-			(select cl.coord_id from gg_calendar cl where cl.td_trip_id=
-			(select td.td_trip_id from gg_trip_detail td where td.tb_no=#{tb_no})))
-			and c.country_name=	
-			(select t.tag_value from gg_tag t where t.tag_id=
-			(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
-		</select>
-		
+	<select id="getBoardAlbum" parameterType="java.util.Map"
+		resultType="db.AlbumDataBean">
+		select photo_id,photo_url,alb_reg_date,tb_no,r
+		from (
+		select photo_id,photo_url,alb_reg_date,tb_no,rownum r from (
+		select photo_id,photo_url,alb_reg_date,tb_no from gg_album where
+		tb_no=#{tb_no} order by alb_reg_date desc)
+		order by alb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+	</select>
+	
+	<select id="getPCount" resultType="int">
+		select count(*) from gg_album
+	</select>
+	
+	<select id="getBoardPCount" parameterType="int" resultType="int">
+		select count(*) from gg_album where tb_no=#{tb_no}
+	</select>
+	
+	<delete id="delPhoto" parameterType="int">
+		delete from gg_album where photo_id=#{photo_id}
+	</delete>
+
 		<!--album DB -->
 		<insert id="addPhoto" parameterType="db.AlbumDataBean">
 			insert into gg_album values(SEQ_gg_album_photo_id.nextval,#{photo_url},sysdate,#{tb_no})
@@ -226,4 +321,7 @@
 		<delete id="delPhoto" parameterType="int">
 			delete from gg_album where photo_id=#{photo_id}
 		</delete>
+		<select id="getPhoto_urls" parameterType="int" resultType="String">
+			select photo_url from gg_album where tb_no=#{tb_no}
+		</select>
 	</mapper>
