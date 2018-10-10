@@ -371,50 +371,6 @@ public class SvcProHandler {
 		response.getOutputStream().close();
 	}
 
-	@RequestMapping("/download.go")
-	public void downloadFile(HttpServletRequest request, HttpServletResponse response)
-			throws HandlerException, IOException {
-		String realFolder = request.getServletContext().getRealPath("/") + "save/";
-		int bufferSize = LIMIT_SIZE;
-		int n = Integer.parseInt(request.getParameter("num"));
-		ZipOutputStream zos = null;
-		String zipName = "Travelers_Album";
-		// page의 ContentType등을 동적으로 바꾸기 위해 초기화시킴
-		response.reset();
-		response.setHeader("Content-Disposition", "attachment; filename=" + zipName + ".zip" + ";");
-
-		response.setHeader("Content-Transfer-Encoding", "binary");
-
-		OutputStream os = response.getOutputStream();
-		zos = new ZipOutputStream(os); // ZipOutputStream
-		zos.setLevel(8); // 압축 레벨 - 최대 압축률은 9, 디폴트 8
-		BufferedInputStream bis = null;
-
-		for (int i = 0; i < n; i++) {
-			String path[] = request.getParameter("photo" + i).split("/");
-			String fileName = path[path.length - 1];
-			String filePath = realFolder + fileName;
-
-			File sourceFile = new File(filePath);
-
-			bis = new BufferedInputStream(new FileInputStream(sourceFile));
-			ZipEntry zentry = new ZipEntry(fileName);
-			zentry.setTime(sourceFile.lastModified());
-			zos.putNextEntry(zentry);
-
-			byte[] buffer = new byte[bufferSize];
-
-			int cnt = 0;
-
-			while ((cnt = bis.read(buffer, 0, bufferSize)) != -1) {
-				zos.write(buffer, 0, cnt);
-			}
-			zos.closeEntry();
-		}
-		zos.close();
-		bis.close();
-	}
-
 	///////////////////////////////// ajax list/////////////////////////////////
 	
 	@RequestMapping(value = "/idCheck.go", produces = "application/json")
