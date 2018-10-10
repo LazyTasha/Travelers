@@ -505,7 +505,7 @@ function loadMoreList(last_tb_no) {
 			}
 		},
 		error : function(error) {
-			alert('글 불러오기에 실패했습니다.');
+			alert('글 불러오기에 실패했습니다.'+error);
 		}
 	});
 }

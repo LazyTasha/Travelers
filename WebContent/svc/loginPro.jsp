@@ -22,8 +22,7 @@
 	</script>
 </c:if>
 <c:if test="${result eq 1}">
-	${sessionScope.userDto=userDto}
-	${sessionScope.memid = id}
+	${sessionScope.user_id = id}
 	<c:if test="${userType eq 1}">
 		${sessionScope.user_level = user_level}
 		<c:redirect url="adminTrip.go"/>

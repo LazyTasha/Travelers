@@ -126,8 +126,10 @@
 		gg_user_tag ut where ut.user_id=#{user_id})
 	</select>
 
-	<select id="getAllTags" resultType="java.util.Map">
-		select * from gg_tag
+	<select id="getStyleTags" resultType="java.util.Map">
+		<![CDATA[
+		select * from gg_tag where tag_id>=1 and tag_id<=100
+		]]>
 	</select>
 
 	<!-- board DB -->

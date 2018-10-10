@@ -16,7 +16,6 @@
 	</script>		
 </c:if>
 <c:if test="${result eq 1}">
-	${sessionScope.userDto=userDto}
-	${sessionScope.memid=userDto.user_id}
+	${sessionScope.user_id=userDto.user_id}
 	<c:redirect url="tripList.go"/>
 </c:if>	
