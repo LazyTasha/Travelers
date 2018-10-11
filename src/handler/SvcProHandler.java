@@ -183,6 +183,9 @@ public class SvcProHandler {
 		tbDto.setTb_talk(request.getParameter("tb_talk"));
 		tbDto.setLocs(request.getParameterValues("trip_location"));
 		tbDto.setTags(request.getParameterValues("trip_tags"));
+//		tbDto.setCal_start_date(request.getParameter("cal_start_date"));
+//		tbDto.setCal_end_date(request.getParameter("cal_end_date"));
+		
 
 		tbDao.writeTb(tbDto);
 

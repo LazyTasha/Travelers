@@ -84,15 +84,15 @@ public class SvcFormHandler {
 	@RequestMapping("/tripWrite")
 	public ModelAndView svcTripWriteFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//need to know who is writing
-		String writer_id=((UserDataBean)request.getAttribute("userDto")).getUser_id();
-		String writer_name=((UserDataBean)request.getAttribute("userDto")).getUser_name();
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		String user_name= userDao.getUserName(user_id);
+		System.out.println(user_name);
 		//get tag list too so that user choose it
 		//but I don't know why should I put a map there...
 		Map<Integer, String> tags=tagDao.getStyleTags();
 		//send them to set User Name on the form
-		request.setAttribute("writer_id", writer_id);
-		request.setAttribute("writer_name", writer_name);
 		request.setAttribute("tags", tags);
+		
 		return new ModelAndView("svc/tripWrite");
 	}
 	

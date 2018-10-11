@@ -75,3 +75,5 @@
 <c:set var="trip_tag" value="여행 태그"/>
 <c:set var="trip_write" value="등록"/>
 <c:set var="trip_location" value="장소"/>
+<c:set var="trip_schedule" value="일정"/>
+<c:set var="trip_content" value="내용을 입력하세요"/>
