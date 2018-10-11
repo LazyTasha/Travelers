@@ -34,7 +34,7 @@
 				<div class="form-group row">
 					<label for="nickname" class="col-sm-2 col-form-label">${str_id}</label>
 					<div class="col-sm-8">&nbsp; ${userDto.user_name}</div>
-					<input type="hidden" name="user_id" value="${userDto.user_name}">
+					<input type="hidden" name="user_id" value="${user_id}">
 				</div>
 				<div class="form-group row">
 					<label for="inputPassword" class="col-sm-2 col-form-label">${str_passwd}</label>
