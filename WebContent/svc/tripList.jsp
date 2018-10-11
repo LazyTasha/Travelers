@@ -116,14 +116,14 @@ h1, h2, h3, h4, h5, h6 {
 			   <img src="${project}img/logo_hz.png" width="200px" height="100px" class="d-inline-block align-top">    
 			</a>
           </div>
-          <c:if test="${sessionScope.memid eq null}">
+          <c:if test="${sessionScope.user_id eq null}">
 	          <div class="col-4 d-flex justify-content-end align-items-center">
 	            <!-- Header login/sign-up section -->	
 			 	<a href="login.go" class="nav-item">${page_login}</a> &nbsp; 
 			 	| &nbsp; <a href="registration.go">${page_input}</a>&nbsp;
 	          </div>
         </c:if>
-        <c:if test="${sessionScope.memid ne null}">
+        <c:if test="${sessionScope.user_id ne null}">
         	<div class="col-4 d-flex justify-content-end align-items-center">
         		<!-- if user has been logged in -->
 			 	<a href="myPage.go" class="nav-item">${page_mypage2}</a>
@@ -177,7 +177,7 @@ h1, h2, h3, h4, h5, h6 {
 	    		<div class="row" id="board-append-list">
 	    		</div>
 	    	</c:if>
-    	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList()">Load more...</button>
+    	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList(${tripList})">Load more...</button>
     </div><!-- board list -->
 </div><!-- body box -->	
 		
