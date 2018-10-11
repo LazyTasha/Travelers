@@ -31,7 +31,7 @@
 			</a>
 			<h4>${msg_passwdform}</h4><br>
 		</div>
-		<form class="form-horizontal" method="post" name="userModPassCheck">
+		<form class="form-horizontal" method="post" action="userModify.go" name="userModPassCheck">
 			<div class="form-group row">
 				<label for="user_id" class="col-sm-2 col-form-label">${str_id}</label>
 				<div class="col-sm-8">&nbsp; ${sessionScope.user_id}</div>
@@ -39,14 +39,13 @@
 			</div>
 			<div class="form-group row">
 				<label for="nickname" class="col-sm-2 col-form-label">${str_passwd}</label>
-				<div class="col-sm-8"><input type="text" name="passwd" class="form-control" id="passwd"
-						placeholder="ID" maxlength="20" required autofocus><br></div>
+				<div class="col-sm-8"><input type="password" name="passwd" class="form-control"
+				maxlength="20" required autofocus><br></div>
 			</div>
 			<div class="form-group row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-8">
-					<button type="submit" class="btn btn-lg btn-secondary btn-block"
-						onclick="location='userModify.go'">${btn_ok}</button>
+					<button type="submit" class="btn btn-lg btn-secondary btn-block">${btn_ok}</button>
 					<button type="button" class="btn btn-lg btn-secondary btn-block"
 						onclick="location='myPage.go'">${btn_cancel}</button>
 				</div>

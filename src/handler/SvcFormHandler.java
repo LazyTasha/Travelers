@@ -1,6 +1,6 @@
 package handler;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -63,10 +63,10 @@ public class SvcFormHandler {
 		UserDataBean userDto=userDao.getUser(user_id);
 		
 		if(userDto!=null) {
-			if(passwd==userDto.getPasswd()) {
+			if(passwd.equals(userDto.getPasswd())) {
 				result=1;
 				request.setAttribute("userDto", userDto);
-				Map<Integer, String> tagList=tagDao.getStyleTags();
+				List<String> tagList=tagDao.getStyleTags();
 				request.setAttribute("tagList", tagList);
 			} else {
 				result=0;
@@ -95,7 +95,7 @@ public class SvcFormHandler {
 		String writer_name=((UserDataBean)request.getAttribute("userDto")).getUser_name();
 		//get tag list too so that user choose it
 		//but I don't know why should I put a map there...
-		Map<Integer, String> tags=tagDao.getStyleTags();
+		List<String> tags=tagDao.getStyleTags();
 		//send them to set User Name on the form
 		request.setAttribute("writer_id", writer_id);
 		request.setAttribute("writer_name", writer_name);

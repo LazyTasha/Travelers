@@ -1,9 +1,25 @@
-<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="setting.jsp"%>
-<link rel="stylesheet" type="text/css" href="${project}style_member.css">
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>${page_input}</title>
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- Custom style for this template -->
+<link rel="stylesheet" href="${project}style_loginForm.css">
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요한) -->
+<script src="//code.jquery.com/jquery.js"></script>
 <script src="${project}script.js"></script>
+</head>
+
 <c:if test="${result eq 1}">
 	<body onload="userModify(${user_id})">
 		<div class="container" style="width: 600px">
@@ -25,7 +41,7 @@
 					<div class="col-sm-8">
 						<input type="text" name="user_name" class="form-control"
 							id="name_val" placeholder="Nickname" required>
-						<h4 style="color: red;" id="passwordCheckMessageggg"></h4>
+						<h4 style="color: red;" id="passwordCheckMessage"></h4>
 					</div>
 					<div class="col-sm-2">
 						<button type="button" class="btn btn-md btn-secondary"
@@ -34,18 +50,15 @@
 				</div>
 				<div class="form-group row">
 					<label for="gender" class="col-sm-2 col-form-label">${str_gender}</label>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="gender"
-							id="gridRadios1" value="1" checked> <label
-							class="form-check-label" for="gridRadios1">
-							${str_gender_f} </label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="gender"
-							id="gridRadios2" value="0"> <label
-							class="form-check-label" for="gridRadios2">
-							${str_gender_m} </label>
-					</div>
+				<div class="col-sm-8">
+					&nbsp;
+					<c:if test="${userDto.gender eq 0}">
+						${str_gender_m}
+					</c:if>
+					<c:if test="${userDto.gender eq 1}">
+						${str_gender_f}
+					</c:if>
+				</div>
 				</div>
 				<div class="form-group row">
 					<label for="email" class="control-label col-sm-2">${str_email}
@@ -60,7 +73,7 @@
 							<c:if test="${tagList} ne null">
 								<c:forEach var="i" items="${tagList}">
 									<button type="button" class="btn btn-default" name="tags"
-										disabled>#${i.value}&nbsp;</button>
+										disabled># ${i.value}&nbsp;</button>
 								</c:forEach>
 							</c:if>
 						</div>
@@ -81,11 +94,11 @@
 </c:if>
 <c:if test="${result eq 0}">
 	<script type="text/javascript">
-		erroralert(${modError_passwd});
+		erroralert("${modError_passwd}");
 	</script>
 </c:if>
 <c:if test="${result eq -1}">
 	<script type="text/javascript">
-		erroralert(${modError_noUser});
+		erroralert("${modError_noUser}");
 	</script>
 </c:if>

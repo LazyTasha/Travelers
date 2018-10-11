@@ -50,7 +50,7 @@ public class TagDBBean {
 	public List<String> getTripTags(int tb_no) {
 		return session.selectList("db.getTripTags", tb_no);
 	}
-	public Map<Integer, String> getStyleTags() {
-		return session.selectOne("db.getStyleTags");
+	public List<String> getStyleTags() {
+		return session.selectList("db.getStyleTags");
 	}
 }
