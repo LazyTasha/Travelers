@@ -226,7 +226,7 @@
 
 	<select id="loadMoreList" parameterType="int" resultType="db.TripDataBean">
 			<![CDATA[
-			select * from gg_trip_board where tb_no<#{last_tb_no} and tb_no<=(#{last_tb_no}-10) order by tb_no desc
+			select * from gg_trip_board where tb_no<#{last_tb_no} and tb_no<=(#{last_tb_no}-5) order by tb_no desc
 			]]>
 	</select>
 
