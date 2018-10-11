@@ -218,10 +218,6 @@ function passwordCheckFunction() {
 	}
 }
 
-
-
-
-
 //아이디
 var idck = 0;
 function IdCheck() {
@@ -575,8 +571,8 @@ function loadMoreList(last_tb_no) {
 		}
 	});
 }
-//달력 불러오기
-$(function(){
-	$("#date1").datepicker();
-	$("#date2").datepicker();
-});
+//달력 불러오기 
+ $(function(){ 
+	$("#date1").datepicker(); 
+	$("#date2").datepicker(); 
+}); 
