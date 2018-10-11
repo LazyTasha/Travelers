@@ -44,13 +44,13 @@ public class TagDBBean {
 	public int deleteTag(String tag_id) {
 		return session.delete("db.deleteTag",tag_id);
 	}
-	public List<String> getUserTags(String user_id) {
+	public List<TagDataBean> getUserTags(String user_id) {
 		return session.selectList("db.getUserTags", user_id);
 	}
-	public List<String> getTripTags(int tb_no) {
+	public List<TagDataBean> getTripTags(int tb_no) {
 		return session.selectList("db.getTripTags", tb_no);
 	}
-	public List<String> getStyleTags() {
+	public List<TagDataBean> getStyleTags() {
 		return session.selectList("db.getStyleTags");
 	}
 }

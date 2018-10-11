@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>${page_input}</title>
+<title>${page_modify}</title>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -21,7 +21,7 @@
 </head>
 
 <c:if test="${result eq 1}">
-	<body onload="userModify(${user_id})">
+	<body>
 		<div class="container" style="width: 600px">
 			<div class="text-center">
 				<a href="tripList.go"> <img class="mb-4"
@@ -87,12 +87,9 @@
 					</label>
 					<div class="col-sm-8">
 						<div class="btn-group btn-group-sm" role="group" aria-label="...">
-							<c:if test="${tagList} ne null">
-								<c:forEach var="i" items="${tagList}">
-									<button type="button" class="btn btn-default" name="tags"
-										disabled># ${i.value}&nbsp;</button>
-								</c:forEach>
-							</c:if>
+							<c:forEach var="i" items="${tagList}">
+								<button type="button" class="btn btn-default" name="tags">#${i.tag_value}&nbsp;</button>
+							</c:forEach>
 						</div>
 					</div>
 				</div>
