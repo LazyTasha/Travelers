@@ -297,7 +297,13 @@
 		(select t.tag_value from gg_tag t where t.tag_id=
 		(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
 	</select>
-
+	
+	<!-- locDB -->
+	<insert id="insertCoord" parameterType="db.LocDataBean">
+		insert into gg_coordinate(country_id,coord_long,coord_lat,coord_order,coord_id) values(
+				(select country_id from gg_country where country_code=#{country_code}),#{coord_long},#{coord_lat},#{coord_order},SEQ_gg_coordinate_coord_id.NEXTVAL)
+	</insert>
+	
 	<!--album DB -->
 
 	<insert id="addPhoto" parameterType="db.AlbumDataBean">

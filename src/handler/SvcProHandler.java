@@ -44,6 +44,7 @@ import db.AlbumDataBean;
 import db.CmtDBBean;
 import db.CmtDataBean;
 import db.LocDBBean;
+import db.LocDataBean;
 import db.TagDBBean;
 import db.TbDBBean;
 import db.TbDataBean;
@@ -246,18 +247,27 @@ public class SvcProHandler {
 			e.printStackTrace();
 		}
 		//gg_coordinata&location
-		double lat=Double.parseDouble(request.getParameter("lat"));
-		double lng=Double.parseDouble(request.getParameter("lng"));
+		double coord_lat=Double.parseDouble(request.getParameter("lat"));
+		double coord_long=Double.parseDouble(request.getParameter("lng"));
+		String country_code=request.getParameter("country_code");
 		
-		String country_name=request.getParameter("country_name");//한글로 받아지는 상태
+		if(country_code!=null) {
+			int coord_order=1;//test용//일정하나만 있는 경우
+			LocDataBean locDto=new LocDataBean();
+			locDto.setCountry_code(country_code);
+			locDto.setCoord_lat(coord_lat);
+			locDto.setCoord_long(coord_long);
+			locDto.setCoord_order(coord_order);
+			
+			int result=locDao.insertCoord(locDto);
+		}
 
-		
 		// tbDto will be used for DB update
 		// #{user_id}, #{tb_title}, #{tb_content}, sysdate, 0,
 		// #{tb_m_num}, 0, #{tb_talk}
 		TbDataBean tbDto = new TbDataBean();
 
-		tbDto.setUser_id(userDao.getUserId(request.getParameter("user_name")));
+		tbDto.setUser_id((String)request.getSession().getAttribute("user_id"));
 		tbDto.setTb_title(request.getParameter("trip_title"));
 		tbDto.setTb_content(request.getParameter("content"));
 		tbDto.setTb_m_num(Integer.parseInt(request.getParameter("trip_m_num")));
