@@ -498,6 +498,7 @@ function commentDelete(c_id){
 }
 
 function loadMoreList(last_tb_no) {
+	alert(last_tb_no);
 	$.ajax({
 		type : 'post',
 		data : {last_tb_no : last_tb_no},
