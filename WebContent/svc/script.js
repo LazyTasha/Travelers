@@ -12,14 +12,16 @@ var extensionerror="jpg, gif, png 확장자만 업로드 가능합니다.";
 var sizeerror="이미지 용량은 5M이하만 가능합니다.";
 
 var nocheckerror="다운로드 받을 사진을 선택하세요";
+var locationerror="장소를 선택하세요";
 
 var filesize=5*1024*1024;
 
 $(document).ready(function(){
 	var tb_no=$('input[name=tb_no]').val();
-    commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
+	if(tb_no){
+		commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
+		}
 });
-
 
 function erroralert( msg ) {
 	alert( msg );
@@ -39,7 +41,10 @@ function initMap() {
 	      document.getElementById('map'), {zoom: 8, center: uluru});
 	  // The marker, positioned at Uluru
 	  var marker = new google.maps.Marker({position: uluru, map: map});
-
+	  
+	  var infowindow = new google.maps.InfoWindow;
+	  var geocoder = new google.maps.Geocoder;
+	  geocodeLatLng(uluru,geocoder, map, infowindow)
 }
 //지도 주소검색
 function searchMap() {
@@ -48,9 +53,9 @@ function searchMap() {
       center: {lat: -34.397, lng: 150.644}
     });
     var geocoder = new google.maps.Geocoder();
-
+    
     document.getElementById('submit').addEventListener('click', function() {
-     geocodeAddress(geocoder, map);
+      geocodeAddress(geocoder, map);
     });
   }
 //주소로 좌표 표시
@@ -62,23 +67,53 @@ function searchMap() {
         var marker = new google.maps.Marker({
           map: resultsMap,
           position: results[0].geometry.location
-        });
+        });	
         //좌표 받기
         var lat=marker.position.lat();//위도 
         var lng=marker.position.lng();//경도
-        
-        //lat,lng를 form에 보내주기
-        var position="<input name='lat' type='hidden' value='"+lat+"'/>"
+       
+        //lat,lng를 form에 붙여주기
+        var input="<input name='lat' type='hidden' value='"+lat+"'/>"
         	+"<input name='lng' type='hidden' value='"+lng+"'/>";
-        $('#searchmap').append(position);
-        //alert($('#searchmap').html())
-    
-        //alert(document.getElementById('lat').value);
+       
+        //국가-jason 값 가져오기
+        var country=results[0].address_components.filter(
+        		function(component){
+        			return component.types[0]=="country"
+        		});
+        var country_name=country[0].long_name;
+        
+        input+="<input name='country_name' type='hidden' value='"+country_name+"'/>";
+        $('#searchmap').append(input);
+        
+        var infowindow = new google.maps.InfoWindow;
+       
+        geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap, infowindow); 
       } else {
-        alert('Geocode was not successful for the following reason: ' + status);
+        alert(locationerror);
       }
     });
   }
+ //좌표로 주소 띄우기(coordinate->address)
+ function geocodeLatLng(latlng,geocoder, map, infowindow) {
+  geocoder.geocode({'location': latlng}, function(results, status) {
+    if (status === 'OK') {
+      if (results[0]) {
+        map.setZoom(8);
+        var marker = new google.maps.Marker({
+          position: latlng,
+          map: map
+        });
+        infowindow.setContent(results[0].formatted_address);
+        infowindow.open(map, marker);
+      } else {
+        window.alert('No results found');
+      }
+    } else {
+      window.alert('Geocoder failed due to: ' + status);
+    }
+  });
+}
 //trip view-button event-map
 function showMap(){
 	$('#albumTab').hide();
@@ -99,6 +134,7 @@ function previous(start,size){
 	if(start>size)start=start-size;
 	albumPaging(start);
 }
+//page넘기기
 function albumPaging(start){
 	var tb_no=$('input[name=tb_no]').val();
 	var tab=1;
@@ -192,12 +228,12 @@ function overlapCheck() {
 			url : "idCheck.go",
 			dataType : "json",
 			success : function(data) {
-				if (data.cnt > 0) {
+				if (data.countId > 0) {
 					$('#passwordCheckMessagegg').html(
 							"아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 				} else {
 					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.");
-					idck = 1;
+					idck = 1; //아이디 중복체크시 1이됨
 				}
 			},
 			error : function(error) {
@@ -220,14 +256,11 @@ function over() {
 			dataType : "json",
 			/* contentType : "application/json", */
 			success : function(data) {
-				if (data.cntt > 0) {
+				if (data.countName > 0) {
 					$('#passwordCheckMessageggg').html("닉네임이 존재합니다.")
-				
 				} else {
 					$('#passwordCheckMessageggg').html("사용가능한 닉네임입니다.")
-
-					genck = 1;
-
+					genck = 1; // 닉네임 중복체크시 1이됨
 				}
 			},
 			error : function(error) {
@@ -380,17 +413,17 @@ function commentList(tb_no){
         type : 'get',
         data : {tb_no : tb_no},
         success : function(data){
-            var a =''; 
-            $.each(data, function(key, comemnt){ 
-            	a += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                a += '<div class="commentInfo'+comemnt.c_id+'">'+'댓글번호 : '+comemnt.c_id+' / 작성자 : '+comemnt.user_id;
-                a += '<a onclick="commentUpdate('+comemnt.c_id+',\''+comemnt.c_content+'\');"> 수정 </a>';
-                a += '<a onclick="commentDelete('+comemnt.c_id+');"> 삭제 </a> </div>';
-                a += '<div class="commentContent'+comemnt.c_id+'"> <p> 내용 : '+comemnt.c_content +'</p>';
-                a += '</div></div>'
+            var commentView =''; 
+            $.each(data, function(key, comment){ 
+            	commentView += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
+            	commentView += '<div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_id;
+            	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
+            	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a> </div>';
+            	commentView += '<div class="commentContent'+comment.c_id+'"> <p> 내용 : '+comment.c_content +'</p>';
+            	commentView += '</div></div>'
             });
             
-            $(".commentList").html(a);
+            $(".commentList").html(commentView);
         },
         error : function(error) {
             alert("error : " + error + number);
@@ -421,14 +454,14 @@ function CmtInsert(insertData){
 
 //댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
 function commentUpdate(c_id, c_content){
-    var a ='';
+    var commentModify ='';
     
-    a += '<div class="input-group">';
-    a += '<input type="text" class="form-control" name="c_content_'+c_id+'" value="'+c_content+'"/>';
-    a += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+c_id+');">수정</button> </span>';
-    a += '</div>';
+    commentModify += '<div class="input-group">';
+    commentModify += '<input type="text" class="form-control" name="c_content_'+c_id+'" value="'+c_content+'"/>';
+    commentModify += '<span class="input-group-btn"><button class="btn btn-default" type="button" onclick="commentUpdateProc('+c_id+');">수정</button> </span>';
+    commentModify += '</div>';
     
-    $('.commentContent'+c_id).html(a);
+    $('.commentContent'+c_id).html(commentModify);
     
 }
  
@@ -506,7 +539,7 @@ function loadMoreList(last_tb_no) {
 			}
 		},
 		error : function(error) {
-			alert('글 불러오기에 실패했습니다.');
+			alert('글 불러오기에 실패했습니다.'+error);
 		}
 	});
 }

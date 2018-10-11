@@ -104,6 +104,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 </style>
 <script src="//code.jquery.com/jquery.js"></script>
+<script src="${project}script.js"></script>
 </head>
 
 <body>
@@ -111,21 +112,21 @@ h1, h2, h3, h4, h5, h6 {
      <header class="board-header py-2">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-4 pt-2 text-left">
-            <a href="list.go">
+            <a href="tripList.go">
 			   <img src="${project}img/logo_hz.png" width="200px" height="100px" class="d-inline-block align-top">    
 			</a>
           </div>
           <c:if test="${sessionScope.memid eq null}">
 	          <div class="col-4 d-flex justify-content-end align-items-center">
 	            <!-- Header login/sign-up section -->	
-			 	<a href="userLoginForm.go" class="nav-item">${page_login}</a> &nbsp; 
-			 	| &nbsp; <a href="userInputForm.go">${page_input}</a>&nbsp;
+			 	<a href="login.go" class="nav-item">${page_login}</a> &nbsp; 
+			 	| &nbsp; <a href="registration.go">${page_input}</a>&nbsp;
 	          </div>
         </c:if>
         <c:if test="${sessionScope.memid ne null}">
         	<div class="col-4 d-flex justify-content-end align-items-center">
         		<!-- if user has been logged in -->
-			 	<a href="userLoginForm.go" class="nav-item">${page_mypage2}</a>
+			 	<a href="myPage.go" class="nav-item">${page_mypage2}</a>
 			</div>
         </c:if>
         </div>
@@ -138,7 +139,7 @@ h1, h2, h3, h4, h5, h6 {
 <!-- Category & Contents Box -->    
 	<div class="body-box">
 		<div class="d-flex justify-content-end">
-			<a href="${project}tripWriteForm.go">
+			<a href="tripWrite.go">
 				<img src="${project}img/compose_icon.png" width="120" height="40">
 			</a> 
      		</div>

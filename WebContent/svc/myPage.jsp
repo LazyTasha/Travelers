@@ -20,13 +20,11 @@
 <script src="//code.jquery.com/jquery.js"></script>
 </head>
 
-
- 
 <body>
 	
 <div class="container" style="width:600px">
 		<div class="text-center">
-			<a href="list.jsp">
+			<a href="tripList.go">
 				<img class="mb-4" src="${project}img/logo_c.png" alt="" width="100" height="100">
 			</a>
 			<h2>${userDto.user_id} &nbsp; ${msg_main_login}</h2>
@@ -42,7 +40,13 @@
 			<div class="form-group row">
 				<label for="gender" class="col-sm-2 col-form-label">${str_gender}</label>
 				<div class="col-sm-8">
-					&nbsp; ${userDto.gender}
+					&nbsp;
+					<c:if test="${userDto.gender eq 0}">
+						${str_gender_m}
+					</c:if>
+					<c:if test="${userDto.gender eq 1}">
+						${str_gender_f}
+					</c:if>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -72,13 +76,12 @@
 			<div class="form-group row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-8">
-					<button type="button" class="btn btn-lg btn-secondary btn-block">${btn_modify}</button>
-					<button type="button" class="btn btn-lg btn-secondary btn-block" onclick="location='userLogout.go'">${btn_logout}</button>
+					<button type="button" class="btn btn-lg btn-secondary btn-block" onclick="location='userModPassCheck.go'">${btn_modify}</button>
+					<button type="button" class="btn btn-lg btn-secondary btn-block" onclick="location='logout.go'">${btn_logout}</button>
 				</div>
 			</div>
 		</form>
 </div>	
-
 
 </body>
 </html>

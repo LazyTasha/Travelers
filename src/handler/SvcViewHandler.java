@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import db.AlbumDBBean;
@@ -22,13 +21,12 @@ import db.TagDBBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
-import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
 
 @Controller
 public class SvcViewHandler {
-	private static final int PHOTOSIZE=6;//한 화면에 출력되는 사진 개수
+	private static final int PHOTOSIZE=6;//�븳 �솕硫댁뿉 異쒕젰�릺�뒗 �궗吏� 媛쒖닔
 	
 	private static final String MAP="0";
 	
@@ -47,37 +45,45 @@ public class SvcViewHandler {
 	@Resource
 	private TbDBBean tbDao;
 	
-	@RequestMapping( "/userMain" )
-	public ModelAndView UserMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView( "svc/main" );
-	}
+	/////////////////////////////////default pages/////////////////////////////////
 	
-	@RequestMapping( "/userModifyView" )
-	public ModelAndView MemberProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		
-		String id = (String) request.getSession().getAttribute( "memid" );
-		String passwd = request.getParameter( "passwd" );
-	
-		int result = userDao.check( id, passwd );
-	
-		request.setAttribute( "result", result );
-		
-		if( result == 1 ) {
-			UserDataBean UserDto = userDao.getUser( id );
-			request.setAttribute( "UserDto", UserDto );
-		}
-		
-		return new ModelAndView( "svc/modifyView" );
-	}
 	@RequestMapping("/*")
 	public ModelAndView svcDefaultProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/default");
 	}
+	
+	/////////////////////////////////main page/////////////////////////////////
+	
+	//temporary go to login
 	@RequestMapping("/main")
 	public ModelAndView svcMainProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/main");
+		return new ModelAndView("svc/login");
 	}
-	@RequestMapping("/list")
+	
+	/////////////////////////////////user pages/////////////////////////////////
+	
+	@RequestMapping("/myPage")
+	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		//I don't know why but it fails to get userDto, so here I try to get it.
+		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("user_id"));
+		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
+		String[] userTags=new String[userTagList.size()];
+		for(int i=0; i<userTags.length; i++) {
+			userTags[i]=userTagList.get(i);
+		}
+		request.setAttribute("userDto", userDto);
+		request.setAttribute("userTags", userTags);
+		return new ModelAndView("svc/myPage");
+	}
+	
+	@RequestMapping("/myTrip")
+	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/myTrip");
+	}
+	
+	/////////////////////////////////board pages/////////////////////////////////
+	
+	@RequestMapping("/tripList")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TbDataBean> tripList=tbDao.getTripList();
@@ -85,15 +91,42 @@ public class SvcViewHandler {
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
 		request.setAttribute("count", count);
-		return new ModelAndView("svc/list");
+		return new ModelAndView("svc/tripList");
 	}
-	@RequestMapping(value="/loadMoreList", produces = "application/json")
-	@ResponseBody
-	public List<TbDataBean> loadMoreList(int last_tb_no) {
-		List<TbDataBean> additionalList=tbDao.loadMoreList(last_tb_no);
+	
+	@RequestMapping("/trip")
+	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		//get tb_no of the post
+		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		request.setAttribute("tb_no", tb_no);
+		//get the content of the post
+		//TripDataBean has a part of contents of board
+		//TbDataBean has every content of board
+		TbDataBean tbDto=tbDao.getTb(tb_no);
+		request.setAttribute("tbDto", tbDto);
 		
-		return additionalList;
+		//determine tab
+		String tab=request.getParameter("tab");
+		if(tab==null)tab=MAP;
+		request.setAttribute("tab", tab);
+		
+		//map data
+		//test
+		double lat=37.554690;
+		double lng=126.970702;
+		//
+		request.setAttribute("lat",lat);
+		request.setAttribute("lng", lng);
+		
+		//board album data	
+		String start=request.getParameter("start");
+		if(start==null)start="1";
+		request.setAttribute("start",start);
+
+		return new ModelAndView("svc/trip");
 	}
+	
+	/////////////////////////////////album pages/////////////////////////////////
 	
 	@RequestMapping("/album")
 	public ModelAndView svcAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {	
@@ -106,12 +139,13 @@ public class SvcViewHandler {
 		}
 		return new ModelAndView("svc/album");
 	}
+	
 	@RequestMapping("/svc/boardAlbum")//svc/boardAlbum
 	public ModelAndView svcBoardAlbumProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
 		
-		String user_id=(String) request.getSession().getAttribute( "memid" );
+		String user_id=(String) request.getSession().getAttribute( "user_id" );
 		if(user_id==null)user_id="";
 		
 		int count=albumDao.getBoardCount(tb_no);
@@ -144,58 +178,13 @@ public class SvcViewHandler {
 		}
 		return new ModelAndView("svc/boardAlbum");
 	}
-	@RequestMapping("/reg")
-	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/reg");
-	}
-	@RequestMapping("/myPage")
-	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		//I don't know why but it fails to get userDto, so here I try to get it.
-		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("memid"));
-		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
-		String[] userTags=new String[userTagList.size()];
-		for(int i=0; i<userTags.length; i++) {
-			userTags[i]=userTagList.get(i);
-		}
-		request.setAttribute("userDto", userDto);
-		request.setAttribute("userTags", userTags);
-		return new ModelAndView("svc/myPage");
-	}
-	@RequestMapping("/myTrip")
-	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/myTrip");
-	}
-	@RequestMapping("/trip")
-	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		//get tb_no of the post
-		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
-		request.setAttribute("tb_no", tb_no);
-		//get the content of the post
-		//TripDataBean has a part of contents of board
-		//TbDataBean has every content of board
-		//TbDataBean tbDto=tbDao.getTb(tb_no);
-		//request.setAttribute("tbDto", tbDto);
-		
-		//determine tab
-		String tab=request.getParameter("tab");
-		if(tab==null)tab=MAP;
-		request.setAttribute("tab", tab);
-		
-		//map data
-		//test용
-		double lat=37.554690;
-		double lng=126.970702;
-		//
-		request.setAttribute("lat",lat);
-		request.setAttribute("lng", lng);
-		
-		//board album data	
-		String start=request.getParameter("start");
-		if(start==null)start="1";
-		request.setAttribute("start",start);
-		
-		//where are the comments?
-
-		return new ModelAndView("svc/tripView");
+	
+	/////////////////////////////////ajax method list/////////////////////////////////
+	@RequestMapping(value="/loadMoreList", produces = "application/json")
+	@ResponseBody
+	public List<TbDataBean> loadMoreList(int last_tb_no) {
+		//get more 10 trip articles when 'load more' button is pressed
+		List<TbDataBean> additionalList=tbDao.loadMoreList(last_tb_no);
+		return additionalList;
 	}
 }
