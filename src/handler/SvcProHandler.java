@@ -110,12 +110,10 @@ public class SvcProHandler {
 	@RequestMapping("/userModPro")
 	public ModelAndView UserModifyprocess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
-
-		UserDataBean userDto = new UserDataBean();
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		UserDataBean userDto = userDao.getUser(user_id);
 		userDto.setPasswd(request.getParameter("passwd"));
 		userDto.setUser_name(request.getParameter("user_name"));
-
-		userDto.setUser_id((String) request.getSession().getAttribute("user_id"));
 
 		int result = userDao.modifyUser(userDto);
 		request.setAttribute("result", result);
