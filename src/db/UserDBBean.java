@@ -28,6 +28,10 @@ public class UserDBBean {
 	public int check( String user_id ) {
 		return session.selectOne( "db.checkId", user_id);
 	}
+	
+	public int EmailCheck( String email ) {
+		return session.selectOne( "db.EmailCheck", email);
+	}
 	public int nameCheck( String user_name ) {
 		return session.selectOne( "db.nameCheck", user_name);
 	}

@@ -3,6 +3,7 @@ var emailerror = "이메일 형식에 맞지 않습니다";
 var confirmerror = "아이디 중복확인 해 주세요";
 var gendererror = "성별을 선택해 주세요";
 
+var emailconfirmerror = "이메일 인증에 실패하였습니다."
 var inputerror = "회원가입에 실패했습니다.\n잠시 후 다시 시도하세요.";
 var loginiderror = "입력하신 아이디가 없습니다.\n아이디를 다시 확인하세요.";
 var loginpasswderror = "입력하신 비밀번호가 다릅니다.\n비밀번호를 다시 확인하세요.";
@@ -210,15 +211,19 @@ function passwordCheckFunction() {
 	var userPassword2 = $('#userPassword2').val();
 
 	if (userPassword1 != userPassword2) {
-		$('#passwordCheckMessage').html("비밀번호가 일치하지 않습니다");
+		$('#emailCheck').html("비밀번호가 일치하지 않습니다");
 	} else {
 		$('#passwordCheckMessage').html(" ");
 	}
 }
 
+
+
+
+
 //아이디
 var idck = 0;
-function overlapCheck() {
+function IdCheck() {
 	var user_id = $("#id_val").val();
 	if (user_id) {
 		$.ajax({
@@ -229,10 +234,10 @@ function overlapCheck() {
 			dataType : "json",
 			success : function(data) {
 				if (data.countId > 0) {
-					$('#passwordCheckMessagegg').html(
+					$('#IdCheckMessagegg').html(
 							"아이디가 존재합니다. 다른 아이디를 입력해주세요.");
 				} else {
-					$('#passwordCheckMessagegg').html("사용가능한 아이디입니다.");
+					$('#IdCheckMessagegg').html("사용가능한 아이디입니다.");
 					idck = 1; //아이디 중복체크시 1이됨
 				}
 			},
@@ -245,7 +250,7 @@ function overlapCheck() {
 
 // 닉네임
 var genck = 0;
-function over() {
+function NameCheck() {
 	var name_val = $("#name_val").val();
 	if (name_val) {
 		$.ajax({
@@ -257,9 +262,9 @@ function over() {
 			/* contentType : "application/json", */
 			success : function(data) {
 				if (data.countName > 0) {
-					$('#passwordCheckMessageggg').html("닉네임이 존재합니다.")
+					$('#NameCheckMessageggg').html("닉네임이 존재합니다.")
 				} else {
-					$('#passwordCheckMessageggg').html("사용가능한 닉네임입니다.")
+					$('#NameCheckMessageggg').html("사용가능한 닉네임입니다.")
 					genck = 1; // 닉네임 중복체크시 1이됨
 				}
 			},
@@ -267,6 +272,30 @@ function over() {
 				alert("error : " + error);
 			}
 		});
+	}
+}
+//이메일
+function EmailClose(){
+	self.close();
+}
+
+function EmailCheck(email1){
+    // 인증을 위해 새창으로 이동
+	var url="emailCheck.go?email1="+email1
+	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=400, height=200" );
+}
+
+function confirmeMail(authNum){
+	var Email = $('#EmailVlaue').val(); //이메일 인증 창에서 내가 입력한 인증번호 값가져옴
+    // 입력한 값이 없거나, 인증코드가 일지하지 않을 경우
+	if(!Email || Email!= authNum){
+		alert(emailconfirmerror);
+		self.close();
+    // 인증코드가 일치하는 경우
+	}else if(Email==authNum){
+		alert("인증완료");
+		opener.document.inputform.confirm.value = 1;
+		self.close();
 	}
 }
 
@@ -278,7 +307,9 @@ function inputcheck() {
 		} else if (genck == 0) {
 			alert('닉네임 중복체크를 해주세요');
 			return false;
-		} else {
+		} else if (inputform.confirm.value == 0){
+			alert('이메일 인증을해주세요');
+		}else {
 			alert("회원가입을 축하합니다");
 			$("#inputform").button();
 		}
@@ -543,3 +574,7 @@ function loadMoreList(last_tb_no) {
 		}
 	});
 }
+
+
+
+

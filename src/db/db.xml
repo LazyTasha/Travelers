@@ -39,6 +39,11 @@
 		select
 		count(*) from gg_user where user_id=#{user_id}
 	</select>
+	
+	<select id="EmailCheck" parameterType="String" resultType="int">
+		select
+		count(*) from gg_user where email=#{email}
+	</select>
 
 	<delete id="deleteUser" parameterType="String">
 		delete from gg_user where
