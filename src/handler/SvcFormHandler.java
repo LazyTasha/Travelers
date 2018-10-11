@@ -51,25 +51,31 @@ public class SvcFormHandler {
 	
 	@RequestMapping( "/userModPassCheck" )
 	public ModelAndView userModPassCheckProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		String user_id = (String) request.getSession().getAttribute( "user_id" );
-		String passwd = request.getParameter( "passwd" );
-		
-		int result = userDao.check( user_id, passwd );
-		request.setAttribute( "result", result );
-		
-		if( result == 1 ) {
-			UserDataBean userDto = userDao.getUser( user_id );
-			request.setAttribute( "userDto", userDto );
-		}
-		
 		return new ModelAndView( "svc/userModPassCheck" );
 	}
 	
 	@RequestMapping( "/userModify" )
 	public ModelAndView userModifyProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		String user_id=(String)request.getSession().getAttribute("user_id");
+		String passwd=request.getParameter("passwd");
+		
+		int result=0;
 		UserDataBean userDto=userDao.getUser(user_id);
-		request.setAttribute("userDto", userDto);
+		
+		if(userDto!=null) {
+			if(passwd==userDto.getPasswd()) {
+				result=1;
+				request.setAttribute("userDto", userDto);
+				Map<Integer, String> tagList=tagDao.getStyleTags();
+				request.setAttribute("tagList", tagList);
+			} else {
+				result=0;
+			}
+		} else {
+			result=-1;
+		}
+		
+		request.setAttribute("result", result);
 		
 		return new ModelAndView( "svc/userModify" );
 	}

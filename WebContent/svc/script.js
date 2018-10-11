@@ -574,7 +574,3 @@ function loadMoreList(last_tb_no) {
 		}
 	});
 }
-
-
-
-

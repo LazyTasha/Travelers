@@ -30,7 +30,7 @@
 			<h2>${userDto.user_id} &nbsp; ${msg_main_login}</h2>
 			<br>
 		</div>
-		 <form class="form-horizontal" action="/action_page.php" method="post" name="mypage">
+		 <form class="form-horizontal" name="mypage">
 			<div class="form-group row">
 				<label for="nickname" class="col-sm-2 col-form-label">${str_nickname}</label>
 				<div class="col-sm-8">
