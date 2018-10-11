@@ -262,9 +262,9 @@ function NameCheck() {
 			/* contentType : "application/json", */
 			success : function(data) {
 				if (data.countName > 0) {
-					$('#NameCheckMessageggg').html("닉네임이 존재합니다.")
+					$('#NameCheckMessage').html("닉네임이 존재합니다.")
 				} else {
-					$('#NameCheckMessageggg').html("사용가능한 닉네임입니다.")
+					$('#NameCheckMessage').html("사용가능한 닉네임입니다.")
 					genck = 1; // 닉네임 중복체크시 1이됨
 				}
 			},

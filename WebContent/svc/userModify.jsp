@@ -30,35 +30,52 @@
 				<h4>${page_modify}</h4>
 				<br>
 			</div>
-			<form class="form-horizontal" name="userMod">
+			<form class="form-horizontal" action="userModPro.go" name="userMod">
 				<div class="form-group row">
-					<label for="nickname" class="col-sm-2 col-form-label">${str_nickname}</label>
+					<label for="nickname" class="col-sm-2 col-form-label">${str_id}</label>
 					<div class="col-sm-8">&nbsp; ${userDto.user_name}</div>
 					<input type="hidden" name="user_id" value="${userDto.user_name}">
+				</div>
+				<div class="form-group row">
+					<label for="inputPassword" class="col-sm-2 col-form-label">${str_passwd}</label>
+					<div class="col-sm-8">
+						<input type="password" class="form-control" id="userPassword1"
+							name="passwd" placeholder="비밀번호" maxlength="30" required
+							onkeyup="passwordCheckFunction()">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-2"></div>
+					<div class="col-sm-8">
+						<input type="password" class="form-control" id="userPassword2"
+							name="repasswd" placeholder="비밀번호 재입력" maxlength="30" required
+							onkeyup="passwordCheckFunction()">
+						<h6 style="color: red;" id="passwordCheckMessage"></h6>
+					</div>
 				</div>
 				<div class="form-group row">
 					<label for="inputNickname" class="col-sm-2 col-form-label">${str_nickname}</label>
 					<div class="col-sm-8">
 						<input type="text" name="user_name" class="form-control"
 							id="name_val" placeholder="Nickname" required>
-						<h4 style="color: red;" id="passwordCheckMessage"></h4>
+						<h4 style="color: red;" id="NameCheckMessage"></h4>
 					</div>
 					<div class="col-sm-2">
 						<button type="button" class="btn btn-md btn-secondary"
-							onclick="over()">${btn_confirm}</button>
+							onclick="NameCheck()">${btn_confirm}</button>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="gender" class="col-sm-2 col-form-label">${str_gender}</label>
-				<div class="col-sm-8">
-					&nbsp;
-					<c:if test="${userDto.gender eq 0}">
+					<div class="col-sm-8">
+						&nbsp;
+						<c:if test="${userDto.gender eq 0}">
 						${str_gender_m}
 					</c:if>
-					<c:if test="${userDto.gender eq 1}">
+						<c:if test="${userDto.gender eq 1}">
 						${str_gender_f}
 					</c:if>
-				</div>
+					</div>
 				</div>
 				<div class="form-group row">
 					<label for="email" class="control-label col-sm-2">${str_email}
@@ -82,8 +99,7 @@
 				<div class="form-group row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">
-						<button type="submit" class="btn btn-lg btn-secondary btn-block"
-							onclick="location='userModPro.go'">${btn_modify}</button>
+						<button type="submit" class="btn btn-lg btn-secondary btn-block">${btn_modify}</button>
 						<button type="button" class="btn btn-lg btn-secondary btn-block"
 							onclick="location='myPage.go'">${btn_cancel}</button>
 					</div>
