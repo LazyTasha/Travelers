@@ -91,6 +91,7 @@ public class SvcViewHandler {
 		int count=tbDao.getCount();
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
+		request.setAttribute("last_tb_no", last_tb_no);
 		request.setAttribute("count", count);
 		request.setAttribute("last_tb_no", last_tb_no);
 		return new ModelAndView("svc/tripList");
