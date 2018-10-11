@@ -211,7 +211,7 @@ function passwordCheckFunction() {
 	var userPassword2 = $('#userPassword2').val();
 
 	if (userPassword1 != userPassword2) {
-		$('#emailCheck').html("비밀번호가 일치하지 않습니다");
+		$('#passwordCheckMessage').html("비밀번호가 일치하지 않습니다");
 	} else {
 		$('#passwordCheckMessage').html(" ");
 	}
