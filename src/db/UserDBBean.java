@@ -69,4 +69,7 @@ public class UserDBBean {
 	public String getUserId(String user_name) {
 		return session.selectOne("db.getUserId", user_name);
 	}
+	public String getUserName(String user_id) {
+		return session.selectOne("db.getUserName", user_id);
+	}
 }
