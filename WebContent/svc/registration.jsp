@@ -39,11 +39,11 @@
 				<div class="col-sm-8">
 					<input type="text" name=user_id class="form-control" id="id_val"
 						placeholder="ID" maxlength="20" required autofocus>
-					<h4 style="color: red;" id="passwordCheckMessagegg"></h4>
+					<h4 style="color: red;" id="IdCheckMessagegg"></h4>
 				</div>
 				<div class="col-sm-2">
 					<button type="button" class="btn btn-md btn-secondary"
-						onclick="overlapCheck()">${btn_confirm}</button>
+						onclick="IdCheck()">${btn_confirm}</button>
 				</div>
 			</div>
 
@@ -70,11 +70,11 @@
 				<div class="col-sm-8">
 					<input type="text" name="user_name" class="form-control"
 						id="name_val" placeholder="Nickname" required>
-					<h4 style="color: red;" id="passwordCheckMessageggg"></h4>
+					<h4 style="color: red;" id="NameCheckMessageggg"></h4>
 				</div>
 				<div class="col-sm-2">
 					<button type="button" class="btn btn-md btn-secondary"
-						onclick="over()">${btn_confirm}</button>
+						onclick="NameCheck()">${btn_confirm}</button>
 				</div>
 			</div>
 
@@ -109,7 +109,8 @@
 							placeholder="Enter email" required>
 					</div>
 					<div class="col-sm-2">
-						<button type="button" class="btn btn-md btn-secondary" onclick="">${btn_confirm_smtp}</button>
+						<button type="button" class="btn btn-md btn-secondary" onclick="EmailCheck(inputform.email1.value)">${btn_confirm_smtp}</button>
+						<input type="hidden" name="confirm" value="0">
 					</div>
 				</div>
 			</div>
