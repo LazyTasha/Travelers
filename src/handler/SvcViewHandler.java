@@ -18,6 +18,7 @@ import db.AlbumDataBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
+import db.TagDataBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
@@ -66,11 +67,7 @@ public class SvcViewHandler {
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//I don't know why but it fails to get userDto, so here I try to get it.
 		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("user_id"));
-		List<String> userTagList=tagDao.getUserTags(userDto.getUser_id());
-		String[] userTags=new String[userTagList.size()];
-		for(int i=0; i<userTags.length; i++) {
-			userTags[i]=userTagList.get(i);
-		}
+		List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("userTags", userTags);
 		return new ModelAndView("svc/myPage");

@@ -60,60 +60,61 @@ function searchMap() {
     });
   }
 //주소로 좌표 표시
-  function geocodeAddress(geocoder, resultsMap) {
-    var address = document.getElementById('address').value;
-    geocoder.geocode({'address': address}, function(results, status) {
-      if (status === 'OK') {
-        resultsMap.setCenter(results[0].geometry.location);
-        var marker = new google.maps.Marker({
-          map: resultsMap,
-          position: results[0].geometry.location
-        });	
-        //좌표 받기
-        var lat=marker.position.lat();//위도 
-        var lng=marker.position.lng();//경도
-       
-        //lat,lng를 form에 붙여주기
-        var input="<input name='lat' type='hidden' value='"+lat+"'/>"
-        	+"<input name='lng' type='hidden' value='"+lng+"'/>";
-       
-        //국가-jason 값 가져오기
-        var country=results[0].address_components.filter(
-        		function(component){
-        			return component.types[0]=="country"
-        		});
-        var country_name=country[0].long_name;
-        
-        input+="<input name='country_name' type='hidden' value='"+country_name+"'/>";
-        $('#searchmap').append(input);
-        
-        var infowindow = new google.maps.InfoWindow;
-       
-        geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap, infowindow); 
-      } else {
-        alert(locationerror);
-      }
-    });
-  }
- //좌표로 주소 띄우기(coordinate->address)
- function geocodeLatLng(latlng,geocoder, map, infowindow) {
-  geocoder.geocode({'location': latlng}, function(results, status) {
+function geocodeAddress(geocoder, resultsMap) {
+  var address = document.getElementById('address').value;
+  geocoder.geocode({'address': address}, function(results, status) {
     if (status === 'OK') {
-      if (results[0]) {
-        map.setZoom(8);
-        var marker = new google.maps.Marker({
-          position: latlng,
-          map: map
-        });
-        infowindow.setContent(results[0].formatted_address);
-        infowindow.open(map, marker);
-      } else {
-        window.alert('No results found');
-      }
+      resultsMap.setCenter(results[0].geometry.location);
+      var marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location
+      });	
+      //좌표 받기
+      var lat=marker.position.lat();//위도 
+      var lng=marker.position.lng();//경도
+     
+      //lat,lng를 form에 붙여주기
+      var input="<input name='lat' type='hidden' value='"+lat+"'/>"
+      	+"<input name='lng' type='hidden' value='"+lng+"'/>";
+     
+      //국가-jason 값 가져오기
+      var country=results[0].address_components.filter(
+      		function(component){
+      			return component.types[0]=="country"
+      		});
+      var country_code=country[0].short_name;
+      //country_code 값 form에 붙여주기
+      input+="<input name='country_code' type='hidden' value='"+country_code+"'/>"
+      
+      $('#searchmap').append(input);
+      
+      var infowindow = new google.maps.InfoWindow;
+     
+      geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap, infowindow); 
     } else {
-      window.alert('Geocoder failed due to: ' + status);
+      alert(locationerror);
     }
   });
+}
+//좌표로 주소 띄우기(coordinate->address)
+function geocodeLatLng(latlng,geocoder, map, infowindow) {
+ geocoder.geocode({'location': latlng}, function(results, status) {
+   if (status === 'OK') {
+     if (results[0]) {
+       map.setZoom(8);
+       var marker = new google.maps.Marker({
+         position: latlng,
+         map: map
+       });
+       infowindow.setContent(results[0].formatted_address);
+       infowindow.open(map, marker);
+     } else {
+       window.alert('No results found');
+     }
+   } else {
+     window.alert('Geocoder failed due to: ' + status);
+   }
+ });
 }
 //trip view-button event-map
 function showMap(){
@@ -262,9 +263,9 @@ function NameCheck() {
 			/* contentType : "application/json", */
 			success : function(data) {
 				if (data.countName > 0) {
-					$('#NameCheckMessageggg').html("닉네임이 존재합니다.")
+					$('#NameCheckMessage').html("닉네임이 존재합니다.")
 				} else {
-					$('#NameCheckMessageggg').html("사용가능한 닉네임입니다.")
+					$('#NameCheckMessage').html("사용가능한 닉네임입니다.")
 					genck = 1; // 닉네임 중복체크시 1이됨
 				}
 			},

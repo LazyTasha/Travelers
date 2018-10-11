@@ -32,6 +32,7 @@
 <c:set var="msg_modify" value="수정할 정보를 입력하세요"/>
 <c:set var="modError_passwd" value="비밀번호가 일치하지 않습니다."/>
 <c:set var="modError_noUser" value="사용자 정보가 올바르지 않습니다."/>
+<c:set var="userMod_updateError" value="사용자 정보 수정에 실패했습니다."/>
 
 <c:set var="str_id" value="아이디"/> <!-- o -->
 <c:set var="str_passwd" value="비밀번호"/> <!-- o -->
