@@ -14,8 +14,10 @@ var sizeerror="이미지 용량은 5M이하만 가능합니다.";
 
 var nocheckerror="다운로드 받을 사진을 선택하세요";
 var locationerror="장소를 선택하세요";
+var schedulesizeerror="일정은 최대 "+maxschedule+"개 입니다.";
 
 var filesize=5*1024*1024;
+var maxschedule=5;
 
 $(document).ready(function(){
 	var tb_no=$('input[name=tb_no]').val();
@@ -576,3 +578,22 @@ function loadMoreList(last_tb_no) {
 	$("#date1").datepicker(); 
 	$("#date2").datepicker(); 
 }); 
+//add schedule-일정 추가//작업중//한글 처리/달력처리
+function addSchedule(num){
+	var schedule="";
+	var str_schedule=$('.col-2 col-form-label').text();
+	var str_add;
+	$('#btn'+num+'').hide();//btn 숨기기
+	num++;
+	schedule+= 	'<div id="schedule" class="form-group row">';	  
+	schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
+	schedule+=      '<input type="text" name="cal_start_date" id="date1" class="col-2"/>';
+	schedule+=		'~';
+	schedule+=		'<input type="text" name="cal_end_date" id="date2" class="col-2"/>';
+	schedule+=			'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
+	schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
+	schedule+=			'일정추가';
+	schedule+=			'</button>';
+	schedule+=	'</div>';
+	$('#schedulediv').append(schedule);
+}

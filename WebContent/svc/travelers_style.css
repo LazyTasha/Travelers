@@ -43,6 +43,16 @@ body {
 	line-height: 30px;
 	padding-left: 5px;   
 }
+.btn_plus{
+	background-color: transparent !important;
+	border-color: transparent;
+    border: none;
+}
+button img{
+	height:30px;
+	width:30px;
+	outline:none;
+}
 /*tripList.jsp*/
 a {
 	color: black;

@@ -28,13 +28,22 @@
                  <input type="text" name="title" class="col-12 form-control form-control-lg" maxlength="30" placeholder="${trip_title}" autofocus required>
             </div>
                <input type="hidden" name="user_name" value="${userDto.user_name}">
-            <div class="form-group row">	
-                 <label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
-                 	<input type="number" name="trip_m_num" class="col-2" min="0">
-                 <label for="cal_date" class="col-2 col-form-label">${trip_schedule}</label>
-                  	<input type="text" name="cal_start_date" id="date1" class="col-2"/>
-                  	~
-                  	<input type="text" name="cal_end_date" id="date2" class="col-2"/>
+            <div class="form-group row">
+            	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
+                	<input type="number" name="trip_m_num" class="col-2" min="0">
+            </div>
+            <c:set var="i" value="1"/>  
+            <div id="schedule" class="form-group row">	  
+                <label for="cal_date" class="col-2 col-form-label">${trip_schedule} ${i}</label> 
+                    <input type="text" name="cal_start_date" id="date1" class="col-2"/>
+                 	~
+                 	<input type="text" name="cal_end_date" id="date2" class="col-2"/>
+                 	<button id="btn${i}"class="btn_plus" type="button" onclick="addSchedule(${i})">
+					<img  class="btn_img" src="${project}img/addbutton.png"> 
+					일정추가
+				</button>
+	        </div>
+	        <div id="schedulediv" >
             </div>
             <div class="form-group row">
                  <label for="trip_talk_link" class="col-2 col-form-label">${trip_talk_link}</label>
