@@ -125,15 +125,15 @@
 		select tag_value from gg_trip_tag where tb_no=#{tb_no}
 	</select>
 
-	<select id="getUserTags" parameterType="String" resultType="java.util.List">
+	<select id="getUserTags" parameterType="String" resultType="db.TagDataBean">
 		select t.tag_value from gg_tag t where t.tag_id=(select
 		ut.tag_id from
 		gg_user_tag ut where ut.user_id=#{user_id})
 	</select>
 
-	<select id="getStyleTags" resultType="java.util.Map">
+	<select id="getStyleTags" resultType="db.TagDataBean">
 		<![CDATA[
-		select * from gg_tag where tag_id>=1 and tag_id<=100
+		select tag_value from gg_tag where tag_id>=1 and tag_id<=100
 		]]>
 	</select>
 
@@ -148,7 +148,7 @@
 		select * from gg_trip_board where tb_no=#{tb_no}
 	</select>
 
-	<select id="getTripTags" parameterType="int" resultType="java.util.List">
+	<select id="getTripTags" parameterType="int" resultType="db.TagDataBean">
 		select tag_value from gg_tag t, gg_trip_tag tr where
 		t.tag_id=tr.tag_id and
 		tr.tb_no=#{tb_no}

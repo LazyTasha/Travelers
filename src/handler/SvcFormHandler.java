@@ -1,6 +1,7 @@
 package handler;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
+import db.TagDataBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
@@ -66,8 +68,10 @@ public class SvcFormHandler {
 			if(passwd.equals(userDto.getPasswd())) {
 				result=1;
 				request.setAttribute("userDto", userDto);
-				List<String> tagList=tagDao.getStyleTags();
+				List<TagDataBean> tagList=tagDao.getStyleTags();
 				request.setAttribute("tagList", tagList);
+				List<TagDataBean> userTags=tagDao.getUserTags(user_id);
+				request.setAttribute("userTags", userTags);
 			} else {
 				result=0;
 			}
@@ -95,7 +99,7 @@ public class SvcFormHandler {
 		String writer_name=((UserDataBean)request.getAttribute("userDto")).getUser_name();
 		//get tag list too so that user choose it
 		//but I don't know why should I put a map there...
-		List<String> tags=tagDao.getStyleTags();
+		List<TagDataBean> tags=tagDao.getStyleTags();
 		//send them to set User Name on the form
 		request.setAttribute("writer_id", writer_id);
 		request.setAttribute("writer_name", writer_name);
