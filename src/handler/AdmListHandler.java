@@ -248,9 +248,9 @@ public class AdmListHandler {
 	}
 	@RequestMapping("adminLogout")
 	public ModelAndView adminLogoutHandler(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		request.getSession().removeAttribute( "memid" );
+		request.getSession().removeAttribute( "user_id" );
 		request.getSession().removeAttribute( "user_level" );
-		return new ModelAndView("redirect:userLoginForm.go");
+		return new ModelAndView("redirect:login.go");
 	}
 	
 	

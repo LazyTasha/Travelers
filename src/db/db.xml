@@ -228,6 +228,89 @@
 			<![CDATA[
 			select * from gg_trip_board where tb_no<#{last_tb_no} and tb_no<=(#{last_tb_no}-10) order by tb_no desc
 			]]>
+<<<<<<< HEAD
+		</select>
+		
+		<!--cmt DB-->
+		<select id="getCmtCount" resultType="int">
+			select count(*) from gg_comment
+		</select>
+		<select id="getComments" parameterType="java.util.Map" resultType="db.CmtDataBean">
+			select c_id,tb_no,user_id,c_content,c_reg_date,r 
+			from (
+				select c_id,tb_no,user_id,c_content,c_reg_date,rownum r from (
+					select c_id,tb_no,user_id,c_content,c_reg_date from gg_comment order by c_reg_date desc) 
+					order by c_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+		</select>
+		<delete id="delComment" parameterType="int">
+			delete from gg_comment where c_id=#{c_id}
+		</delete>
+		
+		<insert id="insertComment" parameterType="db.CmtDataBean">
+		<!-- insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content}, #{c_reg_date}) -->
+		insert into gg_comment(c_id, tb_no, user_id, c_content, c_reg_date) values(SEQ_gg_comment_comment_id.NEXTVAL, #{tb_no}, #{user_id}, #{c_content, jdbcType=VARCHAR}, SYSDATE)
+		</insert>
+		
+		<select id="getComment" parameterType="int" resultType="db.CmtDataBean" >
+     	select * from gg_comment where tb_no=#{tb_no} order by c_id desc
+     	</select>
+     	
+     	<update id="updateComment" parameterType="db.CmtDataBean">
+        update gg_comment set c_content = #{c_content} where c_id = #{c_id}
+    	</update>
+    
+    	<delete id="deleteComment" parameterType="int">
+        delete from gg_comment where c_id = #{c_id}
+    	</delete>
+		
+		<!-- location -->
+		<select id="getLocs" parameterType="int" resultType="java.util.List">
+			select td_trip_id from gg_trip_detail where tb_no=#{tb_no}
+		</select>
+		<select id="getTripLoc" parameterType="int" resultType="java.util.List">
+			select c.country_name from gg_country c where c.country_id=
+			(select cd.country_id from gg_coordinate cd where cd.coord_id=
+			(select cl.coord_id from gg_calendar cl where cl.td_trip_id=
+			(select td.td_trip_id from gg_trip_detail td where td.tb_no=#{tb_no})))
+			and c.country_name=	
+			(select t.tag_value from gg_tag t where t.tag_id=
+			(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
+		</select>
+		<insert id="insertLocation" parameterType="">
+			insert into gg_coordinate values(SEQ_gg_coordinate_coord_id.nextval,#{coord_long},#{coord_lat},#{order},#{country_id});
+		</insert>
+		
+		<!--album DB -->
+		<insert id="addPhoto" parameterType="db.AlbumDataBean">
+			insert into gg_album values(SEQ_gg_album_photo_id.nextval,#{photo_url},sysdate,#{tb_no})
+		</insert>
+		<select id="getAlbum" resultType="db.AlbumDataBean">
+			select * from gg_album order by alb_reg_date desc	
+		</select>
+<!-- 		<select id="getBoardAlbum" parameterType="int"  resultType="db.AlbumDataBean">
+			select * from gg_album where tb_no=#{tb_no} order by alb_reg_date desc	
+		</select> -->
+		<select id="getBoardAlbum" parameterType="java.util.Map"  resultType="db.AlbumDataBean">
+			select photo_id,photo_url,alb_reg_date,tb_no,r 
+			from (
+				select photo_id,photo_url,alb_reg_date,tb_no,rownum r from (
+					select photo_id,photo_url,alb_reg_date,tb_no from gg_album where tb_no=#{tb_no} order by alb_reg_date desc) 
+					order by alb_reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
+		</select>
+		<select id="getPCount" resultType="int">
+			select count(*) from gg_album
+		</select>
+		<select id="getBoardPCount" parameterType="int" resultType="int">
+			select count(*) from gg_album where tb_no=#{tb_no}
+		</select>
+		<delete id="delPhoto" parameterType="int">
+			delete from gg_album where photo_id=#{photo_id}
+		</delete>
+		<select id="getPhoto_urls" parameterType="int" resultType="String">
+			select photo_url from gg_album where tb_no=#{tb_no}
+		</select>
+	</mapper>
+=======
 	</select>
 
 	<!--cmt DB -->
@@ -339,3 +422,4 @@
 	</select>
 
 </mapper>
+>>>>>>> 83e36e0e1c49a1e3c8ea5d3746bbdfb6672f259c

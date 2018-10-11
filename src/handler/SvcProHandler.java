@@ -98,6 +98,18 @@ public class SvcProHandler {
 
 		return new ModelAndView("svc/regPro");
 	}
+<<<<<<< HEAD
+	@RequestMapping("/tripWritePro")
+	public ModelAndView svcTripWriteProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		double lat=Double.parseDouble(request.getParameter("lat"));
+		double lng=Double.parseDouble(request.getParameter("lng"));
+		
+		return new ModelAndView("svc/tripWritePro");
+	}
+	@RequestMapping("/svc/tripModPro")
+	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/tripModPro");
+=======
 
 	@RequestMapping("/userModPro")
 	public ModelAndView UserModifyprocess(HttpServletRequest request, HttpServletResponse response)
@@ -107,12 +119,13 @@ public class SvcProHandler {
 		userDto.setPasswd(request.getParameter("passwd"));
 		userDto.setUser_name(request.getParameter("user_name"));
 
-		userDto.setUser_id((String) request.getSession().getAttribute("memid"));
+		userDto.setUser_id((String) request.getSession().getAttribute("user_id"));
 
 		int result = userDao.modifyUser(userDto);
 		request.setAttribute("result", result);
 
 		return new ModelAndView("svc/userModPro");
+>>>>>>> 83e36e0e1c49a1e3c8ea5d3746bbdfb6672f259c
 	}
 
 	@RequestMapping("/loginPro")
@@ -144,7 +157,7 @@ public class SvcProHandler {
 	@RequestMapping("/logout") // logout �엫
 	public ModelAndView LogoutProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
-		request.getSession().removeAttribute("memid");
+		request.getSession().removeAttribute("user_id");
 		// send user to main page
 		// but we don't have a main page yet, so send him to board list, temporary
 		return new ModelAndView("svc/login");
@@ -153,7 +166,7 @@ public class SvcProHandler {
 	@RequestMapping("/userLeavePro")
 	public ModelAndView DeleteProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
-		String id = (String) request.getSession().getAttribute("memid");
+		String id = (String) request.getSession().getAttribute("user_id");
 		String passwd = request.getParameter("passwd");
 		int resultCheck = userDao.check(id, passwd);
 		request.setAttribute("resultCheck", resultCheck);
@@ -171,6 +184,18 @@ public class SvcProHandler {
 	@RequestMapping("/tripWritePro")
 	public ModelAndView svcTripWriteProProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		//gg_coordinata&location
+		double lat=Double.parseDouble(request.getParameter("lat"));
+		double lng=Double.parseDouble(request.getParameter("lng"));
+		
+		String country_name=request.getParameter("country_name");//한글로 받아지는 상태
+
+		
 		// tbDto will be used for DB update
 		// #{user_id}, #{tb_title}, #{tb_content}, sysdate, 0,
 		// #{tb_m_num}, 0, #{tb_talk}
@@ -407,7 +432,7 @@ public class SvcProHandler {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String user_id = (String)session.getAttribute("memid");
+		String user_id = (String)session.getAttribute("user_id");
 		CmtDataBean cmtDto = new CmtDataBean();
 
 		cmtDto.setUser_id(user_id); // jsp에서 히든으로 가져오면됨
