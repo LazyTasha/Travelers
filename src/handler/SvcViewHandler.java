@@ -26,7 +26,7 @@ import db.UserDataBean;
 
 @Controller
 public class SvcViewHandler {
-	private static final int PHOTOSIZE=6;//�븳 �솕硫댁뿉 異쒕젰�릺�뒗 �궗吏� 媛쒖닔
+	private static final int PHOTOSIZE=6;//占쎈립 占쎌넅筌롫똻肉� �빊�뮆�젾占쎈┷占쎈뮉 占쎄텢筌욑옙 揶쏆뮇�땾
 	
 	private static final String MAP="0";
 	
@@ -183,7 +183,7 @@ public class SvcViewHandler {
 	@RequestMapping(value="/loadMoreList", produces = "application/json")
 	@ResponseBody
 	public List<TbDataBean> loadMoreList(int last_tb_no) {
-		//get more 10 trip articles when 'load more' button is pressed
+		//get more 5 trip articles when 'load more' button is pressed
 		List<TbDataBean> additionalList=tbDao.loadMoreList(last_tb_no);
 		return additionalList;
 	}
