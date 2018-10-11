@@ -98,18 +98,6 @@ public class SvcProHandler {
 
 		return new ModelAndView("svc/regPro");
 	}
-<<<<<<< HEAD
-	@RequestMapping("/tripWritePro")
-	public ModelAndView svcTripWriteProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		double lat=Double.parseDouble(request.getParameter("lat"));
-		double lng=Double.parseDouble(request.getParameter("lng"));
-		
-		return new ModelAndView("svc/tripWritePro");
-	}
-	@RequestMapping("/svc/tripModPro")
-	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		return new ModelAndView("svc/tripModPro");
-=======
 
 	@RequestMapping("/userModPro")
 	public ModelAndView UserModifyprocess(HttpServletRequest request, HttpServletResponse response)
@@ -125,7 +113,6 @@ public class SvcProHandler {
 		request.setAttribute("result", result);
 
 		return new ModelAndView("svc/userModPro");
->>>>>>> 83e36e0e1c49a1e3c8ea5d3746bbdfb6672f259c
 	}
 
 	@RequestMapping("/loginPro")
