@@ -26,7 +26,7 @@ import db.UserDataBean;
 
 @Controller
 public class SvcViewHandler {
-	private static final int PHOTOSIZE=6;//�븳 �솕硫댁뿉 異쒕젰�릺�뒗 �궗吏� 媛쒖닔
+	private static final int PHOTOSIZE=6;//占쎈립 占쎌넅筌롫똻肉� �빊�뮆�젾占쎈┷占쎈뮉 占쎄텢筌욑옙 揶쏆뮇�땾
 	
 	private static final String MAP="0";
 	
@@ -87,12 +87,13 @@ public class SvcViewHandler {
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TbDataBean> tripList=tbDao.getTripList();
-		int last_tb_no=tripList.get(10).getTb_no();
+		int last_tb_no=tripList.get(tripList.size()-1).getTb_no();
 		int count=tbDao.getCount();
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
 		request.setAttribute("last_tb_no", last_tb_no);
 		request.setAttribute("count", count);
+		request.setAttribute("last_tb_no", last_tb_no);
 		return new ModelAndView("svc/tripList");
 	}
 	
@@ -185,7 +186,7 @@ public class SvcViewHandler {
 	@RequestMapping(value="/loadMoreList", produces = "application/json")
 	@ResponseBody
 	public List<TbDataBean> loadMoreList(int last_tb_no) {
-		//get more 10 trip articles when 'load more' button is pressed
+		//get more 5 trip articles when 'load more' button is pressed
 		List<TbDataBean> additionalList=tbDao.loadMoreList(last_tb_no);
 		return additionalList;
 	}
