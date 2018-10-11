@@ -10,11 +10,20 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.UUID;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.annotation.Resource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -39,7 +48,6 @@ import db.TagDBBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
-import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
 
@@ -164,6 +172,69 @@ public class SvcProHandler {
 		}
 
 		return new ModelAndView("svc/userLeavePro");
+	}
+	
+	////Email
+	@RequestMapping("/emailCheck")
+	public ModelAndView EmailCheckProcess(HttpServletRequest request, String email1) {
+		String to1=email1; // 인증위해 사용자가 입력한 이메일주소
+		String host="smtp.gmail.com"; // smtp 서버
+		String subject="EmailCheck"; // 보내는 제목 설정
+		String fromName="Admin"; // 보내는 이름 설정
+		String from="dlagurgur@gmail.com"; // 보내는 사람(구글계정)
+		String authNum=SvcProHandler.authNum(); // 인증번호 위한 난수 발생부분
+		String content="Number ["+authNum+"]"; // 이메일 내용 설정
+		
+		String email = request.getParameter("email1");
+		int result = userDao.EmailCheck( email );
+		
+		request.setAttribute("authNum", authNum);
+		request.setAttribute("email", email);
+		request.setAttribute("result",result);
+		
+		try{
+		Properties props=new Properties();
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.transport.protocol", "smtp");
+		props.put("mail.smtp.host", host);
+		props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		props.put("mail.smtp.port","465");
+		props.put("mail.smtp.user",from);
+		props.put("mail.smtp.auth","true");
+		
+		Session mailSession 
+           = Session.getInstance(props,new javax.mail.Authenticator(){
+			    protected PasswordAuthentication getPasswordAuthentication(){
+				    return new PasswordAuthentication("dlagurgur@gmail.com","asd75311");
+			}
+		});
+		
+		Message msg = new MimeMessage(mailSession);
+		InternetAddress []address = {new InternetAddress(to1)};
+		msg.setFrom(new InternetAddress
+                      (from, MimeUtility.encodeText(fromName,"utf-8","B")));
+		msg.setRecipients(Message.RecipientType.TO, address);
+		msg.setSubject(subject);
+		msg.setSentDate(new java.util.Date());
+		msg.setContent(content,"text/html; charset=utf-8");
+		
+		Transport.send(msg);
+		}catch(MessagingException e){
+			e.printStackTrace();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return new ModelAndView("svc/emailCheck");
+	}
+	
+	public static String authNum(){	//난수발생부분
+		StringBuffer buffer=new StringBuffer();
+		for(int i=0;i<=4;i++){
+			int num=(int)(Math.random()*9+1);
+			buffer.append(num);
+		}
+		return buffer.toString();
 	}
 
 	///////////////////////////////// board pages/////////////////////////////////
@@ -385,7 +456,7 @@ public class SvcProHandler {
 
 	///////////////////////////////// ajax list/////////////////////////////////
 	
-	@RequestMapping(value = "/idCheck.go", produces = "application/json")
+	@RequestMapping(value = "/idCheck.go", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Map<Object, Object> idCheck(@RequestBody String user_id) {
 		user_id = user_id.split("=")[0];
@@ -477,4 +548,5 @@ public class SvcProHandler {
 		}
 		return false;
 	}
+
 }
