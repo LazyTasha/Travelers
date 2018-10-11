@@ -497,8 +497,7 @@ function commentDelete(c_id){
     });
 }
 
-function loadMoreList(tripList) {
-	var last_tb_no=(tripList.get(0)-10);
+function loadMoreList(last_tb_no) {
 	$.ajax({
 		type : 'post',
 		data : {last_tb_no : last_tb_no},

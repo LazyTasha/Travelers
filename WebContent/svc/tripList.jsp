@@ -177,7 +177,7 @@ h1, h2, h3, h4, h5, h6 {
 	    		<div class="row" id="board-append-list">
 	    		</div>
 	    	</c:if>
-    	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList(${tripList})">Load more...</button>
+    	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList(${last_tb_no})">Load more...</button>
     </div><!-- board list -->
 </div><!-- body box -->	
 		

@@ -87,9 +87,11 @@ public class SvcViewHandler {
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TbDataBean> tripList=tbDao.getTripList();
+		int last_tb_no=tripList.get(10).getTb_no();
 		int count=tbDao.getCount();
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
+		request.setAttribute("last_tb_no", last_tb_no);
 		request.setAttribute("count", count);
 		return new ModelAndView("svc/tripList");
 	}
