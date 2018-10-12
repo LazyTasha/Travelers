@@ -22,7 +22,7 @@
 	</select>
 
 	<select id="getUserName" parameterType="String" resultType="String">
-		select user_name from gg_user where user_id=#{id}
+		select user_name from gg_user where user_id=#{user_id}
 	</select>
 
 	<select id="getUserId" parameterType="String" resultType="String">
@@ -362,4 +362,29 @@
 	<select id="getPhoto_urls" parameterType="int" resultType="String">
 		select photo_url from gg_album where tb_no=#{tb_no}
 	</select>
+<!-- 	
+	<insert id="writeTrip" parameterType="db.TbDataBean">
+		insert into gg_trip_board
+		(tb_no, user_id, tb_title, tb_content, tb_reg_date, tb_v_count,
+		tb_m_num,
+		tb_notice, tb_talk)
+		values(SEQ_GG_TRIP_BOARD_TB_NO.nextval,
+		#{user_id}, #{tb_title}, #{tb_content}, sysdate, 0,
+		#{tb_m_num}, 0,
+		#{tb_talk})
+	</insert>
+	 -->
+	<insert id="insertTb_no" parameterType="db.TbDataBean" keyProperty="tb_no">
+      	insert into gg_trip_board
+		(tb_no, tb_title, user_id, tb_content, tb_reg_date, tb_v_count,
+		tb_m_num,
+		tb_notice, tb_talk)
+		values(SEQ_GG_TRIP_BOARD_TB_NO.nextval, #{tb_title},
+		#{user_id}, #{tb_content}, sysdate, 0,
+		#{tb_m_num}, 0,
+		#{tb_talk})
+      <selectKey keyProperty="tb_no" resultType="int" order="AFTER">
+         select SEQ_GG_TRIP_BOARD_TB_NO.currval from dual
+      </selectKey>
+   </insert>
 </mapper>

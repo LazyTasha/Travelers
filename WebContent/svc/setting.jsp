@@ -74,7 +74,7 @@
 <c:set var="trip_writer" value="작성자"/>
 <c:set var="trip_content" value="본문"/>
 <c:set var="trip_m_num" value="인원"/>
-<c:set var="trip_talk_link" value="대화 링크"/>
+<c:set var="tb_talk" value="대화 링크"/>
 <c:set var="trip_tag" value="여행 태그"/>
 <c:set var="trip_write" value="등록"/>
 <c:set var="trip_location" value="장소"/>

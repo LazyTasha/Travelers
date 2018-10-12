@@ -435,6 +435,7 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 
 var number = '${tbDto.tb_no}'; //게시글 번호
 //댓글 목록 
+
 function commentList(tb_no){
     $.ajax({
         url : 'commentSelect.go',
