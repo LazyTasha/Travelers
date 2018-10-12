@@ -89,6 +89,11 @@
 						<div class="btn-group btn-group-sm" role="group" aria-label="...">
 							<c:forEach var="i" items="${tagList}">
 								<button type="button" class="btn btn-default" name="tags">#${i.tag_value}&nbsp;</button>
+								<c:forEach var="j" items="${userTags}">
+									<c:if test="${i.tag_value!=j.tag_value}">
+										<button type="button" class="btn btn-default" name="tags" disabled>#${i.tag_value}&nbsp;</button>
+									</c:if>
+								</c:forEach>
 							</c:forEach>
 						</div>
 					</div>
