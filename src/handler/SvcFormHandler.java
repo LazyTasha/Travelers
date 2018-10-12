@@ -97,13 +97,15 @@ public class SvcFormHandler {
 		String user_id=(String)request.getSession().getAttribute("user_id");
 		String user_name= userDao.getUserName(user_id);//user_id �޾Ƽ� db�� �ִ� name ���� �ҷ�����
 		
-		//get tag list too so that user choose it
-		//but I don't know why should I put a map there...
-		List<TagDataBean> tags=tagDao.getStyleTags();
+		List<TagDataBean> styleTags=tagDao.getStyleTags();
+		List<TagDataBean> cityTags=tagDao.getCityTags();
+		List<TagDataBean> countryTags=tagDao.getCountryTags();
 		//send them to set User Name on the form
 		request.setAttribute("user_id", user_id); 
 		request.setAttribute("user_name", user_name); 
-		request.setAttribute("tags", tags); 
+		request.setAttribute("tags", styleTags); 
+		request.setAttribute("tags", cityTags); 
+		request.setAttribute("tags", countryTags); 
 		return new ModelAndView("svc/tripWrite"); 
 	}
 	

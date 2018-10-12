@@ -45,12 +45,22 @@ public class TagDBBean {
 		return session.delete("db.deleteTag",tag_id);
 	}
 	public List<TagDataBean> getUserTags(String user_id) {
-		return session.selectList("db.getUserTags", user_id);
+		List<TagDataBean> userTagList=session.selectList("db.getUserTags", user_id);
+		for(int i=0; i<userTagList.size(); i++) {
+			userTagList.get(i).setTag_value((String)session.selectOne("db.getTagValue", userTagList.get(i).getTag_id()));
+		}
+		return userTagList;
 	}
 	public List<TagDataBean> getTripTags(int tb_no) {
 		return session.selectList("db.getTripTags", tb_no);
 	}
 	public List<TagDataBean> getStyleTags() {
 		return session.selectList("db.getStyleTags");
+	}
+	public List<TagDataBean> getCityTags() {
+		return session.selectList("db.getCityTags");
+	}
+	public List<TagDataBean> getCountryTags() {
+		return session.selectList("db.getCountryTags");
 	}
 }
