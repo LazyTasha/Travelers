@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,6 +47,7 @@ import db.CmtDataBean;
 import db.LocDBBean;
 import db.LocDataBean;
 import db.TagDBBean;
+import db.TagDataBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
@@ -115,10 +117,23 @@ public class SvcProHandler {
 		UserDataBean userDto = userDao.getUser(user_id);
 		userDto.setPasswd(request.getParameter("passwd"));
 		userDto.setUser_name(request.getParameter("user_name"));
+		String[] tagValues=request.getParameterValues("tags");
+		List<TagDataBean> userTags=new ArrayList<TagDataBean>();
+		
+		for(int i=0; i<tagValues.length; i++) {
+			TagDataBean tempTagBean=new TagDataBean();
+			tempTagBean.setTag_value(tagValues[i]);
+			tempTagBean.setTag_id(tagDao.getTagId(tempTagBean.getTag_value()));
+			userTags.add(i, tempTagBean);
+		}
 
 		int result = userDao.modifyUser(userDto);
-		request.setAttribute("result", result);
-
+		
+		if(result==1) {
+			request.setAttribute("result", result);
+			result=tagDao.updateUserTags(user_id, userTags);
+		}
+		
 		return new ModelAndView("svc/userModPro");
 	}
 
