@@ -282,6 +282,7 @@ function EmailCheck(email1){
 	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=400, height=200" );
 }
 
+
 function confirmeMail(authNum){
 	var Email = $('#EmailVlaue').val(); //이메일 인증 창에서 내가 입력한 인증번호 값가져옴
     // 입력한 값이 없거나, 인증코드가 일지하지 않을 경우
@@ -433,24 +434,25 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 	 CmtInsert(insertData); //Insert 함수호출(아래)
 }
 
-var number = '${tbDto.tb_no}'; //게시글 번호
-//댓글 목록 
+/////댓글 목록 
 function commentList(tb_no){
-    $.ajax({
+	var SessionID=$("input[name=session]").val();
+	$.ajax({
         url : 'commentSelect.go',
         type : 'get',
         data : {tb_no : tb_no},
         success : function(data){
-            var commentView =''; 
+            var commentView ='';
             $.each(data, function(key, comment){ 
             	commentView += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-            	commentView += '<div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_id;
+            	commentView += '</div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_id;
+            	if(SessionID == comment.user_id){
             	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
-            	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a> </div>';
+            	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a>';
+            	}
             	commentView += '<div class="commentContent'+comment.c_id+'"> <p> 내용 : '+comment.c_content +'</p>';
             	commentView += '</div></div>'
             });
-            
             $(".commentList").html(commentView);
         },
         error : function(error) {
