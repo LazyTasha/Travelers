@@ -125,15 +125,15 @@
 		select tag_value from gg_trip_tag where tb_no=#{tb_no}
 	</select>
 
-	<select id="getUserTags" parameterType="String" resultType="java.util.List">
+	<select id="getUserTags" parameterType="String" resultType="db.TagDataBean">
 		select t.tag_value from gg_tag t where t.tag_id=(select
 		ut.tag_id from
 		gg_user_tag ut where ut.user_id=#{user_id})
 	</select>
 
-	<select id="getStyleTags" resultType="java.util.Map">
+	<select id="getStyleTags" resultType="db.TagDataBean">
 		<![CDATA[
-		select * from gg_tag where tag_id>=1 and tag_id<=100
+		select tag_value from gg_tag where tag_id>=1 and tag_id<=100
 		]]>
 	</select>
 
@@ -148,7 +148,7 @@
 		select * from gg_trip_board where tb_no=#{tb_no}
 	</select>
 
-	<select id="getTripTags" parameterType="int" resultType="java.util.List">
+	<select id="getTripTags" parameterType="int" resultType="db.TagDataBean">
 		select tag_value from gg_tag t, gg_trip_tag tr where
 		t.tag_id=tr.tag_id and
 		tr.tb_no=#{tb_no}
@@ -297,7 +297,13 @@
 		(select t.tag_value from gg_tag t where t.tag_id=
 		(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
 	</select>
-
+	
+	<!-- locDB -->
+	<insert id="insertCoord" parameterType="db.LocDataBean">
+		insert into gg_coordinate(country_id,coord_long,coord_lat,coord_order,coord_id) values(
+				(select country_id from gg_country where country_code=#{country_code}),#{coord_long},#{coord_lat},#{coord_order},SEQ_gg_coordinate_coord_id.NEXTVAL)
+	</insert>
+	
 	<!--album DB -->
 
 	<insert id="addPhoto" parameterType="db.AlbumDataBean">

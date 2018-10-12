@@ -65,7 +65,7 @@
             </div>           
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
-                     onclick="location='boardList.go'">   
+                     onclick="location='tripList.go'">   
       </div><!-- input box -->
    </form>
 </div><!-- container -->
