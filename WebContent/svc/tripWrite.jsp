@@ -10,17 +10,54 @@
    <!-- Bootstrap core CSS -->
    <link rel="stylesheet" type="text/css"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-   <!-- Custom style for this template (Font API & Our UI)-->
+   <!-- Custom style for this template -->
    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
-   <link rel="stylesheet" href="${project}travelers_style.css">
-   <!-- Calendar API -->
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <style>
+     input[type=text] {
+         border: none;
+         border-bottom: 1px solid #344955;
+     }
+     input[type=text]:focus {
+         border: none;
+         border-bottom: 2px solid #344955 !important;
+     }
+      body {
+           padding-top: 5rem;
+      }
+      .input-box {
+           padding: 3rem 1.5rem;
+           text-align: center;
+      }
+      .form-group{
+            margin-bottom:0.6rem !important
+      }
+      .form-group:focus{
+            border-color: #5cb85c;  box-shadow: none; -webkit-box-shadow: none;
+      }
+      #searchmap{
+           position:relative;
+           bottom:-10px;
+           height: 200px;
+           margin:auto;
+           padding : 3px;
+          }
+     #floating-panel {
+           position: relative;
+           top: 5px;
+           z-index: 5;
+           background-color: #fff;
+           padding: 5px;
+           border: 1px solid #999;
+           text-align: center;
+           font-family: 'Roboto','sans-serif';
+           line-height: 30px;
+           padding-left: 5px;   
+         }
+      </style>
 </head>
 <body>
 <div class="container" style="width:800px;">
-      <form class="form-horizontal" method="post" action="tripWritePro.go" >
+   <form id="tripWriteForm" class="form-horizontal" method="post" action="tripWritePro.go">
          <h4> ${page_write}</h4>
          <hr size="1px" color="black">
          <div class="input-box">
@@ -28,13 +65,11 @@
                  <input type="text" name="title" class="col-12 form-control form-control-lg" maxlength="30" placeholder="${trip_title}" autofocus required>
             </div>
                <input type="hidden" name="user_name" value="${userDto.user_name}">
-            <div class="form-group row">	
+            <div class="form-group row">
                  <label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
-                 	<input type="number" name="trip_m_num" class="col-2" min="0">
-                 <label for="cal_date" class="col-2 col-form-label">${trip_schedule}</label>
-                  	<input type="text" name="cal_start_date" id="date1" class="col-2"/>
-                  	~
-                  	<input type="text" name="cal_end_date" id="date2" class="col-2"/>
+                 <input type="text" name="trip_m_num" class="col-4">
+                 <label for="cal_date" class="col-2 col-form-label">일정</label>
+                 <input type="text" name="trip_m_num" class="col-4">
             </div>
             <div class="form-group row">
                  <label for="trip_talk_link" class="col-2 col-form-label">${trip_talk_link}</label>
@@ -46,32 +81,59 @@
                   <input id="address" type="text"/>
                   <input id="submit" type="button" class="btn btn-dark btn-sm"  value="${btn_search}"/>
                </div>
+            </div>
+            <div class="form-group row">
                <div id="searchmap" class="col-12"></div>
             </div>
             <hr>
             <div class="form-group row">
-               <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}"></textarea>
+               <textarea name="content" class="col-12" rows="10" placeholder="내용을 입력하세요"></textarea>
             </div>
             <hr>
             <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
-               <c:if test="${tag.size() ne 0}">
-                  <c:forEach var="i" items="${tags}">
-                  	 <label class="btn btn-secondary">
-                   	  <input type="checkbox" name="tag" value="${key}">${value}
-                     </label>
-                  </c:forEach>
-               </c:if>
-            </div>           
+               
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons">
+              <label class="btn btn-secondary active">
+                <input type="checkbox" autocomplete="off"> Tag1
+              </label>
+              <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag2
+              </label>
+              <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag3
+              </label>
+              <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag4
+              </label>
+              <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag5
+              </label>
+               <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag6
+              </label>
+               <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag7
+              </label>
+               <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag8
+              </label>
+               <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag9
+              </label>
+               <label class="btn btn-secondary">
+                <input type="checkbox" autocomplete="off"> Tag10
+              </label>
+            </div>      
+            </div>   
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
-                     onclick="location='boardList.go'">   
+                     onclick="location='list.go'">       
       </div><!-- input box -->
    </form>
 </div><!-- container -->
 </body>
 <!-- Map Search API -->
-   <script async defer
-       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=searchMap">
-   </script>
-</html>
+<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=searchMap">
+</script>

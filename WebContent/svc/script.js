@@ -574,8 +574,3 @@ function loadMoreList(last_tb_no) {
 		}
 	});
 }
-//달력 불러오기
-$(function(){
-	$("#date1").datepicker();
-	$("#date2").datepicker();
-});
