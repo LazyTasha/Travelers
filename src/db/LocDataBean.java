@@ -9,6 +9,9 @@ public class LocDataBean {
 	private double coord_lat;
 	private int coord_order;
 	private int coord_id;
+	private String cal_start_date;
+	private String cal_end_date;
+	private int td_trip_id;
 	public int getNum() {
 		return num;
 	}
@@ -56,5 +59,23 @@ public class LocDataBean {
 	}
 	public void setCoord_id(int coord_id) {
 		this.coord_id = coord_id;
+	}
+	public String getCal_start_date() {
+		return cal_start_date;
+	}
+	public void setCal_start_date(String cal_start_date) {
+		this.cal_start_date = cal_start_date;
+	}
+	public String getCal_end_date() {
+		return cal_end_date;
+	}
+	public void setCal_end_date(String cal_end_date) {
+		this.cal_end_date = cal_end_date;
+	}
+	public int getTd_trip_id() {
+		return td_trip_id;
+	}
+	public void setTd_trip_id(int td_trip_id) {
+		this.td_trip_id = td_trip_id;
 	}
 }

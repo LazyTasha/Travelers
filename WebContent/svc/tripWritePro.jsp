@@ -7,6 +7,6 @@
 </c:if>
 <c:if test="${result ne 0}">
 	<c:if test="${tb_no ne 0}">
-		<c:redirect url="boardList.go"/>
+		<c:redirect url="tripList.go"/>
 	</c:if>
 </c:if>

@@ -19,8 +19,11 @@ public class LocDBBean {
 	}
 	public void delLoc() {
 	}
-	//when knowing country code, insert coordinate
+	//when knowing country code, insert coordinate and if inserting data succeed, return coord_id
 	public int insertCoord(LocDataBean locDto) {
-		return session.insert("db.insertCoord",locDto);
+		 return session.insert("db.insertCoord",locDto);
+	}
+	public int insertCal(LocDataBean locDto) {
+		return session.insert("db.insertCal",locDto);
 	}
 }

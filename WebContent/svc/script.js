@@ -14,16 +14,20 @@ var sizeerror="이미지 용량은 5M이하만 가능합니다.";
 
 var nocheckerror="다운로드 받을 사진을 선택하세요";
 var locationerror="장소를 선택하세요";
+var maxschedule=5;
 var schedulesizeerror="일정은 최대 "+maxschedule+"개 입니다.";
 
 var filesize=5*1024*1024;
-var maxschedule=5;
 
 $(document).ready(function(){
 	var tb_no=$('input[name=tb_no]').val();
 	if(tb_no){
 		commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
 		}
+	var num=$('label[name=schedule]').length;//일정 개수 
+	if(num){
+		loadCal(num);
+	}
 });
 
 function erroralert( msg ) {
@@ -32,7 +36,6 @@ function erroralert( msg ) {
 }
 //Initialize and add the map
 function initMap() {
-	
 	var lat=parseFloat(document.getElementById("lat").value);
 	var lng=parseFloat(document.getElementById("lng").value);
 	
@@ -50,6 +53,8 @@ function initMap() {
 	  geocodeLatLng(uluru,geocoder, map, infowindow)
 }
 //지도 주소검색
+
+
 function searchMap() {
     var map = new google.maps.Map(document.getElementById('searchmap'), {
       zoom: 8,
@@ -67,6 +72,7 @@ function geocodeAddress(geocoder, resultsMap) {
   geocoder.geocode({'address': address}, function(results, status) {
     if (status === 'OK') {
       resultsMap.setCenter(results[0].geometry.location);
+
       var marker = new google.maps.Marker({
         map: resultsMap,
         position: results[0].geometry.location
@@ -87,6 +93,11 @@ function geocodeAddress(geocoder, resultsMap) {
       var country_code=country[0].short_name;
       //country_code 값 form에 붙여주기
       input+="<input name='country_code' type='hidden' value='"+country_code+"'/>"
+      //country name, address 값 form에 붙여주기
+      var country_name=country[0].long_name;
+      var full_address=results[0].formatted_address
+      input+="<input name='country_name' type='hidden' value='"+country_name+"'/>";
+      		+"<input name='address' type='hidden' value='"+full_address+"'/>"
       
       $('#searchmap').append(input);
       
@@ -118,6 +129,7 @@ function geocodeLatLng(latlng,geocoder, map, infowindow) {
    }
  });
 }
+
 //trip view-button event-map
 function showMap(){
 	$('#albumTab').hide();
@@ -511,7 +523,7 @@ function commentUpdateProc(c_id){
  
 //댓글 삭제 
 function commentDelete(c_id){
-	var tb_no=$("input[name=tb_no").val();
+	var tb_no=$("input[name=tb_no]").val();
     $.ajax({
         url : 'commentDelete.go',
         type : 'post',
@@ -574,26 +586,39 @@ function loadMoreList(last_tb_no) {
 	});
 }
 //달력 불러오기 
- $(function(){ 
-	$("#date1").datepicker(); 
-	$("#date2").datepicker(); 
-}); 
-//add schedule-일정 추가//작업중//한글 처리/달력처리
+function loadCal(num){ 
+	$("#start"+num+"").datepicker(); 
+	$("#end"+num+"").datepicker(); 
+} 
+//add schedule-일정 추가//작업중//한글 처리
 function addSchedule(num){
-	var schedule="";
-	var str_schedule=$('.col-2 col-form-label').text();
-	var str_add;
-	$('#btn'+num+'').hide();//btn 숨기기
-	num++;
-	schedule+= 	'<div id="schedule" class="form-group row">';	  
-	schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
-	schedule+=      '<input type="text" name="cal_start_date" id="date1" class="col-2"/>';
-	schedule+=		'~';
-	schedule+=		'<input type="text" name="cal_end_date" id="date2" class="col-2"/>';
-	schedule+=			'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
-	schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
-	schedule+=			'일정추가';
-	schedule+=			'</button>';
-	schedule+=	'</div>';
-	$('#schedulediv').append(schedule);
+	if(num>=maxschedule){
+		alert(schedulesizeerror);
+	}else{
+		$('#address').val('');
+		var schedule="";
+		$('#btn'+num+'').hide();//btn 숨기기
+		num++;
+		schedule+= 	'<div id="schedule" class="form-group row">';	  
+		schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
+		schedule+=      '<input type="text" name="start'+num+'" id="start'+num+'" class="col-2"/>';
+		schedule+=		'~';
+		schedule+=		'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2"/>';
+		schedule+=			'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
+		schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
+		schedule+=			'일정추가';
+		schedule+=			'</button>';
+		schedule+=	'</div>';
+		$('#schedulediv').append(schedule);
+		loadCal(num);
+		
+		var schedulenum='<input type="hidden" name="schedulenum" value="'+num+'">';
+		$('#schedulenum').empty();
+		$('#schedulenum').append(schedulenum);
+		
+	}
+}
+//장소추가
+function addPlace(){
+	
 }
