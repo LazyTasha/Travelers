@@ -1,5 +1,6 @@
 package handler;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -14,6 +15,7 @@ import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.LocDBBean;
 import db.TagDBBean;
+import db.TagDataBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
@@ -63,11 +65,13 @@ public class SvcFormHandler {
 		UserDataBean userDto=userDao.getUser(user_id);
 		
 		if(userDto!=null) {
-			if(passwd==userDto.getPasswd()) {
+			if(passwd.equals(userDto.getPasswd())) {
 				result=1;
 				request.setAttribute("userDto", userDto);
-				Map<Integer, String> tagList=tagDao.getStyleTags();
+				List<TagDataBean> tagList=tagDao.getStyleTags();
 				request.setAttribute("tagList", tagList);
+				List<TagDataBean> userTags=tagDao.getUserTags(user_id);
+				request.setAttribute("userTags", userTags);
 			} else {
 				result=0;
 			}
@@ -89,18 +93,32 @@ public class SvcFormHandler {
 	
 	@RequestMapping("/tripWrite")
 	public ModelAndView svcTripWriteFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+<<<<<<< HEAD
 		//need to know who is writing
 		String writer_id=((UserDataBean)request.getAttribute("userDto")).getUser_id();
 		//String writer_id=(String) request.getSession().getAttribute("user_id");
 		String writer_name=((UserDataBean)request.getAttribute("userDto")).getUser_name();
+=======
+		//Need to know the writer: Bring user_id from session & user_name(nickname)
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		String user_name= userDao.getUserName(user_id);//user_id �޾Ƽ� db�� �ִ� name ���� �ҷ�����
+		
+>>>>>>> master
 		//get tag list too so that user choose it
 		//but I don't know why should I put a map there...
-		Map<Integer, String> tags=tagDao.getStyleTags();
+		List<TagDataBean> tags=tagDao.getStyleTags();
 		//send them to set User Name on the form
+<<<<<<< HEAD
 		request.setAttribute("writer_id", writer_id);
 		request.setAttribute("writer_name", writer_name);
 		request.setAttribute("tags", tags);
 		return new ModelAndView("svc/tripWrite");
+=======
+		request.setAttribute("user_id", user_id); 
+		request.setAttribute("user_name", user_name); 
+		request.setAttribute("tags", tags); 
+		return new ModelAndView("svc/tripWrite"); 
+>>>>>>> master
 	}
 	
 	@RequestMapping("/tripMod")

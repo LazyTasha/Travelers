@@ -65,11 +65,9 @@
 		    	<label for="tag" class="control-label col-sm-2" >${str_tag} </label>
 		    	<div class="col-sm-8">
 		    		<div class="btn-group btn-group-sm" role="group" aria-label="...">
-		    			<c:if test="${userTags} ne null">
-		    				<c:forEach var="i" items="${userTags}">
-		    					<button type="button" class="btn btn-default" disabled>#${i.value}&nbsp; </button>
-		    				</c:forEach>
-		    			</c:if>
+		    			<c:forEach var="i" items="${userTags}">
+		    				<button type="button" class="btn btn-default">#${i.tag_value}&nbsp; </button>
+		    			</c:forEach>
 					</div>
 		     	 </div>	
 			</div>

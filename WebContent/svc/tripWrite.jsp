@@ -134,6 +134,13 @@
 </div><!-- container -->
 </body>
 <!-- Map Search API -->
+<<<<<<< HEAD
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=searchMap">
 </script>
+=======
+   <script async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=searchMap">
+   </script>
+</html>
+>>>>>>> master
