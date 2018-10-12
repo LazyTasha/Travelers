@@ -78,11 +78,13 @@
 		</div>
 		
 		<!-- comment -->
+		<c:if test="${sessionScope.user_id != null}">
 		<div class="container">
 		        <label for="content">comment</label>
 		        <form name="commentInsertForm" method="post">
 		            <div class="input-group">
 		            	<input type="hidden" name="tb_no" value="${tb_no}"/>
+		            	<input type="hidden" name="session" value="${user_id}"/>
 		               	<input type="text" class="input" id="c_content" name="c_content" placeholder="내용을 입력하세요.">
 		               
 		               <span class="input-group-btn">
@@ -91,10 +93,11 @@
 		     		</div>
 				</form>
 			</div>
-		    
+		 </c:if>   
 		   	<div class="container">
 		        <div class="commentList"></div>
 		    </div>
+		 
 		<!-- comment -->
 	</article>
 </body>
@@ -103,8 +106,8 @@
 </script>
 
     <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+    ==================================================
+    Placed at the end of the document so the pages load faster -->
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="../../assets/js/vendor/popper.min.js"></script>
     <script src="../../dist/js/bootstrap.min.js"></script>

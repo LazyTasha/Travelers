@@ -126,7 +126,7 @@
 	</select>
 
 	<select id="getUserTags" resultType="db.TagDataBean">
-		select tag_id from gg_user_tag where user_id=#{user_id}
+		select * from gg_user_tag where user_id=#{user_id}
 	</select>
 
 	<select id="getStyleTags" resultType="db.TagDataBean">
@@ -150,6 +150,18 @@
 	<select id="getTagValue" resultType="String">
 		select tag_value from gg_tag where tag_id=#{tag_id}
 	</select>
+	
+	<insert id="updateUserTag" parameterType="java.util.Map">
+		insert into gg_user_tag values(#{user_id}, #{tag_id}) 
+	</insert>
+	
+	<select id="getTagId" resultType="int">
+		select tag_id from gg_tag where tag_value=#{tag_value}
+	</select>
+	
+	<delete id="deleteUserTag" parameterType="java.util.Map">
+		delete from gg_user_tag where user_id=#{user_id} and tag_id=#{tag_id}
+	</delete>
 
 	<!-- board DB -->
 	<select id="getCount" resultType="int">
