@@ -512,6 +512,7 @@ public class SvcProHandler {
 	@ResponseBody
 	public List<CmtDataBean> commentSelectProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
+		
 		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
 		List<CmtDataBean>comment= cmtDao.getComment(tb_no);
 		request.setAttribute("comment", comment);
