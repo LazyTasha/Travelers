@@ -59,6 +59,9 @@ public class TbDBBean {
 	//trip_tag : hash tag
 	//trip_detail :location
 	//not tested yet...
+	public int insertTb_no(TbDataBean tbDto) {
+		return session.insert("db.insertTb_no",tbDto);
+	}
 	public int writeTb(TbDataBean tbDto) {
 		//first, insert into gg_trip_board
 		int result=session.update("db.writeTrip", tbDto);

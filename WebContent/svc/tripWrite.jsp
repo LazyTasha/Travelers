@@ -25,9 +25,10 @@
          <hr size="1px" color="black">
          <div class="input-box">
             <div class="form-group row">
-                 <input type="text" name="title" class="col-12 form-control form-control-lg" maxlength="30" placeholder="${trip_title}" autofocus required>
+                 <input type="text" name="trip_title" class="col-12 form-control form-control-lg" maxlength="30" placeholder="${trip_title}" autofocus required>
             </div>
-               <input type="hidden" name="user_name" value="${userDto.user_name}">
+               ${user_id}
+               <input type="hidden" name="user_name" value="${user_name}"> ${user_name}
             <div class="form-group row">	
                  <label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
                  	<input type="number" name="trip_m_num" class="col-2" min="0">
@@ -37,8 +38,8 @@
                   	<input type="text" name="cal_end_date" id="date2" class="col-2"/>
             </div>
             <div class="form-group row">
-                 <label for="trip_talk_link" class="col-2 col-form-label">${trip_talk_link}</label>
-                 <input type="text" name="trip_talk_link" class="col-10">
+                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
+                 <input type="text" name="tb_talk" class="col-10">
             </div>
             <div class="form-group row">
                  <label for="trip_location" class="col-2 col-form-label">${trip_location}</label>
@@ -53,19 +54,23 @@
                <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}"></textarea>
             </div>
             <hr>
+            
             <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
-               <c:if test="${tag.size() ne 0}">
-                  <c:forEach var="i" items="${tags}">
-                  	 <label class="btn btn-secondary">
-                   	  <input type="checkbox" name="tag" value="${key}">${value}
-                     </label>
-                  </c:forEach>
-               </c:if>
-            </div>           
+	               <div class="row pt-2 px-3">
+	               <c:if test="${styleTag.size() ne 0}">
+	                  <c:forEach var="i" items="${styleTags}">
+	                  	 <label class="btn btn-secondary btn-sm">
+	                   	  <input type="checkbox" name="styleTags">#${i.tag_value}
+	                     </label> &nbsp;
+	                  </c:forEach>
+	               </c:if>
+	               </div>
+            </div>   
+            <hr>        
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
-                     onclick="location='boardList.go'">   
+                     onclick="location='tripList.go'">   
       </div><!-- input box -->
    </form>
 </div><!-- container -->

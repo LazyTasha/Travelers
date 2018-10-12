@@ -162,10 +162,10 @@ h1, h2, h3, h4, h5, h6 {
 				             	      <hr size="1px" color="black" noshade>
 				              		  <p class="card-text mb-auto">${i.tb_content}</p>
 				              		  	 <hr style="width: 100%"> 
-								  <div class="d-flex justify-content-center">
+							        	  <div class="d-flex justify-content-center">
 				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;
-									<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;
-									<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;
+										        <div class="p-2">인원:${i.tb_m_num}</div>&nbsp;
+										        <div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;
 				           			  </div>
 			           			  </div>
 			          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">

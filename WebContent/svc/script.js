@@ -435,6 +435,7 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 }
 
 /////댓글 목록 
+
 function commentList(tb_no){
 	var SessionID=$("input[name=session]").val();
 	$.ajax({
