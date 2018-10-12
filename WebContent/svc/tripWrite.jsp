@@ -25,20 +25,33 @@
          <hr size="1px" color="black">
          <div class="input-box">
             <div class="form-group row">
-                 <input type="text" name="title" class="col-12 form-control form-control-lg" maxlength="30" placeholder="${trip_title}" autofocus required>
+                 <input type="text" name="trip_title" class="col-12 form-control form-control-lg" maxlength="30" placeholder="${trip_title}" autofocus required>
             </div>
                <input type="hidden" name="user_name" value="${userDto.user_name}">
-            <div class="form-group row">	
-                 <label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
-                 	<input type="number" name="trip_m_num" class="col-2" min="0">
-                 <label for="cal_date" class="col-2 col-form-label">${trip_schedule}</label>
-                  	<input type="text" name="cal_start_date" id="date1" class="col-2"/>
-                  	~
-                  	<input type="text" name="cal_end_date" id="date2" class="col-2"/>
+            <div class="form-group row">
+            	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
+                	<input type="number" name="trip_m_num" class="col-2" min="0">
+            </div>
+            <c:set var="i" value="1"/>  
+            <div id="schedule" class="form-group row">	  
+                <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule} ${i}</label> 
+                    <input type="text" name="start${i}" id="start${i}" class="col-2"/>
+                 	~
+                 	<input type="text" name="end${i}" id="end${i}" class="col-2"/>
+                 	&nbsp;&nbsp;
+                	<input name="place${i}" type="text" class="col-2" readonly>
+                 <button id="btn${i}" class="btn_plus" type="button" onclick="addSchedule(${i})">
+					<img  class="btn_img" src="${project}img/addbutton.png"> 
+					일정추가
+				</button>
+				<div id="coordinfo${i}">
+				</div>
+	        </div>
+	        <div id="schedulediv" >
             </div>
             <div class="form-group row">
                  <label for="trip_talk_link" class="col-2 col-form-label">${trip_talk_link}</label>
-                 <input type="text" name="trip_talk_link" class="col-10">
+                 <input type="text" name="tb_talk" class="col-10">
             </div>
             <div class="form-group row">
                  <label for="trip_location" class="col-2 col-form-label">${trip_location}</label>
@@ -65,8 +78,12 @@
             </div>           
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
-                     onclick="location='boardList.go'">   
-      </div><!-- input box -->
+                     onclick="location='tripList.go'">   
+      </div>
+      <div id="schedulenum">
+      	<input type="hidden" name="schedulenum" value="1">
+      </div>
+      <!-- input box -->
    </form>
 </div><!-- container -->
 </body>

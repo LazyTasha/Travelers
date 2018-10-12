@@ -52,7 +52,9 @@ public class TbDBBean {
 		
 		return tbDto;
 	}
-	
+	public int insertTb_no(TbDataBean tbDto) {
+	      return session.insert("db.insertTb_no",tbDto);
+	   }
 	//write a new trip post
 	//We have to update three tables
 	//trip_board : post
@@ -68,7 +70,10 @@ public class TbDBBean {
 		result=session.update("db.setTripDetails", tbDto);
 		return result;
 	}
-	
+	//게시물을 만든 후 일정 개수만큼 생성되는 gg_trip_detail table
+	public int insertTripDetail(TbDataBean tbDto) {
+		return session.insert("db.insertTripDetail",tbDto);
+	}
 	//TbDataBean has user_name as user_id instead of real user_id, 
 	//so we need this
 	public String getUserId(String user_name) {

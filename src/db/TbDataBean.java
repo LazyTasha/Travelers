@@ -12,6 +12,7 @@ public class TbDataBean extends TripDataBean {
 	public int tb_m_num;
 	public int tb_notice;
 	public String tb_talk;
+	public int td_trip_id;
 	public String[] locs;
 	public String[] tags;
 	public int getTb_no() {
@@ -67,6 +68,12 @@ public class TbDataBean extends TripDataBean {
 	}
 	public void setTb_talk(String tb_talk) {
 		this.tb_talk = tb_talk;
+	}
+	public int getTd_trip_id() {
+		return td_trip_id;
+	}
+	public void setTd_trip_id(int td_trip_id) {
+		this.td_trip_id = td_trip_id;
 	}
 	public String[] getLocs() {
 		return locs;
