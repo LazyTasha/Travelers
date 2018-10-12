@@ -58,7 +58,7 @@
 					<div class="col-sm-8">
 						<input type="text" name="user_name" class="form-control"
 							id="name_val" placeholder="Nickname" required>
-						<h4 style="color: red;" id="NameCheckMessage"></h4>
+						<h6 style="color: red;" id="NameCheckMessage"></h6>
 					</div>
 					<div class="col-sm-2">
 						<button type="button" class="btn btn-md btn-secondary"
