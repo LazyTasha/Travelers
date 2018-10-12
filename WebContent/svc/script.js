@@ -16,6 +16,7 @@ var nocheckerror="다운로드 받을 사진을 선택하세요";
 var locationerror="장소를 선택하세요";
 var maxschedule=5;
 var schedulesizeerror="일정은 최대 "+maxschedule+"개 입니다.";
+var noscheduleerror="일정을 먼저 입력해 주세요";
 
 var filesize=5*1024*1024;
 
@@ -53,8 +54,6 @@ function initMap() {
 	  geocodeLatLng(uluru,geocoder, map, infowindow)
 }
 //지도 주소검색
-
-
 function searchMap() {
     var map = new google.maps.Map(document.getElementById('searchmap'), {
       zoom: 8,
@@ -80,30 +79,21 @@ function geocodeAddress(geocoder, resultsMap) {
       //좌표 받기
       var lat=marker.position.lat();//위도 
       var lng=marker.position.lng();//경도
-     
-      //lat,lng를 form에 붙여주기
-      var input="<input name='lat' type='hidden' value='"+lat+"'/>"
-      	+"<input name='lng' type='hidden' value='"+lng+"'/>";
-     
+         
       //국가-jason 값 가져오기
       var country=results[0].address_components.filter(
       		function(component){
       			return component.types[0]=="country"
       		});
       var country_code=country[0].short_name;
-      //country_code 값 form에 붙여주기
-      input+="<input name='country_code' type='hidden' value='"+country_code+"'/>"
-      //country name, address 값 form에 붙여주기
       var country_name=country[0].long_name;
       var full_address=results[0].formatted_address
-      input+="<input name='country_name' type='hidden' value='"+country_name+"'/>";
-      		+"<input name='address' type='hidden' value='"+full_address+"'/>"
-      
-      $('#searchmap').append(input);
       
       var infowindow = new google.maps.InfoWindow;
      
       geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap, infowindow); 
+      
+      showPlace(country_code,country_name,full_address,lat,lng);
     } else {
       alert(locationerror);
     }
@@ -590,35 +580,59 @@ function loadCal(num){
 	$("#start"+num+"").datepicker(); 
 	$("#end"+num+"").datepicker(); 
 } 
-//add schedule-일정 추가//작업중//한글 처리
+//add schedule-일정 추가//한글 처리
 function addSchedule(num){
-	if(num>=maxschedule){
-		alert(schedulesizeerror);
+	var start=$('input[name=start'+num+']');
+	var end=$('input[name=end'+num+']');
+	if(!start.val()||!end.val()){//일정날짜가 없는 경우는 일정 추가 x
+		alert(noscheduleerror);
+		if(!start.val())start.focus();
+		else end.focus();
 	}else{
-		$('#address').val('');
-		var schedule="";
-		$('#btn'+num+'').hide();//btn 숨기기
-		num++;
-		schedule+= 	'<div id="schedule" class="form-group row">';	  
-		schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
-		schedule+=      '<input type="text" name="start'+num+'" id="start'+num+'" class="col-2"/>';
-		schedule+=		'~';
-		schedule+=		'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2"/>';
-		schedule+=			'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
-		schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
-		schedule+=			'일정추가';
-		schedule+=			'</button>';
-		schedule+=	'</div>';
 		$('#schedulediv').append(schedule);
-		loadCal(num);
-		
-		var schedulenum='<input type="hidden" name="schedulenum" value="'+num+'">';
-		$('#schedulenum').empty();
-		$('#schedulenum').append(schedulenum);
-		
+		if(num>=maxschedule){
+			alert(schedulesizeerror);
+		}else{
+			$('#address').val('');
+			var schedule="";
+			$('#btn'+num+'').hide();//btn 숨기기
+			num++;
+			schedule+= 	'<div id="schedule" class="form-group row">';	  
+			schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
+			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2"/>';
+			schedule+=			'~';
+			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2"/>&nbsp;&nbsp;';
+			schedule+=			'<input name="place'+num+'" type="text" class="col-2" readonly>';
+			schedule+=		'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
+			schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
+			schedule+=			'일정추가';
+			schedule+=		'</button>';
+			schedule+=		'<div id="coordinfo'+num+'">';
+			schedule+=		'</div>';
+			schedule+=	'</div>';
+			$('#schedulediv').append(schedule);
+			loadCal(num);
+			
+			if(num==maxschedule)$('#btn'+num+'').hide();
+			var schedulenum='<input type="hidden" name="schedulenum" value="'+num+'">';
+			$('#schedulenum').empty();
+			$('#schedulenum').append(schedulenum);
+		}		
 	}
 }
 //장소추가
-function addPlace(){
+function showPlace(country_code,country_name,full_address,lat,lng){
+	var num=$('#schedulenum').find('input[name=schedulenum]').val();
+	var placeinput=$('input[name=place'+num+']');
+	var coordinfo=$('#coordinfo'+num+'');
+	placeinput.val('');
+	coordinfo.empty();
 	
+	var placeinfo=''+country_name+'/'+full_address;
+	placeinput.val(placeinfo);
+	var infoinput='<input name="country_code'+num+'" type="hidden"/>'
+		infoinput+='<input name="lat'+num+'" type="hidden" />'
+		infoinput+='<input name="lng'+num+'" type="hidden" />';
+	coordinfo.append(infoinput);	
+	alert(infoinput.html());
 }

@@ -38,10 +38,14 @@
                     <input type="text" name="start${i}" id="start${i}" class="col-2"/>
                  	~
                  	<input type="text" name="end${i}" id="end${i}" class="col-2"/>
-                 <button id="btn${i}"class="btn_plus" type="button" onclick="addSchedule(${i})">
+                 	&nbsp;&nbsp;
+                	<input name="place${i}" type="text" class="col-2" readonly>
+                 <button id="btn${i}" class="btn_plus" type="button" onclick="addSchedule(${i})">
 					<img  class="btn_img" src="${project}img/addbutton.png"> 
 					일정추가
 				</button>
+				<div id="coordinfo${i}">
+				</div>
 	        </div>
 	        <div id="schedulediv" >
             </div>
