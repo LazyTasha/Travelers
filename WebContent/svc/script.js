@@ -328,6 +328,11 @@ function inputcheck() {
 		}
 	}
 }
+//delete tripBoard-게시물 삭제
+function deleteBoard(tb_no){
+	alert("들어옴"+tb_no)
+	location.href="tripDelPro.go?tb_no="+tb_no;
+}
 //사진 선택click->create checkbox
 function selectPhotos(){
 	$('input[name=check1]').show();

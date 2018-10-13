@@ -29,22 +29,30 @@
 </head>
 <body>
 	<article>
-		<section>
-		<table border="1">
-			<tr>
-				<th>제목</th>
-				<td>${trip.tb_title}</td>
-			</tr>
-			<tr>
-				<th>방문자수</th>
-				<td>${trip.tb_v_count}</td>
-			</tr>
-			<tr>
-				<th>글내용</th>
-				<td>${trip.tb_content}</td>
-			</tr>
+	<!--수정/삭제 -->
+	<c:if test="${isOwner eq true}">
 
-		</table>
+		<section> 
+			<button type="button" onclick="deleteBoard(${tb_no})">${btn_mod}</button>
+			<button type="button">${btn_delete}	${isOwner}</button>
+		</section>
+	</c:if>
+	<!--  -->
+		<section>
+			<table border="1">
+				<tr>
+					<th>제목</th>
+					<td>${trip.tb_title}</td>
+				</tr>
+				<tr>
+					<th>방문자수</th>
+					<td>${trip.tb_v_count}</td>
+				</tr>
+				<tr>
+					<th>글내용</th>
+					<td>${trip.tb_content}</td>
+				</tr>
+			</table>
 		</section>
 		
 		<br>
