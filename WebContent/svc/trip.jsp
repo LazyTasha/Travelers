@@ -33,12 +33,17 @@
 		<table border="1">
 			<tr>
 				<th>제목</th>
-				<td>${tbDto.tb_title}</td>
+				<td>${trip.tb_title}</td>
 			</tr>
 			<tr>
-				<th>글쓴이</th>
-				<td>${tbDto.user_id}</td>
+				<th>방문자수</th>
+				<td>${trip.tb_v_count}</td>
 			</tr>
+			<tr>
+				<th>글내용</th>
+				<td>${trip.tb_content}</td>
+			</tr>
+
 		</table>
 		</section>
 		

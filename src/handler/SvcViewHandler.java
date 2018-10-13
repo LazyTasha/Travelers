@@ -23,6 +23,7 @@ import db.TagDataBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
+import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
 
@@ -100,11 +101,10 @@ public class SvcViewHandler {
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
-		//get the content of the post
-		//TripDataBean has a part of contents of board
-		//TbDataBean has every content of board
-		TbDataBean tbDto=tbDao.getTb(tb_no);
-		request.setAttribute("tbDto", tbDto);
+		
+		//getTrip-게시물 정보 가져오기
+		TripDataBean trip=tripDao.getTrip(tb_no);
+		request.setAttribute("trip", trip);
 		
 		//determine tab
 		String tab=request.getParameter("tab");
