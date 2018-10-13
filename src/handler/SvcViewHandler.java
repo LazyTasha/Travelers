@@ -67,10 +67,16 @@ public class SvcViewHandler {
 	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//I don't know why but it fails to get userDto, so here I try to get it.
-		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("user_id"));
-		List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
-		request.setAttribute("userDto", userDto);
-		request.setAttribute("userTags", userTags);
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		
+		if(user_id!=null) {
+			UserDataBean userDto=userDao.getUser(user_id);
+			request.setAttribute("userDto", userDto);
+			
+			List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
+			request.setAttribute("userTags", userTags);
+		}
+		
 		return new ModelAndView("svc/myPage");
 	}
 	

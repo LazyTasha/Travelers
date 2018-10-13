@@ -119,4 +119,10 @@ public class TagDBBean {
 		}
 		return result;
 	}
+	public String getTagValue(int tag_id) {
+		return session.selectOne("db.getTagValue", tag_id);
+	}
+	public int setTripTag(Map<String, Integer> tagSetter) {
+		return session.update("db.insertTripTags", tagSetter);
+	}
 }

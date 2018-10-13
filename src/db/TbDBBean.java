@@ -112,10 +112,10 @@ public class TbDBBean {
 			}
 			tbDto.setLocs(locs);
 			
-			List<String> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
+			List<TagDataBean> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
 			String[] tags=new String[originTags.size()];
 			for(int k=0; k<originTags.size(); k++) {
-				tags[k]=originTags.get(k);
+				tags[k]=originTags.get(k).getTag_value();
 			}
 			tbDto.setTags(tags);
 			//put each TbDataBean into the List!

@@ -86,37 +86,19 @@
 					</label>
 					<div class="col-sm-8">
 						<div class="btn-group btn-group-sm" role="group" aria-label="...">
-							<c:choose>
-							<c:when test="${userTags ne null}">
-								<c:forEach var="i" items="${tagList}">
-									<c:set var="count" value="0"/>
-									<c:forEach var="j" items="${userTags}">
-									<c:set var="size" value="${userTags.size()}"/>
-										<c:choose>
-											<c:when test="${i.tag_value==j.tag_value}">
-											 	<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_value}" checked># ${i.tag_value}</button>
-											 	<c:set var="done" value="true"/>
-											 </c:when>
-											 <c:otherwise>
-											 	<c:choose>
-											 		<c:when test="${count<size-1}">
-											 			<c:set var="count" value="${count=count+1}"/>
-											 		</c:when>
-											 		<c:otherwise>
-											 			<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_value}"># ${i.tag_value}</button>
-											 		</c:otherwise>
-											 	</c:choose>
-											</c:otherwise>
-											</c:choose>
-										</c:forEach>
+							<c:forEach var="i" items="${tagList}">
+								<c:forEach var="j" items="${userTags}">
+									<c:choose>
+										<c:when test="${i.tag_value==j.tag_value}">
+										 	<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}" checked># ${i.tag_value}</button>
+										 	<c:set var="done" value="true"/>
+										 </c:when>
+										 <c:otherwise>
+										 	<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</button>
+										 </c:otherwise>
+										</c:choose>
 									</c:forEach>
-								</c:when>
-								<c:otherwise>
-									<c:forEach var="i" items="${tagList}">
-										<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_value}"># ${i.tag_value}</button>
-									</c:forEach>
-								</c:otherwise>
-							</c:choose>
+								</c:forEach>
 						</div>
 					</div>
 				</div>
