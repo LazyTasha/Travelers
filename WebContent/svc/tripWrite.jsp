@@ -50,7 +50,7 @@
 	        <div id="schedulediv" >
             </div>
             <div class="form-group row">
-                 <label for="trip_talk_link" class="col-2 col-form-label">${trip_talk_link}</label>
+                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
                  <input type="text" name="tb_talk" class="col-10">
             </div>
             <div class="form-group row">
