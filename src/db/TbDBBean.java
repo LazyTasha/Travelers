@@ -35,7 +35,7 @@ public class TbDBBean {
 		tbDto.setTb_talk(tripDto.getTb_talk());
 		
 		//get location list
-		List<String> locList=session.selectList("db.getLocs", tb_no);
+		List<String> locList=session.selectList("db.getDestination", tb_no);
 		String[] locs = null;
 		for(int i=0; i<locList.size(); i++) {
 			locs[i]=locList.get(i);
@@ -70,7 +70,7 @@ public class TbDBBean {
 		result=session.update("db.setTripDetails", tbDto);
 		return result;
 	}
-	//게시물을 만든 후 일정 개수만큼 생성되는 gg_trip_detail table
+	//寃뚯떆臾쇱쓣 留뚮뱺 �썑 �씪�젙 媛쒖닔留뚰겮 �깮�꽦�릺�뒗 gg_trip_detail table
 	public int insertTripDetail(TbDataBean tbDto) {
 		return session.insert("db.insertTripDetail",tbDto);
 	}
@@ -105,13 +105,14 @@ public class TbDBBean {
 			tbDto.setTb_talk(tripDto.getTb_talk());
 			
 			//locations and tags 
-			List <String> originLocs=session.selectList("db.getTripLoc", tripDto.getTb_no());
-			String[] locs=new String[originLocs.size()];
-			for(int j=0; j<originLocs.size(); j++) {
-				locs[j]=originLocs.get(j);
+			List <String> tripIds=session.selectList("db.getLocs", tripDto.getTb_no());
+			String[] locs=new String[tripIds.size()];
+			for(int j=0; j<tripIds.size(); j++) {
+				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
 			}
 			tbDto.setLocs(locs);
-			List<String> originTags=session.selectList("db.getTripLoc", tripDto.getTb_no());
+			
+			List<String> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
 			String[] tags=new String[originTags.size()];
 			for(int k=0; k<originTags.size(); k++) {
 				tags[k]=originTags.get(k);

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="setting.jsp"%>
+<%@include file="header.jsp" %>
 
 <!DOCTYPE html>
 <html lang="ko">

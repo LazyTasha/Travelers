@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-	
+<%@include file="header.jsp" %>
 <%@include file="setting.jsp" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,7 +10,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>${page_mypage1}</title>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -18,10 +18,10 @@
 <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요한) -->
 <script src="//code.jquery.com/jquery.js"></script>
+<script src="${project}script.js"></script>
 </head>
 
 <body>
-	
 <div class="container" style="width:600px">
 		<div class="text-center">
 			<a href="tripList.go">
@@ -79,6 +79,8 @@
 				</div>
 			</div>
 		</form>
+		<div id="reputation">
+		</div>
 </div>	
 
 </body>
