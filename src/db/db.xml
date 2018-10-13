@@ -22,7 +22,7 @@
 	</select>
 
 	<select id="getUserName" parameterType="String" resultType="String">
-		select user_name from gg_user where user_id=#{id}
+		select user_name from gg_user where user_id=#{user_id}
 	</select>
 
 	<select id="getUserId" parameterType="String" resultType="String">
@@ -341,6 +341,10 @@
 		c.country_name=
 		(select t.tag_value from gg_tag t where t.tag_id=
 		(select tt.tag_id from gg_trip_tag tt where tt.tb_no=#{tb_no}))
+	</select>
+	
+	<select id="getDestination" resultType="java.util.List">
+		select country_name from gg_country where country_id=(select country_id from gg_coordinate where td_trip_id=#{td_trip_id})
 	</select>
 	
 	<!-- locDB -->
