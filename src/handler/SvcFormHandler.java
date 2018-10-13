@@ -94,9 +94,9 @@ public class SvcFormHandler {
 	@RequestMapping("/tripWrite")
 	public ModelAndView svcTripWriteFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//Need to know the writer: Bring user_id from session & user_name(nickname)
-		//String user_id=(String)request.getSession().getAttribute("user_id");//나중에 주석 지우기
+		//String user_id=(String)request.getSession().getAttribute("user_id");//�굹以묒뿉 二쇱꽍 吏��슦湲�
 		String user_id="aaa";
-		String user_name= userDao.getUserName(user_id);//user_id �޾Ƽ� db�� �ִ� name ���� �ҷ�����
+		String user_name= userDao.getUserName(user_id);//user_id 占쌨아쇽옙 db占쏙옙 占쌍댐옙 name 占쏙옙占쏙옙 占쌀뤄옙占쏙옙占쏙옙
 		
 		List<TagDataBean> styleTags=tagDao.getStyleTags();
 		List<TagDataBean> cityTags=tagDao.getCityTags();
@@ -104,9 +104,9 @@ public class SvcFormHandler {
 		//send them to set User Name on the form
 		request.setAttribute("user_id", user_id); 
 		request.setAttribute("user_name", user_name); 
-		request.setAttribute("tags", styleTags); 
-		request.setAttribute("tags", cityTags); 
-		request.setAttribute("tags", countryTags); 
+		request.setAttribute("styleTags", styleTags); 
+		request.setAttribute("cityTags", cityTags); 
+		request.setAttribute("countryTags", countryTags); 
 		return new ModelAndView("svc/tripWrite"); 
 	}
 	

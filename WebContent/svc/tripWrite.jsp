@@ -68,10 +68,10 @@
             <hr>
             <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
-               <c:if test="${tag.size() ne 0}">
-                  <c:forEach var="i" items="${tags}">
+               <c:if test="${styleTags.size() ne 0}">
+                  <c:forEach var="i" items="${styleTags}">
                   	 <label class="btn btn-secondary">
-                   	  <input type="checkbox" name="tag" value="${key}">${value}
+                   	  <input type="checkbox" name="tag" value="${i.tag_id}">${i.tag_value}
                      </label>
                   </c:forEach>
                </c:if>
