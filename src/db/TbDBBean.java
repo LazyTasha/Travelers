@@ -105,7 +105,7 @@ public class TbDBBean {
 			tbDto.setTb_talk(tripDto.getTb_talk());
 			
 			//locations and tags 
-			List <Integer> tripIds=session.selectList("db.getLocs", tripDto.getTb_no());
+			List <Integer> tripIds=session.selectList("db.getTripIds", tripDto.getTb_no());
 			String[] locs=new String[tripIds.size()];
 			for(int j=0; j<tripIds.size(); j++) {
 				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
@@ -163,17 +163,19 @@ public class TbDBBean {
 				tempTb.setTb_talk(tripDto.getTb_talk());
 				
 				//get location list
-				List<String> locList=session.selectList("db.getLocs", tempTb.getTb_no());
-				String[] locs = null;
-				for(int j=0; j<locList.size(); j++) {
-					locs[j]=locList.get(j);
+				List <Integer> tripIds=session.selectList("db.getTripIds", tripDto.getTb_no());
+				String[] locs=new String[tripIds.size()];
+				for(int j=0; j<tripIds.size(); j++) {
+					locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
 				}
-				//get tag list
-				List<String> tagList=session.selectList("db.getTripTags", tempTb.getTb_no());
-				String[] tags=null;
-				for(int k=0; k<tagList.size(); k++) {
-					tags[k]=tagList.get(k);
+				tempTb.setLocs(locs);
+				
+				List<String> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
+				String[] tags=new String[originTags.size()];
+				for(int k=0; k<originTags.size(); k++) {
+					tags[k]=originTags.get(k);
 				}
+				tempTb.setTags(tags);
 				
 				tempTb.setLocs(locs);
 				tempTb.setTags(tags);

@@ -45,7 +45,7 @@
 <c:set var="str_reg_date" value="가입일자"/>
 <c:set var="str_tag" value="#태 그"/>
 <c:set var="str_write" value="글쓰기"/>
-
+<c:set var="trip_talk_link" value="오픈채팅"/>
 
 <c:set var="str_manual" value="직접입력"/>
 <c:set var="str_name" value="이름"/>
