@@ -352,7 +352,7 @@
 		</selectKey>
 	</insert>
  	<insert id="insertCal" parameterType="db.LocDataBean">
-		insert into gg_calendar values(TO_DATE(#{cal_start_date},'MM-YYYY-DD'), TO_DATE(#{cal_end_date},'MM-YYYY-DD'),#{coord_id},#{td_trip_id})
+		insert into gg_calendar values(TO_DATE(#{cal_start_date},'MM/DD/YYYY'), TO_DATE(#{cal_end_date},'MM/DD/YYYY'),#{coord_id},#{td_trip_id})
 	</insert> 
 	<!--album DB -->
 
