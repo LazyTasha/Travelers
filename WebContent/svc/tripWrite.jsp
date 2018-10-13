@@ -66,7 +66,7 @@
                <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}"></textarea>
             </div>
             <hr>
-            <div class="form-group row">
+                <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
                <c:if test="${styleTags.size() ne 0}">
                   <c:forEach var="i" items="${styleTags}">
@@ -75,7 +75,7 @@
                      </label>
                   </c:forEach>
                </c:if>
-            </div>           
+            </div>      
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
                      onclick="location='tripList.go'">   
