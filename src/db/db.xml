@@ -131,19 +131,19 @@
 
 	<select id="getStyleTags" resultType="db.TagDataBean">
 		<![CDATA[
-		select tag_value from gg_tag where tag_id>=1 and tag_id<=100
+		select * from gg_tag where tag_id>=1 and tag_id<=100
 		]]>
 	</select>
 	
 	<select id="getCityTags" resultType="db.TagDataBean">
 		<![CDATA[
-		select tag_value from gg_tag where tag_id>=101 and tag_id<=1000
+		select * from gg_tag where tag_id>=101 and tag_id<=1000
 		]]>
 	</select>
 	
 	<select id="getCountryTags" resultType="db.TagDataBean">
 		<![CDATA[
-		select tag_value from gg_tag where tag_id>=1001 and tag_id<=9999
+		select * from gg_tag where tag_id>=1001 and tag_id<=9999
 		]]>
 	</select>
 	
@@ -162,6 +162,10 @@
 	<delete id="deleteUserTag" parameterType="java.util.Map">
 		delete from gg_user_tag where user_id=#{user_id} and tag_id=#{tag_id}
 	</delete>
+	
+	<insert id="insertTripTags" parameterType="java.util.Map">
+		insert into gg_trip_tag(tb_no, tag_id) values(#{tb_no}, #{tag_id})
+	</insert>
 
 	<!-- board DB -->
 	<select id="getCount" resultType="int">
@@ -175,7 +179,7 @@
 	</select>
 
 	<select id="getTripTags" parameterType="int" resultType="db.TagDataBean">
-		select tag_value from gg_tag t, gg_trip_tag tr where
+		select * from gg_tag t, gg_trip_tag tr where
 		t.tag_id=tr.tag_id and
 		tr.tb_no=#{tb_no}
 	</select>
@@ -270,7 +274,7 @@
 
 	<select id="getTripList" resultType="db.TripDataBean">
 			<![CDATA[
-			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual) order by tb_no desc
+			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual) order by tb_no asc
 			]]>
 	</select>
 

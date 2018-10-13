@@ -138,11 +138,13 @@ h1, h2, h3, h4, h5, h6 {
 				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;
 									<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;
 									<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;
-				           			  </div>
-				           			  <div>
-				           			  	<c:forEach var="j" items="${i.locs}">
-				           			  	# ${j}
+									 <div class="p-2">
+				           			  	<c:forEach var="j" items="${i.tags}">
+				           			  		<label class="btn btn-secondary">
+				           			  			# ${j}
+				           			  		</label>
 				           			  	</c:forEach>
+				           			  </div>
 				           			  </div>
 			           			  </div>
 			          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">
