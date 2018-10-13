@@ -434,13 +434,13 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 	 CmtInsert(insertData); //Insert 함수호출(아래)
 }
 
-<<<<<<< HEAD
+
 var number = '${tbDto.tb_no}'; //게시글 번호
 //댓글 목록 
 
-=======
+
 /////댓글 목록 
->>>>>>> master
+
 function commentList(tb_no){
 	var SessionID=$("input[name=session]").val();
 	$.ajax({
