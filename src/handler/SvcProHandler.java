@@ -252,7 +252,6 @@ public class SvcProHandler {
 	}
 
 	///////////////////////////////// board pages/////////////////////////////////
-
 	@RequestMapping("/tripWritePro")
 	public ModelAndView svcTripWriteProProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
@@ -261,32 +260,18 @@ public class SvcProHandler {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		//gg_coordinata&location
-		double coord_lat=Double.parseDouble(request.getParameter("lat"));
-		double coord_long=Double.parseDouble(request.getParameter("lng"));
-		String country_code=request.getParameter("country_code");
-		
-		if(country_code!=null) {
-			int coord_order=1;//test용//일정하나만 있는 경우
-			LocDataBean locDto=new LocDataBean();
-			locDto.setCountry_code(country_code);
-			locDto.setCoord_lat(coord_lat);
-			locDto.setCoord_long(coord_long);
-			locDto.setCoord_order(coord_order);
-			
-			int result=locDao.insertCoord(locDto);
-		}
 
-		// tbDto will be used for DB update
-		// #{user_id}, #{tb_title}, #{tb_content}, sysdate, 0,
-		// #{tb_m_num}, 0, #{tb_talk}
+		int schedulenum=Integer.parseInt(request.getParameter("schedulenum"));//일정개수
+		System.out.println(schedulenum);
+		//insert gg_trip_board 
 		TbDataBean tbDto = new TbDataBean();
-
+	
 		tbDto.setUser_id((String)request.getSession().getAttribute("user_id"));
 		tbDto.setTb_title(request.getParameter("trip_title"));
 		tbDto.setTb_m_num(Integer.parseInt(request.getParameter("trip_m_num")));
 		tbDto.setTb_talk(request.getParameter("tb_talk"));
 		tbDto.setTb_content(request.getParameter("content"));
+<<<<<<< HEAD
 //		tbDto.setLocs(request.getParameterValues("trip_location"));
 //		tbDto.setCityTags(request.getParameter("cityTags"));
 //		tbDto.setCountryTags(request.getParameter("countryTags"));
@@ -297,7 +282,84 @@ public class SvcProHandler {
 		 
 		System.out.println(tbDto.getTb_no());
 		return new ModelAndView("svc/tripWritePro");
+=======
+		
+		tbDao.insertTb_no(tbDto);
+		int tb_no=tbDto.getTb_no();//tb_no
+		request.setAttribute("tb_no", tb_no);
+		
+		int td_trip_ids[]=new int[schedulenum];
+		for(int i=1;i<=schedulenum;i++) {
+			tbDao.insertTripDetail(tbDto);
+			td_trip_ids[i-1]=tbDto.getTd_trip_id();
+			System.out.println(td_trip_ids[i-1]);//여기까지 성공?
+			
+			//gg_coordinate&location
+			String country_code=request.getParameter("country_code"+i+"");//여기서 부터 안들어감
+			double coord_lat=Double.parseDouble(request.getParameter("lat"+i+""));
+			double coord_long=Double.parseDouble(request.getParameter("lng"+i+""));
+			if(country_code!=null) {
+				int coord_order=i;
+				LocDataBean locDto=new LocDataBean();
+				locDto.setCountry_code(country_code);
+				locDto.setCoord_lat(coord_lat);
+				locDto.setCoord_long(coord_long);
+				locDto.setCoord_order(coord_order);
+				
+				int coordResult=locDao.insertCoord(locDto);//locDto의 coord_id에 좌표값 저장한 후 생성된 coord_id저장 됨
+			}
+		}
+/*		
+	
+	double coord_lat=Double.parseDouble(request.getParameter("lat"));
+	double coord_long=Double.parseDouble(request.getParameter("lng"));
+	String country_code=request.getParameter("country_code");
+	
+	String cal_start_date=request.getParameter("start"+schedulenum+"");
+	String cal_end_date=request.getParameter("end"+schedulenum+"");
+
+	if(country_code!=null) {
+		int coord_order=1;//test용//일정하나만 있는 경우
+		LocDataBean locDto=new LocDataBean();
+		locDto.setCountry_code(country_code);
+		locDto.setCoord_lat(coord_lat);
+		locDto.setCoord_long(coord_long);
+		locDto.setCoord_order(coord_order);
+			
+		int coordResult=locDao.insertCoord(locDto);//locDto의 coord_id에 좌표값 저장한 후 생성된 coord_id저장 됨
+//		int coord_id=locDto.getCoord_id();//insert한 gg_coordinate의 기본키
+		
+		//insert gg_calender
+		int td_trip_id=1;
+		locDto.setCal_start_date(cal_start_date);
+		locDto.setCal_end_date(cal_end_date);
+		locDto.setTd_trip_id(td_trip_id);
+		//int calResult=locDao.insertCal(locDto);
+		
+		
+>>>>>>> master
 	}
+*/	
+//미사용 데이터
+
+//	// tbDto will be used for DB update
+//	// #{user_id}, #{tb_title}, #{tb_content}, sysdate, 0,
+//	// #{tb_m_num}, 0, #{tb_talk}
+//	TbDataBean tbDto = new TbDataBean();
+//
+////	tbDto.setUser_id((String)request.getSession().getAttribute("user_id"));
+//	tbDto.setUser_id("aaa");
+//	tbDto.setTb_title(request.getParameter("trip_title"));
+//	tbDto.setTb_content(request.getParameter("content"));
+//	tbDto.setTb_m_num(Integer.parseInt(request.getParameter("trip_m_num")));
+//	tbDto.setTb_talk(request.getParameter("tb_talk"));
+//	tbDto.setLocs(request.getParameterValues("trip_location"));
+//	tbDto.setTags(request.getParameterValues("trip_tags"));
+//
+//	tbDao.writeTb(tbDto);
+
+	return new ModelAndView("svc/tripWritePro");
+}
 
 	@RequestMapping("/tripModPro")
 	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response)

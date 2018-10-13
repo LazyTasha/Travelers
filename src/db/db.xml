@@ -184,8 +184,27 @@
 		update gg_tb_board set
 		tb_v_count=tb_v_count+1 where tb_no=#{tb_no}
 	</update>
-
-	<insert id="writeTrip" parameterType="db.TbDataBean">
+	
+	<insert id="insertTb_no" parameterType="db.TbDataBean" keyProperty="tb_no">
+       insert into gg_trip_board
+      (tb_no, tb_title, user_id, tb_content, tb_reg_date, tb_v_count,
+      tb_m_num,
+      tb_notice, tb_talk)
+      values(SEQ_GG_TRIP_BOARD_TB_NO.nextval, #{tb_title},
+      #{user_id}, #{tb_content}, sysdate, 0,
+      #{tb_m_num}, 0,
+      #{tb_talk})
+      <selectKey keyProperty="tb_no" resultType="int" order="AFTER">
+         select SEQ_GG_TRIP_BOARD_TB_NO.currval from dual
+      </selectKey>
+   	</insert>
+   	<insert id="insertTripDetail" parameterType="db.TbDataBean" keyProperty="td_trip_id">
+   		insert into gg_trip_detail values(SEQ_gg_trip_detail_td_trip_id.nextval,#{tb_no})
+	   	<selectKey keyProperty="td_trip_id" resultType="int" order="AFTER">
+	       select SEQ_gg_trip_detail_td_trip_id.currval from dual
+	    </selectKey>
+    </insert>
+<!-- 	<insert id="writeTrip" parameterType="db.TbDataBean">
 		insert into gg_trip_board
 		(tb_no, user_id, tb_title, tb_content, tb_reg_date, tb_v_count,
 		tb_m_num,
@@ -194,8 +213,8 @@
 		#{user_id}, #{tb_title}, #{tb_content}, sysdate, 0,
 		#{tb_m_num}, 0,
 		#{tb_talk})
-	</insert>
-
+	</insert> -->
+	
 	<insert id="setTripTags" parameterType="db.TbDataBean">
 		insert into gg_trip_tag (tb_no, tag_id) values
 		<foreach item="item" collection="list" separator=",">
@@ -325,11 +344,16 @@
 	</select>
 	
 	<!-- locDB -->
-	<insert id="insertCoord" parameterType="db.LocDataBean">
-		insert into gg_coordinate(country_id,coord_long,coord_lat,coord_order,coord_id) values(
+	<insert id="insertCoord" parameterType="db.LocDataBean" keyProperty="coord_id">
+		insert into gg_coordinate values(
 				(select country_id from gg_country where country_code=#{country_code}),#{coord_long},#{coord_lat},#{coord_order},SEQ_gg_coordinate_coord_id.NEXTVAL)
+		<selectKey keyProperty="coord_id" resultType="int" order="AFTER">
+			select SEQ_gg_coordinate_coord_id.currval from dual
+		</selectKey>
 	</insert>
-	
+ 	<insert id="insertCal" parameterType="db.LocDataBean">
+		insert into gg_calendar values(TO_DATE(#{cal_start_date},'MM-YYYY-DD'), TO_DATE(#{cal_end_date},'MM-YYYY-DD'),#{coord_id},#{td_trip_id})
+	</insert> 
 	<!--album DB -->
 
 	<insert id="addPhoto" parameterType="db.AlbumDataBean">
