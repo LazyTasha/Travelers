@@ -276,11 +276,14 @@ public class SvcProHandler {
 		int tb_no=tbDto.getTb_no();//tb_no
 		request.setAttribute("tb_no", tb_no);
 		
-		int td_trip_ids[]=new int[schedulenum];
+//		int td_trip_ids[]=new int[schedulenum];
+		
+		LocDataBean locDto=new LocDataBean();	
 		for(int i=1;i<=schedulenum;i++) {
 			tbDao.insertTripDetail(tbDto);
-			td_trip_ids[i-1]=tbDto.getTd_trip_id();
-			System.out.println(td_trip_ids[i-1]);//여기까지 성공?
+			int td_trip_id=tbDto.getTd_trip_id();
+//			td_trip_ids[i-1]=td_trip_id;
+//			System.out.println(td_trip_ids[i-1]);//여기까지 성공?
 			
 			//gg_coordinate&location
 			String country_code=request.getParameter("country_code"+i+"");//여기서 부터 안들어감
@@ -288,13 +291,22 @@ public class SvcProHandler {
 			double coord_long=Double.parseDouble(request.getParameter("lng"+i+""));
 			if(country_code!=null) {
 				int coord_order=i;
-				LocDataBean locDto=new LocDataBean();
 				locDto.setCountry_code(country_code);
 				locDto.setCoord_lat(coord_lat);
 				locDto.setCoord_long(coord_long);
 				locDto.setCoord_order(coord_order);
 				
 				int coordResult=locDao.insertCoord(locDto);//locDto의 coord_id에 좌표값 저장한 후 생성된 coord_id저장 됨
+//				int coord_id=locDto.getCoord_id();//insert한 gg_coordinate의 기본키
+				
+				String cal_start_date=request.getParameter("start"+i+"");
+				String cal_end_date=request.getParameter("end"+i+"");
+				
+				locDto.setCal_start_date(cal_start_date);
+				locDto.setCal_end_date(cal_end_date);
+				locDto.setTd_trip_id(td_trip_id);
+				
+				int calResult=locDao.insertCal(locDto);//일정에 맞는  calendar table 레코드추가
 			}
 		}
 /*		
