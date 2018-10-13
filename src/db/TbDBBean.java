@@ -70,7 +70,7 @@ public class TbDBBean {
 		result=session.update("db.setTripDetails", tbDto);
 		return result;
 	}
-	//寃뚯떆臾쇱쓣 留뚮뱺 �썑 �씪�젙 媛쒖닔留뚰겮 �깮�꽦�릺�뒗 gg_trip_detail table
+	//野껊슣�뻻�눧�눘�뱽 筌띾슢諭� 占쎌뜎 占쎌뵬占쎌젟 揶쏆뮇�땾筌띾슦寃� 占쎄문占쎄쉐占쎈┷占쎈뮉 gg_trip_detail table
 	public int insertTripDetail(TbDataBean tbDto) {
 		return session.insert("db.insertTripDetail",tbDto);
 	}
@@ -105,17 +105,17 @@ public class TbDBBean {
 			tbDto.setTb_talk(tripDto.getTb_talk());
 			
 			//locations and tags 
-			List <String> tripIds=session.selectList("db.getLocs", tripDto.getTb_no());
+			List <Integer> tripIds=session.selectList("db.getTripIds", tripDto.getTb_no());
 			String[] locs=new String[tripIds.size()];
 			for(int j=0; j<tripIds.size(); j++) {
 				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
 			}
 			tbDto.setLocs(locs);
 			
-			List<String> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
+			List<TagDataBean> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
 			String[] tags=new String[originTags.size()];
 			for(int k=0; k<originTags.size(); k++) {
-				tags[k]=originTags.get(k);
+				tags[k]=originTags.get(k).getTag_value();
 			}
 			tbDto.setTags(tags);
 			//put each TbDataBean into the List!
@@ -163,17 +163,19 @@ public class TbDBBean {
 				tempTb.setTb_talk(tripDto.getTb_talk());
 				
 				//get location list
-				List<String> locList=session.selectList("db.getLocs", tempTb.getTb_no());
-				String[] locs = null;
-				for(int j=0; j<locList.size(); j++) {
-					locs[j]=locList.get(j);
+				List <Integer> tripIds=session.selectList("db.getTripIds", tripDto.getTb_no());
+				String[] locs=new String[tripIds.size()];
+				for(int j=0; j<tripIds.size(); j++) {
+					locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
 				}
-				//get tag list
-				List<String> tagList=session.selectList("db.getTripTags", tempTb.getTb_no());
-				String[] tags=null;
-				for(int k=0; k<tagList.size(); k++) {
-					tags[k]=tagList.get(k);
+				tempTb.setLocs(locs);
+				
+				List<String> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
+				String[] tags=new String[originTags.size()];
+				for(int k=0; k<originTags.size(); k++) {
+					tags[k]=originTags.get(k);
 				}
+				tempTb.setTags(tags);
 				
 				tempTb.setLocs(locs);
 				tempTb.setTags(tags);

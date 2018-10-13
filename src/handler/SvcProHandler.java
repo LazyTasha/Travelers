@@ -122,8 +122,8 @@ public class SvcProHandler {
 		
 		for(int i=0; i<tagValues.length; i++) {
 			TagDataBean tempTagBean=new TagDataBean();
-			tempTagBean.setTag_value(tagValues[i]);
-			tempTagBean.setTag_id(tagDao.getTagId(tempTagBean.getTag_value()));
+			tempTagBean.setTag_id(Integer.parseInt(tagValues[i]));
+			tempTagBean.setTag_value(tagDao.getTagValue(tempTagBean.getTag_id()));
 			userTags.add(i, tempTagBean);
 		}
 
@@ -282,7 +282,7 @@ public class SvcProHandler {
 			int td_trip_id=tbDto.getTd_trip_id();
 			
 			//gg_coordinate&location
-			String country_code=request.getParameter("country_code"+i+"");//여기서 부터 안들어감
+			String country_code=request.getParameter("country_code"+i+"");
 			double coord_lat=Double.parseDouble(request.getParameter("lat"+i+""));
 			double coord_long=Double.parseDouble(request.getParameter("lng"+i+""));
 			if(country_code!=null) {
@@ -304,6 +304,17 @@ public class SvcProHandler {
 				int calResult=locDao.insertCal(locDto);//일정에 맞는  calendar table 레코드추가
 			}
 		}
+		
+	//get tags
+	String[] tags=request.getParameterValues("tag");
+	//put them in a Map and call db update
+	Map<String, Integer> tagSetter=new HashMap<String, Integer>();
+	for(String tag:tags) {
+		tagSetter.put("tb_no", tb_no);
+		tagSetter.put("tag_id", Integer.parseInt(tag));
+		tagDao.setTripTag(tagSetter);
+	}
+		
 	return new ModelAndView("svc/tripWritePro");
 }
 

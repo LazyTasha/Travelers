@@ -23,18 +23,16 @@
 </head>
 
 <body>
-<h2>이메일인증</h2>
-
 <c:if test="${result eq 0}"> <!-- 이메일이 없을때-->
 	<form method="post" action="" name="emailCheck">
 	<table>
 		<tr>
-			<th colspan="2">인증번호를 입력하세요.</th>
+			<th colspan="2">${email_auth_guide}</th>
 		</tr>
 		<tr>
 			<td>
 				<input name="input" type="text" name="emailconfirm" id="EmailVlaue" >
-				<input name="inputbutton" type="button" value="인증" 
+				<input name="inputbutton" type="button" value="${btn_auth}" 
                  onclick="confirmeMail('${authNum}')">
                  <input type="hidden" name="confirm" value="0">	<!-- 인증성공시 1로변함 -->
 			</td>
@@ -47,12 +45,12 @@
 	<table>
 			<tr>
 				<td align="center">
-					<span>${email}</span>이미사용중입니다
+					<span>${email}</span>${email_used}
 				</td>
 			</tr>
 			<tr>
 				<th>
-					<input class="inputbutton" type="button" value="확인"
+					<input class="inputbutton" type="button" value="${btn_ok}"
 						onclick="EmailClose()">
 				</th>
 			</tr>

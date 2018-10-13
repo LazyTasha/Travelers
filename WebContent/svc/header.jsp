@@ -51,9 +51,9 @@
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0 login-section">
-          <a href="${project}login.go" class="nav-item">${page_login}</a> 
+          <a href="login.go" class="nav-item">${page_login}</a> 
           &nbsp;|&nbsp; 
-          <a href="${project}registration.go" class="nav-item">${page_input}</a>
+          <a href="registration.go" class="nav-item">${page_input}</a>
         </form>
       </div>
     </nav>

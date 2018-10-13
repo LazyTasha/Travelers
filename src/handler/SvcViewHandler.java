@@ -67,10 +67,16 @@ public class SvcViewHandler {
 	@RequestMapping("/myPage")
 	public ModelAndView svcMyPageProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		//I don't know why but it fails to get userDto, so here I try to get it.
-		UserDataBean userDto=userDao.getUser((String)request.getSession().getAttribute("user_id"));
-		List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
-		request.setAttribute("userDto", userDto);
-		request.setAttribute("userTags", userTags);
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		
+		if(user_id!=null) {
+			UserDataBean userDto=userDao.getUser(user_id);
+			request.setAttribute("userDto", userDto);
+			
+			List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
+			request.setAttribute("userTags", userTags);
+		}
+		
 		return new ModelAndView("svc/myPage");
 	}
 	
@@ -81,12 +87,13 @@ public class SvcViewHandler {
 	
 	/////////////////////////////////board pages/////////////////////////////////
 	
+	@SuppressWarnings("null")
 	@RequestMapping("/tripList")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TbDataBean> tripList=tbDao.getTripList();
 		int last_tb_no=0;
-		if(tripList!=null||tripList.size()!=0) {
+		if(tripList.size()!=0) {
 			last_tb_no=tripList.get(tripList.size()-1).getTb_no();
 		}
 		int count=tbDao.getCount();
@@ -106,8 +113,8 @@ public class SvcViewHandler {
 		//get the content of the post
 		//TripDataBean has a part of contents of board
 		//TbDataBean has every content of board
-		TbDataBean tbDto=tbDao.getTb(tb_no);
-		request.setAttribute("tbDto", tbDto);
+		//TbDataBean tbDto=tbDao.getTb(tb_no);
+		//request.setAttribute("tbDto", tbDto);
 		
 		//determine tab
 		String tab=request.getParameter("tab");
