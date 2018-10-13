@@ -50,7 +50,7 @@
 	        <div id="schedulediv" >
             </div>
             <div class="form-group row">
-                 <label for="trip_talk_link" class="col-2 col-form-label">${trip_talk_link}</label>
+                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
                  <input type="text" name="tb_talk" class="col-10">
             </div>
             <div class="form-group row">
@@ -72,7 +72,7 @@
                   <c:if test="${tags.size() ne 0}">
                      <c:forEach var="i" items="${tags}">
                          <label class="btn btn-secondary btn-sm">
-                           <input type="checkbox" name="styleTags">#${i.tag_value}
+                           <input type="checkbox" name="tags" value="${i.tag_value}">#${i.tag_value}
                         </label> &nbsp;
                      </c:forEach>
                   </c:if>
