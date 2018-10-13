@@ -106,8 +106,8 @@ public class SvcViewHandler {
 		//get the content of the post
 		//TripDataBean has a part of contents of board
 		//TbDataBean has every content of board
-		TbDataBean tbDto=tbDao.getTb(tb_no);
-		request.setAttribute("tbDto", tbDto);
+		//TbDataBean tbDto=tbDao.getTb(tb_no);
+		//request.setAttribute("tbDto", tbDto);
 		
 		//determine tab
 		String tab=request.getParameter("tab");

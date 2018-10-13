@@ -282,7 +282,7 @@ public class SvcProHandler {
 			int td_trip_id=tbDto.getTd_trip_id();
 			
 			//gg_coordinate&location
-			String country_code=request.getParameter("country_code"+i+"");//여기서 부터 안들어감
+			String country_code=request.getParameter("country_code"+i+"");
 			double coord_lat=Double.parseDouble(request.getParameter("lat"+i+""));
 			double coord_long=Double.parseDouble(request.getParameter("lng"+i+""));
 			if(country_code!=null) {
