@@ -271,20 +271,16 @@ public class SvcProHandler {
 		tbDto.setTb_m_num(Integer.parseInt(request.getParameter("trip_m_num")));
 		tbDto.setTb_talk(request.getParameter("tb_talk"));
 		tbDto.setTb_content(request.getParameter("content"));
-<<<<<<< HEAD
+
 //		tbDto.setLocs(request.getParameterValues("trip_location"));
-//		tbDto.setCityTags(request.getParameter("cityTags"));
-//		tbDto.setCountryTags(request.getParameter("countryTags"));
 //		tbDto.setStyleTags(request.getParameterValues("styleTags"));
 		
 //		tbDao.writeTb(tbDto);
 		tbDao.insertTb_no(tbDto);
 		 
 		System.out.println(tbDto.getTb_no());
-		return new ModelAndView("svc/tripWritePro");
-=======
-		
-		tbDao.insertTb_no(tbDto);
+
+
 		int tb_no=tbDto.getTb_no();//tb_no
 		request.setAttribute("tb_no", tb_no);
 		
