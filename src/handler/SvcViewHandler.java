@@ -81,12 +81,13 @@ public class SvcViewHandler {
 	
 	/////////////////////////////////board pages/////////////////////////////////
 	
+	@SuppressWarnings("null")
 	@RequestMapping("/tripList")
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TbDataBean> tripList=tbDao.getTripList();
 		int last_tb_no=0;
-		if(tripList!=null||tripList.size()!=0) {
+		if(tripList.size()!=0) {
 			last_tb_no=tripList.get(tripList.size()-1).getTb_no();
 		}
 		int count=tbDao.getCount();
