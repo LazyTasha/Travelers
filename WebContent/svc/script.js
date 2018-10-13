@@ -17,6 +17,7 @@ var locationerror="장소를 선택하세요";
 var maxschedule=5;
 var schedulesizeerror="일정은 최대 "+maxschedule+"개 입니다.";
 var noscheduleerror="일정을 먼저 입력해 주세요";
+var noplaceerror="장소를 먼저 검색해주세요";
 
 var filesize=5*1024*1024;
 
@@ -592,10 +593,14 @@ function loadCal(num){
 function addSchedule(num){
 	var start=$('input[name=start'+num+']');
 	var end=$('input[name=end'+num+']');
+	var place=$('input[name=place'+num+']');
 	if(!start.val()||!end.val()){//일정날짜가 없는 경우는 일정 추가 x
 		alert(noscheduleerror);
 		if(!start.val())start.focus();
 		else end.focus();
+	}else if(!place.val()){
+		alert(noplaceerror);
+		$('#address').focus();
 	}else{
 		$('#schedulediv').append(schedule);
 		if(num>=maxschedule){
@@ -628,7 +633,7 @@ function addSchedule(num){
 		}		
 	}
 }
-//장소추가
+//whenever searching address, update address-장소추가-검색할때 마다 장소갱신
 function showPlace(country_code,country_name,full_address,lat,lng){
 	var num=$('#schedulenum').find('input[name=schedulenum]').val();
 	var placeinput=$('input[name=place'+num+']');
@@ -638,9 +643,8 @@ function showPlace(country_code,country_name,full_address,lat,lng){
 	
 	var placeinfo=''+country_name+'/'+full_address;
 	placeinput.val(placeinfo);
-	var infoinput='<input name="country_code'+num+'" type="hidden"/>'
-		infoinput+='<input name="lat'+num+'" type="hidden" />'
-		infoinput+='<input name="lng'+num+'" type="hidden" />';
+	var infoinput='<input name="country_code'+num+'" type="hidden" value="'+country_code+'"/>'
+		infoinput+='<input name="lat'+num+'" type="hidden" value="'+lat+'"/>'
+		infoinput+='<input name="lng'+num+'" type="hidden" value="'+lng+'"/>';
 	coordinfo.append(infoinput);	
-	alert(infoinput.html());
 }
