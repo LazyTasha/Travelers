@@ -68,17 +68,14 @@
             <hr>
                 <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
-                  <div class="row pt-2 px-3">
-                  <c:if test="${tags.size() ne 0}">
-                     <c:forEach var="i" items="${tags}">
-                         <label class="btn btn-secondary btn-sm">
-                           <input type="checkbox" name="styleTags">#${i.tag_value}
-                        </label> &nbsp;
-                     </c:forEach>
-                  </c:if>
-                  </div>
-          		</div>   
-
+               <c:if test="${styleTags.size() ne 0}">
+                  <c:forEach var="i" items="${styleTags}">
+                  	 <label class="btn btn-secondary">
+                   	  <input type="checkbox" name="tag" value="${i.tag_id}">${i.tag_value}
+                     </label>
+                  </c:forEach>
+               </c:if>
+            </div>      
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
                      onclick="location='tripList.go'">   

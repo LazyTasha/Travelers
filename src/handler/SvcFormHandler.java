@@ -102,7 +102,10 @@ public class SvcFormHandler {
 		//send them to set User Name on the form
 		request.setAttribute("user_id", user_id); 
 		request.setAttribute("user_name", user_name); 
-		request.setAttribute("tags", styleTags); 
+		request.setAttribute("styleTags", styleTags); 
+		request.setAttribute("cityTags", cityTags); 
+		request.setAttribute("countryTags", countryTags); 
+
 		return new ModelAndView("svc/tripWrite"); 
 	}
 	

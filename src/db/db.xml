@@ -344,7 +344,7 @@
 	</select>
 	
 	<select id="getDestination" resultType="java.util.List">
-		select country_name from gg_country where country_id=(select country_id from gg_coordinate where td_trip_id=#{td_trip_id})
+		select country_name from gg_country where country_id=(select country_id from gg_coordinate where coord_id=(select coord_id from gg_calendar where td_trip_id=#{td_trip_id}))
 	</select>
 	
 	<!-- locDB -->

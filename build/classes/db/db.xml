@@ -344,7 +344,7 @@
 	</select>
 	
 	<select id="getDestination" resultType="java.util.List">
-		select country_name from gg_country where country_id=(select country_id from gg_coordinate where td_trip_id=#{td_trip_id})
+		select country_name from gg_country where country_id=(select country_id from gg_coordinate where coord_id=(select coord_id from gg_calendar where td_trip_id=#{td_trip_id}))
 	</select>
 	
 	<!-- locDB -->
@@ -356,7 +356,7 @@
 		</selectKey>
 	</insert>
  	<insert id="insertCal" parameterType="db.LocDataBean">
-		insert into gg_calendar values(TO_DATE(#{cal_start_date},'MM-YYYY-DD'), TO_DATE(#{cal_end_date},'MM-YYYY-DD'),#{coord_id},#{td_trip_id})
+		insert into gg_calendar values(TO_DATE(#{cal_start_date},'MM/DD/YYYY'), TO_DATE(#{cal_end_date},'MM/DD/YYYY'),#{coord_id},#{td_trip_id})
 	</insert> 
 	<!--album DB -->
 

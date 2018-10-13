@@ -70,7 +70,7 @@ public class TbDBBean {
 		result=session.update("db.setTripDetails", tbDto);
 		return result;
 	}
-	//寃뚯떆臾쇱쓣 留뚮뱺 �썑 �씪�젙 媛쒖닔留뚰겮 �깮�꽦�릺�뒗 gg_trip_detail table
+	//野껊슣�뻻�눧�눘�뱽 筌띾슢諭� 占쎌뜎 占쎌뵬占쎌젟 揶쏆뮇�땾筌띾슦寃� 占쎄문占쎄쉐占쎈┷占쎈뮉 gg_trip_detail table
 	public int insertTripDetail(TbDataBean tbDto) {
 		return session.insert("db.insertTripDetail",tbDto);
 	}
@@ -105,7 +105,7 @@ public class TbDBBean {
 			tbDto.setTb_talk(tripDto.getTb_talk());
 			
 			//locations and tags 
-			List <String> tripIds=session.selectList("db.getLocs", tripDto.getTb_no());
+			List <Integer> tripIds=session.selectList("db.getLocs", tripDto.getTb_no());
 			String[] locs=new String[tripIds.size()];
 			for(int j=0; j<tripIds.size(); j++) {
 				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
