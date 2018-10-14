@@ -7,9 +7,6 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <script src="${project}script.js"></script>
-   <!-- Bootstrap core CSS -->
-   <link rel="stylesheet" type="text/css"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
    <!-- Custom style for this template (Font API & Our UI)-->
    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
    <link rel="stylesheet" href="${project}travelers_style.css">
@@ -20,7 +17,7 @@
 </head>
 <body>
 <div class="container" style="width:800px;">
-      <form class="form-horizontal" method="post" action="tripWritePro.go" >
+      <form id="tripForm" class="form-horizontal" method="post" action="tripWritePro.go" onsubmit="return writeCheck()"> >
          <h4> ${page_write}</h4>
          <hr size="1px" color="black">
          <div class="input-box">
@@ -30,16 +27,16 @@
                <input type="hidden" name="user_name" value="${userDto.user_name}">
             <div class="form-group row">
             	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
-                	<input type="number" name="trip_m_num" class="col-2" min="0">
+                	<input type="number" name="trip_m_num" class="col-2" min="0" autofocus required>
             </div>
             <c:set var="i" value="1"/>  
             <div id="schedule" class="form-group row">	  
                 <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule} ${i}</label> 
-                    <input type="text" name="start${i}" id="start${i}" class="col-2"/>
+                    <input type="text" name="start${i}" id="start${i}" type="date"  class="col-2" autofocus autocomplete="off"/>
                  	~
-                 	<input type="text" name="end${i}" id="end${i}" class="col-2"/>
+                 	<input type="text" name="end${i}" id="end${i}" type="date" class="col-2" autofocus autocomplete="off"/>
                  	&nbsp;&nbsp;
-                	<input name="place${i}" type="text" class="col-2" readonly>
+                	<input name="place${i}" id="place${i}" type="text" readonly="readonly" placeholder="${trip_location}">
                  <button id="btn${i}" class="btn_plus" type="button" onclick="addSchedule(${i})">
 					<img  class="btn_img" src="${project}img/addbutton.png"> 
 					일정추가
@@ -49,10 +46,7 @@
 	        </div>
 	        <div id="schedulediv" >
             </div>
-            <div class="form-group row">
-                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
-                 <input type="text" name="tb_talk" class="col-10">
-            </div>
+
             <div class="form-group row">
                  <label for="trip_location" class="col-2 col-form-label">${trip_location}</label>
                <div id="floating-panel" class="col-10">
@@ -61,9 +55,14 @@
                </div>
                <div id="searchmap" class="col-12"></div>
             </div>
+            <br>
+            <div class="form-group row">
+                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
+                 <input type="text" name="tb_talk" class="col-10">
+            </div>
             <hr>
             <div class="form-group row">
-               <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}"></textarea>
+               <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}" autofocus required></textarea>
             </div>
             <hr>
                 <div class="form-group row">
@@ -76,7 +75,7 @@
                   </c:forEach>
                </c:if>
             </div>      
-               <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
+               <input class="btn btn-dark btn-sm"  type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
                      onclick="location='tripList.go'">   
       </div>
