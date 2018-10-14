@@ -1,13 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="setting.jsp"%>
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>게시판</title>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -108,34 +108,6 @@ h1, h2, h3, h4, h5, h6 {
 </head>
 
 <body>
-<!-- header -->
-     <header class="board-header py-2">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4 pt-2 text-left">
-            <a href="tripList.go">
-			   <img src="${project}img/logo_hz.png" width="200px" height="100px" class="d-inline-block align-top">    
-			</a>
-          </div>
-          <c:if test="${sessionScope.user_id eq null}">
-	          <div class="col-4 d-flex justify-content-end align-items-center">
-	            <!-- Header login/sign-up section -->	
-			 	<a href="login.go" class="nav-item">${page_login}</a> &nbsp; 
-			 	| &nbsp; <a href="registration.go">${page_input}</a>&nbsp;
-	          </div>
-        </c:if>
-        <c:if test="${sessionScope.user_id ne null}">
-        	<div class="col-4 d-flex justify-content-end align-items-center">
-        		<!-- if user has been logged in -->
-			 	<a href="myPage.go" class="nav-item">${page_mypage2}</a>&nbsp;
-			</div>
-        </c:if>
-        </div>
-      </header>
-<!-- navigation bar -->
-      <nav class="nav d-flex">
-        <a class="p-2 text-muted" href="#">Board</a>
-        <a class="p-2 text-muted" href="#">Calendar</a>
-      </nav> 
 <!-- Category & Contents Box -->    
 	<div class="body-box">
 		<div class="d-flex justify-content-end">
@@ -166,6 +138,13 @@ h1, h2, h3, h4, h5, h6 {
 				           			  	<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;
 									<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;
 									<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;
+									 <div class="p-2">
+				           			  	<c:forEach var="j" items="${i.tags}">
+				           			  		<label class="btn btn-secondary">
+				           			  			# ${j}
+				           			  		</label>
+				           			  	</c:forEach>
+				           			  </div>
 				           			  </div>
 			           			  </div>
 			          			  <img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">

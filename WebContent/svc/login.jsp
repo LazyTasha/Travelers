@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@include file="setting.jsp" %>
+<%@include file="header.jsp" %>
     
 <!DOCTYPE html>
 <html lang="en">
@@ -14,8 +15,6 @@
 	 <!-- Custom style for this template -->
 	<link rel="stylesheet" href="${project}style_loginForm.css">
 	<script src="${project}script.js"></script>
-	
-    <title>${page_login}</title>
 
   </head>
   <c:if test="${sessionScope.user_id eq null}">	   

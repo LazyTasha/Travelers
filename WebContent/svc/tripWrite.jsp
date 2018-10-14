@@ -50,7 +50,7 @@
 	        <div id="schedulediv" >
             </div>
             <div class="form-group row">
-                 <label for="trip_talk_link" class="col-2 col-form-label">${trip_talk_link}</label>
+                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
                  <input type="text" name="tb_talk" class="col-10">
             </div>
             <div class="form-group row">
@@ -66,16 +66,16 @@
                <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}"></textarea>
             </div>
             <hr>
-            <div class="form-group row">
+                <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
-               <c:if test="${tag.size() ne 0}">
-                  <c:forEach var="i" items="${tags}">
+               <c:if test="${styleTags.size() ne 0}">
+                  <c:forEach var="i" items="${styleTags}">
                   	 <label class="btn btn-secondary">
-                   	  <input type="checkbox" name="tag" value="${key}">${value}
+                   	  <input type="checkbox" name="tag" value="${i.tag_id}">${i.tag_value}
                      </label>
                   </c:forEach>
                </c:if>
-            </div>           
+            </div>      
                <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
                      onclick="location='tripList.go'">   

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/svc/setting.jsp"%>
-
+<%@include file="header.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <style>
@@ -28,7 +28,8 @@
 	<script src="${project}script.js"></script>
 </head>
 <body>
-	<article>
+<div class="container" style="width:800px;">
+	<div>
 		<!--수정/삭제 button -->
 		<c:if test="${isOwner eq 1}">
 			<section> 
@@ -37,6 +38,7 @@
 			</section>
 		</c:if>
 		<!--  -->
+		<br>
 		<section>
 			<table border="1">
 				<tr>
@@ -106,12 +108,10 @@
 				</form>
 			</div>
 		 </c:if>   
-		   	<div class="container">
-		        <div class="commentList"></div>
-		    </div>
-		 
+		        <div class="commentList"></div>	 
 		<!-- comment -->
-	</article>
+	</div>
+</div>
 </body>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=initMap">

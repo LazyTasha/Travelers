@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ include file="setting.jsp"%>
+<%@include file="header.jsp" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -8,8 +9,6 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
-<title>${page_modify}</title>
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -89,25 +88,31 @@
 						<div class="btn-group btn-group-sm" role="group" aria-label="...">
 							<c:forEach var="i" items="${tagList}">
 								<c:set var="count" value="0"/>
-								<c:forEach var="j" items="${userTags}">
 								<c:set var="size" value="${userTags.size()}"/>
-									<c:choose>
-										<c:when test="${i.tag_value==j.tag_value}">
-										 	<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_value}" checked># ${i.tag_value}</button>
-										 	<c:set var="done" value="true"/>
-										 </c:when>
-										 <c:otherwise>
-										 	<c:choose>
-										 		<c:when test="${count<size-1}">
-										 			<c:set var="count" value="${count=count+1}"/>
-										 		</c:when>
-										 		<c:otherwise>
-										 			<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_value}"># ${i.tag_value}</button>
-										 		</c:otherwise>
-										 	</c:choose>
-										 </c:otherwise>
-									</c:choose>
-								</c:forEach>
+								<c:choose>
+									<c:when test="${size eq 0}">
+										<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</button>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="j" items="${userTags}">
+											<c:choose>
+												<c:when test="${i.tag_value==j.tag_value}">
+												 	<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}" checked># ${i.tag_value}</button>
+												 </c:when>
+												 <c:otherwise>
+												 	<c:choose>
+												 		<c:when test="${count<size-1}">
+												 			<c:set var="count" value="${count=count+1}"/>
+												 		</c:when>
+												 		<c:otherwise>
+												 			<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</button>
+												 		</c:otherwise>
+												 	</c:choose>
+												 </c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</c:forEach>
 						</div>
 					</div>

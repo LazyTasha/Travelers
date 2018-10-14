@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="setting.jsp"%>
+<%@include file="header.jsp" %>
 
 <!DOCTYPE html>
 <html lang="ko">
@@ -39,7 +40,7 @@
 				<div class="col-sm-8">
 					<input type="text" name=user_id class="form-control" id="id_val"
 						placeholder="ID" maxlength="20" required autofocus>
-					<h4 style="color: red;" id="IdCheckMessagegg"></h4>
+					<h6 style="color: red;" id="IdCheckMessagegg"></h6>
 				</div>
 				<div class="col-sm-2">
 					<button type="button" class="btn btn-md btn-secondary"
@@ -114,6 +115,10 @@
 					</div>
 				</div>
 			</div>
+
+			<c:forEach var="i" items="${tagList}">
+				<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</button>
+			</c:forEach>
 
 			<div class="form-group row">
 				<div class="col-sm-2"></div>
