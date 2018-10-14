@@ -129,7 +129,7 @@ public class TbDBBean {
 	}
 
 	public int deleteTrip(int tb_no) {
-		return session.selectOne("db.deleteTrip", tb_no);
+		return session.delete("db.deleteTrip", tb_no);
 	}
 	//member check
 	public boolean isMember(TbDataBean tbDto) {

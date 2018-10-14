@@ -29,15 +29,14 @@
 </head>
 <body>
 	<article>
-	<!--수정/삭제 -->
-	<c:if test="${isOwner eq true}">
-
-		<section> 
-			<button type="button" onclick="deleteBoard(${tb_no})">${btn_mod}</button>
-			<button type="button">${btn_delete}	${isOwner}</button>
-		</section>
-	</c:if>
-	<!--  -->
+		<!--수정/삭제 button -->
+		<c:if test="${isOwner eq 1}">
+			<section> 
+				<input type="button" value="${btn_mod}" onclick="modifyBoard(${tb_no})">
+				<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})">
+			</section>
+		</c:if>
+		<!--  -->
 		<section>
 			<table border="1">
 				<tr>

@@ -94,7 +94,7 @@ function geocodeAddress(geocoder, resultsMap) {
      
       geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap, infowindow); 
       
-      showPlace(country_code,country_name,full_address,lat,lng);
+      showPlace(country_code,full_address,lat,lng);
     } else {
       alert(locationerror);
     }
@@ -330,7 +330,6 @@ function inputcheck() {
 }
 //delete tripBoard-게시물 삭제
 function deleteBoard(tb_no){
-	alert("들어옴"+tb_no)
 	location.href="tripDelPro.go?tb_no="+tb_no;
 }
 //사진 선택click->create checkbox
@@ -633,14 +632,14 @@ function addSchedule(num){
 	}
 }
 //whenever searching address, update address-장소추가-검색할때 마다 장소갱신
-function showPlace(country_code,country_name,full_address,lat,lng){
+function showPlace(country_code,full_address,lat,lng){
 	var num=$('#schedulenum').find('input[name=schedulenum]').val();
 	var placeinput=$('input[name=place'+num+']');
 	var coordinfo=$('#coordinfo'+num+'');
 	placeinput.val('');
 	coordinfo.empty();
 	
-	var placeinfo=''+country_name+'/'+full_address;
+	var placeinfo=full_address;
 	placeinput.val(placeinfo);
 	var infoinput='<input name="country_code'+num+'" type="hidden" value="'+country_code+'"/>'
 		infoinput+='<input name="lat'+num+'" type="hidden" value="'+lat+'"/>'

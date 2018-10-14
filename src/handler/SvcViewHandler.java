@@ -104,13 +104,13 @@ public class SvcViewHandler {
 		request.setAttribute("tb_no", tb_no);
 		
 		//getTrip-게시물 정보 가져오기
-		TripDataBean tripDto=tripDao.getTrip(tb_no);
-		request.setAttribute("tripDto", tripDto);
 		
 		//authorization for deletion and modification-수정 삭제 권한 
-		tripDto.setUser_id(user_id);
+		TripDataBean tripDto=new TripDataBean();
 		tripDto.setTb_no(tb_no);
-		boolean isOwner=tripDao.isOwner(tripDto);
+		user_id=(user_id==null?"":user_id);
+		tripDto.setUser_id(user_id);
+		int isOwner=tripDao.isOwner(tripDto);
 		request.setAttribute("isOwner", isOwner);
 		
 		//determine tab
