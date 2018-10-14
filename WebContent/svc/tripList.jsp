@@ -110,15 +110,15 @@ h1, h2, h3, h4, h5, h6 {
 <body>
 <!-- Category & Contents Box -->    
 	<div class="body-box">
-		<div class="d-flex justify-content-end">
-			<c:if test="${sessionScope.user_id eq null}">
-				<a href="login.go">
-			</c:if>
-			<c:if test="${sessionScope.user_id ne null}">
-				<a href="tripWrite.go">
-			</c:if>
-				<img src="${project}img/compose_icon.png" width="120" height="40">
-			</a> 
+		  <div class="d-flex justify-content-end">
+        <c:if test="${sessionScope.user_id eq null}">
+          <a href="login.go">
+        </c:if>
+        <c:if test="${sessionScope.user_id ne null}">
+          <a href="tripWrite.go">
+        </c:if>
+          <img src="${project}img/compose_icon.png" width="120" height="40">
+        </a> 
      	</div>
 	  	<div class="board-list">
 	     	<c:if test="${count ne 0}">
