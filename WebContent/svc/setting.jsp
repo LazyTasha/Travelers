@@ -66,6 +66,7 @@
 <c:set var="btn_delete" value="회원탈퇴"/>
 <c:set var="btn_logout" value="로그아웃"/>
 <c:set var="btn_mod" value="수정"/>
+<c:set var="btn_delete" value="삭제"/>
 <c:set var="btn_mod_cancel" value="수정취소"/>
 <c:set var="btn_del" value="탈퇴"/>
 <c:set var="btn_del_cancel" value="탈퇴취소"/>

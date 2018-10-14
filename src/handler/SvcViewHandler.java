@@ -7,7 +7,6 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +22,7 @@ import db.TagDataBean;
 import db.TbDBBean;
 import db.TbDataBean;
 import db.TripDBBean;
+import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
 
@@ -107,14 +107,21 @@ public class SvcViewHandler {
 	
 	@RequestMapping("/trip")
 	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
-		//get the content of the post
-		//TripDataBean has a part of contents of board
-		//TbDataBean has every content of board
-		//TbDataBean tbDto=tbDao.getTb(tb_no);
-		//request.setAttribute("tbDto", tbDto);
+		
+		//getTrip-게시물 정보 가져오기
+		
+		//authorization for deletion and modification-수정 삭제 권한 
+		TripDataBean tripDto=new TripDataBean();
+		tripDto.setTb_no(tb_no);
+		user_id=(user_id==null?"":user_id);
+		tripDto.setUser_id(user_id);
+		int isOwner=tripDao.isOwner(tripDto);
+		request.setAttribute("isOwner", isOwner);
 		
 		//determine tab
 		String tab=request.getParameter("tab");

@@ -241,7 +241,9 @@
 	</select>
 
 	<!--trip DB -->
-
+	<select id="isOwner" parameterType="db.TripDataBean" resultType="int">
+		select count(*) from gg_trip_board where tb_no=#{tb_no} and user_id=#{user_id}
+	</select>
 	<select id="getTrips" parameterType="java.util.Map" resultType="db.TbDataBean">
 		select
 		tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r

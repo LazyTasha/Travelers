@@ -30,17 +30,30 @@
 <body>
 <div class="container" style="width:800px;">
 	<div>
+		<!--수정/삭제 button -->
+		<c:if test="${isOwner eq 1}">
+			<section> 
+				<input type="button" value="${btn_mod}" onclick="modifyBoard(${tb_no})">
+				<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})">
+			</section>
+		</c:if>
+		<!--  -->
+		<br>
 		<section>
-		<table border="1">
-			<tr>
-				<th>제목</th>
-				<td>${tbDto.tb_title}</td>
-			</tr>
-			<tr>
-				<th>글쓴이</th>
-				<td>${tbDto.user_id}</td>
-			</tr>
-		</table>
+			<table border="1">
+				<tr>
+					<th>제목</th>
+					<td>${trip.tb_title}</td>
+				</tr>
+				<tr>
+					<th>방문자수</th>
+					<td>${trip.tb_v_count}</td>
+				</tr>
+				<tr>
+					<th>글내용</th>
+					<td>${trip.tb_content}</td>
+				</tr>
+			</table>
 		</section>
 		
 		<br>
