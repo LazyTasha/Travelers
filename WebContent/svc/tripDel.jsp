@@ -7,7 +7,7 @@ pageEncoding="UTF-8"%>
 <c:if test="${result eq 0}">
 	<script type="text/javascript">
 		<!--
-			erroralert(deleteerror);
+			erroralert(boarddeleteerror);
 		//-->
 	</script>
 </c:if>

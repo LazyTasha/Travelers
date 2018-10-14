@@ -18,6 +18,7 @@
 
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
+<c:set var="page_album_eng" value="Album"/>
 <c:set var="page_calendar_eng" value="Calendar"/>
 <c:set var="page_write" value="글쓰기"/>
 
