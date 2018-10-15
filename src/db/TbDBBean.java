@@ -81,7 +81,12 @@ public class TbDBBean {
 			TbDataBean tbDto=new TbDataBean();
 			tbDto.setTb_no(tripDto.getTb_no());
 			//set Nickname instead of id
-			tbDto.setUser_id((String) session.selectOne("db.getUserName", tripDto.getUser_id()));
+			String user_name=(String) session.selectOne("db.getUserName", tripDto.getUser_id());
+			//if that user left
+			if(user_name==null||user_name.equals("")) {
+				user_name="Ex-User";
+			} 
+			tbDto.setUser_id(user_name);
 			tbDto.setTb_title(tripDto.getTb_title());
 			tbDto.setTb_content(tripDto.getTb_content());
 			tbDto.setTb_reg_date(tripDto.getTb_reg_date());
