@@ -43,6 +43,7 @@ public class SvcFormHandler {
 	
 	@RequestMapping("/registration")
 	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		
 		return new ModelAndView("svc/registration");
 	}
 	

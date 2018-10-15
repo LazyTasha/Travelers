@@ -307,14 +307,15 @@ public class SvcProHandler {
 		
 	//get tags
 	String[] tags=request.getParameterValues("tag");
-	//put them in a Map and call db update
-	Map<String, Integer> tagSetter=new HashMap<String, Integer>();
-	for(String tag:tags) {
-		tagSetter.put("tb_no", tb_no);
-		tagSetter.put("tag_id", Integer.parseInt(tag));
-		tagDao.setTripTag(tagSetter);
+	if(tags!=null) {//tag를 선택한 경우에만 실행
+		//put them in a Map and call db update
+		Map<String, Integer> tagSetter=new HashMap<String, Integer>();
+		for(String tag:tags) {
+			tagSetter.put("tb_no", tb_no);
+			tagSetter.put("tag_id", Integer.parseInt(tag));
+			tagDao.setTripTag(tagSetter);
+		}
 	}
-		
 	return new ModelAndView("svc/tripWritePro");
 }
 

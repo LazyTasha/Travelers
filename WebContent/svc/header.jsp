@@ -47,6 +47,9 @@
             <a class="nav-link" href="tripList.go">${page_board_eng}</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link" href="album.go">${page_album_eng}</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link" href="#">${page_calendar_eng}</a>
           </li>
         </ul>
@@ -83,6 +86,9 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="tripList.go">${page_board_eng}</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="album.go">${page_album_eng}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">${page_calendar_eng}</a>
