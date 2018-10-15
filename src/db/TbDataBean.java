@@ -3,18 +3,19 @@ package db;
 import java.sql.Timestamp;
 
 public class TbDataBean extends TripDataBean {
-	public int tb_no;
-	public String user_id;
-	public String tb_title;
-	public String tb_content;
-	public Timestamp tb_reg_date;
-	public int tb_v_count;
-	public int tb_m_num;
-	public int tb_notice;
-	public String tb_talk;
-	public int td_trip_id;
-	public String[] locs;
-	public String[] tags;
+	private int tb_no;
+	private String user_id;
+	private String tb_title;
+	private String tb_content;
+	private Timestamp tb_reg_date;
+	private int tb_v_count;
+	private int tb_m_num;
+	private int tb_notice;
+	private String tb_talk;
+	private int td_trip_id;
+	private int[] td_trip_ids;
+	private String[] locs;
+	private String[] tags;
 	public int getTb_no() {
 		return tb_no;
 	}
@@ -86,5 +87,11 @@ public class TbDataBean extends TripDataBean {
 	}
 	public void setTags(String[] tags) {
 		this.tags = tags;
+	}
+	public int[] getTd_trip_ids() {
+		return td_trip_ids;
+	}
+	public void setTd_trip_ids(int[] td_trip_ids) {
+		this.td_trip_ids = td_trip_ids;
 	}
 }
