@@ -1,9 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    
+    pageEncoding="UTF-8"%>   
 <%@include file="setting.jsp" %>
 <%@include file="header.jsp" %>
-    
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -13,17 +11,15 @@
     <!-- Bootstrap core CSS -->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 	 <!-- Custom style for this template -->
-	<link rel="stylesheet" href="${project}style_loginForm.css">
+	<link rel="stylesheet" href="${project}travelers_style.css">
 	<script src="${project}script.js"></script>
 
   </head>
-  <c:if test="${sessionScope.user_id eq null}">	   
-  
-  <body class="text-center">
+  <c:if test="${sessionScope.user_id eq null}">	    
+  <body class="login">
   	<form class="form-signin" method="post" action="loginPro.go" name="loginform" onsubmit="return logincheck()" >
-  	
   		<a href="tripList.go">
-  			<img class="mb-4" src="${project}img/logo.jpg" alt="logo" width="400" height="250">
+  			<img class="pt-0 mt-0 mb-4" src="${project}img/logo.jpg" alt="logo" width="400" height="250">
   		</a>
      	<input type="text" id="inputId" name="user_id" class="form-control" 
      		placeholder="${str_id}" required autofocus>
@@ -33,11 +29,10 @@
   		
   		<button class="btn btn-lg btn-secondary btn-block" type="submit">${btn_login}</button>
   		<a href="registration.go"><u>${page_input}</u></a>
-  		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>	
+  		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
   	</form>
   </body>
 </c:if>
-
  <c:if test="${sessionScope.user_id ne null}">
 	<c:redirect url="myPage.go"/>		
 </c:if>
