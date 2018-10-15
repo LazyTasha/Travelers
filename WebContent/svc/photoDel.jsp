@@ -6,7 +6,7 @@
 <c:if test="${result eq 0}">
 	<script type="text/javascript">
 		<!--
-			erroralert(boarddeleteerror);
+			erroralert(photodeleteerror);
 		//-->
 	</script>
 </c:if>

@@ -11,6 +11,7 @@ var deleteerror = "회원탈퇴에 실패했습니다.\n잠시 후 다시 시도
 
 /* 게시물 관리 */
 var boarddeleteerror="게시물 삭제에 실패했습니다.\n잠시후 다시 시도하세요";
+var photodeleteerror="사진 삭제에 실패했습니다.\n잠시후 다시 시도하세요";
 var extensionerror="jpg, gif, png 확장자만 업로드 가능합니다.";
 var sizeerror="이미지 용량은 5M이하만 가능합니다.";
 
