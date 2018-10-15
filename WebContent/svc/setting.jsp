@@ -8,7 +8,7 @@
 <c:set var="project" value="/Travelers/svc/"/> 
 
 <c:set var="page_main" value="메인 페이지"/>
-<c:set var="page_input" value="회원 가입"/> 
+<c:set var="page_input" value="회원가입"/> 
 <c:set var="page_confirm" value="아이디 중복확인"/>
 <c:set var="page_login" value="로 그 인"/> <!-- o -->
 <c:set var="page_delete" value="회 원 탈 퇴"/>
@@ -21,6 +21,8 @@
 <c:set var="page_album_eng" value="Album"/>
 <c:set var="page_calendar_eng" value="Calendar"/>
 <c:set var="page_write" value="글쓰기"/>
+<c:set var="page_tripMod" value="글수정"/>
+
 
 
 <c:set var="msg_main" value="비회원이시면 회원가입을 해주세요"/>
