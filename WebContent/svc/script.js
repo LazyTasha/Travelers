@@ -725,7 +725,7 @@ function tripmodcheck() {
 		return false;
 	} 
 }
+
 function goAdminPage(){
 	location.href="adminTrip.go";
-
 }
