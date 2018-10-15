@@ -395,4 +395,10 @@
 	<select id="getPhoto_urls" parameterType="int" resultType="String">
 		select photo_url from gg_album where tb_no=#{tb_no}
 	</select>
+	
+	<select id="getTripCountry" parameterType="int" resultType="String">
+		select country_name from gg_country where country_id=
+		(select country_id from gg_coordinate where coord_id=
+		(select coord_id from gg_calendar where td_trip_id=#{td_trip_id}))
+	</select>
 </mapper>

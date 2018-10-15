@@ -1,5 +1,6 @@
 package handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -154,6 +155,37 @@ public class SvcViewHandler {
 			//select album
 			List<AlbumDataBean>album=albumDao.getAlbum();
 			request.setAttribute("album", album);			
+			
+			//send photo countries and tags
+			List<Map<String, String>> photoInfos=new ArrayList<Map<String, String>>();
+			List<Map<String, String>> photoTags=new ArrayList<Map<String, String>>();
+			if(count>0) {
+				int tb_no=0;
+				for(int i=0; i<album.size(); i++) {
+					if(tb_no!=album.get(i).getTb_no()) {
+						//tb_no of this photo, if it has same with previous one, then pass
+						tb_no=album.get(i).getTb_no();
+						
+						//send photo countries
+						Map<String, String> photoInfo=new HashMap<String, String>();
+						photoInfo.put("tb_no", ""+tb_no);
+						photoInfo.put("photoLoc", locDao.getPhotoLoc(album.get(i).getTb_no()));
+						photoInfos.add(photoInfo);
+						
+						//send photo tags
+						List<TagDataBean> photoTag=tagDao.getTripTags(tb_no);
+						for(TagDataBean tb:photoTag) {
+							Map<String, String> tempTags=new HashMap<String, String>();
+							tempTags.put("tb_no", ""+tb_no);
+							tempTags.put("tag_value", tb.getTag_value());
+							photoTags.add(tempTags);
+						}
+					}
+					
+				}
+			}
+			request.setAttribute("photoInfos", photoInfos);
+			request.setAttribute("photoTags", photoTags);
 		}
 		return new ModelAndView("svc/album");
 	}
