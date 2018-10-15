@@ -34,8 +34,14 @@
 		<c:if test="${isOwner eq 1}">
 			<section> 
 				<input type="button" value="${btn_mod}" onclick="modifyBoard(${tb_no})">
+				<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})">	
+			</section>		
+		</c:if>
+		<c:if test="${user_level eq 9}">
+			<section> 
 				<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})">
-			</section>
+				<input type="button" value="${btn_back_admin}" onclick="goAdminPage()">	
+			</section>	
 		</c:if>
 		<!--  -->
 		<br>

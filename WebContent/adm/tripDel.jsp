@@ -3,7 +3,7 @@
 <%@ include file="setting.jsp"%>
 <script src="${project}script.js"></script>
 <h2>adminTripDel</h2>
-<c:if test="${result eq 0}">
+<c:if test="${result ne 1}">
 	<script type="text/javascript">
 		<!--
 			erroralert(deleteerror);

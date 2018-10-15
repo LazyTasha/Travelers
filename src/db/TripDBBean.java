@@ -14,9 +14,19 @@ public class TripDBBean {
 	public void addViewCount(int tb_no) {
 		session.update("db.addViewCount", tb_no);
 	}
+	public int deleteCal(int tb_no) {
+		return session.delete("db.deleteCal",tb_no);
+	}
 	//delete trip board-게시물 삭제
 	public int deleteTrip(int tb_no) {
-		return session.delete("db.deleteTrip",tb_no);
+		int result;
+		int calReuslt=deleteCal(tb_no);
+		if(calReuslt!=1) {//calendar삭제 실패
+			result=-1;
+		}else {//calendar삭제 성공
+			result=session.delete("db.deleteTrip",tb_no);
+		}
+		return result;
 	}
 	//notice
 	public void notice(int tb_no) {
