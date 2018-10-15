@@ -6,6 +6,8 @@
 
 package db;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import bean.SqlMapClient;
@@ -25,5 +27,24 @@ public class LocDBBean {
 	}
 	public int insertCal(LocDataBean locDto) {
 		return session.insert("db.insertCal",locDto);
+	}
+	//get destination countriy's name of some trip
+	public String getPhotoLoc(int tb_no) {
+		//get trip ids
+		List<Integer> tripIds=session.selectList("db.getTripIds", tb_no);
+		String locs="";
+		//get country name with trip ids
+		if(tripIds.size()>0) {
+			for(int i=0; i<tripIds.size(); i++) {
+				int td_trip_id=tripIds.get(i);
+				String country=session.selectOne("db.getTripCountry", td_trip_id);
+				if(i==tripIds.size()-1) {
+					locs=locs+country;
+				} else {
+					locs=locs+", "+country;
+				}
+			}
+		}
+		return locs;
 	}
 }
