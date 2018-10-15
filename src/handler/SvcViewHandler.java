@@ -17,6 +17,7 @@ import db.AlbumDBBean;
 import db.AlbumDataBean;
 import db.CmtDBBean;
 import db.LocDBBean;
+import db.LocDataBean;
 import db.TagDBBean;
 import db.TagDataBean;
 import db.TbDBBean;
@@ -112,9 +113,12 @@ public class SvcViewHandler {
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
-		
 		//getTrip-게시물 정보 가져오기
-		
+		TbDataBean tbDto=tbDao.getTb(tb_no);
+		request.setAttribute("tbDto", tbDto);
+		//LocDataBean
+		List<LocDataBean> Detail=locDao.selectDetail(tb_no);
+		request.setAttribute("Detail", Detail);
 		//authorization for deletion and modification-수정 삭제 권한 
 		TripDataBean tripDto=new TripDataBean();
 		tripDto.setTb_no(tb_no);

@@ -6,6 +6,8 @@
 
 package db;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import bean.SqlMapClient;
@@ -25,5 +27,9 @@ public class LocDBBean {
 	}
 	public int insertCal(LocDataBean locDto) {
 		return session.insert("db.insertCal",locDto);
+	}
+	
+	public List<LocDataBean> selectDetail(int tb_no) {
+		return session.selectList("db.selectDetail",tb_no);
 	}
 }
