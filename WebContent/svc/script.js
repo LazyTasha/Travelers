@@ -474,7 +474,7 @@ function commentList(tb_no){
             var commentView ='';
             $.each(data, function(key, comment){ 
             	commentView += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-            	commentView += '</div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_id;
+            	commentView += '</div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_name;
             	if(SessionID == comment.user_id){
             	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
             	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a>';
