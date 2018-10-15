@@ -40,7 +40,7 @@ function erroralert( msg ) {
 	history.back();
 }
 //Initialize and add the map
-var map
+var map;
 function initMap() {
 	var lat=parseFloat(document.getElementById("lat").value);
 	var lng=parseFloat(document.getElementById("lng").value);
@@ -102,21 +102,18 @@ function geocodeAddress(geocoder, resultsMap) {
       geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap); 
       
       showPlace(country_code,full_address,lat,lng);
-      markers.push(marker);
-      marker.setMap(map);
-      deleteMarker(marker);
     } else {
       alert(locationerror);
     }
   });
 }
+function addMarker(marker){
+
+}
 function deleteMarker(marker){
 	var markernum=markers.length;
 	var num=$('#schedulenum').find('input[name=schedulenum]').val(); //일정 수
 	if(markernum>num){//마커 지우기//미완..
-		markers[num-1].setMap(null);
-		//markers[num].setMap(null);
-		markers.pop();
 	}
 }
 //좌표로 주소 띄우기(coordinate->address)

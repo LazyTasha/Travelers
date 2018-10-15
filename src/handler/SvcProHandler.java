@@ -262,7 +262,6 @@ public class SvcProHandler {
 		}
 
 		int schedulenum=Integer.parseInt(request.getParameter("schedulenum"));//일정개수
-		System.out.println(schedulenum);
 		//insert gg_trip_board 
 		TbDataBean tbDto = new TbDataBean();
 	
