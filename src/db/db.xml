@@ -351,6 +351,11 @@
 		delete from gg_comment
 		where c_id = #{c_id}
 	</delete>
+	
+	<update id="updateTb" parameterType="db.TbDataBean">
+		update gg_trip_board set (tb_title=#{tb_title}, tb_conent=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk}) 
+		where tb_no=#{tb_no}
+	</update>
 
 	<!-- location -->
 

@@ -724,8 +724,8 @@ function tripmodcheck() {
 		modifyform.content.focus();
 		return false;
 	} 
+}
 
 function goAdminPage(){
 	location.href="adminTrip.go";
-
 }
