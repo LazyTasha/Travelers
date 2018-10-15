@@ -48,7 +48,7 @@
 							<td name="key">${trip.tb_no}</td>
 							<td>${trip.tb_title}</td>
 							<td>${trip.user_id}</td>
-							<td><a title="${trip.tb_content}">${trip.tb_content}</a></td>
+							<td><a href="trip.go?tb_no=${trip.tb_no}" title="${trip.tb_content}">${trip.tb_content}</a></td>
 							<td><fmt:formatDate value="${trip.tb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></td>
 							<td>${trip.tb_v_count}</td>
 						</tr>

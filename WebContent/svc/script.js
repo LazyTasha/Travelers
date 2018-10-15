@@ -702,3 +702,6 @@ function writeCheck(){
 	}
 	if(result==0)return false;
 }
+function goAdminPage(){
+	location.href="adminTrip.go";
+}
