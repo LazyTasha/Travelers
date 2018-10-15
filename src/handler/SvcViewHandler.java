@@ -114,10 +114,12 @@ public class SvcViewHandler {
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
+		
 		//getTrip-게시물 정보 가져오기
 		TbDataBean tbDto=tbDao.getTb(tb_no);
 		request.setAttribute("tbDto", tbDto);
-		//LocDataBean
+		
+		//trip details
 		List<LocDataBean> Detail=locDao.selectDetail(tb_no);
 		System.out.println(Detail);
 		request.setAttribute("Detail", Detail);
@@ -181,10 +183,11 @@ public class SvcViewHandler {
 					if(tb_no!=album.get(i).getTb_no()) {
 						//tb_no of this photo, if it has same with previous one, then pass
 						tb_no=album.get(i).getTb_no();
+						String this_tb_no=""+tb_no;
 						
 						//send photo countries
 						Map<String, String> photoInfo=new HashMap<String, String>();
-						photoInfo.put("tb_no", ""+tb_no);
+						photoInfo.put("this_tb_no", this_tb_no);
 						photoInfo.put("photoLoc", locDao.getPhotoLoc(album.get(i).getTb_no()));
 						photoInfos.add(photoInfo);
 						
@@ -192,7 +195,7 @@ public class SvcViewHandler {
 						List<TagDataBean> photoTag=tagDao.getTripTags(tb_no);
 						for(TagDataBean tb:photoTag) {
 							Map<String, String> tempTags=new HashMap<String, String>();
-							tempTags.put("tb_no", ""+tb_no);
+							tempTags.put("this_tb_no", this_tb_no);
 							tempTags.put("tag_value", tb.getTag_value());
 							photoTags.add(tempTags);
 						}
