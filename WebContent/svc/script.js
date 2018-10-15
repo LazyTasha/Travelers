@@ -39,6 +39,7 @@ function erroralert( msg ) {
 	history.back();
 }
 //Initialize and add the map
+var map
 function initMap() {
 	var lat=parseFloat(document.getElementById("lat").value);
 	var lng=parseFloat(document.getElementById("lng").value);
@@ -47,7 +48,7 @@ function initMap() {
 	  var uluru = {lat: lat, lng: lng};
 	  // The map, centered at Uluru
 
-	  var map = new google.maps.Map(
+	  map = new google.maps.Map(
 	      document.getElementById('map'), {zoom: 8, center: uluru});
 	  // The marker, positioned at Uluru
 	  var boardmarker = new google.maps.Marker({position: uluru, map: map});
@@ -59,17 +60,16 @@ function initMap() {
 
 var markers=[];
 var marker;
-var searchmap;
 //지도 주소검색
 function searchMap() {
-	 searchmap = new google.maps.Map(document.getElementById('searchmap'), {
+	 map = new google.maps.Map(document.getElementById('searchmap'), {
       zoom: 8,
       center: {lat: -34.397, lng: 150.644}
     });
     var geocoder = new google.maps.Geocoder();
     
     document.getElementById('submit').addEventListener('click', function() {
-      geocodeAddress(geocoder, searchmap);
+      geocodeAddress(geocoder, map);
     });
   }
 //주소로 좌표 표시
@@ -102,6 +102,7 @@ function geocodeAddress(geocoder, resultsMap) {
       
       showPlace(country_code,full_address,lat,lng);
       markers.push(marker);
+      marker.setMap(map);
       deleteMarker(marker);
     } else {
       alert(locationerror);
@@ -111,9 +112,12 @@ function geocodeAddress(geocoder, resultsMap) {
 function deleteMarker(marker){
 	var markernum=markers.length;
 	var num=$('#schedulenum').find('input[name=schedulenum]').val(); //일정 수
+	alert(markernum);
 	if(markernum>num){//마커 지우기//미완..
+		alert(num-1);
 		markers[num-1].setMap(null);
-		markers[num].setMap(null);
+		//markers[num].setMap(null);
+		markers.pop();
 	}
 }
 //좌표로 주소 띄우기(coordinate->address)
