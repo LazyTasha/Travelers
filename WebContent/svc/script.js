@@ -112,9 +112,7 @@ function geocodeAddress(geocoder, resultsMap) {
 function deleteMarker(marker){
 	var markernum=markers.length;
 	var num=$('#schedulenum').find('input[name=schedulenum]').val(); //일정 수
-	alert(markernum);
 	if(markernum>num){//마커 지우기//미완..
-		alert(num-1);
 		markers[num-1].setMap(null);
 		//markers[num].setMap(null);
 		markers.pop();
@@ -643,7 +641,7 @@ function addSchedule(num){
 			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
 			schedule+=			'~';
 			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
-			schedule+=			'<input name="place'+num+'" type="text" readonly>';
+			schedule+=			'<input name="place'+num+'" id="place'+num+'" type="text" readonly>';
 			schedule+=		'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
 			schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
 			schedule+=			'일정추가';
@@ -699,7 +697,7 @@ function writeCheck(){
 		}else if(!end.val()){
 			end.focus();result=0;break;
 		}else if(!place.val()){
-			$('#address').focus();result=0;break
+			$('#address').focus();result=0;break;
 		}
 	}
 	if(result==0)return false;
