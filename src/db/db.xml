@@ -77,10 +77,6 @@
 	</select>
 
 	<!-- tag DB -->
-	<insert id="insertUser_tag" parameterType="java.util.Map">
-		insert into gg_user_tag values(#{user_id}, #{tag_id}) 
-	</insert>
-
 	<select id="getTagList" resultType="java.util.Map">
 		select * from gg_tag
 	</select>
@@ -178,7 +174,7 @@
 	</select>
 
 	<select id="getTrip" parameterType="int"
-		resultType="db.TripDataBean">
+		resultType="db.TbDataBean">
 		select * from gg_trip_board where tb_no=#{tb_no}
 	</select>
 
@@ -206,7 +202,8 @@
          select SEQ_GG_TRIP_BOARD_TB_NO.currval from dual
       </selectKey>
    	</insert>
-   	<insert id="insertTripDetail" parameterType="db.TbDataBean" keyProperty="td_trip_id">
+
+ <insert id="insertTripDetail" parameterType="db.TbDataBean" keyProperty="td_trip_id">
    		insert into gg_trip_detail values(SEQ_gg_trip_detail_td_trip_id.nextval,#{tb_no})
 	   	<selectKey keyProperty="td_trip_id" resultType="int" order="AFTER">
 	       select SEQ_gg_trip_detail_td_trip_id.currval from dual
@@ -423,4 +420,26 @@
 		(select country_id from gg_coordinate where coord_id=
 		(select coord_id from gg_calendar where td_trip_id=#{td_trip_id}))
 	</select>
+	
+	<select id="getCalendar" parameterType="int" resultType="db.LocDataBean">
+		select * from gg_calendar where td_trip_id=#{td_trip_id}
+	</select>
+	
+	<select id="getCoordLong" parameterType="int" resultType="double">
+		select coord_long from gg_coordinate where coord_id=#{coord_id}
+	</select>
+	
+	<select id="getCoordLat" parameterType="int" resultType="double">
+		select coord_lat from gg_coordinate where coord_id=#{coord_id}
+	</select>
+	
+	<select id="getCountryName" parameterType="int" resultType="String">
+		select country_name from gg_country where country_id=
+		(select country_id from gg_coordinate where coord_id=#{coord_id})
+	</select>
+  
+  <update id="updateTb" parameterType="db.TbDataBean">
+		update gg_trip_board set tb_title=#{tb_title}, tb_content=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk} 
+		where tb_no=#{tb_no}
+	</update>
 </mapper>
