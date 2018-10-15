@@ -107,6 +107,14 @@
 					</div>
 				</div>
 			</div>
+<<<<<<< HEAD
+=======
+
+			<c:forEach var="i" items="${tagList}">
+				<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</button>
+			</c:forEach>
+
+>>>>>>> master
 			<div class="form-group row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-10">

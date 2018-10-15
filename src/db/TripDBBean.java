@@ -26,4 +26,12 @@ public class TripDBBean {
 	public void noticeX(int tb_no) {
 		session.update("db.noticeX",tb_no);
 	}
+	//게시물의 주인 판별
+	public int isOwner(TripDataBean tripDto) {
+		int count=session.selectOne("db.isOwner",tripDto);
+		if(count!=0) {
+			count=1;
+		}
+		return count;
+	}
 }

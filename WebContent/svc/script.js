@@ -9,6 +9,8 @@ var loginiderror = "입력하신 아이디가 없습니다.\n아이디를 다시
 var loginpasswderror = "입력하신 비밀번호가 다릅니다.\n비밀번호를 다시 확인하세요.";
 var deleteerror = "회원탈퇴에 실패했습니다.\n잠시 후 다시 시도하세요.";
 
+/* 게시물 관리 */
+var boarddeleteerror="게시물 삭제에 실패했습니다.\n잠시후 다시 시도하세요";
 var extensionerror="jpg, gif, png 확장자만 업로드 가능합니다.";
 var sizeerror="이미지 용량은 5M이하만 가능합니다.";
 
@@ -48,22 +50,26 @@ function initMap() {
 	  var map = new google.maps.Map(
 	      document.getElementById('map'), {zoom: 8, center: uluru});
 	  // The marker, positioned at Uluru
-	  var marker = new google.maps.Marker({position: uluru, map: map});
+	  var boardmarker = new google.maps.Marker({position: uluru, map: map});
 	  
 	  var infowindow = new google.maps.InfoWindow;
 	  var geocoder = new google.maps.Geocoder;
 	  geocodeLatLng(uluru,geocoder, map, infowindow)
 }
+
+var markers=[];
+var marker;
+var searchmap;
 //지도 주소검색
 function searchMap() {
-    var map = new google.maps.Map(document.getElementById('searchmap'), {
+	 searchmap = new google.maps.Map(document.getElementById('searchmap'), {
       zoom: 8,
       center: {lat: -34.397, lng: 150.644}
     });
     var geocoder = new google.maps.Geocoder();
     
     document.getElementById('submit').addEventListener('click', function() {
-      geocodeAddress(geocoder, map);
+      geocodeAddress(geocoder, searchmap);
     });
   }
 //주소로 좌표 표시
@@ -73,14 +79,6 @@ function geocodeAddress(geocoder, resultsMap) {
     if (status === 'OK') {
       resultsMap.setCenter(results[0].geometry.location);
 
-      var marker = new google.maps.Marker({
-        map: resultsMap,
-        position: results[0].geometry.location
-      });	
-      //좌표 받기
-      var lat=marker.position.lat();//위도 
-      var lng=marker.position.lng();//경도
-         
       //국가-jason 값 가져오기
       var country=results[0].address_components.filter(
       		function(component){
@@ -88,17 +86,35 @@ function geocodeAddress(geocoder, resultsMap) {
       		});
       var country_code=country[0].short_name;
       var country_name=country[0].long_name;
-      var full_address=results[0].formatted_address
+      var full_address=results[0].formatted_address;
       
-      var infowindow = new google.maps.InfoWindow;
-     
-      geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap, infowindow); 
+      marker = new google.maps.Marker({
+        map: resultsMap,
+        position: results[0].geometry.location,
+        title:full_address
+      });	
       
-      showPlace(country_code,country_name,full_address,lat,lng);
+      //좌표 받기
+      var lat=marker.position.lat();//위도 
+      var lng=marker.position.lng();//경도
+          
+      geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap); 
+      
+      showPlace(country_code,full_address,lat,lng);
+      markers.push(marker);
+      deleteMarker(marker);
     } else {
       alert(locationerror);
     }
   });
+}
+function deleteMarker(marker){
+	var markernum=markers.length;
+	var num=$('#schedulenum').find('input[name=schedulenum]').val(); //일정 수
+	if(markernum>num){//마커 지우기//미완..
+		markers[num-1].setMap(null);
+		markers[num].setMap(null);
+	}
 }
 //좌표로 주소 띄우기(coordinate->address)
 function geocodeLatLng(latlng,geocoder, map, infowindow) {
@@ -108,10 +124,9 @@ function geocodeLatLng(latlng,geocoder, map, infowindow) {
        map.setZoom(8);
        var marker = new google.maps.Marker({
          position: latlng,
-         map: map
+         map: map,
+         title:results[0].formatted_address
        });
-       infowindow.setContent(results[0].formatted_address);
-       infowindow.open(map, marker);
      } else {
        window.alert('No results found');
      }
@@ -327,6 +342,10 @@ function inputcheck() {
 			return false;
 		}
 	}
+}
+//delete tripBoard-게시물 삭제
+function deleteBoard(tb_no){
+	location.href="tripDelPro.go?tb_no="+tb_no;
 }
 //사진 선택click->create checkbox
 function selectPhotos(){
@@ -581,7 +600,17 @@ function loadMoreList(last_tb_no) {
 //달력 불러오기 
 function loadCal(num){ 
 	$("#start"+num+"").datepicker(); 
-	$("#end"+num+"").datepicker(); 
+	 $("#start"+num+"").datepicker("option", "onClose", function ( selectedDate ) {
+	        $("#end"+num+"").datepicker( "option", "minDate", selectedDate );
+	        $("#start"+(num+1)+"").datepicker( "option", "minDate", selectedDate );
+	    });
+	 
+	$("#end"+num+"").datepicker();
+	$("#end"+num+"").datepicker("option", "minDate", $("#start"+num+"").val()); 
+	$("#end"+num+"").datepicker("option", "onClose", function () {	 
+        $("#address").focus();
+    });
+
 } 
 //add schedule-일정 추가//한글 처리
 function addSchedule(num){
@@ -601,18 +630,22 @@ function addSchedule(num){
 			alert(schedulesizeerror);
 		}else{
 			$('#address').val('');
+			$('#btn_del'+num+'').hide();
 			var schedule="";
 			$('#btn'+num+'').hide();//btn 숨기기
 			num++;
-			schedule+= 	'<div id="schedule" class="form-group row">';	  
+			schedule+= 	'<div id="schedule'+num+'" class="form-group row">';	  
 			schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
-			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2"/>';
+			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
 			schedule+=			'~';
-			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2"/>&nbsp;&nbsp;';
-			schedule+=			'<input name="place'+num+'" type="text" class="col-2" readonly>';
+			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
+			schedule+=			'<input name="place'+num+'" type="text" readonly>';
 			schedule+=		'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
 			schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
 			schedule+=			'일정추가';
+			schedule+=		'</button>';
+			schedule+=		'<button id="btn_del'+num+'" class="btn_del" type="button" onclick="removeSchedule('+num+')">';
+			schedule+=			'<img class="del_img" src="/Travelers/svc/img/trash.png"/>';
 			schedule+=		'</button>';
 			schedule+=		'<div id="coordinfo'+num+'">';
 			schedule+=		'</div>';
@@ -627,18 +660,43 @@ function addSchedule(num){
 		}		
 	}
 }
+function removeSchedule(num){
+	$('#address').val('');
+	$('#schedule'+num+'').remove();
+	num--;
+	$('#btn'+num+'').show();//btn 보여주기
+	$('#btn_del'+num+'').show();//btn 보여주기
+	$("#schedulenum").val(num);//minus schedule num
+}
 //whenever searching address, update address-장소추가-검색할때 마다 장소갱신
-function showPlace(country_code,country_name,full_address,lat,lng){
+function showPlace(country_code,full_address,lat,lng){
 	var num=$('#schedulenum').find('input[name=schedulenum]').val();
 	var placeinput=$('input[name=place'+num+']');
 	var coordinfo=$('#coordinfo'+num+'');
 	placeinput.val('');
 	coordinfo.empty();
 	
-	var placeinfo=''+country_name+'/'+full_address;
+	var placeinfo=full_address;
 	placeinput.val(placeinfo);
 	var infoinput='<input name="country_code'+num+'" type="hidden" value="'+country_code+'"/>'
 		infoinput+='<input name="lat'+num+'" type="hidden" value="'+lat+'"/>'
 		infoinput+='<input name="lng'+num+'" type="hidden" value="'+lng+'"/>';
 	coordinfo.append(infoinput);	
+}
+function writeCheck(){
+	var num=$('#schedulenum').find('input[name=schedulenum]').val();
+	var result=1;
+	for(var i=1;i<=num;i++){
+		var place=$('#place'+i+'');
+		var start=$('#start'+i+'');
+		var end=$('#end'+i+'');
+		if(!start.val()){
+			start.focus();result=0;break;
+		}else if(!end.val()){
+			end.focus();result=0;break;
+		}else if(!place.val()){
+			$('#address').focus();result=0;break
+		}
+	}
+	if(result==0)return false;
 }

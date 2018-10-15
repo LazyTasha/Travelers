@@ -18,6 +18,7 @@
 
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
+<c:set var="page_album_eng" value="Album"/>
 <c:set var="page_calendar_eng" value="Calendar"/>
 <c:set var="page_write" value="글쓰기"/>
 <c:set var="page_tripMod" value="글수정"/>
@@ -68,6 +69,7 @@
 <c:set var="btn_delete" value="회원탈퇴"/>
 <c:set var="btn_logout" value="로그아웃"/>
 <c:set var="btn_mod" value="수정"/>
+<c:set var="btn_delete" value="삭제"/>
 <c:set var="btn_mod_cancel" value="수정취소"/>
 <c:set var="btn_del" value="탈퇴"/>
 <c:set var="btn_del_cancel" value="탈퇴취소"/>
