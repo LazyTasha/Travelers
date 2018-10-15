@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container" style="width:800px;">
-      <form id="tripForm" class="form-horizontal" method="post" action="tripWritePro.go" onsubmit="return writeCheck()"> >
+      <form id="tripForm" class="form-horizontal" method="post" action="tripWritePro.go" onsubmit="return writeCheck()"> 
          <h4> ${page_write}</h4>
          <hr size="1px" color="black">
          <div class="input-box">

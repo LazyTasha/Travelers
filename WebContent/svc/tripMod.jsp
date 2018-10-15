@@ -20,21 +20,22 @@
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <div class="container" style="width:800px;">
-      <form class="form-horizontal" method="post" action="tripModPro.go" >
+      <form class="form-horizontal" method="post" action="tripModPro.go" name="tripmodform" onsubmit="tripmodcheck()">
          <h4>${page_tripMod}</h4>
          <hr size="1px" color="black">
          <div class="input-box">
             <div class="form-group row">
-                 <input type="text" name="trip_title" class="col-12 form-control form-control-lg" maxlength="30" placeholder="${trip_title}" autofocus required>
+                 <input type="text" name="trip_title" class="col-12 form-control form-control-lg" maxlength="30" value="${tbDto.tb_title}" autofocus required>
             </div>
                <input type="hidden" name="user_name" value="${userDto.user_name}">
+               <input type="hidden" name="tb_no" value="${tbDto.tb_no}">
             <div class="form-group row">
-            	<label for="trip_m_num" class="col-2 col-form-label">${tbDto.trip_m_num}</label>
-                	<input type="number" name="trip_m_num" class="col-2" min="0">
+            	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
+                	<input type="number" name="trip_m_num" class="col-2" min="0" value="${tbDto.tb_m_num}">
             </div>
             <c:set var="i" value="1"/>  
-            <div id="schedule" class="form-group row">	  
-                <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule} ${i}</label> 
+           <!--<div id="schedule" class="form-group row">	  
+                <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule}${i}</label> 
                     <input type="text" name="start${i}" id="start${i}" class="col-2"/>
                  	~
                  	<input type="text" name="end${i}" id="end${i}" class="col-2"/>
@@ -48,10 +49,10 @@
 				</div>
 	        </div>
 	        <div id="schedulediv" >
-            </div>
+            </div>--> 
             <div class="form-group row">
                  <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
-                 <input type="text" name="tb_talk" class="col-10">
+                 <input type="text" name="tb_talk" class="col-10" value="${tbDto.tb_talk}">
             </div>
             <div class="form-group row">
                  <label for="trip_location" class="col-2 col-form-label">${trip_location}</label>
@@ -63,20 +64,20 @@
             </div>
             <hr>
             <div class="form-group row">
-               <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}"></textarea>
+               <textarea name="content" class="col-12" rows="10">${tbDto.tb_content}</textarea>
             </div>
             <hr>
-                <div class="form-group row">
+            <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
-               <c:if test="${styleTags.size() ne 0}">
+               	 <c:if test="${styleTags.size() ne 0}">
                   <c:forEach var="i" items="${styleTags}">
                   	 <label class="btn btn-secondary">
                    	  <input type="checkbox" name="tag" value="${i.tag_id}">${i.tag_value}
                      </label>
                   </c:forEach>
-               </c:if>
-            </div>      
-               <input class="btn btn-dark btn-sm" type="submit" value="${trip_write}">
+                </c:if>
+            </div>  
+               <input class="btn btn-dark btn-sm" type="submit" value="${btn_mod}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"
                      onclick="location='tripList.go'">   
       </div>
