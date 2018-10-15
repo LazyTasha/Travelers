@@ -139,12 +139,11 @@
 					<label for="content">comment</label>
 					<form name="commentInsertForm" method="post">
 						<div class="input-group">
-							<input type="hidden" name="tb_no" value="${tb_no}" /> <input
-								type="hidden" name="session" value="${user_id}" /> <input
-								type="text" class="input" id="c_content" name="c_content"
-								placeholder="내용을 입력하세요."> <span class="input-group-btn">
-								<button class="btn btn-default" type="button"
-									onclick="commentInsert()">등록</button>
+							<input type="hidden" name="tb_no" value="${tb_no}" /> 
+							<input type="hidden" name="session" value="${user_id}" /> 
+								<input type="text" class="input" id="c_content" name="c_content" placeholder="내용을 입력하세요."> 
+								<span class="input-group-btn">
+								<button class="btn btn-default" type="button" 	onclick="commentInsert()">등록</button>
 							</span>
 						</div>
 					</form>

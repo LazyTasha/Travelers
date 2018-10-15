@@ -589,6 +589,18 @@ public class SvcProHandler {
 		
 		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
 		List<CmtDataBean>comment= cmtDao.getComment(tb_no);
+		for(CmtDataBean dto:comment) {
+			String user_name;
+			String user_id=dto.getUser_id();
+			if(user_id==null||user_id.equals("")) {
+				user_name="Ex-User";
+				dto.setUser_name(user_name);
+			} else {
+				user_name=userDao.getUserName(user_id);
+				dto.setUser_name(user_name);
+			}
+		}
+		
 		request.setAttribute("comment", comment);
 		// don't set the name of variable like this!
 		return comment;
