@@ -40,11 +40,22 @@
 		              <div class="card mb-4 shadow-sm">
 		                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail" alt="Card image cap" src="${photo.photo_url}">
 		                <div class="card-body">
-		                  <p class="card-text">프랑스</p>
+		                	<c:set var="done" value="false"/>
+		                  <c:forEach var='eachPhoto' items="${photoInfos}">
+		                  	<c:if test="${eachPhoto.this_tb_no eq photo.tb_no and not done}">
+		                  	<p class="card-text">
+		                  		${eachPhoto.photoLoc}
+		                  		<c:set var="done" value="true"/>
+		                  	 </p>
+		                  	</c:if>
+		                  </c:forEach>
 		                  <div class="d-flex justify-content-between align-items-center">
 		                    <div class="btn-group">
-		                      <button type="button" class="btn btn-sm btn-outline-secondary" disabled>#해시태그</button>
-		                      <button type="button" class="btn btn-sm btn-outline-secondary" disabled>#해시태그</button>
+		                    	<c:forEach var="tags" items="${photoTags}">
+		                    		<c:if test="${tags.this_tb_no eq photo.tb_no}">
+		                    		<button type="button" class="btn btn-sm btn-outline-secondary" disabled>#${tags.tag_value}</button>
+		                    		</c:if>
+		                    	</c:forEach>
 		                    </div>
 		                    <small class="text-muted"><fmt:formatDate value="${photo.alb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></small>
 		                  </div>

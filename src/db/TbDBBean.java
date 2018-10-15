@@ -33,22 +33,8 @@ public class TbDBBean {
 		tbDto.setTb_m_num(tripDto.getTb_m_num());
 		tbDto.setTb_notice(tripDto.getTb_notice());
 		tbDto.setTb_talk(tripDto.getTb_talk());
-		
-		//get location list
-		List<String> locList=session.selectList("db.getDestination", tb_no);
-		String[] locs = null;
-		for(int i=0; i<locList.size(); i++) {
-			locs[i]=locList.get(i);
-		}
-		//get tag list
-		List<String> tagList=session.selectList("db.getTripTags", tb_no);
-		String[] tags=null;
-		for(int i=0; i<tagList.size(); i++) {
-			tags[i]=tagList.get(i);
-		}
-		
-		tbDto.setLocs(locs);
-		tbDto.setTags(tags);
+
+		//trip detail
 		
 		return tbDto;
 	}
@@ -70,7 +56,7 @@ public class TbDBBean {
 		result=session.update("db.setTripDetails", tbDto);
 		return result;
 	}
-	//野껊슣�뻻�눧�눘�뱽 筌띾슢諭� 占쎌뜎 占쎌뵬占쎌젟 揶쏆뮇�땾筌띾슦寃� 占쎄문占쎄쉐占쎈┷占쎈뮉 gg_trip_detail table
+	//�뇦猿딆뒩占쎈뻣占쎈닱占쎈닔占쎈굵 嶺뚮씭�뒧獄�占� �뜝�럩�쐩 �뜝�럩逾у뜝�럩�젧 �뤆�룇裕뉛옙�빢嶺뚮씭�뒭野껓옙 �뜝�럡臾멨뜝�럡�뎽�뜝�럥�뵹�뜝�럥裕� gg_trip_detail table
 	public int insertTripDetail(TbDataBean tbDto) {
 		return session.insert("db.insertTripDetail",tbDto);
 	}

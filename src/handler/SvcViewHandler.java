@@ -1,5 +1,6 @@
 package handler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ import db.AlbumDBBean;
 import db.AlbumDataBean;
 import db.CmtDBBean;
 import db.LocDBBean;
+import db.LocDataBean;
 import db.TagDBBean;
 import db.TagDataBean;
 import db.TbDBBean;
@@ -114,6 +116,23 @@ public class SvcViewHandler {
 		request.setAttribute("tb_no", tb_no);
 		
 		//getTrip-게시물 정보 가져오기
+		TbDataBean tbDto=tbDao.getTb(tb_no);
+		request.setAttribute("tbDto", tbDto);
+		
+		//trip details
+		List<LocDataBean> Detail=locDao.selectDetail(tb_no);
+		System.out.println(Detail);
+		request.setAttribute("Detail", Detail);
+		
+		List<LocDataBean> Coordinate=locDao.selectCoordinate(tb_no);
+		System.out.println(Coordinate);
+		request.setAttribute("Coordinate", Coordinate);
+		
+		List<LocDataBean> selectCountry=locDao.selectCountry(tb_no);
+		System.out.println(selectCountry);
+		request.setAttribute("selectCountry", selectCountry);
+		
+	
 		
 		//authorization for deletion and modification-수정 삭제 권한 
 		TripDataBean tripDto=new TripDataBean();
@@ -154,6 +173,38 @@ public class SvcViewHandler {
 			//select album
 			List<AlbumDataBean>album=albumDao.getAlbum();
 			request.setAttribute("album", album);			
+			
+			//send photo countries and tags
+			List<Map<String, String>> photoInfos=new ArrayList<Map<String, String>>();
+			List<Map<String, String>> photoTags=new ArrayList<Map<String, String>>();
+			if(count>0) {
+				int tb_no=0;
+				for(int i=0; i<album.size(); i++) {
+					if(tb_no!=album.get(i).getTb_no()) {
+						//tb_no of this photo, if it has same with previous one, then pass
+						tb_no=album.get(i).getTb_no();
+						String this_tb_no=""+tb_no;
+						
+						//send photo countries
+						Map<String, String> photoInfo=new HashMap<String, String>();
+						photoInfo.put("this_tb_no", this_tb_no);
+						photoInfo.put("photoLoc", locDao.getPhotoLoc(album.get(i).getTb_no()));
+						photoInfos.add(photoInfo);
+						
+						//send photo tags
+						List<TagDataBean> photoTag=tagDao.getTripTags(tb_no);
+						for(TagDataBean tb:photoTag) {
+							Map<String, String> tempTags=new HashMap<String, String>();
+							tempTags.put("this_tb_no", this_tb_no);
+							tempTags.put("tag_value", tb.getTag_value());
+							photoTags.add(tempTags);
+						}
+					}
+					
+				}
+			}
+			request.setAttribute("photoInfos", photoInfos);
+			request.setAttribute("photoTags", photoTags);
 		}
 		return new ModelAndView("svc/album");
 	}

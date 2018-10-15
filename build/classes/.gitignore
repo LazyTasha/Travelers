@@ -1,4 +1,4 @@
--# Created by https://www.gitignore.io/api/java,windows,eclipse
+# Created by https://www.gitignore.io/api/java,windows,eclipse
 .gitignore
 ### Eclipse ###
  .metadata
@@ -91,3 +91,4 @@ $RECYCLE.BIN/
 /db/
 /bean/
 /handler/
+/db/

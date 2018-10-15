@@ -94,10 +94,17 @@
             <a class="nav-link" href="#">${page_calendar_eng}</a>
           </li>
         </ul>
-        <form class="form-inline mt-2 mt-md-0 login-section">
-          <a href="myPage.go" class="nav-item">${page_mypage2}</a> 
-          &nbsp;
-        </form>
+        <c:if test="${user_level ne 9}">
+	        <form class="form-inline mt-2 mt-md-0 login-section">
+	          <a href="myPage.go" class="nav-item">${page_mypage2}</a> 
+	          &nbsp;
+	        </form>
+        </c:if>
+	        <c:if test="${user_level eq 9}">
+	        	<form class="form-inline mt-2 mt-md-0 login-section">
+	        		<a href="adminLogout.go">${btn_logout}</a>
+	        	</form>
+	        </c:if>
       </div>
     </nav>
 

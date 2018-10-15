@@ -42,6 +42,7 @@ function erroralert( msg ) {
 	history.back();
 }
 //Initialize and add the map
+var map
 function initMap() {
 	var lat=parseFloat(document.getElementById("lat").value);
 	var lng=parseFloat(document.getElementById("lng").value);
@@ -50,7 +51,7 @@ function initMap() {
 	  var uluru = {lat: lat, lng: lng};
 	  // The map, centered at Uluru
 
-	  var map = new google.maps.Map(
+	  map = new google.maps.Map(
 	      document.getElementById('map'), {zoom: 8, center: uluru});
 	  // The marker, positioned at Uluru
 	  var boardmarker = new google.maps.Marker({position: uluru, map: map});
@@ -62,17 +63,16 @@ function initMap() {
 
 var markers=[];
 var marker;
-var searchmap;
 //지도 주소검색
 function searchMap() {
-	 searchmap = new google.maps.Map(document.getElementById('searchmap'), {
+	 map = new google.maps.Map(document.getElementById('searchmap'), {
       zoom: 8,
       center: {lat: -34.397, lng: 150.644}
     });
     var geocoder = new google.maps.Geocoder();
     
     document.getElementById('submit').addEventListener('click', function() {
-      geocodeAddress(geocoder, searchmap);
+      geocodeAddress(geocoder, map);
     });
   }
 //주소로 좌표 표시
@@ -105,6 +105,7 @@ function geocodeAddress(geocoder, resultsMap) {
       
       showPlace(country_code,full_address,lat,lng);
       markers.push(marker);
+      marker.setMap(map);
       deleteMarker(marker);
     } else {
       alert(locationerror);
@@ -116,7 +117,8 @@ function deleteMarker(marker){
 	var num=$('#schedulenum').find('input[name=schedulenum]').val(); //일정 수
 	if(markernum>num){//마커 지우기//미완..
 		markers[num-1].setMap(null);
-		markers[num].setMap(null);
+		//markers[num].setMap(null);
+		markers.pop();
 	}
 }
 //좌표로 주소 띄우기(coordinate->address)
@@ -166,6 +168,10 @@ function albumPaging(start){
 
 	var page="svc/boardAlbum.go?tb_no="+tb_no+"&start="+start+"&tab="+tab;
 	$('#album').load(page);
+}
+//사진 지우기
+function deletePhoto(tb_no,photo_id){
+	location.href="photoDel.go?tb_no="+tb_no+"&photo_id="+photo_id;
 }
 // 회원 정보 수정
 function modifyfocus() {
@@ -621,51 +627,51 @@ function loadCal(num){
 } 
 //add schedule-일정 추가//한글 처리
 function addSchedule(num){
-	   var start=$('input[name=start'+num+']');
-	   var end=$('input[name=end'+num+']');
-	   var place=$('input[name=place'+num+']');
-	   if(!start.val()||!end.val()){//일정날짜가 없는 경우는 일정 추가 x
-	      alert(noscheduleerror);
-	      if(!start.val())start.focus();
-	      else end.focus();
-	   }else if(!place.val()){
-	      alert(noplaceerror);
-	      $('#address').focus();
-	   }else{
-	      $('#schedulediv').append(schedule);
-	      if(num>=maxschedule){
-	         alert(schedulesizeerror);
-	      }else{
-	         $('#address').val('');
-	         $('#btn_del'+num+'').hide();
-	         var schedule="";
-	         $('#btn'+num+'').hide();//btn 숨기기
-	         num++;
-	         schedule+=    '<div id="schedule'+num+'" class="form-group row">';     
-	         schedule+=       '<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
-	         schedule+=         '<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
-	         schedule+=         '~';
-	         schedule+=         '<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
-	         schedule+=         '<input name="place'+num+'" id="place'+num+'" type="text" readonly>';
-	         schedule+=      '<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
-	         schedule+=         '<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
-	         schedule+=         '일정추가';
-	         schedule+=      '</button>';
-	         schedule+=      '<button id="btn_del'+num+'" class="btn_del" type="button" onclick="removeSchedule('+num+')">';
-	         schedule+=         '<img class="del_img" src="/Travelers/svc/img/trash.png"/>';
-	         schedule+=      '</button>';
-	         schedule+=      '<div id="coordinfo'+num+'">';
-	         schedule+=      '</div>';
-	         schedule+=   '</div>';
-	         $('#schedulediv').append(schedule);
-	         loadCal(num);
-	         
-	         if(num==maxschedule)$('#btn'+num+'').hide();
-	         var schedulenum='<input type="hidden" name="schedulenum" value="'+num+'">';
-	         $('#schedulenum').empty();
-	         $('#schedulenum').append(schedulenum);
-	      }      
-	   }
+	var start=$('input[name=start'+num+']');
+	var end=$('input[name=end'+num+']');
+	var place=$('input[name=place'+num+']');
+	if(!start.val()||!end.val()){//일정날짜가 없는 경우는 일정 추가 x
+		alert(noscheduleerror);
+		if(!start.val())start.focus();
+		else end.focus();
+	}else if(!place.val()){
+		alert(noplaceerror);
+		$('#address').focus();
+	}else{
+		$('#schedulediv').append(schedule);
+		if(num>=maxschedule){
+			alert(schedulesizeerror);
+		}else{
+			$('#address').val('');
+			$('#btn_del'+num+'').hide();
+			var schedule="";
+			$('#btn'+num+'').hide();//btn 숨기기
+			num++;
+			schedule+= 	'<div id="schedule'+num+'" class="form-group row">';	  
+			schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
+			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
+			schedule+=			'~';
+			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
+			schedule+=			'<input name="place'+num+'" id="place'+num+'" type="text" readonly>';
+			schedule+=		'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
+			schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
+			schedule+=			'일정추가';
+			schedule+=		'</button>';
+			schedule+=		'<button id="btn_del'+num+'" class="btn_del" type="button" onclick="removeSchedule('+num+')">';
+			schedule+=			'<img class="del_img" src="/Travelers/svc/img/trash.png"/>';
+			schedule+=		'</button>';
+			schedule+=		'<div id="coordinfo'+num+'">';
+			schedule+=		'</div>';
+			schedule+=	'</div>';
+			$('#schedulediv').append(schedule);
+			loadCal(num);
+			
+			if(num==maxschedule)$('#btn'+num+'').hide();
+			var schedulenum='<input type="hidden" name="schedulenum" value="'+num+'">';
+			$('#schedulenum').empty();
+			$('#schedulenum').append(schedulenum);
+		}		
+	}
 }
 function removeSchedule(num){
 	$('#address').val('');
@@ -702,7 +708,7 @@ function writeCheck(){
 		}else if(!end.val()){
 			end.focus();result=0;break;
 		}else if(!place.val()){
-			$('#address').focus();result=0;break
+			$('#address').focus();result=0;break;
 		}
 	}
 	if(result==0)return false;
@@ -718,4 +724,8 @@ function tripmodcheck() {
 		modifyform.content.focus();
 		return false;
 	} 
+
+function goAdminPage(){
+	location.href="adminTrip.go";
+
 }

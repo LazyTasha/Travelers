@@ -359,7 +359,7 @@ public class SvcProHandler {
 
 	///////////////////////////////// album pages/////////////////////////////////
 
-	@RequestMapping("/boardAlbumPro")
+	@RequestMapping("/boardAlbumPro.go")
 	public ModelAndView svcAlbumProProcess(HttpServletRequest request, MultipartHttpServletRequest mtrequest)
 			throws HandlerException {
 		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
@@ -412,7 +412,17 @@ public class SvcProHandler {
 		request.setAttribute("fileResult", fileResult);
 		return new ModelAndView("/svc/boardAlbumPro");
 	}
-
+	@RequestMapping("/photoDel")
+	public ModelAndView svcPhotoDelProcess(HttpServletRequest request,HttpServletResponse response)
+			throws HandlerException {
+		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		request.setAttribute("tb_no", tb_no);
+		
+		int photo_id=Integer.parseInt(request.getParameter("photo_id"));
+		int result=albumDao.delPhoto(photo_id);
+		request.setAttribute("result", result);
+		return new ModelAndView("/svc/photoDel");
+	}
 	@RequestMapping("/downloadAlbum.go")
 	public void downloadAlbumProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException, IOException {

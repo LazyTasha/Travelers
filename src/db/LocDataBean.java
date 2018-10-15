@@ -1,10 +1,8 @@
 package db;
 
 public class LocDataBean {
-	private int num;
-	private int tripId;
 	private int country_id;
-	private String country_code;
+	private String country_name;
 	private double coord_long;
 	private double coord_lat;
 	private int coord_order;
@@ -12,29 +10,19 @@ public class LocDataBean {
 	private String cal_start_date;
 	private String cal_end_date;
 	private int td_trip_id;
-	public int getNum() {
-		return num;
-	}
-	public void setNum(int num) {
-		this.num = num;
-	}
-	public int getTripId() {
-		return tripId;
-	}
-	public void setTripId(int tripId) {
-		this.tripId = tripId;
-	}
+	private int tb_no;
+	private String country_code;
 	public int getCountry_id() {
 		return country_id;
 	}
 	public void setCountry_id(int country_id) {
 		this.country_id = country_id;
 	}
-	public String getCountry_code() {
-		return country_code;
+	public String getCountry_name() {
+		return country_name;
 	}
-	public void setCountry_code(String country_code) {
-		this.country_code = country_code;
+	public void setCountry_name(String country_name) {
+		this.country_name = country_name;
 	}
 	public double getCoord_long() {
 		return coord_long;
@@ -78,4 +66,16 @@ public class LocDataBean {
 	public void setTd_trip_id(int td_trip_id) {
 		this.td_trip_id = td_trip_id;
 	}
+	public int getTb_no() {
+		return tb_no;
+	}
+	public void setTb_no(int tb_no) {
+		this.tb_no = tb_no;
+	}
+	public String getCountry_code() {
+		return country_code;
+	}
+	public void setCountry_code(String country_code) {
+		this.country_code = country_code;
+	}		
 }
