@@ -207,8 +207,7 @@
 	   	<selectKey keyProperty="td_trip_id" resultType="int" order="AFTER">
 	       select SEQ_gg_trip_detail_td_trip_id.currval from dual
 	    </selectKey>
-    </insert>
-   
+    </insert>   
 	<select id="selectDetail" parameterType="int" resultType="db.LocDataBean">
 		select * from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no})
 	</select>
@@ -223,6 +222,7 @@
 		select coord_id from gg_calendar where td_trip_id in(
 		select td_trip_id from gg_trip_detail where tb_no=#{tb_no})))
 	</select>
+  
 <!-- 	<insert id="writeTrip" parameterType="db.TbDataBean">
 		insert into gg_trip_board
 		(tb_no, user_id, tb_title, tb_content, tb_reg_date, tb_v_count,

@@ -40,9 +40,9 @@ body.login {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 }
-/*===registration.jsp===*/
-body.registration {
-	margin-top: 2rem;
+/*===registration & my page & user modify===*/
+body.registration, body.mypage, body.usermodify{
+	margin-top: 3rem;
 	background-color: #f5f5f5;
 }
 /*responsive under 768px*/
