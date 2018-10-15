@@ -57,6 +57,7 @@
 <c:set var="str_jumin" value="주민등록번호"/>
 <c:set var="str_tel" value="전화번호"/>
 
+<c:set var="btn_user_delete" value="회원탈퇴"/>
 <c:set var="btn_login" value="로그인"/> <!-- o -->
 <c:set var="btn_cancel" value="취소"/>
 <c:set var="btn_join" value="가입하기"/>
