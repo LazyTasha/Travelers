@@ -436,4 +436,9 @@
 		select country_name from gg_country where country_id=
 		(select country_id from gg_coordinate where coord_id=#{coord_id})
 	</select>
+  
+  <update id="updateTb" parameterType="db.TbDataBean">
+		update gg_trip_board set tb_title=#{tb_title}, tb_content=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk} 
+		where tb_no=#{tb_no}
+	</update>
 </mapper>

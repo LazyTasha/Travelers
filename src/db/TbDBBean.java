@@ -62,7 +62,10 @@ public class TbDBBean {
 	public String getUserId(String user_name) {
 		return session.selectOne("db.getUserId", user_name);
 	}
-
+	//updateTb
+	public int updateTb(TbDataBean tbDto) {
+		return session.update("db.updateTb", tbDto);
+	}
 	//trip board list
 	public List<TbDataBean> getTrips(Map<String,Integer> map){
 		return session.selectList("db.getTrips",map);

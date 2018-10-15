@@ -322,6 +322,27 @@ public class SvcProHandler {
 	@RequestMapping("/tripModPro")
 	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		System.out.println(request.getParameter("tb_no"));
+		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
+		//update gg_trip_board 
+		TbDataBean tbDto = new TbDataBean();
+		tbDto.setTb_no(tb_no);
+		tbDto.setUser_id((String)request.getSession().getAttribute("user_id"));
+		tbDto.setTb_title(request.getParameter("trip_title"));
+		tbDto.setTb_m_num(Integer.parseInt(request.getParameter("trip_m_num")));
+		tbDto.setTb_talk(request.getParameter("tb_talk"));
+		tbDto.setTb_content(request.getParameter("content"));
+		
+		//update modified "tripMod" in DB
+		int result = tbDao.updateTb(tbDto);
+		request.setAttribute("result", result);
+		request.setAttribute("tb_no", tb_no);
+		
 		return new ModelAndView("svc/tripModPro");
 	}
 
