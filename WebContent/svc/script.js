@@ -10,6 +10,9 @@ var loginpasswderror = "입력하신 비밀번호가 다릅니다.\n비밀번호
 var deleteerror = "회원탈퇴에 실패했습니다.\n잠시 후 다시 시도하세요.";
 
 /* 게시물 관리 */
+var trip_tileerror = "글제목을 입력해주세요";
+var contenterror = "글내용을 입력해주세요";
+
 var boarddeleteerror="게시물 삭제에 실패했습니다.\n잠시후 다시 시도하세요";
 var extensionerror="jpg, gif, png 확장자만 업로드 가능합니다.";
 var sizeerror="이미지 용량은 5M이하만 가능합니다.";
@@ -343,6 +346,10 @@ function inputcheck() {
 		}
 	}
 }
+//modify tripBoard-게시물 수정
+function modifyBoard(tb_no){
+	location.href="tripMod.go?tb_no="+tb_no;
+}
 //delete tripBoard-게시물 삭제
 function deleteBoard(tb_no){
 	location.href="tripDelPro.go?tb_no="+tb_no;
@@ -614,51 +621,51 @@ function loadCal(num){
 } 
 //add schedule-일정 추가//한글 처리
 function addSchedule(num){
-	var start=$('input[name=start'+num+']');
-	var end=$('input[name=end'+num+']');
-	var place=$('input[name=place'+num+']');
-	if(!start.val()||!end.val()){//일정날짜가 없는 경우는 일정 추가 x
-		alert(noscheduleerror);
-		if(!start.val())start.focus();
-		else end.focus();
-	}else if(!place.val()){
-		alert(noplaceerror);
-		$('#address').focus();
-	}else{
-		$('#schedulediv').append(schedule);
-		if(num>=maxschedule){
-			alert(schedulesizeerror);
-		}else{
-			$('#address').val('');
-			$('#btn_del'+num+'').hide();
-			var schedule="";
-			$('#btn'+num+'').hide();//btn 숨기기
-			num++;
-			schedule+= 	'<div id="schedule'+num+'" class="form-group row">';	  
-			schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
-			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
-			schedule+=			'~';
-			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
-			schedule+=			'<input name="place'+num+'" type="text" readonly>';
-			schedule+=		'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
-			schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
-			schedule+=			'일정추가';
-			schedule+=		'</button>';
-			schedule+=		'<button id="btn_del'+num+'" class="btn_del" type="button" onclick="removeSchedule('+num+')">';
-			schedule+=			'<img class="del_img" src="/Travelers/svc/img/trash.png"/>';
-			schedule+=		'</button>';
-			schedule+=		'<div id="coordinfo'+num+'">';
-			schedule+=		'</div>';
-			schedule+=	'</div>';
-			$('#schedulediv').append(schedule);
-			loadCal(num);
-			
-			if(num==maxschedule)$('#btn'+num+'').hide();
-			var schedulenum='<input type="hidden" name="schedulenum" value="'+num+'">';
-			$('#schedulenum').empty();
-			$('#schedulenum').append(schedulenum);
-		}		
-	}
+	   var start=$('input[name=start'+num+']');
+	   var end=$('input[name=end'+num+']');
+	   var place=$('input[name=place'+num+']');
+	   if(!start.val()||!end.val()){//일정날짜가 없는 경우는 일정 추가 x
+	      alert(noscheduleerror);
+	      if(!start.val())start.focus();
+	      else end.focus();
+	   }else if(!place.val()){
+	      alert(noplaceerror);
+	      $('#address').focus();
+	   }else{
+	      $('#schedulediv').append(schedule);
+	      if(num>=maxschedule){
+	         alert(schedulesizeerror);
+	      }else{
+	         $('#address').val('');
+	         $('#btn_del'+num+'').hide();
+	         var schedule="";
+	         $('#btn'+num+'').hide();//btn 숨기기
+	         num++;
+	         schedule+=    '<div id="schedule'+num+'" class="form-group row">';     
+	         schedule+=       '<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
+	         schedule+=         '<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
+	         schedule+=         '~';
+	         schedule+=         '<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
+	         schedule+=         '<input name="place'+num+'" id="place'+num+'" type="text" readonly>';
+	         schedule+=      '<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
+	         schedule+=         '<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
+	         schedule+=         '일정추가';
+	         schedule+=      '</button>';
+	         schedule+=      '<button id="btn_del'+num+'" class="btn_del" type="button" onclick="removeSchedule('+num+')">';
+	         schedule+=         '<img class="del_img" src="/Travelers/svc/img/trash.png"/>';
+	         schedule+=      '</button>';
+	         schedule+=      '<div id="coordinfo'+num+'">';
+	         schedule+=      '</div>';
+	         schedule+=   '</div>';
+	         $('#schedulediv').append(schedule);
+	         loadCal(num);
+	         
+	         if(num==maxschedule)$('#btn'+num+'').hide();
+	         var schedulenum='<input type="hidden" name="schedulenum" value="'+num+'">';
+	         $('#schedulenum').empty();
+	         $('#schedulenum').append(schedulenum);
+	      }      
+	   }
 }
 function removeSchedule(num){
 	$('#address').val('');
@@ -699,4 +706,16 @@ function writeCheck(){
 		}
 	}
 	if(result==0)return false;
+}
+//글 수정
+function tripmodcheck() {
+	if( ! tripmodform.trip_title.value ) {
+		alert( trip_titleerror );
+		modifyform.trip_title.focus();
+		return false;
+	} else if( ! tripmodform.content.value ) {
+		alert( contenterror );
+		modifyform.content.focus();
+		return false;
+	} 
 }
