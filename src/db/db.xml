@@ -166,6 +166,10 @@
 	<insert id="insertTripTags" parameterType="java.util.Map">
 		insert into gg_trip_tag(tb_no, tag_id) values(#{tb_no}, #{tag_id})
 	</insert>
+	
+	<insert id="insertUser_tag" parameterType="java.util.Map">
+		insert into gg_user_tag values(#{user_id}, #{tag_id}) 
+	</insert>
 
 	<!-- board DB -->
 	<select id="getCount" resultType="int">
@@ -202,8 +206,7 @@
          select SEQ_GG_TRIP_BOARD_TB_NO.currval from dual
       </selectKey>
    	</insert>
-
- <insert id="insertTripDetail" parameterType="db.TbDataBean" keyProperty="td_trip_id">
+   	<insert id="insertTripDetail" parameterType="db.TbDataBean" keyProperty="td_trip_id">
    		insert into gg_trip_detail values(SEQ_gg_trip_detail_td_trip_id.nextval,#{tb_no})
 	   	<selectKey keyProperty="td_trip_id" resultType="int" order="AFTER">
 	       select SEQ_gg_trip_detail_td_trip_id.currval from dual
@@ -437,9 +440,4 @@
 		select country_name from gg_country where country_id=
 		(select country_id from gg_coordinate where coord_id=#{coord_id})
 	</select>
-  
-  <update id="updateTb" parameterType="db.TbDataBean">
-		update gg_trip_board set tb_title=#{tb_title}, tb_content=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk} 
-		where tb_no=#{tb_no}
-	</update>
 </mapper>

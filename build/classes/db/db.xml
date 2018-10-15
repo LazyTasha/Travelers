@@ -166,6 +166,10 @@
 	<insert id="insertTripTags" parameterType="java.util.Map">
 		insert into gg_trip_tag(tb_no, tag_id) values(#{tb_no}, #{tag_id})
 	</insert>
+	
+	<insert id="insertUser_tag" parameterType="java.util.Map">
+		insert into gg_user_tag values(#{user_id}, #{tag_id}) 
+	</insert>
 
 	<!-- board DB -->
 	<select id="getCount" resultType="int">
@@ -436,9 +440,4 @@
 		select country_name from gg_country where country_id=
 		(select country_id from gg_coordinate where coord_id=#{coord_id})
 	</select>
-  
-  <update id="updateTb" parameterType="db.TbDataBean">
-		update gg_trip_board set tb_title=#{tb_title}, tb_content=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk} 
-		where tb_no=#{tb_no}
-	</update>
 </mapper>
