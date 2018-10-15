@@ -107,9 +107,19 @@
 					</div>
 				</div>
 			</div>
-			<c:forEach var="i" items="${tagList}">
-				<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</button>
-			</c:forEach>
+			
+			<div class="form-group row">
+				<label for="tag" class="control-label col-sm-2" >${str_tag} </label>
+				<div class="col-sm-8">
+				<c:forEach var="i" items="${styleTags}">
+                	<div class="btn-group btn-group-sm" role="group" aria-label="...">
+                		<button type="button" class="btn btn-default"><input type="checkbox" name="user_tag" value="${i.tag_id}">${i.tag_value}</button>
+                	</div>
+                </c:forEach>
+            </div>
+                
+            </div>
+            
 			<div class="form-group row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-10">

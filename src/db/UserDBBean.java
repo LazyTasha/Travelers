@@ -6,6 +6,7 @@
 
 package db;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,11 @@ public class UserDBBean {
 	public int insertUser( UserDataBean UserDto ) {
 		return session.insert("db.insertUser", UserDto);
 	}
+	
+	public int insertUser_tag(Map<String, String> map) {
+		return session.update("db.insertUser_tag", map);		
+	}
+	
 	public int check( String user_id ) {
 		return session.selectOne( "db.checkId", user_id);
 	}

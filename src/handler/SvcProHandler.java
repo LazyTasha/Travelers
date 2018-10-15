@@ -35,7 +35,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -87,22 +86,28 @@ public class SvcProHandler {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-
+		String []tag_id = request.getParameterValues("user_tag");
 		UserDataBean userDto = new UserDataBean();
 		userDto.setUser_id(request.getParameter("user_id"));
 		userDto.setPasswd(request.getParameter("passwd"));
 		userDto.setUser_name(request.getParameter("user_name"));
 		userDto.setEmail(request.getParameter("email1"));
 		// user_level
-
 		// gender
 		int gender = Integer.parseInt(request.getParameter("gender"));
 
 		userDto.setGender(gender);
 		userDto.setReg_date(new Timestamp(System.currentTimeMillis()));
-
+		
 		int result = userDao.insertUser(userDto);
-
+		if(tag_id.length > 0) {
+			for(String tag:tag_id) {
+		Map<String, String> map = new HashMap<>(); 
+		map.put("user_id", request.getParameter("user_id"));
+		map.put("tag_id", tag);
+		result=userDao.insertUser_tag(map);
+			}
+		}
 		request.setAttribute("result", result);
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("user_id", userDto.getUser_id());
@@ -128,7 +133,6 @@ public class SvcProHandler {
 		}
 
 		int result = userDao.modifyUser(userDto);
-		
 		if(result==1) {
 			request.setAttribute("result", result);
 			result=tagDao.updateUserTags(user_id, userTags);
@@ -219,7 +223,7 @@ public class SvcProHandler {
 		Session mailSession 
            = Session.getInstance(props,new javax.mail.Authenticator(){
 			    protected PasswordAuthentication getPasswordAuthentication(){
-				    return new PasswordAuthentication("dlagurgur@gmail.com","asd75311");
+				    return new PasswordAuthentication("dlagurgur@gmail.com","tkdgur0713!@");
 			}
 		});
 		

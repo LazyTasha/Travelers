@@ -43,7 +43,8 @@ public class SvcFormHandler {
 	
 	@RequestMapping("/registration")
 	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		
+		List<TagDataBean> styleTags=tagDao.getStyleTags();
+		request.setAttribute("styleTags", styleTags);
 		return new ModelAndView("svc/registration");
 	}
 	

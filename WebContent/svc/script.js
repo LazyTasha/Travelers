@@ -336,19 +336,11 @@ function inputcheck() {
 			return false;
 		} else if (inputform.confirm.value == 0){
 			alert('이메일 인증을해주세요');
-		}else {
+		} else if(inputform.user_tag.value == null){
+			alert('태그를 선택해주세요');
+		} else {
 			alert("회원가입을 축하합니다");
 			$("#inputform").button();
-		}
-	}
-
-	if (inputform.email1.value.indexOf("@") == -1) {
-		alert(emailerror);
-		return false;
-	} else {
-		if (inputform.email1.value.indexOf("@") != -1) {
-			alert(emailerror);
-			return false;
 		}
 	}
 }
