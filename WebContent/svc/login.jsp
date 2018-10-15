@@ -30,10 +30,14 @@
   		<button class="btn btn-lg btn-secondary btn-block" type="submit">${btn_login}</button>
   		<a href="registration.go"><u>${page_input}</u></a>
 <<<<<<< HEAD
+<<<<<<< HEAD
   		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
 =======
   		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>	
 >>>>>>> master
+=======
+  		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>
+>>>>>>> 11ef56d70ebef346daefcb5a8ce789913644c1fe
   	</form>
   </body>
 </c:if>
