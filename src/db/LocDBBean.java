@@ -28,6 +28,17 @@ public class LocDBBean {
 	public int insertCal(LocDataBean locDto) {
 		return session.insert("db.insertCal",locDto);
 	}
+	public List<LocDataBean> selectDetail(int tb_no) {
+		return session.selectList("db.selectDetail",tb_no);
+	}
+	
+	public List<LocDataBean> selectCoordinate(int tb_no) {
+		return session.selectList("db.selectCoordinate",tb_no);
+	}
+	
+	public List<LocDataBean> selectCountry(int tb_no) {
+		return session.selectList("db.selectCountry",tb_no);
+	}
 	//get destination countriy's name of some trip
 	public String getPhotoLoc(int tb_no) {
 		//get trip ids

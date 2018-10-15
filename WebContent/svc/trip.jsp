@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ include file="/svc/setting.jsp"%>
-<%@include file="header.jsp" %>
+<%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
 <style>
@@ -45,22 +45,51 @@
 		</c:if>
 		<!--  -->
 		<br>
+		<input type="hidden" value="${tbDto.tb_notice}" id="notice"/>	<!----- 공지 ----->
+	<article>
 		<section>
-			<table border="1">
-				<tr>
-					<th>제목</th>
-					<td>${trip.tb_title}</td>
-				</tr>
-				<tr>
-					<th>방문자수</th>
-					<td>${trip.tb_v_count}</td>
-				</tr>
-				<tr>
-					<th>글내용</th>
-					<td>${trip.tb_content}</td>
-				</tr>
-			</table>
+			<c:if test="${tbDto.tb_notice == 1}">
+			<img class="mb-4" src="${project}img/logo_c.png"  alt="" width="100" height="100">
+		</c:if>
+			<div>
+				<div>제목 : ${tbDto.tb_title}</div>
+			
+			
+			<div>
+				<div>글쓴이 : ${tbDto.user_id}</div>
+			</div>
+			
+			<div>
+				<div>본문 : ${tbDto.tb_content}</div>
+			</div>
+			
+			<div>
+				<div>인원 : ${tbDto.tb_v_count}/${tbDto.tb_m_num}</div>
+			</div>
+			
+			<c:forEach var="i" items="${Detail}">
+		    	<div>
+				<div>일정 : ${i.cal_start_date}~${i.cal_end_date}</div>
+			</div>
+		    </c:forEach>
+		    
+			<c:forEach var="A" items="${Coordinate}">
+		    	<div>
+				<div>좌표 : ${A.coord_long}~${A.coord_lat}>
+              	</div>
+			</div>
+		    </c:forEach>
+		 
+		    <c:forEach var="C" items="${selectCountry}">
+				<div>나라 이름: ${C.country_name}</div>
+			</c:forEach>
+			
+			<div>
+				<div>카카오톡 :<a href="${tbDto.tb_talk}" target="_blank"> 카카오톡</a></div>
+			</div>
+		</div>
 		</section>
+		
 		
 		<br>
 		<!--button 영역 -->
