@@ -78,7 +78,6 @@ public class SvcViewHandler {
 			List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
 			request.setAttribute("userTags", userTags);
 		}
-		
 		return new ModelAndView("svc/myPage");
 	}
 	

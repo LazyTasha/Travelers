@@ -40,6 +40,8 @@ function erroralert( msg ) {
 	history.back();
 }
 //Initialize and add the map
+var markers=[];
+var marker;
 var map;
 function initMap() {
 	var lat=parseFloat(document.getElementById("lat").value);
@@ -52,15 +54,12 @@ function initMap() {
 	  map = new google.maps.Map(
 	      document.getElementById('map'), {zoom: 8, center: uluru});
 	  // The marker, positioned at Uluru
-	  var boardmarker = new google.maps.Marker({position: uluru, map: map});
+	  marker = new google.maps.Marker({position: uluru, map: map});
 	  
 	  var infowindow = new google.maps.InfoWindow;
 	  var geocoder = new google.maps.Geocoder;
 	  geocodeLatLng(uluru,geocoder, map, infowindow)
 }
-
-var markers=[];
-var marker;
 //지도 주소검색
 function searchMap() {
 	 map = new google.maps.Map(document.getElementById('searchmap'), {
@@ -102,18 +101,22 @@ function geocodeAddress(geocoder, resultsMap) {
       geocodeLatLng({lat: lat, lng: lng},geocoder, resultsMap); 
       
       showPlace(country_code,full_address,lat,lng);
+      deleteMarker();
     } else {
       alert(locationerror);
     }
   });
 }
 function addMarker(marker){
-
+	markers.push(marker);
 }
-function deleteMarker(marker){
+function deleteMarker(){
 	var markernum=markers.length;
 	var num=$('#schedulenum').find('input[name=schedulenum]').val(); //일정 수
 	if(markernum>num){//마커 지우기//미완..
+		markers[num-1].setMap(null);
+		markers[num].setMap(null);
+		markers.pop();
 	}
 }
 //좌표로 주소 띄우기(coordinate->address)
@@ -165,8 +168,22 @@ function albumPaging(start){
 	$('#album').load(page);
 }
 //사진 지우기
-function deletePhoto(tb_no,photo_id){
-	location.href="photoDel.go?tb_no="+tb_no+"&photo_id="+photo_id;
+function deletePhoto(tb_no,photo_id,start){
+	$.ajax({
+		type:'POST',
+		url:'photoDel.go',
+		data:{
+			tb_no:tb_no,
+			photo_id:photo_id
+		},
+		success:function(data){
+			var page="svc/boardAlbum.go?tb_no="+tb_no+"&start="+start;
+			$('#album').load(page);
+		},
+		error:function(e){
+			alert(photodeleteerror);
+		}
+	});
 }
 // 회원 정보 수정
 function modifyfocus() {

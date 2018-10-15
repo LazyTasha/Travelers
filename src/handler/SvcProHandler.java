@@ -399,7 +399,7 @@ public class SvcProHandler {
 		int photo_id=Integer.parseInt(request.getParameter("photo_id"));
 		int result=albumDao.delPhoto(photo_id);
 		request.setAttribute("result", result);
-		return new ModelAndView("/svc/photoDel");
+		return new ModelAndView("redirect:trip.go?tb_no="+tb_no);
 	}
 	@RequestMapping("/downloadAlbum.go")
 	public void downloadAlbumProcess(HttpServletRequest request, HttpServletResponse response)
