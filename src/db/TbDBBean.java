@@ -18,23 +18,29 @@ public class TbDBBean {
 	
 	//get one trip post by tb_no, including location and tag list
 	public TbDataBean getTb(int tb_no) {
-		//augmented trip data
-		TbDataBean tbDto=new TbDataBean();
 		//original trip data
-		TripDataBean tripDto=session.selectOne("db.getTrip", tb_no);
-		
-		tbDto.setTb_no(tb_no);
+		TbDataBean tbDto=session.selectOne("db.getTrip", tb_no);
 		//set Nickname instead of id
-		tbDto.setUser_id((String) session.selectOne("db.getUserName", tripDto.getUser_id()));
-		tbDto.setTb_title(tripDto.getTb_title());
-		tbDto.setTb_content(tripDto.getTb_content());
-		tbDto.setTb_reg_date(tripDto.getTb_reg_date());
-		tbDto.setTb_v_count(tripDto.getTb_v_count());
-		tbDto.setTb_m_num(tripDto.getTb_m_num());
-		tbDto.setTb_notice(tripDto.getTb_notice());
-		tbDto.setTb_talk(tripDto.getTb_talk());
-
+		//set Nickname instead of id
+		String user_id=tbDto.getUser_id();
+		String user_name;
+		//if that user left
+		if(user_id==null||user_id.equals("")) {
+			user_name="Ex-User";
+		} else {
+			user_name=(String) session.selectOne("db.getUserName", user_id);
+		}
+		tbDto.setUser_id(user_name);
+		
 		//trip detail
+		List<Integer> td_trip_id_list=session.selectList("db.getTripIds", tb_no);
+		int[] td_trip_ids=new int[td_trip_id_list.size()];
+		if(td_trip_id_list.size()>0) {
+			for(int i=0; i<td_trip_id_list.size(); i++) {
+				td_trip_ids[i]=td_trip_id_list.get(i);
+			}
+		}
+		tbDto.setTd_trip_ids(td_trip_ids);
 		
 		return tbDto;
 	}
@@ -65,7 +71,10 @@ public class TbDBBean {
 	public String getUserId(String user_name) {
 		return session.selectOne("db.getUserId", user_name);
 	}
-
+	//updateTb
+	public int updateTb(TbDataBean tbDto) {
+		return session.update("db.updateTb", tbDto);
+	}
 	//trip board list
 	public List<TbDataBean> getTrips(Map<String,Integer> map){
 		return session.selectList("db.getTrips",map);
@@ -81,7 +90,15 @@ public class TbDBBean {
 			TbDataBean tbDto=new TbDataBean();
 			tbDto.setTb_no(tripDto.getTb_no());
 			//set Nickname instead of id
-			tbDto.setUser_id((String) session.selectOne("db.getUserName", tripDto.getUser_id()));
+			String user_id=tripDto.getUser_id();
+			String user_name;
+			//if that user left
+			if(user_id==null||user_id.equals("")) {
+				user_name="Ex-User";
+			} else {
+				user_name=(String) session.selectOne("db.getUserName", user_id);
+			}
+			tbDto.setUser_id(user_name);
 			tbDto.setTb_title(tripDto.getTb_title());
 			tbDto.setTb_content(tripDto.getTb_content());
 			tbDto.setTb_reg_date(tripDto.getTb_reg_date());

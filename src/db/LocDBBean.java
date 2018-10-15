@@ -39,6 +39,14 @@ public class LocDBBean {
 	public List<LocDataBean> selectCountry(int tb_no) {
 		return session.selectList("db.selectCountry",tb_no);
 	}
+	public LocDataBean getTripDetail(int td_trip_id) {
+		LocDataBean locDto=session.selectOne("db.getCalendar", td_trip_id);
+		locDto.setCoord_long((double)session.selectOne("db.getCoordLong", locDto.getCoord_id()));
+		locDto.setCoord_lat((double)session.selectOne("db.getCoordLat", locDto.getCoord_id()));
+		locDto.setCountry_name((String)session.selectOne("db.getCountryName", locDto.getCoord_id()));
+		return locDto;
+	}
+	
 	//get destination countriy's name of some trip
 	public String getPhotoLoc(int tb_no) {
 		//get trip ids

@@ -43,7 +43,8 @@ public class SvcFormHandler {
 	
 	@RequestMapping("/registration")
 	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		
+		List<TagDataBean> styleTags=tagDao.getStyleTags();
+		request.setAttribute("styleTags", styleTags);
 		return new ModelAndView("svc/registration");
 	}
 	
@@ -110,7 +111,8 @@ public class SvcFormHandler {
 	
 	@RequestMapping("/tripMod")
 	public ModelAndView svcTripModFormProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
-		//get the origin, it will also bring its tags and locs
+		//get the origin;
+		//basic contents(essential 'var' for tripMod.jsp: tb_no, user_id, tb_content, tb_m_num, tb_talk, td_trip_id, locs[], tags[])
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 		TbDataBean tbDto=tbDao.getTb(tb_no);
 		//set the origin to spread out

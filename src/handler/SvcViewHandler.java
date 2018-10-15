@@ -119,19 +119,15 @@ public class SvcViewHandler {
 		request.setAttribute("tbDto", tbDto);
 		
 		//trip details
-		List<LocDataBean> Detail=locDao.selectDetail(tb_no);
-		System.out.println(Detail);
-		request.setAttribute("Detail", Detail);
-		
-		List<LocDataBean> Coordinate=locDao.selectCoordinate(tb_no);
-		System.out.println(Coordinate);
-		request.setAttribute("Coordinate", Coordinate);
-		
-		List<LocDataBean> selectCountry=locDao.selectCountry(tb_no);
-		System.out.println(selectCountry);
-		request.setAttribute("selectCountry", selectCountry);
-		
-	
+		List<LocDataBean> locDtoList=new ArrayList<LocDataBean>();
+		//tbDto has td_trip_ids
+		if(tbDto.getTd_trip_ids().length>0) {
+			for(int trip_id:tbDto.getTd_trip_ids()) {
+				LocDataBean locDto=locDao.getTripDetail(trip_id);
+				locDtoList.add(locDto);
+			}
+			request.setAttribute("locDtoList", locDtoList);
+		}
 		
 		//authorization for deletion and modification-수정 삭제 권한 
 		TripDataBean tripDto=new TripDataBean();

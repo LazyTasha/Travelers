@@ -25,6 +25,11 @@ public class UserDBBean {
 	public int insertUser( UserDataBean UserDto ) {
 		return session.insert("db.insertUser", UserDto);
 	}
+	
+	public int insertUser_tag(Map<String, String> map) {
+		return session.update("db.insertUser_tag", map);		
+	}
+	
 	public int check( String user_id ) {
 		return session.selectOne( "db.checkId", user_id);
 	}
@@ -71,5 +76,9 @@ public class UserDBBean {
 	public String getUserName(String user_id) { 
 		return session.selectOne("db.getUserName", user_id); 
 	} 
+	
+	public int deleteMember( String user_id ) {
+		return session.delete("Member.deleteUser", user_id);
+	}
 
 }

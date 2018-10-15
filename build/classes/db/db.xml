@@ -5,6 +5,9 @@
 <mapper namespace="db">
 
 	<!-- user DB -->
+	<delete id="deleteUser" parameterType="String">
+	 	delete from gg_user where user_id=#{user_id}
+	</delete>
 	
 	<select id="getUsers" parameterType="java.util.Map" resultType="db.UserDataBean">
 		select user_id,user_name,email,gender,reg_date,r
@@ -44,11 +47,6 @@
 		select
 		count(*) from gg_user where email=#{email}
 	</select>
-
-	<delete id="deleteUser" parameterType="String">
-		delete from gg_user where
-		user_id=#{user_id}
-	</delete>
 
 	<update id="modifyUser" parameterType="db.UserDataBean">
 		update gg_user set
@@ -166,6 +164,10 @@
 	<insert id="insertTripTags" parameterType="java.util.Map">
 		insert into gg_trip_tag(tb_no, tag_id) values(#{tb_no}, #{tag_id})
 	</insert>
+	
+	<insert id="insertUser_tag" parameterType="java.util.Map">
+		insert into gg_user_tag values(#{user_id}, #{tag_id}) 
+	</insert>
 
 	<!-- board DB -->
 	<select id="getCount" resultType="int">
@@ -174,7 +176,7 @@
 	</select>
 
 	<select id="getTrip" parameterType="int"
-		resultType="db.TripDataBean">
+		resultType="db.TbDataBean">
 		select * from gg_trip_board where tb_no=#{tb_no}
 	</select>
 
@@ -347,6 +349,11 @@
 		delete from gg_comment
 		where c_id = #{c_id}
 	</delete>
+	
+	<update id="updateTb" parameterType="db.TbDataBean">
+		update gg_trip_board set (tb_title=#{tb_title}, tb_conent=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk}) 
+		where tb_no=#{tb_no}
+	</update>
 
 	<!-- location -->
 
@@ -418,5 +425,22 @@
 		select country_name from gg_country where country_id=
 		(select country_id from gg_coordinate where coord_id=
 		(select coord_id from gg_calendar where td_trip_id=#{td_trip_id}))
+	</select>
+	
+	<select id="getCalendar" parameterType="int" resultType="db.LocDataBean">
+		select * from gg_calendar where td_trip_id=#{td_trip_id}
+	</select>
+	
+	<select id="getCoordLong" parameterType="int" resultType="double">
+		select coord_long from gg_coordinate where coord_id=#{coord_id}
+	</select>
+	
+	<select id="getCoordLat" parameterType="int" resultType="double">
+		select coord_lat from gg_coordinate where coord_id=#{coord_id}
+	</select>
+	
+	<select id="getCountryName" parameterType="int" resultType="String">
+		select country_name from gg_country where country_id=
+		(select country_id from gg_coordinate where coord_id=#{coord_id})
 	</select>
 </mapper>

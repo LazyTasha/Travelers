@@ -10,6 +10,9 @@ var loginpasswderror = "입력하신 비밀번호가 다릅니다.\n비밀번호
 var deleteerror = "회원탈퇴에 실패했습니다.\n잠시 후 다시 시도하세요.";
 
 /* 게시물 관리 */
+var trip_tileerror = "글제목을 입력해주세요";
+var contenterror = "글내용을 입력해주세요";
+
 var boarddeleteerror="게시물 삭제에 실패했습니다.\n잠시후 다시 시도하세요";
 var photodeleteerror="사진 삭제에 실패했습니다.\n잠시후 다시 시도하세요";
 var extensionerror="jpg, gif, png 확장자만 업로드 가능합니다.";
@@ -348,21 +351,17 @@ function inputcheck() {
 			return false;
 		} else if (inputform.confirm.value == 0){
 			alert('이메일 인증을해주세요');
-		}else {
+		} else if(inputform.user_tag.value == null){
+			alert('태그를 선택해주세요');
+		} else {
 			alert("회원가입을 축하합니다");
 			$("#inputform").button();
 		}
 	}
-
-	if (inputform.email1.value.indexOf("@") == -1) {
-		alert(emailerror);
-		return false;
-	} else {
-		if (inputform.email1.value.indexOf("@") != -1) {
-			alert(emailerror);
-			return false;
-		}
-	}
+}
+//modify tripBoard-게시물 수정
+function modifyBoard(tb_no){
+	location.href="tripMod.go?tb_no="+tb_no;
 }
 //delete tripBoard-게시물 삭제
 function deleteBoard(tb_no){
@@ -490,7 +489,7 @@ function commentList(tb_no){
             var commentView ='';
             $.each(data, function(key, comment){ 
             	commentView += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-            	commentView += '</div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_id;
+            	commentView += '</div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_name;
             	if(SessionID == comment.user_id){
             	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
             	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a>';
@@ -721,6 +720,19 @@ function writeCheck(){
 	}
 	if(result==0)return false;
 }
+//글 수정
+function tripmodcheck() {
+	if( ! tripmodform.trip_title.value ) {
+		alert( trip_titleerror );
+		modifyform.trip_title.focus();
+		return false;
+	} else if( ! tripmodform.content.value ) {
+		alert( contenterror );
+		modifyform.content.focus();
+		return false;
+	} 
+}
+
 function goAdminPage(){
 	location.href="adminTrip.go";
 }

@@ -13,14 +13,14 @@
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- Custom style for this template -->
-<link rel="stylesheet" href="${project}style_loginForm.css">
+<link rel="stylesheet" href="${project}travelers_style.css">
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요한) -->
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="${project}script.js"></script>
 </head>
 
 <c:if test="${result eq 1}">
-	<body>
+	<body class="usermodify">
 		<div class="container" style="width: 600px">
 			<div class="text-center">
 				<a href="tripList.go"> <img class="mb-4"
