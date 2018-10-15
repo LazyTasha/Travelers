@@ -77,6 +77,10 @@
 	</select>
 
 	<!-- tag DB -->
+	<insert id="insertUser_tag" parameterType="java.util.Map">
+		insert into gg_user_tag values(#{user_id}, #{tag_id}) 
+	</insert>
+
 	<select id="getTagList" resultType="java.util.Map">
 		select * from gg_tag
 	</select>
