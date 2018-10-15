@@ -13,8 +13,8 @@ public class AlbumDBBean {
 	public int addPhoto(AlbumDataBean albumDto) {
 		return session.insert("db.addPhoto",albumDto);
 	}
-	public void delPhoto(int photo_id) {
-		session.delete("db.delPhoto",photo_id);
+	public int delPhoto(int photo_id) {
+		return session.delete("db.delPhoto",photo_id);
 	}
 	public void addPhotos() {
 	}

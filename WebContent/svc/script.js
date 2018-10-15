@@ -166,6 +166,10 @@ function albumPaging(start){
 	var page="svc/boardAlbum.go?tb_no="+tb_no+"&start="+start+"&tab="+tab;
 	$('#album').load(page);
 }
+//사진 지우기
+function deletePhoto(tb_no,photo_id){
+	location.href="photoDel.go?tb_no="+tb_no+"&photo_id="+photo_id;
+}
 // 회원 정보 수정
 function modifyfocus() {
 	modifyform.passwd.focus();
