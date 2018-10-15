@@ -76,6 +76,7 @@
 <c:set var="btn_list" value="목록"/>
 <c:set var="btn_search" value="검색"/>
 <c:set var="btn_auth" value="인증"/>
+<c:set var="btn_back_admin" value="뒤로"/>
 
 <c:set var="trip_title" value="제목"/>
 <c:set var="trip_writer" value="작성자"/>

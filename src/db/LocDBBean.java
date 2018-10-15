@@ -28,7 +28,6 @@ public class LocDBBean {
 	public int insertCal(LocDataBean locDto) {
 		return session.insert("db.insertCal",locDto);
 	}
-	
 	public List<LocDataBean> selectDetail(int tb_no) {
 		return session.selectList("db.selectDetail",tb_no);
 	}
@@ -40,5 +39,23 @@ public class LocDBBean {
 	public List<LocDataBean> selectCountry(int tb_no) {
 		return session.selectList("db.selectCountry",tb_no);
 	}
-
+	//get destination countriy's name of some trip
+	public String getPhotoLoc(int tb_no) {
+		//get trip ids
+		List<Integer> tripIds=session.selectList("db.getTripIds", tb_no);
+		String locs="";
+		//get country name with trip ids
+		if(tripIds.size()>0) {
+			for(int i=0; i<tripIds.size(); i++) {
+				int td_trip_id=tripIds.get(i);
+				String country=session.selectOne("db.getTripCountry", td_trip_id);
+				if(i==tripIds.size()-1) {
+					locs=locs+country;
+				} else {
+					locs=locs+", "+country;
+				}
+			}
+		}
+		return locs;
+	}
 }

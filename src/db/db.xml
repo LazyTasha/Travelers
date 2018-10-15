@@ -256,6 +256,9 @@
 	</select>
 
 	<!--trip DB -->
+	<delete id="deleteCal" parameterType="int">
+		delete from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no});
+	</delete>
 	<select id="isOwner" parameterType="db.TripDataBean" resultType="int">
 		select count(*) from gg_trip_board where tb_no=#{tb_no} and user_id=#{user_id}
 	</select>
@@ -409,5 +412,11 @@
 	
 	<select id="getPhoto_urls" parameterType="int" resultType="String">
 		select photo_url from gg_album where tb_no=#{tb_no}
+	</select>
+	
+	<select id="getTripCountry" parameterType="int" resultType="String">
+		select country_name from gg_country where country_id=
+		(select country_id from gg_coordinate where coord_id=
+		(select coord_id from gg_calendar where td_trip_id=#{td_trip_id}))
 	</select>
 </mapper>
