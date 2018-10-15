@@ -63,16 +63,27 @@
 			
 			<c:forEach var="i" items="${Detail}">
 		    	<div>
-				<div>
-				일정 : ${i.cal_start_date}~${i.cal_end_date}</div>
+				<div>일정 : ${i.cal_start_date}~${i.cal_end_date}</div>
 			</div>
 		    </c:forEach>
+		    
+			<c:forEach var="A" items="${Coordinate}">
+		    	<div>
+				<div>좌표 : ${A.coord_long}~${A.coord_lat}>
+              	</div>
+			</div>
+		    </c:forEach>
+		 
+		    <c:forEach var="C" items="${selectCountry}">
+				<div>나라 이름: ${C.country_name}</div>
+			</c:forEach>
 			
 			<div>
 				<div>카카오톡 :<a href="${tbDto.tb_talk}" target="_blank"> 카카오톡</a></div>
 			</div>
 		</div>
 		</section>
+		
 		
 		<br>
 		<!--button 영역 -->

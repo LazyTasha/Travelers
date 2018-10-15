@@ -32,4 +32,13 @@ public class LocDBBean {
 	public List<LocDataBean> selectDetail(int tb_no) {
 		return session.selectList("db.selectDetail",tb_no);
 	}
+	
+	public List<LocDataBean> selectCoordinate(int tb_no) {
+		return session.selectList("db.selectCoordinate",tb_no);
+	}
+	
+	public List<LocDataBean> selectCountry(int tb_no) {
+		return session.selectList("db.selectCountry",tb_no);
+	}
+
 }
