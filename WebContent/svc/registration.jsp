@@ -16,23 +16,20 @@
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 <!-- Custom style for this template -->
-<link rel="stylesheet" href="${project}style_loginForm.css">
+<link rel="stylesheet" href="${project}travelers_style.css">
 <!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요한) -->
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="${project}script.js"></script>
 </head>
-
-<body>
-
+<body class="registration">
 	<div class="container" style="width: 600px">
 		<div class="text-center">
-			<a href="list.jsp"> <img class="mb-4" src="${project}img/logo_c.png" alt=""
+			<a href="tripList.go"> <img class="mb-4" src="${project}img/logo_c.png"
 				width="100" height="100">
 			</a>
-			<h1>${page_input}</h1>
+			<h2>${page_input}</h2>
 			<br>
 		</div>
-
 		<form class="form-horizontal" method="post" action="regPro.go"
 			name="inputform" onsubmit="return inputcheck()">
 			<div class="form-group row">
@@ -47,7 +44,6 @@
 						onclick="IdCheck()">${btn_confirm}</button>
 				</div>
 			</div>
-
 			<div class="form-group row">
 				<label for="inputPassword" class="col-sm-2 col-form-label">${str_passwd}</label>
 				<div class="col-sm-8">
@@ -65,7 +61,6 @@
 					<h6 style="color: red;" id="passwordCheckMessage"></h6>
 				</div>
 			</div>
-
 			<div class="form-group row">
 				<label for="inputNickname" class="col-sm-2 col-form-label">${str_nickname}</label>
 				<div class="col-sm-8">
@@ -78,19 +73,16 @@
 						onclick="NameCheck()">${btn_confirm}</button>
 				</div>
 			</div>
-
 			<fieldset class="form-group">
 				<div class="row">
 					<label class="col-form-label col-sm-2 pt-0">${str_gender}</label>
 					<div class="col-sm-10">
 						<div class="form-check">
-
 							<input class="form-check-input" type="radio" name="gender"
 								id="gridRadios1" value="1" checked> <label
 								class="form-check-label" for="gridRadios1">
 								${str_gender_f} </label>
 						</div>
-
 						<div class="form-check">
 							<input class="form-check-input" type="radio" name="gender"
 								id="gridRadios2" value="0"> <label
@@ -100,7 +92,6 @@
 					</div>
 				</div>
 			</fieldset>
-
 			<div class="form-group">
 				<div class="row">
 					<label for="email" class="control-label col-sm-2">${str_email}
@@ -110,12 +101,12 @@
 							placeholder="Enter email" required>
 					</div>
 					<div class="col-sm-2">
-						<button type="button" class="btn btn-md btn-secondary" onclick="EmailCheck(inputform.email1.value)">${btn_confirm_smtp}</button>
+						<button type="button" class="btn btn-md btn-secondary" 
+						onclick="EmailCheck(inputform.email1.value)">${btn_confirm_smtp}</button>
 						<input type="hidden" name="confirm" value="0">
 					</div>
 				</div>
 			</div>
-
 			<div class="form-group row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-10">
@@ -127,17 +118,14 @@
 					</div>
 				</div>
 			</div>
-
 			<div class="form-group row">
 				<div class="col-sm-2"></div>
 				<div class="col-sm-8">
 					<button type="submit" class="btn btn-lg btn-secondary btn-block">${btn_join}</button>
 				</div>
 			</div>
-
 		</form>
 	</div>
-	<!-- container -->
-
+<!-- container -->
 </body>
 </html>
