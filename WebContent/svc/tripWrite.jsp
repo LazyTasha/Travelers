@@ -29,6 +29,7 @@
             	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
                 	<input type="number" name="trip_m_num" class="col-2" min="0" autofocus required>
             </div>
+            
             <c:set var="i" value="1"/>  
             <div id="schedule" class="form-group row">	  
                 <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule} ${i}</label> 

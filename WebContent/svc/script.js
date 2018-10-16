@@ -645,9 +645,9 @@ function addSchedule(num){
 			num++;
 			schedule+= 	'<div id="schedule'+num+'" class="form-group row">';	  
 			schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
-			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
+			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" maxlength="10" value="yyyy-MM-dd" class="col-2" autocomplete="off"/>';
 			schedule+=			'~';
-			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
+			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" maxlength="10" value="yyyy-MM-dd" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
 			schedule+=			'<input name="place'+num+'" id="place'+num+'" type="text" readonly>';
 			schedule+=		'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
 			schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';
