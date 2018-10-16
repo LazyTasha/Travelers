@@ -1,12 +1,28 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
+ <%@include file="setting.jsp" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<title>[이용약관]</title>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap core CSS -->
+<link rel="stylesheet" type="text/css"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<!-- Custom style for this template -->
+<link rel="stylesheet" href="${project}style_loginForm.css">
+<link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+<!-- jQuery (부트스트랩의 자바스크립트 플러그인을 위해 필요한) -->
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="${project}script.js"></script>
 </head>
-<body>
+
+<body class="registration">
 
 <textarea style="width: 98%" rows="5" readonly="" class="ed">[이용약관]
 
@@ -172,5 +188,6 @@
 [부칙]
 
 (시행일) 이 약관은 2010년 2월 1일부터 시행합니다.            </textarea>
+<input type="button" onclick="gridClose()" value="확인">
 </body>
 </html>
