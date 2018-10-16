@@ -4,55 +4,43 @@
 <%@include file="header.jsp"%>
 <!DOCTYPE html>
 <html lang="en">
-<style>
-#map {
-	position: relative;
-	height: 200px; /* The height is 200 pixels */
-	width: 90%; /* The width is the width of the web page */
-	border: 1px black solid;
-}
-</style>
-
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" type="text/css"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+<!-- Custom styles for boarAlbum template -->
+<link rel="stylesheet" href="${project}travelers_style.css">
 <!-- Custom styles for boarAlbum template -->
 <link href="style_album.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Work+Sans"
 	rel="stylesheet">
-
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="${project}script.js"></script>
 </head>
-
 <body>
 	<div class="container" style="width: 800px;">
-		<div>
-			<div id=button_area>
+		<div class="row">
+			<div id=button_area class="float-right">
 				<!--수정/삭제 button -->
 				<c:if test="${isOwner eq 1}">
 					<section>
-						<input type="button" value="${btn_mod}"
-							onclick="modifyBoard(${tb_no})"> <input type="button"
-							value="${btn_delete}" onclick="deleteBoard(${tb_no})">
+						<input type="button" class="btn-sm" value="${btn_mod}" onclick="modifyBoard(${tb_no})"> 							
+						<input type="button" class="btn-sm" value="${btn_delete}" onclick="deleteBoard(${tb_no})">							
 					</section>
 				</c:if>
 				<c:if test="${user_level eq 9}">
 					<section>
-						<input type="button" value="${btn_delete}"
-							onclick="deleteBoard(${tb_no})"> <input type="button"
-							value="${btn_back_admin}" onclick="goAdminPage()">
+						<input type="button" class="btn" value="${btn_delete}" onclick="deleteBoard(${tb_no})">							
+						<input type="button" class="btn" value="${btn_back_admin}" onclick="goAdminPage()">							
 					</section>
 				</c:if>
-			</div>
-			<!--  -->
+			</div><!-- button_area -->
+			
+			<!-- Hidden info toss -->
 			<br> <input type="hidden" value="${tbDto.tb_notice}" id="notice" />
-			<!----- 공지 ----->
+			
+			<!----- Notice ----->
 			<article>
 				<div>
 					<section>
@@ -60,7 +48,7 @@
 							<img class="mb-4" src="${project}img/logo_c.png" alt=""
 								width="100" height="100">
 						</c:if>
-
+            
 						<div id="trip_title">
 							<div>
 								<div>
@@ -110,39 +98,35 @@
 
 
 					<br>
-					<!--button 영역 -->
-					<section>
-						<button onclick="showMap()">지도</button>
-						<button onclick="showAlbum()">사진</button>
-					</section>
-
-					<!--boardAlbum영역  -->
-					<c:if test="${tab eq '0'}">
-						<section id="albumTab" style="display: none">
-					</c:if>
-					<c:if test="${tab eq '1'}">
-						<section id="albumTab">
-					</c:if>
-					<div class="row" id="album">
-						<jsp:include
-							page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}'
-							flush='false' />
-					</div>
-					</section>
-
-					<!--ㅡMap영역  -->
-					<c:if test="${tab eq 0}">
-						<div id="mapTab"></div>
-					</c:if>
-					<c:if test="${tab eq 1}">
-						<div id="mapTab" style="display: none"></div>
-					</c:if>
-					<div id="map">지도</div>
-					<input type="hidden" value="${lat}" id="lat" /> <input
-						type="hidden" value="${lng}" id="lng" />
+				<!--button 영역 -->
+				<section>
+					<button onclick="showMap()">지도</button>
+					<button onclick="showAlbum()">사진</button>
+				</section>
+				<!--boardAlbum영역  -->
+				<c:if test="${tab eq '0'}">
+					<section id="albumTab" style="display: none">
+				</c:if>
+				<c:if test="${tab eq '1'}">
+					<section id="albumTab">
+				</c:if>
+				<div class="row" id="album">
+					<jsp:include
+						page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}'
+						flush='false' />
 				</div>
+				</section>
+				<!--ㅡMap영역  -->
+				<c:if test="${tab eq 0}">
+					<div id="mapTab"></div>
+				</c:if>
+				<c:if test="${tab eq 1}">
+					<div id="mapTab" style="display: none"></div>
+				</c:if>
+				<div id="map">지도</div>
+				<input type="hidden" value="${lat}" id="lat" /> <input
+					type="hidden" value="${lng}" id="lng" />
 			</article>
-
 			<!-- comment -->
 			<c:if test="${sessionScope.user_id != null}">
 				<div class="container">
@@ -163,16 +147,9 @@
 			<div class="commentList"></div>
 			<!-- comment -->
 		</div>
-	</div>
+	</div><!-- container -->
 </body>
 <script async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBnBlipOjNesyFkAIAlXO9WkkIhfiqUIi4&callback=initMap">
 </script>
-
-<!-- Bootstrap core JavaScript
-    ==================================================
-    Placed at the end of the document so the pages load faster -->
-<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
-<script src="../../assets/js/vendor/popper.min.js"></script>
-<script src="../../dist/js/bootstrap.min.js"></script>
-<script src="../../assets/js/vendor/holder.min.js"></script>
+</html>
