@@ -459,4 +459,8 @@
 		select country_name from gg_country where country_id=
 		(select country_id from gg_coordinate where coord_id=#{coord_id})
 	</select>
+	
+	<select id="getCoordOrder" parameterType="int" resultType="int">
+		select coord_order from gg_coordinate where coord_id=#{coord_id}
+	</select>
 </mapper>
