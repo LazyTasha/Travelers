@@ -81,9 +81,14 @@
 							</div>
 
 							<div>
+
 								<c:forEach var="i" items="${locDtoList}">
 									<div>일정 : ${i.cal_start_date}~${i.cal_end_date}</div>
-									<div>좌표 : ${i.coord_long}~${i.coord_lat}</div>
+									<div name="coord">
+										<div id="mapinfo">주소:</div>
+										<input type="hidden" name="coord_long" value="${i.coord_long}">
+										<input type="hidden" name="coord_lat" value="${i.coord_lat}">
+									</div>	
 									<div>나라 이름: ${i.country_name}</div>
 									<button onclick="attend()">참석</button>
 									<button onclick="attend()">불참</button>
@@ -114,11 +119,11 @@
 				<c:if test="${tab eq '1'}">
 					<section id="albumTab">
 				</c:if>
-				<div class="row" id="album">
-					<jsp:include
-						page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}'
-						flush='false' />
-				</div>
+					<div class="row" id="album">
+						<jsp:include
+							page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}'
+							flush='false' />
+					</div>
 				</section>
 
 				<!--ㅡMap영역  -->
