@@ -184,7 +184,6 @@ function updateMarker(marker,num){
 }
 // Removes the markers 
 function deleteMarkers(num) {
-	alert(markers.length)
   for (var i = 0; i < markers.length-1; i++) {
 	    markers[i].setMap(null);
 	    }
