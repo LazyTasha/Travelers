@@ -158,12 +158,12 @@ h1, h2, h3, h4, h5, h6 {
 			    	</div>
 	    		</c:forEach>
 	    		<form name="tripListInfo">
-	    			<input type="hidden" name="last_tb_no" value="${last_tb_no}">
+	    			<input type="hidden" name="last_row" value="${last_row}">
 	    		</form>
 	    		<div class="row" id="board-append-list">
 	    		</div>
 	    	</c:if>
-    	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList(${last_tb_no})">Load more...</button>
+    	<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList(${last_row})">Load more...</button>
     </div><!-- board list -->
 </div><!-- body box -->	
 		

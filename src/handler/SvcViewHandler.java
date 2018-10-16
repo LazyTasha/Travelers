@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +28,7 @@ import db.TripDBBean;
 import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @Controller
 public class SvcViewHandler {
@@ -96,11 +98,10 @@ public class SvcViewHandler {
 		List<TbDataBean> tripList=tbDao.getTripList();
 		int startTrip=0;
 		int endTrip=0;
-		
-		if(tripList.size()!=0) {
-			startTrip=tripList.get(tripList.size()-1).getTb_no();
-			endTrip=startTrip-10;
-			request.setAttribute("last_tb_no", endTrip);
+		if(tripList.size()>=10) {
+			request.setAttribute("last_row", 10);
+		} else {
+			request.setAttribute("last_row", tripList.size());
 		}
 		
 		int count=tbDao.getCount();
@@ -251,7 +252,7 @@ public class SvcViewHandler {
 	}
 	
 	/////////////////////////////////ajax method list/////////////////////////////////
-	@RequestMapping(value="/loadMoreList", produces = "application/json")
+	@RequestMapping(value="/loadMoreList", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
 	public List<TbDataBean> loadMoreList(int last_row) {
 		//get more 5 trip articles when 'load more' button is pressed

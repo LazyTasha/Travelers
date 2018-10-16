@@ -309,16 +309,9 @@
 		update gg_trip_board set
 		tb_notice=0 where tb_no=#{tb_no}
 	</update>
-
-	<select id="getTripList" parameterType="java.util.Map" resultType="db.TbDataBean">
-		<![CDATA[
-			select tb_no, tb_title, user_id, tb_content, tb_reg_date, tb_v_count, tb_m_num, tb_notice, tb_talk from gg_trip_board 
-			where tb_no<=#{start} and tb_no>#{end} order by tb_no desc
-		]]>	
-	</select>
 	
-	<select id="getLatestTrip" resultType="int">
-		select max(tb_no) from gg_trip_board
+	<select id="getFirstTbNo" resultType="int">
+		select min(tb_no) from gg_trip_board
 	</select>
 
 	<!--cmt DB -->

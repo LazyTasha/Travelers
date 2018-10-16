@@ -558,22 +558,21 @@ function commentDelete(c_id){
     });
 }
 
-function loadMoreList(last_tb_no) {
+function loadMoreList(last_row) {
 	$.ajax({
-		type : 'post',
-		data : {last_tb_no : last_tb_no},
+		type : 'get',
+		data : {last_row : last_row},
 		url : "loadMoreList.go",
 		success : function(data) {
+			tripListInfo.last_row.value=last_row+1;
 			var listForAppend="";
 			if(data){
-				alert("추가 리스트 준비!");
 				$.each(data, function(key, additionalList){
 					listForAppend+='<div class="row">';
 					listForAppend+=		'<div class="col-md-12">';
 					listForAppend+=			'<div class="card flex-md-row mb-3 shadow-sm h-md-250">';
 					listForAppend+=				'<div class="card-body d-flex flex-column align-items-start">';
 					listForAppend+=					'<strong class="d-inline-block mb-2">';
-					alert("for 돌기 전");
 					listForAppend+=						'<c:forEach var="j" items="'+additionalList.locs+'">';
 					listForAppend+=							'${j}';
 					listForAppend+=						'</c:forEach>';
@@ -592,7 +591,6 @@ function loadMoreList(last_tb_no) {
 					listForAppend+=						'</div>';
 					listForAppend+=					'<a href="trip.go?tb_no='+additionalList.tb_no+'">Continue reading</a>';
 					listForAppend+=				'</div>';
-					listForAppend+=			'<img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">';
 					listForAppend+='</div></div></div>';
 	            });
 	            alert("준비 끝");
