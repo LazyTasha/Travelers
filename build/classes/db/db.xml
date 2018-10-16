@@ -321,17 +321,9 @@
 		update gg_trip_board set
 		tb_notice=0 where tb_no=#{tb_no}
 	</update>
-
-	<select id="getTripList" resultType="db.TripDataBean">
-			<![CDATA[
-			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual) order by tb_no asc
-			]]>
-	</select>
-
-	<select id="loadMoreList" parameterType="int" resultType="db.TripDataBean">
-			<![CDATA[
-			select * from gg_trip_board where tb_no<#{last_tb_no} and tb_no<=(#{last_tb_no}-5) order by tb_no desc
-			]]>
+	
+	<select id="getFirstTbNo" resultType="int">
+		select min(tb_no) from gg_trip_board
 	</select>
 
 	<!--cmt DB -->
