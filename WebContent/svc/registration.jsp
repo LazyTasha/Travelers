@@ -124,9 +124,9 @@
 				<div class="col-sm-2"></div>
 				<div class="col-sm-10">
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" id="gridCheck1">
+						<input class="form-check-input" type="checkbox" id="gridCheck1" name="gridCheck1">
 						<label class="form-check-label" for="gridCheck1"> Agree to
-							<a href="#" class="alert-link">Terms and Conditions</a>
+							<a href="Conditions.go" target="_blank" class="alert-link">Terms and Conditions</a>
 						</label>
 					</div>
 				</div>
