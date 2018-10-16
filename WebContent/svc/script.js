@@ -593,7 +593,6 @@ function loadMoreList(last_row) {
 					listForAppend+=				'</div>';
 					listForAppend+='</div></div></div>';
 	            });
-	            alert("준비 끝");
 	            $("#board-append-list").append(listForAppend);
 			} else {
 				alert('더 이상 불러올 글이 없습니다.');

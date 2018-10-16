@@ -257,11 +257,6 @@ public class SvcViewHandler {
 	public List<TbDataBean> loadMoreList(int last_row) {
 		//get more 5 trip articles when 'load more' button is pressed
 		List<TbDataBean> additionalList=tbDao.loadMoreList(last_row);
-		if (additionalList.size()!=0) {
-			System.out.println("잘 가져왔나 확인. "+additionalList.get(0).getTb_no());
-		} else {
-			System.out.println("망했어 못 가져왔어");
-		}
 		
 		return additionalList;
 	}
