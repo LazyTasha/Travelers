@@ -110,7 +110,7 @@
 			
 			<div class="form-group row">
 				<label for="tag" class="control-label col-sm-2" >${str_tag} </label>
-				<div class="col-sm-8">
+				<div class="col-sm-8">				
 				<c:forEach var="i" items="${styleTags}">
                 	<div class="btn-group btn-group-sm" role="group" aria-label="...">
                 		<button type="button" class="btn btn-default"><input type="checkbox" name="user_tag" value="${i.tag_id}">${i.tag_value}</button>

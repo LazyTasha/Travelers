@@ -308,7 +308,7 @@ function EmailClose(){
 function EmailCheck(email1){
     // 인증을 위해 새창으로 이동
 	var url="emailCheck.go?email1="+email1
-	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=400, height=200" );
+	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=500, height=200" );
 }
 
 
@@ -336,8 +336,7 @@ function inputcheck() {
 			return false;
 		} else if (inputform.confirm.value == 0){
 			alert('이메일 인증을해주세요');
-		} else if(inputform.user_tag.value == null){
-			alert('태그를 선택해주세요');
+			return false;
 		} else {
 			alert("회원가입을 축하합니다");
 			$("#inputform").button();
