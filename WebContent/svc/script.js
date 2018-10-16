@@ -48,7 +48,6 @@ var boardmarker;
 var boardmap;
 var coord_lats=[];
 var coord_lngs=[];
-var addressList=[];
 //Map for board
 function initMap() {//trip.jsp에서 좌표로 마커 표시
 	var coord=$('div[name=coord]');
@@ -84,7 +83,6 @@ function addMarker(location, num,boardmap) {
 	   if (status === 'OK') {
 	     if (results[0]) {
 	    	 var address=results[0].formatted_address;
-	    	 addressList.push(address);
 	       	 boardmarker = new google.maps.Marker({
 	         position: location,
 	         map: boardmap,
@@ -92,8 +90,8 @@ function addMarker(location, num,boardmap) {
 	 	     label:''+num+'',
 	         animation:google.maps.Animation.DROP,
 	       });
-	       	  //div에 주소 붙이기
-	       	 $('#address'+num+'').append(address);
+	       	//div에 주소 붙이기
+	       $('#address'+num+'').append(address);
 	     } else {
 	       window.alert('No results found');
 	     }
@@ -184,11 +182,9 @@ function updateMarker(marker,num){
 }
 // Removes the markers 
 function deleteMarkers(num) {
-	alert(markers.length)
-  for (var i = 0; i < markers.length-1; i++) {
+ for (var i = 0; i < markers.length-1; i++) {
 	    markers[i].setMap(null);
-	    }
-	markers.pop();
+	    }	
 }
 //trip view-button event-map
 function showMap(){
