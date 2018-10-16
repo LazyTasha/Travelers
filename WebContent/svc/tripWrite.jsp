@@ -29,12 +29,13 @@
             	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
                 	<input type="number" name="trip_m_num" class="col-2" min="0" autofocus required>
             </div>
+            
             <c:set var="i" value="1"/>  
             <div id="schedule" class="form-group row">	  
                 <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule} ${i}</label> 
-                    <input type="text" name="start${i}" id="start${i}" value="yyyy-MM-dd"  class="col-2" autofocus autocomplete="off"/>
+                    <input type="text" name="start${i}" id="start${i}" maxlength="10" value="yyyy-MM-dd"  class="col-2" autofocus autocomplete="off"/>
                  	~
-                 	<input type="text" name="end${i}" id="end${i}" value="yyyy-MM-dd" class="col-2" autofocus autocomplete="off"/>
+                 	<input type="text" name="end${i}" id="end${i}" maxlength="10" value="yyyy-MM-dd" class="col-2" autofocus autocomplete="off"/>
                  	&nbsp;&nbsp;
                 	<input name="place${i}" id="place${i}" type="text" readonly="readonly" placeholder="${trip_location}">
                 	<button id="btn${i}" class="btn_plus" type="button" onclick="addSchedule(${i})">

@@ -129,14 +129,15 @@
 
 				<!--ㅡMap영역  -->
 				<c:if test="${tab eq 0}">
-					<div id="mapTab"></div>
+					<div id="mapTab">
 				</c:if>
 				<c:if test="${tab eq 1}">
-					<div id="mapTab" style="display: none"></div>
+					<div id="mapTab" style="display: none">
 				</c:if>
 				<div id="map">지도</div>
 				<input type="hidden" value="${lat}" id="lat" /> <input
 					type="hidden" value="${lng}" id="lng" />
+					</div>
 			</article>
 
 			<!-- comment -->
