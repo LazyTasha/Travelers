@@ -37,16 +37,16 @@
                  	<input type="text" name="end${i}" id="end${i}" type="date" class="col-2" autofocus autocomplete="off"/>
                  	&nbsp;&nbsp;
                 	<input name="place${i}" id="place${i}" type="text" readonly="readonly" placeholder="${trip_location}">
-                 <button id="btn${i}" class="btn_plus" type="button" onclick="addSchedule(${i})">
-					<img  class="btn_img" src="${project}img/addbutton.png"> 
-					일정추가
-				</button>
-				<div id="coordinfo${i}">
-				</div>
+                	<button id="btn${i}" class="btn_plus" type="button" onclick="addSchedule(${i})">
+						<img  class="btn_img" src="${project}img/addbutton.png">${btn_add_trip}
+					</button>
+				<div id="coordinfo${i}"></div>	
 	        </div>
-	        <div id="schedulediv" >
+	        <div id="schedulediv" ></div>  
+			<div class="form-group row">
+                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
+                 <input type="text" name="tb_talk" class="col-10">
             </div>
-
             <div class="form-group row">
                  <label for="trip_location" class="col-2 col-form-label">${trip_location}</label>
                <div id="floating-panel" class="col-10">
@@ -56,13 +56,9 @@
                <div id="searchmap" class="col-12"></div>
             </div>
             <br>
-            <div class="form-group row">
-                 <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
-                 <input type="text" name="tb_talk" class="col-10">
-            </div>
             <hr>
             <div class="form-group row">
-               <textarea name="content" class="col-12" rows="10" placeholder="${trip_content}" autofocus required></textarea>
+               <textarea name="content" class="col-12" rows="10" placeholder="${trip_entercontent}" autofocus required></textarea>
             </div>
             <hr>
                 <div class="form-group row">

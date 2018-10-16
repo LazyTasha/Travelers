@@ -3,6 +3,9 @@
 .btn {
 	background-color: #232F34;
 }
+a {
+   color: black;
+}
 /*===login.jsp===*/
 body.login {
 	margin-top: 5rem;
@@ -53,11 +56,11 @@ body.registration, body.mypage, body.usermodify{
 	}
 }
 /*===tripWrite.jsp===*/
-input[type=number].input-box ,input[type=text].input-box  {
+.input-box input[type=number], .input-box input[type=text] {
 	border: none;
 	border-bottom: 1px solid #999;
 }
-input[type=text]:focus.input-box {
+.input-box input[type=text]:focus{
 	border: none;
 	border-bottom: 2px solid #344955 !important;
 }
@@ -113,11 +116,18 @@ button img{
 	width:30px;
 	outline:none;
 }
-
-/*===tripList.jsp===*/
-a {
-   color: black;
+/*===trip.jsp===*/
+.input-box input[type=number], .input-box input[type=text] {
+	border: none;
+	border-bottom: 1px solid #999;
 }
+#map {
+	position: relative;
+	height: 400px; /* The height is 400 pixels */
+	width: 90%; /* The width is the width of the web page */
+	border: 1px black solid;
+}
+/*===tripList.jsp===*/
 aside {
 	position: relative;
 	width:20%;
