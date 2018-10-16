@@ -2,7 +2,6 @@ package handler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -42,7 +41,11 @@ public class SvcFormHandler {
 	private UserDBBean userDao;
 	
 	/////////////////////////////////user pages/////////////////////////////////
-	
+	@RequestMapping("/Conditions")
+	public ModelAndView svcConditionsProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/Conditions");
+	}
+
 	@RequestMapping("/registration")
 	public ModelAndView svcRegProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		List<TagDataBean> styleTags=tagDao.getStyleTags();

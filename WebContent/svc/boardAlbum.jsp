@@ -10,14 +10,14 @@
 	 <section class="jumbotron text-center">
 	   <div class="container">
 	     <h1 class="jumbotron-heading">Album</h1>
-	      <%--	<c:if test="${isMember eq true}"> --%>
+<%-- 	     <c:if test="${isMember eq true}"> --%>
 	     <p>
 	      	 	<a class="btn btn-primary my-2" onclick="uploadPhotos()">사진 업로드</a>
 	      	 	<a id="select" class="btn btn-primary my-2" onclick="selectPhotos()">사진 선택 </a>
 	      	 	<a id="download" class="btn btn-primary my-2" onclick="downloadPhotos()" style="display:none">사진 다운로드</a>
 	      	 	<a class="btn btn-primary my-2" onclick="downloadAlbum()">앨범 전체 다운로드</a>
 	     </p>	 	
-	      	<%-- </c:if> --%>
+<%-- 	     </c:if> --%>
 	        <form id="uploadForm" action="boardAlbumPro.go" method="post" enctype="multipart/form-data">
 	          	<input type="file" name="files" multiple="multiple" id="file" accept=".gif, .jpg, .png" style="display:none"/>
 	          	<input type="hidden" name="tb_no" value="${tb_no}"/>
@@ -43,7 +43,7 @@
 		                <div class="d-flex justify-content-between align-items-center">
 		                  <small class="text-muted"><fmt:formatDate value="${photo.alb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></small>
 		                  <%-- <c:if test="${isMember eq true}"> --%>	             
-		                  	<button type="button" onclick="deletePhoto(${tb_no},${photo.photo_id})" >${btn_delete}</button>
+		                  	<button type="button" onclick="deletePhoto(${tb_no},${photo.photo_id},${start})" >${btn_delete}</button>
 		                  <%-- </c:if> --%>
 	                </div>
 	            </div>

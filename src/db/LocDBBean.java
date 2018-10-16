@@ -43,6 +43,7 @@ public class LocDBBean {
 		LocDataBean locDto=session.selectOne("db.getCalendar", td_trip_id);
 		locDto.setCoord_long((double)session.selectOne("db.getCoordLong", locDto.getCoord_id()));
 		locDto.setCoord_lat((double)session.selectOne("db.getCoordLat", locDto.getCoord_id()));
+		locDto.setCoord_order((int)session.selectOne("db.getCoordOrder", locDto.getCoord_id()));
 		locDto.setCountry_name((String)session.selectOne("db.getCountryName", locDto.getCoord_id()));
 		return locDto;
 	}

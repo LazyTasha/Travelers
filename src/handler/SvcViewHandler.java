@@ -78,7 +78,6 @@ public class SvcViewHandler {
 			List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
 			request.setAttribute("userTags", userTags);
 		}
-		
 		return new ModelAndView("svc/myPage");
 	}
 	
@@ -110,6 +109,7 @@ public class SvcViewHandler {
 	@RequestMapping("/trip")
 	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		String user_id=(String)request.getSession().getAttribute("user_id");
+		request.setAttribute("user_id", user_id);
 		
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
@@ -129,6 +129,8 @@ public class SvcViewHandler {
 			}
 			request.setAttribute("locDtoList", locDtoList);
 		}
+		
+		tbDao.addCount(tb_no);
 		
 		//authorization for deletion and modification-수정 삭제 권한 
 		TripDataBean tripDto=new TripDataBean();
@@ -236,6 +238,7 @@ public class SvcViewHandler {
 
 			//check user whether user is member or not
 			TbDataBean tbDto=new TbDataBean();
+			user_id=(user_id==null?"":user_id);
 			tbDto.setUser_id(user_id);
 			tbDto.setTb_no(tb_no);
 			boolean isMember=tbDao.isMember(tbDto);
