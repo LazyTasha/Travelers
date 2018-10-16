@@ -6,7 +6,6 @@
 
 package db;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -77,5 +76,9 @@ public class UserDBBean {
 	public String getUserName(String user_id) { 
 		return session.selectOne("db.getUserName", user_id); 
 	} 
+	
+	public int deleteMember( String user_id ) {
+		return session.delete("Member.deleteUser", user_id);
+	}
 
 }

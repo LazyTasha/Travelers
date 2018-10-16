@@ -6,6 +6,7 @@ public class CmtDataBean {
 	private int c_id;
 	private int tb_no;
 	private String user_id;
+	private String user_name;
 	private String c_content;
 	private Timestamp c_reg_date;
 	public int getC_id() {
@@ -38,5 +39,11 @@ public class CmtDataBean {
 	public void setC_reg_date(Timestamp c_reg_date) {
 		this.c_reg_date = c_reg_date;
 	}
-
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	
 }
