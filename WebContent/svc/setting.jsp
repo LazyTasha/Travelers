@@ -78,6 +78,7 @@
 <c:set var="btn_search" value="검색"/>
 <c:set var="btn_auth" value="인증"/>
 <c:set var="btn_back_admin" value="뒤로"/>
+<c:set var="btn_add_trip" value="일정추가"/>
 
 <c:set var="trip_title" value="제목"/>
 <c:set var="trip_writer" value="작성자"/>
@@ -89,3 +90,17 @@
 <c:set var="trip_location" value="장소"/>
 <c:set var="trip_schedule" value="일정"/>
 <c:set var="trip_content" value="내용을 입력하세요"/>
+<c:set var="trip_entercontent" value="내용을 입력하세요"/>
+
+<c:set var="trip_map" value="지도"/>
+<c:set var="trip_photo" value="사진"/>
+<c:set var="trip_member_myung" value="명 모집 중!"/>
+<c:set var="trip_attend" value="참석"/>
+<c:set var="trip_absent" value="빠지기"/>
+<c:set var="trip_from" value="부터 "/>
+<c:set var="trip_until" value="까지"/>
+<c:set var="trip_to" value="로 여행합니다."/>
+<c:set var="trip_go_to_chat" value="채팅하러 가기"/>
+<c:set var="btn_trip_detail" value="번째 여행지"/>
+<c:set var="trip_talk" value="오픈채팅"/>
+

@@ -370,7 +370,7 @@ function EmailClose(){
 function EmailCheck(email1){
     // 인증을 위해 새창으로 이동
 	var url="emailCheck.go?email1="+email1
-	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=400, height=200" );
+	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=500, height=200" );
 }
 
 
@@ -398,8 +398,10 @@ function inputcheck() {
 			return false;
 		} else if (inputform.confirm.value == 0){
 			alert('이메일 인증을해주세요');
-		} else if(inputform.user_tag.value == null){
-			alert('태그를 선택해주세요');
+			return false;
+		} else if (inputform.gridCheck1.checked == false ){
+			alert('약관을 확인해주세요');
+			return false;
 		} else {
 			alert("회원가입을 축하합니다");
 			$("#inputform").button();
@@ -783,4 +785,60 @@ function tripmodcheck() {
 
 function goAdminPage(){
 	location.href="adminTrip.go";
+}
+
+function attend(td_trip_id) {
+	var user_id=trip_detail.user_id.value;
+	if(user_id) {
+		$.ajax({
+			type : 'post',
+			data : {user_id : user_id,
+						td_trip_id : td_trip_id},
+			url : "memberAttend.go",
+			success : function(data) {
+				if(data) {
+					var mList="";
+					$.each(data, function(key, memberList) {
+						mList+='<div class="row">';
+						mList+=memberList.user_name;
+						mList+='</div>'
+		            });
+					$('#trip_member_list').html(mList);
+				} else {
+					alert('참가하려는 일정에 이상이 있습니다.');
+				}
+			},
+			error : function(error) {
+				alert('멤버 추가에 실패했습니다.');
+			}
+		});
+	}
+}
+
+function absent(td_trip_id) {
+	var user_id=trip_detail.user_id.value;
+	if(user_id) {
+		$.ajax({
+			type : 'post',
+			data :  {user_id : user_id,
+						td_trip_id : td_trip_id},
+			url : "memberAbsent.go",
+			success : function(data) {
+				if(data) {
+					var mList="";
+					$.each(data, function(key, memberList) {
+						mList+='<div class="row">';
+						mList+=memberList.user_name;
+						mList+='</div>';
+		            });
+		            $('#trip_member_list').html(mList);
+				} else {
+					alert('빠지려는 일정에 이상이 있습니다.');
+				}
+			},
+			error : function(error) {
+				alert('불참석 처리에 실패했습니다.');
+			}
+		});
+	}
 }
