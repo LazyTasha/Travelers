@@ -83,9 +83,10 @@
 							<div>
 
 								<c:forEach var="i" items="${locDtoList}">
+									<c:set var="order" value="${i.coord_order}"/>
 									<div>일정 : ${i.cal_start_date}~${i.cal_end_date}</div>
 									<div name="coord">
-										<div name="address">주소:</div>
+										<div id="address${order}">주소:</div>
 										<input type="hidden" name="coord_long" value="${i.coord_long}">
 										<input type="hidden" name="coord_lat" value="${i.coord_lat}">
 									</div>	

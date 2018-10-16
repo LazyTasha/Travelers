@@ -78,6 +78,7 @@ function initMap() {//trip.jsp에서 좌표로 마커 표시
 }
 //Adds a marker to the map.
 function addMarker(location, num,boardmap) {
+	num++;
 	var geocoder = new google.maps.Geocoder();
 	geocoder.geocode({'location': location}, function(results, status) {
 	   if (status === 'OK') {
@@ -88,11 +89,11 @@ function addMarker(location, num,boardmap) {
 	         position: location,
 	         map: boardmap,
 	         title:address,
-	 	     label:''+(num+1)+'',
+	 	     label:''+num+'',
 	         animation:google.maps.Animation.DROP,
 	       });
 	       	  //div에 주소 붙이기
-	       	 //alert(num+addressList[num]);  
+	       	 $('#address'+num+'').append(address);
 	     } else {
 	       window.alert('No results found');
 	     }
