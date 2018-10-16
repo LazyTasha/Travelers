@@ -131,6 +131,8 @@ public class SvcViewHandler {
 			request.setAttribute("locDtoList", locDtoList);
 		}
 		
+		tbDao.addCount(tb_no);
+		
 		//authorization for deletion and modification-수정 삭제 권한 
 		TripDataBean tripDto=new TripDataBean();
 		tripDto.setTb_no(tb_no);
