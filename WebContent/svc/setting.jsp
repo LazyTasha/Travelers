@@ -77,6 +77,7 @@
 <c:set var="btn_search" value="검색"/>
 <c:set var="btn_auth" value="인증"/>
 <c:set var="btn_back_admin" value="뒤로"/>
+<c:set var="btn_add_trip" value="일정추가"/>
 
 <c:set var="trip_title" value="제목"/>
 <c:set var="trip_writer" value="작성자"/>
@@ -87,4 +88,4 @@
 <c:set var="trip_write" value="등록"/>
 <c:set var="trip_location" value="장소"/>
 <c:set var="trip_schedule" value="일정"/>
-<c:set var="trip_content" value="내용을 입력하세요"/>
+<c:set var="trip_entercontent" value="내용을 입력하세요"/>
