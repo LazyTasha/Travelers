@@ -110,6 +110,7 @@ public class SvcViewHandler {
 	@RequestMapping("/trip")
 	public ModelAndView svcTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		String user_id=(String)request.getSession().getAttribute("user_id");
+		request.setAttribute("user_id", user_id);
 		
 		//get tb_no of the post
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));

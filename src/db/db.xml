@@ -73,6 +73,22 @@
 		resultType="Integer">
 		select user_level from gg_user where user_id=#{user_id}
 	</select>
+	
+	<select id="getCurrentMember" parameterType="String" resultType="db.UserDataBean">
+		select * from gg_member where td_trip_id=#{td_trip_id}
+	</select>
+	
+	<update id="addTripMember" parameterType="java.util.Map">
+		insert into gg_member values(#{user_id}, #{td_trip_id})
+	</update>
+	
+	<delete id="delTripMember" parameterType="java.util.Map">
+		delete from gg_member where user_id=#{user_id} and td_trip_id=#{td_trip_id}
+	</delete>
+	
+	<select id="isMember2" parameterType="java.util.Map" resultType="int">
+		select count(*) from gg_member where user_id=#{user_id} and td_trip_id=#{td_trip_id}
+	</select>
 
 	<!-- tag DB -->
 	<select id="getTagList" resultType="java.util.Map">

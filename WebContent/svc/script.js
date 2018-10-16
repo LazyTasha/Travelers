@@ -720,3 +720,59 @@ function tripmodcheck() {
 function goAdminPage(){
 	location.href="adminTrip.go";
 }
+
+function attend(td_trip_id) {
+	var user_id=trip_detail.user_id.value;
+	if(user_id) {
+		$.ajax({
+			type : 'post',
+			data : {user_id : user_id,
+						td_trip_id : td_trip_id},
+			url : "memberAttend.go",
+			success : function(data) {
+				if(data) {
+					var mList="";
+					$.each(data, function(key, memberList) {
+						mList+='<div class="row">';
+						mList+=memberList.user_name;
+						mList+='</div>'
+		            });
+					$('#trip_member_list').html(mList);
+				} else {
+					alert('참가하려는 일정에 이상이 있습니다.');
+				}
+			},
+			error : function(error) {
+				alert('멤버 추가에 실패했습니다.');
+			}
+		});
+	}
+}
+
+function absent(td_trip_id) {
+	var user_id=trip_detail.user_id.value;
+	if(user_id) {
+		$.ajax({
+			type : 'post',
+			data :  {user_id : user_id,
+						td_trip_id : td_trip_id},
+			url : "memberAbsent.go",
+			success : function(data) {
+				if(data) {
+					var mList="";
+					$.each(data, function(key, memberList) {
+						mList+='<div class="row">';
+						mList+=memberList.user_name;
+						mList+='</div>';
+		            });
+		            $('#trip_member_list').html(mList);
+				} else {
+					alert('빠지려는 일정에 이상이 있습니다.');
+				}
+			},
+			error : function(error) {
+				alert('불참석 처리에 실패했습니다.');
+			}
+		});
+	}
+}
