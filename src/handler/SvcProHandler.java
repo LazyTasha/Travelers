@@ -100,14 +100,16 @@ public class SvcProHandler {
 		userDto.setReg_date(new Timestamp(System.currentTimeMillis()));
 
 		int result = userDao.insertUser(userDto);
-		if (tag_id.length > 0) {
-			for (String tag : tag_id) {
-				Map<String, String> map = new HashMap<>();
-				map.put("user_id", request.getParameter("user_id"));
-				map.put("tag_id", tag);
-				result = userDao.insertUser_tag(map);
+
+		if(tag_id !=null) {
+			for(String tag:tag_id) {
+        Map<String, String> map = new HashMap<>(); 
+        map.put("user_id", request.getParameter("user_id"));
+        map.put("tag_id", tag);
+        userDao.insertUser_tag(map);
 			}
 		}
+		
 		request.setAttribute("result", result);
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("user_id", userDto.getUser_id());
@@ -137,7 +139,7 @@ public class SvcProHandler {
 			request.setAttribute("result", result);
 			result = tagDao.updateUserTags(user_id, userTags);
 		}
-
+    
 		return new ModelAndView("svc/userModPro");
 	}
 
