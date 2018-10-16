@@ -337,6 +337,9 @@ function inputcheck() {
 		} else if (inputform.confirm.value == 0){
 			alert('이메일 인증을해주세요');
 			return false;
+		} else if (inputform.gridCheck1.checked == false ){
+			alert('약관을 확인해주세요');
+			return false;
 		} else {
 			alert("회원가입을 축하합니다");
 			$("#inputform").button();
