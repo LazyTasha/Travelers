@@ -80,5 +80,25 @@ public class UserDBBean {
 	public int deleteMember( String user_id ) {
 		return session.delete("Member.deleteUser", user_id);
 	}
+	
+	public List<UserDataBean> getCurrentMember(String td_trip_id) {
+		List<UserDataBean> memberList=session.selectList("db.getCurrentMember", td_trip_id);
+		for(UserDataBean user:memberList) {
+			user.setUser_name((String)session.selectOne("db.getUserName", user.getUser_id()));
+		}
+		return memberList;
+	}
+	
+	public int addTripMember(Map<String, String> addMemberMap) {
+		return session.update("db.addTripMember", addMemberMap);
+	}
+	
+	public int delTripMember(Map<String, String> delMemberMap) {
+		return session.update("db.delTripMember", delMemberMap);
+	}
+	
+	public int isMember(Map<String, String> delMemberMap) {
+		return session.selectOne("db.isMember2", delMemberMap);
+	}
 
 }

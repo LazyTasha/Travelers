@@ -86,7 +86,7 @@ public class SvcProHandler {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String []tag_id = request.getParameterValues("user_tag");
+		String[] tag_id = request.getParameterValues("user_tag");
 		UserDataBean userDto = new UserDataBean();
 		userDto.setUser_id(request.getParameter("user_id"));
 		userDto.setPasswd(request.getParameter("passwd"));
@@ -98,14 +98,14 @@ public class SvcProHandler {
 
 		userDto.setGender(gender);
 		userDto.setReg_date(new Timestamp(System.currentTimeMillis()));
-		
+
 		int result = userDao.insertUser(userDto);
-		if(tag_id.length > 0) {
-			for(String tag:tag_id) {
-		Map<String, String> map = new HashMap<>(); 
-		map.put("user_id", request.getParameter("user_id"));
-		map.put("tag_id", tag);
-		result=userDao.insertUser_tag(map);
+		if (tag_id.length > 0) {
+			for (String tag : tag_id) {
+				Map<String, String> map = new HashMap<>();
+				map.put("user_id", request.getParameter("user_id"));
+				map.put("tag_id", tag);
+				result = userDao.insertUser_tag(map);
 			}
 		}
 		request.setAttribute("result", result);
@@ -118,26 +118,26 @@ public class SvcProHandler {
 	@RequestMapping("/userModPro")
 	public ModelAndView UserModifyprocess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
-		String user_id=(String)request.getSession().getAttribute("user_id");
+		String user_id = (String) request.getSession().getAttribute("user_id");
 		UserDataBean userDto = userDao.getUser(user_id);
 		userDto.setPasswd(request.getParameter("passwd"));
 		userDto.setUser_name(request.getParameter("user_name"));
-		String[] tagValues=request.getParameterValues("tags");
-		List<TagDataBean> userTags=new ArrayList<TagDataBean>();
-		
-		for(int i=0; i<tagValues.length; i++) {
-			TagDataBean tempTagBean=new TagDataBean();
+		String[] tagValues = request.getParameterValues("tags");
+		List<TagDataBean> userTags = new ArrayList<TagDataBean>();
+
+		for (int i = 0; i < tagValues.length; i++) {
+			TagDataBean tempTagBean = new TagDataBean();
 			tempTagBean.setTag_id(Integer.parseInt(tagValues[i]));
 			tempTagBean.setTag_value(tagDao.getTagValue(tempTagBean.getTag_id()));
 			userTags.add(i, tempTagBean);
 		}
 
 		int result = userDao.modifyUser(userDto);
-		if(result==1) {
+		if (result == 1) {
 			request.setAttribute("result", result);
-			result=tagDao.updateUserTags(user_id, userTags);
+			result = tagDao.updateUserTags(user_id, userTags);
 		}
-		
+
 		return new ModelAndView("svc/userModPro");
 	}
 
@@ -191,65 +191,63 @@ public class SvcProHandler {
 
 		return new ModelAndView("svc/userLeavePro");
 	}
-	
-	////Email
+
+	//// Email
 	@RequestMapping("/emailCheck")
 	public ModelAndView EmailCheckProcess(HttpServletRequest request, String email1) {
-		String to1=email1; // 인증위해 사용자가 입력한 이메일주소
-		String host="smtp.gmail.com"; // smtp 서버
-		String subject="EmailCheck"; // 보내는 제목 설정
-		String fromName="Admin"; // 보내는 이름 설정
-		String from="dlagurgur@gmail.com"; // 보내는 사람(구글계정)
-		String authNum=SvcProHandler.authNum(); // 인증번호 위한 난수 발생부분
-		String content="Number ["+authNum+"]"; // 이메일 내용 설정
-		
+		String to1 = email1; // 인증위해 사용자가 입력한 이메일주소
+		String host = "smtp.gmail.com"; // smtp 서버
+		String subject = "EmailCheck"; // 보내는 제목 설정
+		String fromName = "Admin"; // 보내는 이름 설정
+		String from = "dlagurgur@gmail.com"; // 보내는 사람(구글계정)
+		String authNum = SvcProHandler.authNum(); // 인증번호 위한 난수 발생부분
+		String content = "Number [" + authNum + "]"; // 이메일 내용 설정
+
 		String email = request.getParameter("email1");
-		int result = userDao.EmailCheck( email );
-		
+		int result = userDao.EmailCheck(email);
+
 		request.setAttribute("authNum", authNum);
 		request.setAttribute("email", email);
-		request.setAttribute("result",result);
-		
-		try{
-		Properties props=new Properties();
-		props.put("mail.smtp.starttls.enable", "true");
-		props.put("mail.transport.protocol", "smtp");
-		props.put("mail.smtp.host", host);
-		props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-		props.put("mail.smtp.port","465");
-		props.put("mail.smtp.user",from);
-		props.put("mail.smtp.auth","true");
-		
-		Session mailSession 
-           = Session.getInstance(props,new javax.mail.Authenticator(){
-			    protected PasswordAuthentication getPasswordAuthentication(){
-				    return new PasswordAuthentication("dlagurgur@gmail.com","tkdgur0713!@");
-			}
-		});
-		
-		Message msg = new MimeMessage(mailSession);
-		InternetAddress []address = {new InternetAddress(to1)};
-		msg.setFrom(new InternetAddress
-                      (from, MimeUtility.encodeText(fromName,"utf-8","B")));
-		msg.setRecipients(Message.RecipientType.TO, address);
-		msg.setSubject(subject);
-		msg.setSentDate(new java.util.Date());
-		msg.setContent(content,"text/html; charset=utf-8");
-		
-		Transport.send(msg);
-		}catch(MessagingException e){
+		request.setAttribute("result", result);
+
+		try {
+			Properties props = new Properties();
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.host", host);
+			props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.port", "465");
+			props.put("mail.smtp.user", from);
+			props.put("mail.smtp.auth", "true");
+
+			Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("dlagurgur@gmail.com", "tkdgur0713!@");
+				}
+			});
+
+			Message msg = new MimeMessage(mailSession);
+			InternetAddress[] address = { new InternetAddress(to1) };
+			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "utf-8", "B")));
+			msg.setRecipients(Message.RecipientType.TO, address);
+			msg.setSubject(subject);
+			msg.setSentDate(new java.util.Date());
+			msg.setContent(content, "text/html; charset=utf-8");
+
+			Transport.send(msg);
+		} catch (MessagingException e) {
 			e.printStackTrace();
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return new ModelAndView("svc/emailCheck");
 	}
-	
-	public static String authNum(){	//난수발생부분
-		StringBuffer buffer=new StringBuffer();
-		for(int i=0;i<=4;i++){
-			int num=(int)(Math.random()*9+1);
+
+	public static String authNum() { // 난수발생부분
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i <= 4; i++) {
+			int num = (int) (Math.random() * 9 + 1);
 			buffer.append(num);
 		}
 		return buffer.toString();
@@ -265,63 +263,71 @@ public class SvcProHandler {
 			e.printStackTrace();
 		}
 
-		int schedulenum=Integer.parseInt(request.getParameter("schedulenum"));//일정개수
+		int schedulenum = Integer.parseInt(request.getParameter("schedulenum"));// 일정개수
 		System.out.println(schedulenum);
-		//insert gg_trip_board 
+		// insert gg_trip_board
 		TbDataBean tbDto = new TbDataBean();
-	
-		tbDto.setUser_id((String)request.getSession().getAttribute("user_id"));
+
+		tbDto.setUser_id((String) request.getSession().getAttribute("user_id"));
 		tbDto.setTb_title(request.getParameter("trip_title"));
 		tbDto.setTb_m_num(Integer.parseInt(request.getParameter("trip_m_num")));
 		tbDto.setTb_talk(request.getParameter("tb_talk"));
 		tbDto.setTb_content(request.getParameter("content"));
-		
+
 		tbDao.insertTb_no(tbDto);
-		int tb_no=tbDto.getTb_no();//tb_no
+		int tb_no = tbDto.getTb_no();// tb_no
 		request.setAttribute("tb_no", tb_no);
-			
-		LocDataBean locDto=new LocDataBean();	
-		for(int i=1;i<=schedulenum;i++) {
+
+		LocDataBean locDto = new LocDataBean();
+		for (int i = 1; i <= schedulenum; i++) {
 			tbDao.insertTripDetail(tbDto);
-			int td_trip_id=tbDto.getTd_trip_id();
+			int td_trip_id = tbDto.getTd_trip_id();
 			
-			//gg_coordinate&location
-			String country_code=request.getParameter("country_code"+i+"");
-			double coord_lat=Double.parseDouble(request.getParameter("lat"+i+""));
-			double coord_long=Double.parseDouble(request.getParameter("lng"+i+""));
-			if(country_code!=null) {
-				int coord_order=i;
+			//set writer as a member of his trips
+			Map<String, String> addMember=new HashMap<String, String>();
+			String td_trip_id_string=""+td_trip_id;
+			addMember.put("user_id", (String) request.getSession().getAttribute("user_id"));
+			addMember.put("td_trip_id", td_trip_id_string);
+			userDao.addTripMember(addMember);
+
+			// gg_coordinate&location
+			String country_code = request.getParameter("country_code" + i + "");
+			double coord_lat = Double.parseDouble(request.getParameter("lat" + i + ""));
+			double coord_long = Double.parseDouble(request.getParameter("lng" + i + ""));
+			if (country_code != null) {
+				int coord_order = i;
 				locDto.setCountry_code(country_code);
 				locDto.setCoord_lat(coord_lat);
 				locDto.setCoord_long(coord_long);
 				locDto.setCoord_order(coord_order);
-				
-				int coordResult=locDao.insertCoord(locDto);//locDto의 coord_id에 좌표값 저장한 후 생성된 coord_id저장 됨
-				
-				String cal_start_date=request.getParameter("start"+i+"");
-				String cal_end_date=request.getParameter("end"+i+"");
-				
+
+				int coordResult = locDao.insertCoord(locDto);// locDto의 coord_id에 좌표값 저장한 후 생성된 coord_id저장 됨
+
+				String cal_start_date = request.getParameter("start" + i + "");
+				String cal_end_date = request.getParameter("end" + i + "");
+
 				locDto.setCal_start_date(cal_start_date);
 				locDto.setCal_end_date(cal_end_date);
 				locDto.setTd_trip_id(td_trip_id);
-				
-				int calResult=locDao.insertCal(locDto);//일정에 맞는  calendar table 레코드추가
+
+				int calResult = locDao.insertCal(locDto);// 일정에 맞는 calendar table 레코드추가
+			}
+		}
+
+		// get tags
+		String[] tags = request.getParameterValues("tag");
+		if (tags != null) {// tag를 선택한 경우에만 실행
+			// put them in a Map and call db update
+			Map<String, Integer> tagSetter = new HashMap<String, Integer>();
+			for (String tag : tags) {
+				tagSetter.put("tb_no", tb_no);
+				tagSetter.put("tag_id", Integer.parseInt(tag));
+				tagDao.setTripTag(tagSetter);
 			}
 		}
 		
-	//get tags
-	String[] tags=request.getParameterValues("tag");
-	if(tags!=null) {//tag를 선택한 경우에만 실행
-		//put them in a Map and call db update
-		Map<String, Integer> tagSetter=new HashMap<String, Integer>();
-		for(String tag:tags) {
-			tagSetter.put("tb_no", tb_no);
-			tagSetter.put("tag_id", Integer.parseInt(tag));
-			tagDao.setTripTag(tagSetter);
-		}
+		return new ModelAndView("svc/tripWritePro");
 	}
-	return new ModelAndView("svc/tripWritePro");
-}
 
 	@RequestMapping("/tripModPro")
 	public ModelAndView svcTrpModProProcess(HttpServletRequest request, HttpServletResponse response)
@@ -333,20 +339,20 @@ public class SvcProHandler {
 		}
 		System.out.println(request.getParameter("tb_no"));
 		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
-		//update gg_trip_board 
+		// update gg_trip_board
 		TbDataBean tbDto = new TbDataBean();
 		tbDto.setTb_no(tb_no);
-		tbDto.setUser_id((String)request.getSession().getAttribute("user_id"));
+		tbDto.setUser_id((String) request.getSession().getAttribute("user_id"));
 		tbDto.setTb_title(request.getParameter("trip_title"));
 		tbDto.setTb_m_num(Integer.parseInt(request.getParameter("trip_m_num")));
 		tbDto.setTb_talk(request.getParameter("tb_talk"));
 		tbDto.setTb_content(request.getParameter("content"));
-		
-		//update modified "tripMod" in DB
+
+		// update modified "tripMod" in DB
 		int result = tbDao.updateTb(tbDto);
 		request.setAttribute("result", result);
 		request.setAttribute("tb_no", tb_no);
-		
+
 		return new ModelAndView("svc/tripModPro");
 	}
 
@@ -416,17 +422,19 @@ public class SvcProHandler {
 		request.setAttribute("fileResult", fileResult);
 		return new ModelAndView("/svc/boardAlbumPro");
 	}
+
 	@RequestMapping("/photoDel")
-	public ModelAndView svcPhotoDelProcess(HttpServletRequest request,HttpServletResponse response)
+	public ModelAndView svcPhotoDelProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
-		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
 		request.setAttribute("tb_no", tb_no);
-		
-		int photo_id=Integer.parseInt(request.getParameter("photo_id"));
-		int result=albumDao.delPhoto(photo_id);
+
+		int photo_id = Integer.parseInt(request.getParameter("photo_id"));
+		int result = albumDao.delPhoto(photo_id);
 		request.setAttribute("result", result);
 		return new ModelAndView("/svc/photoDel");
 	}
+
 	@RequestMapping("/downloadAlbum.go")
 	public void downloadAlbumProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException, IOException {
@@ -537,7 +545,7 @@ public class SvcProHandler {
 	}
 
 	///////////////////////////////// ajax list/////////////////////////////////
-	
+
 	@RequestMapping(value = "/idCheck.go", method = RequestMethod.POST, produces = "application/json")
 	@ResponseBody
 	public Map<Object, Object> idCheck(@RequestBody String user_id) {
@@ -572,7 +580,7 @@ public class SvcProHandler {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
-		String user_id = (String)session.getAttribute("user_id");
+		String user_id = (String) session.getAttribute("user_id");
 		CmtDataBean cmtDto = new CmtDataBean();
 
 		cmtDto.setUser_id(user_id); // jsp에서 히든으로 가져오면됨
@@ -586,21 +594,21 @@ public class SvcProHandler {
 	@ResponseBody
 	public List<CmtDataBean> commentSelectProcess(HttpServletRequest request, HttpServletResponse response)
 			throws HandlerException {
-		
+
 		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
-		List<CmtDataBean>comment= cmtDao.getComment(tb_no);
-		for(CmtDataBean dto:comment) {
+		List<CmtDataBean> comment = cmtDao.getComment(tb_no);
+		for (CmtDataBean dto : comment) {
 			String user_name;
-			String user_id=dto.getUser_id();
-			if(user_id==null||user_id.equals("")) {
-				user_name="Ex-User";
+			String user_id = dto.getUser_id();
+			if (user_id == null || user_id.equals("")) {
+				user_name = "Ex-User";
 				dto.setUser_name(user_name);
 			} else {
-				user_name=userDao.getUserName(user_id);
+				user_name = userDao.getUserName(user_id);
 				dto.setUser_name(user_name);
 			}
 		}
-		
+
 		request.setAttribute("comment", comment);
 		// don't set the name of variable like this!
 		return comment;
@@ -626,6 +634,47 @@ public class SvcProHandler {
 	private void commentDeleteProcess(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		int c_id = Integer.parseInt(request.getParameter("c_id"));
 		cmtDao.deleteComment(c_id);
+	}
+
+	@RequestMapping(value = "/memberAttend.go", method = RequestMethod.POST)
+	@ResponseBody
+	private List<UserDataBean> memberAttendProcess(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String td_trip_id = request.getParameter("td_trip_id");
+		String user_id = request.getParameter("user_id");
+		Map<String, String> addMemberMap = new HashMap<String, String>();
+		addMemberMap.put("user_id", user_id);
+		addMemberMap.put("td_trip_id", td_trip_id);
+
+		int memberCheck = userDao.isMember(addMemberMap);
+
+		if (memberCheck == 0) {
+			int addMemberResult = userDao.addTripMember(addMemberMap);
+			request.setAttribute("addMemberResult", addMemberResult);
+		}
+
+		List<UserDataBean> memberList = userDao.getCurrentMember(td_trip_id);
+		return memberList;
+	}
+
+	@RequestMapping(value = "/memberAbsent.go", method = RequestMethod.POST)
+	@ResponseBody
+	private List<UserDataBean> memberAbsentProcess(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		String td_trip_id = request.getParameter("td_trip_id");
+		String user_id = request.getParameter("user_id");
+
+		Map<String, String> delMemberMap = new HashMap<String, String>();
+		delMemberMap.put("user_id", user_id);
+		delMemberMap.put("td_trip_id", td_trip_id);
+		int memberCheck = userDao.isMember(delMemberMap);
+
+		if (memberCheck != 0) {
+			int delMemberResult = userDao.delTripMember(delMemberMap);
+			request.setAttribute("delMemberResult", delMemberResult);
+		}
+		List<UserDataBean> memberList = userDao.getCurrentMember(td_trip_id);
+		return memberList;
 	}
 
 	///////////////////////////////// etc/////////////////////////////////
