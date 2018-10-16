@@ -3,7 +3,6 @@
   	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="db">
-
 	<!-- user DB -->
 	<delete id="deleteUser" parameterType="String">
 	 	delete from gg_user where user_id=#{user_id}
@@ -95,12 +94,10 @@
 		select * from gg_tag
 	</select>
 
-	<insert id="insertTag" parameterType="String">
-		insert into
-		gg_tag(tag_id,tag_value) values(
-		SEQ_gg_tag_tag_id.nextval,#{tag_value})
+	<insert id="insertTag" parameterType="string">
+		insert into gg_tag(tag_id,tag_value) values(
+			(select max(tag_id) from gg_tag where tag_id &lt;100)+1,#{tag_value}) 
 	</insert>
-
 	<select id="getTCount" resultType="int">
 		select count(*) from gg_tag
 	</select>
@@ -111,8 +108,8 @@
 		select
 		tag_id,tag_value,rownum r from (
 		select tag_id,tag_value from gg_tag
-		order by tag_id desc)
-		order by tag_id desc)where r &gt;= #{start} and r
+		order by tag_id)
+		order by tag_id)where r &gt;= #{start} and r
 		&lt;=#{end}
 	</select>
 
@@ -169,12 +166,20 @@
 		insert into gg_user_tag values(#{user_id}, #{tag_id}) 
 	</insert>
 	
+	<insert id="updateTripTags" parameterType="java.util.Map">
+		insert into gg_trip_tag values(#{tb_no}, #{tag_id}) 
+	</insert>
+	
 	<select id="getTagId" resultType="int">
 		select tag_id from gg_tag where tag_value=#{tag_value}
 	</select>
 	
 	<delete id="deleteUserTag" parameterType="java.util.Map">
 		delete from gg_user_tag where user_id=#{user_id} and tag_id=#{tag_id}
+	</delete>
+	
+	<delete id="deleteTripTag" parameterType="java.util.Map">
+		delete from gg_trip_tag where tb_no=#{tb_no} and tag_id=#{tag_id}
 	</delete>
 	
 	<insert id="insertTripTags" parameterType="java.util.Map">
@@ -186,6 +191,10 @@
 	</insert>
 
 	<!-- board DB -->
+	<update id="addCount" parameterType="int">
+			update gg_trip_board set tb_v_count=tb_v_count+1 where tb_no=#{tb_no}  
+	</update>
+	
 	<select id="getCount" resultType="int">
 		select count(*) from
 		gg_trip_board
@@ -275,7 +284,7 @@
 
 	<!--trip DB -->
 	<delete id="deleteCal" parameterType="int"> 
- 		delete from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no}); 
+ 		delete from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no})
  	</delete> 
 	<delete id="delTripDetail" parameterType="int">
 		delete from gg_trip_detail where tb_no=#{tb_no}
@@ -370,7 +379,7 @@
 	</delete>
 	
 	<update id="updateTb" parameterType="db.TbDataBean">
-		update gg_trip_board set (tb_title=#{tb_title}, tb_conent=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk}) 
+		update gg_trip_board set tb_title=#{tb_title}, tb_content=#{tb_content}, tb_m_num=#{tb_m_num}, tb_talk=#{tb_talk} 
 		where tb_no=#{tb_no}
 	</update>
 
