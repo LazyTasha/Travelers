@@ -278,7 +278,7 @@
 
 	<!--trip DB -->
 	<delete id="deleteCal" parameterType="int"> 
- 		delete from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no}); 
+ 		delete from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no})
  	</delete> 
 	<delete id="delTripDetail" parameterType="int">
 		delete from gg_trip_detail where tb_no=#{tb_no}
