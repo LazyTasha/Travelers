@@ -236,66 +236,6 @@ function deletePhoto(tb_no,photo_id,start){
 		}
 	});
 }
-// 회원 정보 수정
-function modifyfocus() {
-	modifyform.passwd.focus();
-}
-function modifycheck() {
-	if (!modifyform.passwd.value) {
-		alert(passwderror);
-		modifyform.passwd.focus();
-		return false;
-	} else if (modifyform.passwd.value != modifyform.repasswd.value) {
-		alert(repasswderror);
-		modifyform.repasswd.focus();
-		return false;
-	}
-
-	if (!modifyform.user_name.value) {
-		alert(nameerror);
-		modifyform.user_name.focus();
-		return false;
-	}
-
-	if (modifyform.email1.value || modifyform.email2.value) {
-		if ((modifyform.email1.value && !modifyform.email2.value)
-				|| (!modifyform.email1.value && modifyform.email2.value)
-				|| (modifyform.email1.value.indexOf("@") != -1 || modifyform.email2.value
-						.indexOf("@") != -1)) {
-			alert(emailerror);
-			modifyform.email1.focus();
-			return false;
-		}
-	}
-}
-
-// 회원 탈퇴
-function passwdfocus() {
-	passwdform.passwd.focus();
-}
-function passwdcheck() {
-	if (!passwdform.passwd.value) {
-		alert(passwderror);
-		passwdform.passwd.focus();
-		return false;
-	}
-}
-
-// 로그인
-function loginfocus() {
-	loginform.user_id.focus();
-}
-function logincheck() {
-	if (!loginform.user_id.value) {
-		alert(iderror);
-		loginform.user_id.focus();
-		return false;
-	} else if (!loginform.passwd.value) {
-		alert(passwderror);
-		loginform.passwd.focus();
-		return false;
-	}
-}
 
 //AJAX 또는 DOM
 
@@ -364,6 +304,9 @@ function NameCheck() {
 	}
 }
 //이메일
+function gridClose(){
+	self.close();
+}
 function EmailClose(){
 	self.close();
 }
