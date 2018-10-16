@@ -566,35 +566,37 @@ function loadMoreList(last_tb_no) {
 		success : function(data) {
 			var listForAppend="";
 			if(data){
+				alert("추가 리스트 준비!");
 				$.each(data, function(key, additionalList){
 					listForAppend+='<div class="row">';
 					listForAppend+=		'<div class="col-md-12">';
 					listForAppend+=			'<div class="card flex-md-row mb-3 shadow-sm h-md-250">';
 					listForAppend+=				'<div class="card-body d-flex flex-column align-items-start">';
 					listForAppend+=					'<strong class="d-inline-block mb-2">';
-					listForAppend+=						'<c:forEach var="j" items="${additionalList.locs}">';
+					alert("for 돌기 전");
+					listForAppend+=						'<c:forEach var="j" items="'+additionalList.locs+'">';
 					listForAppend+=							'${j}';
 					listForAppend+=						'</c:forEach>';
 					listForAppend+=					'</strong>';
 					listForAppend+=					'<h3 class="mb-0">';
-					listForAppend+=					'<a class="text-dark" href="#">${i.tb_title}</a>';
+					listForAppend+=					'<a class="text-dark" href="#">'+additionalList.tb_title+'</a>';
 					listForAppend+=					'</h3>';
-					listForAppend+=						'<div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>';
+					listForAppend+=						'<div class="mb-1 text-muted"><i><b>With</b></i>&nbsp;'+additionalList.user_id+'</div>';
 					listForAppend+=							'<hr size="1px" color="black" noshade>';
-					listForAppend+=							'<p class="card-text mb-auto">${i.tb_content}</p>';
+					listForAppend+=							'<p class="card-text mb-auto">'+additionalList.tb_content+'</p>';
 					listForAppend+=							'<hr style="width: 100%">';
 					listForAppend+=								'<div class="d-flex justify-content-center">';
 					listForAppend+=								'<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;';
-					listForAppend+=								'<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;';
-					listForAppend+=								'<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;';
+					listForAppend+=								'<div class="p-2">인원:'+additionalList.tb_m_num+'</div>&nbsp;';
+					listForAppend+=								'<div class="p-2">조회수:'+additionalList.tb_v_count+'</div>&nbsp;';
 					listForAppend+=						'</div>';
-					listForAppend+=					'<a href="trip.go?tb_no=${i.tb_no}">Continue reading</a>';
+					listForAppend+=					'<a href="trip.go?tb_no='+additionalList.tb_no+'">Continue reading</a>';
 					listForAppend+=				'</div>';
 					listForAppend+=			'<img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">';
 					listForAppend+='</div></div></div>';
 	            });
-	            
-	            $(".board-append-list").append(listForAppend);
+	            alert("준비 끝");
+	            $("#board-append-list").append(listForAppend);
 			} else {
 				alert('더 이상 불러올 글이 없습니다.');
 			}

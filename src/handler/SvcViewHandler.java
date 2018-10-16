@@ -94,16 +94,21 @@ public class SvcViewHandler {
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TbDataBean> tripList=tbDao.getTripList();
-		int last_tb_no=0;
+		int startTrip=0;
+		int endTrip=0;
+		
 		if(tripList.size()!=0) {
-			last_tb_no=tripList.get(tripList.size()-1).getTb_no();
+			startTrip=tripList.get(tripList.size()-1).getTb_no();
+			endTrip=startTrip-10;
+			request.setAttribute("last_tb_no", endTrip);
 		}
+		
 		int count=tbDao.getCount();
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
-		request.setAttribute("last_tb_no", last_tb_no);
+		request.setAttribute("startTrip", startTrip);
+		request.setAttribute("endTrip", endTrip);
 		request.setAttribute("count", count);
-		request.setAttribute("last_tb_no", last_tb_no);
 		return new ModelAndView("svc/tripList");
 	}
 	
@@ -248,9 +253,15 @@ public class SvcViewHandler {
 	/////////////////////////////////ajax method list/////////////////////////////////
 	@RequestMapping(value="/loadMoreList", produces = "application/json")
 	@ResponseBody
-	public List<TbDataBean> loadMoreList(int last_tb_no) {
+	public List<TbDataBean> loadMoreList(int last_row) {
 		//get more 5 trip articles when 'load more' button is pressed
-		List<TbDataBean> additionalList=tbDao.loadMoreList(last_tb_no);
+		List<TbDataBean> additionalList=tbDao.loadMoreList(last_row);
+		if (additionalList.size()!=0) {
+			System.out.println("잘 가져왔나 확인. "+additionalList.get(0).getTb_no());
+		} else {
+			System.out.println("망했어 못 가져왔어");
+		}
+		
 		return additionalList;
 	}
 }
