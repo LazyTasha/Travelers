@@ -3,7 +3,7 @@
 <%@include file="setting.jsp" %>
 <%@include file="header.jsp" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
  <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -33,34 +33,31 @@
             	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
                 	<input type="number" name="trip_m_num" class="col-2" min="0" value="${tbDto.tb_m_num}">
             </div>
+            
             <c:set var="i" value="1"/>  
-           <!--<div id="schedule" class="form-group row">	  
-                <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule}${i}</label> 
-                    <input type="text" name="start${i}" id="start${i}" class="col-2"/>
-                 	~
-                 	<input type="text" name="end${i}" id="end${i}" class="col-2"/>
-                 	&nbsp;&nbsp;
-                	<input name="place${i}" type="text" class="col-2" readonly>
-                 <button id="btn${i}" class="btn_plus" type="button" onclick="addSchedule(${i})">
-					<img  class="btn_img" src="${project}img/addbutton.png"> 
-					일정추가
-				</button>
-				<div id="coordinfo${i}">
-				</div>
-	        </div>
-	        <div id="schedulediv" >
-            </div>--> 
+            <div id="schedule" class="form-group row">	            
+	            <c:forEach var="i" items="${locDtoList}">
+	            	<label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule}</label> 
+	            	<div class="row col-10">
+						<input type="text" name="start${i}" id="start${i}" class="col-3" value="${i.cal_start_date}" readonly="readonly"/> 
+							~
+						<input type="text" name="end${i}" id="end${i}" class="col-3" value="${i.cal_end_date}" readonly="readonly"/>						
+						<input type="hidden" value="${i.coord_long}~${i.coord_lat}"/>
+						<input type="hidden" value="${i.country_name}"/>
+						<input name="place${i}" type="text" class="col-3" value="${i.country_name}" readonly="readonly"/>		
+					</div>
+				</c:forEach>
+				<div id="coordinfo${i}"></div>
+			</div>
+			<div id="schedulediv" ></div>
+			
             <div class="form-group row">
                  <label for="tb_talk" class="col-2 col-form-label">${tb_talk}</label>
                  <input type="text" name="tb_talk" class="col-10" value="${tbDto.tb_talk}">
             </div>
             <div class="form-group row">
-                 <label for="trip_location" class="col-2 col-form-label">${trip_location}</label>
-               <div id="floating-panel" class="col-10">
-                  <input id="address" type="text"/>
-                  <input id="submit" type="button" class="btn btn-dark btn-sm"  value="${btn_search}"/>
-               </div>
-               <div id="searchmap" class="col-12"></div>
+                 <label for="trip_location" class="col-2 col-form-label">${trip_location}</label>              
+                 <div id="searchmap" class="col-12"></div>
             </div>
             <hr>
             <div class="form-group row">
@@ -69,13 +66,40 @@
             <hr>
             <div class="form-group row">
                  <label for="trip_tag" class="col-2 col-form-label">${trip_tag}</label>
-               	 <c:if test="${styleTags.size() ne 0}">
-                  <c:forEach var="i" items="${styleTags}">
-                  	 <label class="btn btn-secondary">
-                   	  <input type="checkbox" name="tag" value="${i.tag_id}">${i.tag_value}
-                     </label>
-                  </c:forEach>
-                </c:if>
+	               	<c:forEach var="i" items="${tagList}">
+	               	  <c:set var="count" value="0"/>
+					  <c:set var="size" value="${tripTags.size()}"/>				  
+					  <c:choose>
+					  <c:when test="${size eq 0}">
+		   				   <label class="btn"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</label>
+					  </c:when>
+					  <c:otherwise>		              	  
+			             
+			              <c:forEach var="j" items="${tripTags}">
+			            	  <c:choose>
+								 <c:when test="${i.tag_value==j.tag_value}">
+				                  	 <label class="btn">
+				                   	  	<input type="checkbox" name="tags" value="${i.tag_id}" checked>${i.tag_value}
+				                     </label>
+				                  </c:when>
+				                  <c:otherwise>
+									 <c:choose>
+										<c:when test="${count<size-1}">
+											<c:set var="count" value="${count=count+1}"/>
+										</c:when>
+										<c:otherwise>
+											 <label class="btn">
+											 	<input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}
+											 </label>
+										</c:otherwise>
+									</c:choose>
+								  </c:otherwise>				                 
+				              </c:choose>
+			              </c:forEach>               	  
+                	 
+                	  </c:otherwise>
+                	  </c:choose>
+				    </c:forEach>
             </div>  
                <input class="btn btn-dark btn-sm" type="submit" value="${btn_mod}">
                <input class="btn btn-dark btn-sm" type="button" value="${btn_list}"

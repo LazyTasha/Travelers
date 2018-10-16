@@ -80,7 +80,6 @@ public class SvcViewHandler {
 			List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
 			request.setAttribute("userTags", userTags);
 		}
-		
 		return new ModelAndView("svc/myPage");
 	}
 	
@@ -136,6 +135,8 @@ public class SvcViewHandler {
 			}
 			request.setAttribute("locDtoList", locDtoList);
 		}
+		
+		tbDao.addCount(tb_no);
 		
 		//authorization for deletion and modification-수정 삭제 권한 
 		TripDataBean tripDto=new TripDataBean();
@@ -243,6 +244,7 @@ public class SvcViewHandler {
 
 			//check user whether user is member or not
 			TbDataBean tbDto=new TbDataBean();
+			user_id=(user_id==null?"":user_id);
 			tbDto.setUser_id(user_id);
 			tbDto.setTb_no(tb_no);
 			boolean isMember=tbDao.isMember(tbDto);

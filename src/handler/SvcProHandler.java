@@ -265,9 +265,9 @@ public class SvcProHandler {
 			e.printStackTrace();
 		}
 
-		int schedulenum = Integer.parseInt(request.getParameter("schedulenum"));// 일정개수
-		System.out.println(schedulenum);
-		// insert gg_trip_board
+		int schedulenum=Integer.parseInt(request.getParameter("schedulenum"));//일정개수
+		//insert gg_trip_board 
+
 		TbDataBean tbDto = new TbDataBean();
 
 		tbDto.setUser_id((String) request.getSession().getAttribute("user_id"));
@@ -350,11 +350,23 @@ public class SvcProHandler {
 		tbDto.setTb_talk(request.getParameter("tb_talk"));
 		tbDto.setTb_content(request.getParameter("content"));
 
-		// update modified "tripMod" in DB
+		String[] tagValues=request.getParameterValues("tags");
+		
+		//match tag_id & tag_value 
+		List<TagDataBean> tripTags=new ArrayList<TagDataBean>();	
+		for(int i=0; i<tagValues.length; i++) {
+			TagDataBean tempTagBean=new TagDataBean();
+			tempTagBean.setTag_id(Integer.parseInt(tagValues[i]));
+			tempTagBean.setTag_value(tagDao.getTagValue(tempTagBean.getTag_id()));
+			tripTags.add(i, tempTagBean);
+		}
+		
+		//update modified "tripMod" in DB
 		int result = tbDao.updateTb(tbDto);
 		request.setAttribute("result", result);
 		request.setAttribute("tb_no", tb_no);
-
+		result=tagDao.updateTripTags(tb_no, tripTags);
+		
 		return new ModelAndView("svc/tripModPro");
 	}
 
@@ -434,7 +446,7 @@ public class SvcProHandler {
 		int photo_id = Integer.parseInt(request.getParameter("photo_id"));
 		int result = albumDao.delPhoto(photo_id);
 		request.setAttribute("result", result);
-		return new ModelAndView("/svc/photoDel");
+		return new ModelAndView("redirect:trip.go?tb_no="+tb_no);
 	}
 
 	@RequestMapping("/downloadAlbum.go")
