@@ -71,11 +71,6 @@
 							<div>
 								<div>글쓴이 : ${tbDto.user_id}</div>
 							</div>
-
-							<div>
-								<div>본문 : ${tbDto.tb_content}</div>
-							</div>
-
 							<div>
 								<div>인원 : ${tbDto.tb_v_count}/${tbDto.tb_m_num}</div>
 							</div>
@@ -91,6 +86,7 @@
 										<input type="hidden" name="coord_lat" value="${i.coord_lat}">
 									</div>	
 									<div>나라 이름: ${i.country_name}</div>
+									<input type="hidden" id="country${order}" value="${i.country_name}">
 									<button onclick="attend()">참석</button>
 									<button onclick="attend()">불참</button>
 								</c:forEach>

@@ -6,7 +6,6 @@
 <h3>|${str_tag_add}</h3>
 	<input type="hidden" value="${state}" name="state"/>
 	<section>
-			<p><input type="checkbox" id="checkAll">${str_select_all}</p>
 			<div class="buttonarea">
 				<input class="inputbutton" type="button" value="${btn_cancel}" onclick="setCancel()">
 				<input class="inputbutton" type="button" value="${btn_check}" onclick="addTag(${state})">

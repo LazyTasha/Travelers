@@ -48,6 +48,7 @@ var boardmarker;
 var boardmap;
 var coord_lats=[];
 var coord_lngs=[];
+var country_codes=[];
 //Map for board
 function initMap() {//trip.jsp에서 좌표로 마커 표시
 	var coord=$('div[name=coord]');
@@ -69,11 +70,13 @@ function initMap() {//trip.jsp에서 좌표로 마커 표시
     var centerLng = centerLngSum / coord.length ;   
 	var center={lat:centerLat,lng:centerLng};
 	  // The map, centered at allPlace
-    	boardmap = new google.maps.Map(
-	      document.getElementById('map'), {zoom: 8, center:center});
+	boardmap = new google.maps.Map(
+      document.getElementById('map'), {zoom: 3, center:center});
    for(var i=0;i<coord.length;i++){
 	  addMarker(location[i],i,boardmap);  
    }
+   if(isSameCountry()==1)boardmap.setZoom(6);
+   
 }
 //Adds a marker to the map.
 function addMarker(location, num,boardmap) {
@@ -100,6 +103,17 @@ function addMarker(location, num,boardmap) {
 	   }
 	 });
 }
+function isSameCountry(){
+	var result=1;
+	num=$('div[name=coord]').length;
+	for(var i=2;i<=num;i++){
+		if($('#country1').val()!=$('#country'+i+'').val()){
+			result=0;break;
+		}
+	}
+	return result;
+}
+
 //Map for writing
 //지도 주소검색
 var map;
@@ -606,12 +620,18 @@ function loadMoreList(last_tb_no) {
 		}
 	});
 }
-//달력 불러오기 
+//달력 불러오기 //순서대로 입력 받기
 function loadCal(num){ 
-	$("#start"+num+"").datepicker(); 
+	if(num==1){
+		$("#start"+num+"").datepicker();
+	}else if(num>1){
+		var beforeStart=$('#start'+(num-1)+'').val();
+		$("#start"+num+"").datepicker({
+			minDate:beforeStart
+		});
+	}
 	 $("#start"+num+"").datepicker("option", "onClose", function ( selectedDate ) {
 	        $("#end"+num+"").datepicker( "option", "minDate", selectedDate );
-	        $("#start"+(num+1)+"").datepicker( "option", "minDate", selectedDate );
 	    });
 	 
 	$("#end"+num+"").datepicker();

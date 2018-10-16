@@ -59,7 +59,7 @@
             <br>
             <hr>
             <div class="form-group row">
-               <textarea name="content" class="col-12" rows="10" placeholder="${trip_entercontent}" autofocus required></textarea>
+               <textarea name="content" class="col-12" rows="10" maxlength="1300" placeholder="${trip_entercontent}" autofocus required></textarea>
             </div>
             <hr>
                 <div class="form-group row">
