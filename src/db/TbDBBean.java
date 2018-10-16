@@ -16,6 +16,11 @@ public class TbDBBean {
 		return session.selectOne("db.getCount");
 	}
 	
+	public void addCount(int tb_no) {
+		session.update("db.addCount", tb_no);
+	}
+
+	
 	//get one trip post by tb_no, including location and tag list
 	public TbDataBean getTb(int tb_no) {
 		//original trip data

@@ -182,9 +182,9 @@ function updateMarker(marker,num){
 }
 // Removes the markers 
 function deleteMarkers(num) {
- for (var i = 0; i < markers.length-1; i++) {
-	    markers[i].setMap(null);
-	    }	
+	 for (var i = 0; i < markers.length-1; i++) {
+		    markers[i].setMap(null);
+		    }	
 }
 //trip view-button event-map
 function showMap(){

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.TagDBBean;
+import db.TbDBBean;
 import db.TripDBBean;
 import db.UserDBBean;
 
@@ -28,6 +29,8 @@ public class AdmDelHandler {
 	private CmtDBBean cmtDao;
 	@Resource
 	private TagDBBean tagDao;
+	@Resource
+	private TbDBBean tbDao;
 	
 	@RequestMapping("/adminUserDel")
 	public ModelAndView userDelProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
@@ -61,7 +64,7 @@ public class AdmDelHandler {
 			num=Integer.parseInt(request.getParameter("num"));
 			for(int i=0;i<num;i++) {
 				String tb_no=request.getParameter("key"+i+"").trim();
-				result=tripDao.deleteTrip(Integer.parseInt(tb_no));
+				result=tbDao.deleteTrip(Integer.parseInt(tb_no));
 				results.add(result);
 			}
 			if(results.contains(0)) {
@@ -72,6 +75,8 @@ public class AdmDelHandler {
 		}catch(NumberFormatException e) {
 			e.printStackTrace();
 		}
+		
+		
 		return new ModelAndView("adm/tripDel");
 	}
 	@RequestMapping("/adminCommentDel")
