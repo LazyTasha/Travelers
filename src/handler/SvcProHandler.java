@@ -265,9 +265,9 @@ public class SvcProHandler {
 			e.printStackTrace();
 		}
 
-		int schedulenum = Integer.parseInt(request.getParameter("schedulenum"));// 일정개수
-		System.out.println(schedulenum);
-		// insert gg_trip_board
+		int schedulenum=Integer.parseInt(request.getParameter("schedulenum"));//일정개수
+		//insert gg_trip_board 
+
 		TbDataBean tbDto = new TbDataBean();
 
 		tbDto.setUser_id((String) request.getSession().getAttribute("user_id"));
@@ -434,7 +434,7 @@ public class SvcProHandler {
 		int photo_id = Integer.parseInt(request.getParameter("photo_id"));
 		int result = albumDao.delPhoto(photo_id);
 		request.setAttribute("result", result);
-		return new ModelAndView("/svc/photoDel");
+		return new ModelAndView("redirect:trip.go?tb_no="+tb_no);
 	}
 
 	@RequestMapping("/downloadAlbum.go")

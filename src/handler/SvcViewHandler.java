@@ -78,7 +78,6 @@ public class SvcViewHandler {
 			List<TagDataBean> userTags=tagDao.getUserTags(userDto.getUser_id());
 			request.setAttribute("userTags", userTags);
 		}
-		
 		return new ModelAndView("svc/myPage");
 	}
 	
@@ -239,6 +238,7 @@ public class SvcViewHandler {
 
 			//check user whether user is member or not
 			TbDataBean tbDto=new TbDataBean();
+			user_id=(user_id==null?"":user_id);
 			tbDto.setUser_id(user_id);
 			tbDto.setTb_no(tb_no);
 			boolean isMember=tbDao.isMember(tbDto);

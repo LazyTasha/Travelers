@@ -14,7 +14,7 @@
 		from (
 		select user_id,user_name,email,gender,reg_date,rownum r from (
 		select
-		user_id,user_name,email,gender,reg_date from gg_user order by
+		user_id,user_name,email,gender,reg_date from gg_user where user_level!=9 order by
 		reg_date
 		desc)
 		order by reg_date desc)where r &gt;= #{start} and r &lt;=#{end}
@@ -274,8 +274,11 @@
 	</select>
 
 	<!--trip DB -->
-	<delete id="deleteCal" parameterType="int">
-		delete from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no});
+	<delete id="deleteCal" parameterType="int"> 
+ 		delete from gg_calendar where td_trip_id in(select td_trip_id from gg_trip_detail where tb_no=#{tb_no}); 
+ 	</delete> 
+	<delete id="delTripDetail" parameterType="int">
+		delete from gg_trip_detail where tb_no=#{tb_no}
 	</delete>
 	<select id="isOwner" parameterType="db.TripDataBean" resultType="int">
 		select count(*) from gg_trip_board where tb_no=#{tb_no} and user_id=#{user_id}
@@ -458,5 +461,9 @@
 	<select id="getCountryName" parameterType="int" resultType="String">
 		select country_name from gg_country where country_id=
 		(select country_id from gg_coordinate where coord_id=#{coord_id})
+	</select>
+	
+	<select id="getCoordOrder" parameterType="int" resultType="int">
+		select coord_order from gg_coordinate where coord_id=#{coord_id}
 	</select>
 </mapper>
