@@ -1,5 +1,6 @@
 package handler;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import db.AlbumDBBean;
 import db.CmtDBBean;
 import db.LocDBBean;
+import db.LocDataBean;
 import db.TagDBBean;
 import db.TagDataBean;
 import db.TbDBBean;
@@ -114,9 +116,26 @@ public class SvcFormHandler {
 		//get the origin;
 		//basic contents(essential 'var' for tripMod.jsp: tb_no, user_id, tb_content, tb_m_num, tb_talk, td_trip_id, locs[], tags[])
 		int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+		request.setAttribute("tb_no", tb_no);	
 		TbDataBean tbDto=tbDao.getTb(tb_no);
-		//set the origin to spread out
 		request.setAttribute("tbDto", tbDto);
+		
+		//trip details
+		List<LocDataBean> locDtoList=new ArrayList<LocDataBean>();
+			//tbDto has td_trip_ids
+			if(tbDto.getTd_trip_ids().length>0) {
+				for(int trip_id:tbDto.getTd_trip_ids()) {
+					LocDataBean locDto=locDao.getTripDetail(trip_id);
+					locDtoList.add(locDto);
+				}
+				request.setAttribute("locDtoList", locDtoList);
+			}
+		//get tag details & total list 
+		List<TagDataBean> tripTags=tagDao.getTripTags(tb_no);
+		List<TagDataBean> tagList=tagDao.getStyleTags();
+		request.setAttribute("tagList", tagList);	
+		request.setAttribute("tripTags", tripTags); 
+		
 		return new ModelAndView("svc/tripMod");
 	}
 }

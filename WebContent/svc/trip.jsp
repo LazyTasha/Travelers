@@ -75,7 +75,7 @@
 								카카오톡 :<a href="${tbDto.tb_talk}" target="_blank"> 카카오톡</a>
 							</div>
 							<div class="row">
-								${trip_content}<textarea class="col-12" rows="10">${tbDto.tb_content}</textarea>
+								${trip_content}<textarea class="col-12" rows="10" readonly>${tbDto.tb_content}</textarea>
 							</div>							
 						</div>
 					</div>

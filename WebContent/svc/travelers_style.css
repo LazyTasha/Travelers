@@ -2,6 +2,7 @@
 /*====Common Travelers Theme====*/
 .btn {
 	background-color: #232F34;
+	color: white;
 }
 a {
    color: black;
@@ -128,6 +129,9 @@ button img{
 	border: 1px black solid;
 }
 /*===tripList.jsp===*/
+.n_name div{
+	text-align: right;
+}
 aside {
 	position: relative;
 	width:20%;
