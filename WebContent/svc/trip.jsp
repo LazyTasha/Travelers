@@ -143,11 +143,11 @@
 				<c:if test="${tab eq '1'}">
 					<section id="albumTab">
 				</c:if>
-				<div class="row col-12" id="album">
-					<jsp:include
-						page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}'
-						flush='false' />
-				</div>
+					<div class="row" id="album">
+						<jsp:include
+							page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}'
+							flush='false' />
+					</div>
 				</section>
 
 				<!--ㅡMap영역  -->

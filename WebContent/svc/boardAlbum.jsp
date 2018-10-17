@@ -1,12 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="setting.jsp" %>
+
 <link rel="stylesheet" type="text/css"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
  <c:if test="${start gt size}">
-		<button onclick="previous(${start},${size})">◀</button>
+	<div class="navbar" style="background:#a2b1b1;" onclick="previous(${start},${size})">◀</div>
 </c:if>
-<main role="main" class="col-12">	
+<c:if test="${start le size}">
+	<div class="navbar transparent">&nbsp;&nbsp;</div>
+</c:if>
+<div style="width:86%">	
    <div class="container">
      <h3>Album</h3>
      	<c:if test="${isMember eq true}">
@@ -50,8 +54,7 @@
 	     </c:if>
 	   </div>
 	</div>
- </main>
+ </div>
  <c:if test="${start lt last}">
-		<button onclick="next(${start},${size})">▶</button>
+		<div class="navbar" style="background:#a2b1b1;" onclick="next(${start},${size})">▶</div>
 </c:if>
- 
