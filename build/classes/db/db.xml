@@ -20,7 +20,7 @@
 	</select>
 
 	<select id="getUCount" resultType="int">
-		select count(*) from gg_user
+		select count(*) from gg_user where user_level!=9
 	</select>
 
 	<select id="getUserName" parameterType="String" resultType="String">
@@ -99,15 +99,18 @@
 
 	<!-- tag DB -->
 	<select id="getTagList" resultType="java.util.Map">
-		select * from gg_tag
+		select * from gg_tag 
 	</select>
-
-	<insert id="insertTag" parameterType="string">
+	<insert id="insertTag" parameterType="String">
 		insert into gg_tag(tag_id,tag_value) values(
-			(select max(tag_id) from gg_tag where tag_id &lt;100)+1,#{tag_value}) 
+			(select max(tag_id) from gg_tag where tag_id &lt;=100,)+1,#{tag_value}) 
+	</insert>
+	<insert id="insertCityTag" parameterType="String">
+		insert into gg_tag(tag_id,tag_value) values(
+			(select max(tag_id) from gg_tag where tag_id >100 and tag_id &lt;=1000)+1,#{tag_value})
 	</insert>
 	<select id="getTCount" resultType="int">
-		select count(*) from gg_tag
+		select count(*) from gg_tag where tag_id &lt;=1000
 	</select>
 
 	<select id="getTags" parameterType="java.util.Map" resultType="db.TagDataBean">
@@ -115,10 +118,10 @@
 		from (
 		select
 		tag_id,tag_value,rownum r from (
-		select tag_id,tag_value from gg_tag
-		order by tag_id)
+		select tag_id,tag_value from gg_tag where tag_id &lt;=1000
+		order by tag_id ) where tag_id &lt;=1000
 		order by tag_id)where r &gt;= #{start} and r
-		&lt;=#{end}
+		&lt;=#{end} and tag_id &lt;=1000
 	</select>
 
 	<select id="checkTag" parameterType="String" resultType="int">

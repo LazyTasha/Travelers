@@ -44,8 +44,8 @@
 				</c:if>
 				<c:if test="${user_level eq 9}">
 					<div>
-						<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})"> 
-						<input type="button" value="${btn_back_admin}" onclick="goAdminPage()">							
+						<input type="button" value="${btn_delete}" class="btn btn-sm" onclick="deleteBoard(${tb_no})"> 
+						<input type="button" value="${btn_back_admin}" class="btn btn-sm" onclick="goAdminPage()">							
 					</div>
 				</c:if>
 			</div>
@@ -64,12 +64,12 @@
 							<input type="text" name="trip_title" class="col-12 form-control form-control-lg" value="${tbDto.tb_title}" readonly="readonly">																			
 						</div>						
 						<div class="row">
-								<div class="text-muted">
-									<i><b>With</b></i>&nbsp; ${tbDto.user_id}
-								</div>
+							<div class="text-muted">
+								<i><b>With</b></i>&nbsp; ${tbDto.user_id}
+							</div>
 						</div>
 						<div class="row pt-2 pb-2">
-								<label class="col-2">참여 인원</label>${tbDto.tb_v_count}/${tbDto.tb_m_num}
+							<label class="col-2">참여 인원</label>${tbDto.tb_m_num}
 						</div>						
 						<c:forEach var="i" items="${locDtoList}">
 						<c:set var="order" value="${i.coord_order}"/>
@@ -83,12 +83,12 @@
 								<div class="row">
 									<div class="col-12 offset-2">
 										<div class="loc" name="coord">
-												<input type="text" name="trip_location${order}" id="address${order}" class="col-8 pt-3" readonly="readonly">
-												<input type="hidden" name="coord_long" value="${i.coord_long}">
-												<input type="hidden" name="coord_lat" value="${i.coord_lat}">
-												<input type="hidden" id="country${order}"value="${i.country_name}">																						
-												<button onclick="attend(${i.td_trip_id})" class="btn btn-sm">참석</button>
-												<button onclick="absent(${i.td_trip_id})" class="btn btn-sm">불참</button>
+											<input type="text" name="trip_location${order}" id="address${order}" class="col-8 pt-3" readonly="readonly">
+											<input type="hidden" name="coord_long" value="${i.coord_long}">
+											<input type="hidden" name="coord_lat" value="${i.coord_lat}">
+											<input type="hidden" id="country${order}"value="${i.country_name}">																						
+											<button onclick="attend(${i.td_trip_id})" class="btn btn-sm">참석</button>
+											<button onclick="absent(${i.td_trip_id})" class="btn btn-sm">불참</button>
 										</div><!-- 장소 -->
 									</div><!-- column -->
 								</div><!-- row -->
