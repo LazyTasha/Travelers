@@ -79,7 +79,7 @@
 			            	  <c:choose>
 								 <c:when test="${i.tag_value==j.tag_value}">
 				                  	 <label class="btn">
-				                   	  	<input type="checkbox" name="tags" value="${i.tag_id}" checked>${i.tag_value}
+				                   	  	<input type="checkbox" name="tags" value="${i.tag_id}" checked># ${i.tag_value}
 				                     </label>
 				                  </c:when>
 				                  <c:otherwise>

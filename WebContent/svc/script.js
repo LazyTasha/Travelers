@@ -93,8 +93,8 @@ function addMarker(location, num,boardmap) {
 	 	     label:''+num+'',
 	         animation:google.maps.Animation.DROP,
 	       });
-	       	//div에 주소 붙이기
-	       $('#address'+num+'').append(address);
+	       	//input에 주소 붙이기   		
+	       $('#address'+num+'').val(address);
 	     } else {
 	       window.alert('No results found');
 	     }
