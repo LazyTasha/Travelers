@@ -99,11 +99,12 @@
 
 	<!-- tag DB -->
 	<select id="getTagList" resultType="java.util.Map">
-		select * from gg_tag 
+		select * from gg_tag
 	</select>
+
 	<insert id="insertTag" parameterType="String">
 		insert into gg_tag(tag_id,tag_value) values(
-			(select max(tag_id) from gg_tag where tag_id &lt;=100,)+1,#{tag_value}) 
+			(select max(tag_id) from gg_tag where tag_id &lt;=100)+1,#{tag_value}) 
 	</insert>
 	<insert id="insertCityTag" parameterType="String">
 		insert into gg_tag(tag_id,tag_value) values(
@@ -291,6 +292,15 @@
 		td_trip_id in(
 		select td_trip_id from gg_trip_detail where
 		tb_no=#{tb_no})
+	</select>
+	
+	<select id="findTripByKeyword" parameterType="String" resultType="db.TbDataBean">
+		select * from gg_trip_board where regexp_like(tb_title, #{keyword}) or regexp_like(tb_content, #{keyword})
+	</select>
+	
+	<select id="findTripByUser" parameterType="String" resultType="db.TbDataBean">
+		select * from gg_trip_board where user_id=
+		(select user_id from gg_user where user_name=#{keyword})
 	</select>
 
 	<!--trip DB -->

@@ -76,7 +76,7 @@
         <p class="float-right">
           <a href="#">Back to top</a>
         </p>
-        <p>New to Travelers? <a href="../../">Visit the homepage</a></p>
+        <p>New to Travelers? <a href="login.go">Join us</a></p>
       </div>
     </footer>
 
