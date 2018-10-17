@@ -18,6 +18,8 @@ import db.TagDataBean;
 public class AdmTagHandler {
 	final int tagadd=1;
 	final int tagmod=2;
+	private static final int USER_TAG=1;
+	private static final int CITY_TAG=2;
 	
 	@Resource
 	private TagDBBean tagDao;
@@ -42,10 +44,15 @@ public class AdmTagHandler {
 			String[] v=values.split(",");
 			for(int i=0;i<v.length;i++) {
 				//insert하기	
-				tagDto.setTag_value(v[i]);
+				int tagtype=Integer.parseInt(v[i].substring(0, 1));
+				String tag_value=v[i].substring(1);
+				tagDto.setTag_value(tag_value);
 				resultcheck=tagDao.checkTag(tagDto.getTag_value());
 				if(resultcheck==0) {
-					result=tagDao.insertTag(v[i]);
+					if(tagtype==USER_TAG)
+						result=tagDao.insertTag(tag_value);
+					else if(tagtype==CITY_TAG)
+						result=tagDao.insertCityTag(tag_value);
 				}	
 			}
 		}else if(state==tagmod) {

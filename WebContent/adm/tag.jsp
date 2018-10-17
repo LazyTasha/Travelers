@@ -28,6 +28,7 @@
 					<th class="check"><input type="checkbox" disabled="disabled" ></th>
 					<th>${str_tagid}</th>
 					<th>${str_tag}</th>
+					<th>${str_type}</th>
 				</tr>
 				<c:if test="${count ne 0}">	
 					<c:forEach var="tag" items="${tags}">
@@ -35,6 +36,12 @@
 							<td class="check" align="center"><input type="checkbox" name="check1"></td>
 							<td name="key">${tag.tag_id}</td>
 							<td>${tag.tag_value}</td>
+							<c:if test="${tag.tag_id ge 0 and tag.tag_id le 100}">
+								<td>${str_tag_user}</td>
+							</c:if>
+							<c:if test="${tag.tag_id ge 101 and tag.tag_id le 1000}">
+								<td>${str_tag_city}</td>
+							</c:if>
 						</tr>
 					</c:forEach>
 				</c:if>

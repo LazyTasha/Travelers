@@ -128,12 +128,13 @@ function addTag(state){
 			var tr = checkbox.parent().parent().eq(i);	
 		
 			var tag_value=tr.find('input[type="text"]').val();
+			var tag_type=tr.find('select[name=tag_type]').val();
 			// 체크된 row의 모든 값을 배열에 담는다.
 			if(!tag_value){
 				alert(valueerror);
 				
 			}else{
-				values.push(tag_value);
+				values.push(''+tag_type+''+tag_value);
 				
 				location.href="adminTagMng.go?state="+state+"&values="+values;
 				
