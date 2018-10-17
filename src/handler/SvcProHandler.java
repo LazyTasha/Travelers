@@ -483,8 +483,6 @@ public class SvcProHandler {
 	@RequestMapping("/boardAlbumPro.go")
 	public ModelAndView svcAlbumProProcess(HttpServletRequest request, MultipartHttpServletRequest mtrequest)
 			throws HandlerException {
-		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
-		request.setAttribute("tb_no", tb_no);
 
 		String uploadPath = request.getServletContext().getRealPath("/");
 		System.out.println(uploadPath);
@@ -521,9 +519,10 @@ public class SvcProHandler {
 				// db insert
 				albumDto = new AlbumDataBean();
 				albumDto.setPhoto_url(safeDBFile);
+				int tb_no=Integer.parseInt(request.getParameter("tb_no"));
 				albumDto.setTb_no(tb_no);
+				request.setAttribute("tb_no",tb_no);
 				int result = albumDao.addPhoto(albumDto);
-
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -692,13 +691,15 @@ public class SvcProHandler {
 			e.printStackTrace();
 		}
 		String user_id = (String) session.getAttribute("user_id");
+		String c_content= request.getParameter("c_content");
 		CmtDataBean cmtDto = new CmtDataBean();
-
+		if(c_content != null) {
 		cmtDto.setUser_id(user_id); // jsp에서 히든으로 가져오면됨
 		cmtDto.setTb_no(Integer.parseInt(request.getParameter("tb_no")));
-		cmtDto.setC_content(request.getParameter("c_content"));
-
+		cmtDto.setC_content(c_content);
+		
 		cmtDao.insertComment(cmtDto);
+		}
 	}
 
 	@RequestMapping(value = "/commentSelect.go", method = RequestMethod.GET, produces = "application/json")

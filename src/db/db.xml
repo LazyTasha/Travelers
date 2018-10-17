@@ -343,12 +343,12 @@
 
 	<update id="notice" parameterType="int">
 		update gg_trip_board set
-		tb_notice=1 where tb_no=#{tb_no}
+		tb_notice=1 where tb_no=#{tb_no} and tb_notice!=1
 	</update>
 
 	<update id="noticeX" parameterType="int">
 		update gg_trip_board set
-		tb_notice=0 where tb_no=#{tb_no}
+		tb_notice=0 where tb_no=#{tb_no} and tb_notice=1
 	</update>
 	
 	<select id="getFirstTbNo" resultType="int">

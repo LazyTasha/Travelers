@@ -35,8 +35,8 @@
 				</c:if>
 				<c:if test="${user_level eq 9}">
 					<div>
-						<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})"> 
-						<input type="button" value="${btn_back_admin}" onclick="goAdminPage()">							
+						<input type="button" value="${btn_delete}" class="btn btn-sm" onclick="deleteBoard(${tb_no})"> 
+						<input type="button" value="${btn_back_admin}" class="btn btn-sm" onclick="goAdminPage()">							
 					</div>
 				</c:if>
 			</div>
@@ -54,14 +54,41 @@
 							<input type="text" name="trip_title" class="col-12 form-control form-control-lg" value="${tbDto.tb_title}" readonly="readonly">																			
 						</div>						
 						<div class="row">
-								<div class="text-muted">
-									<i><b>With</b></i>&nbsp; ${tbDto.user_id}
-								</div>
+							<div class="text-muted">
+								<i><b>With</b></i>&nbsp; ${tbDto.user_id}
+							</div>
 						</div>
-							<c:forEach var="i" items="${locDtoList}">
-							<c:set var="order" value="${i.coord_order}"/>
-							<form name="orderInfo">
-								<input type="hidden" name="order_of_${i.td_trip_id}" value="${i.coord_order}">
+						<div class="row pt-2 pb-2">
+							<label class="col-2">참여 인원</label>${tbDto.tb_m_num}
+						</div>						
+						<c:forEach var="i" items="${locDtoList}">
+						<c:set var="order" value="${i.coord_order}"/>
+							<div class="container" style="width:100%" onmouseover="focusMarker(${order},${i.coord_long},${i.coord_lat})">
+								<div class="row">									
+									<label class="col-2">${trip_schedule}</label>
+									<input type="text" class="col-3" value="${i.cal_start_date}" readonly="readonly"/> 
+									~
+									<input type="text" class="col-3" value="${i.cal_end_date}" readonly="readonly"/>									
+								</div><!-- 날짜 일정 -->										
+								<div class="row">
+									<div class="col-12 offset-2">
+										<div class="loc" name="coord">
+											<input type="text" name="trip_location${order}" id="address${order}" class="col-8 pt-3" readonly="readonly">
+											<input type="hidden" name="coord_long" value="${i.coord_long}">
+											<input type="hidden" name="coord_lat" value="${i.coord_lat}">
+											<input type="hidden" id="country${order}"value="${i.country_name}">																						
+											<button onclick="attend(${i.td_trip_id})" class="btn btn-sm">참석</button>
+											<button onclick="absent(${i.td_trip_id})" class="btn btn-sm">불참</button>
+										</div><!-- 장소 -->
+									</div><!-- column -->
+								</div><!-- row -->
+						</div><!-- 일정 Container box-->
+						</c:forEach>
+						<div id="trip_member_list">
+							${place_for_member}
+						</div>
+						<form name="trip_detail">
+								<input type="hidden" name="user_id" value="${user_id}">
 							</form>
 								<div class="container" style="width:100%" onmouseover="focusMarker(${order},${i.coord_long},${i.coord_lat})">
 									<div class="row">									
@@ -157,7 +184,7 @@
 							<input type="hidden" name="session" value="${user_id}" /> 
 								<input type="text" class="input col-11" id="c_content" name="c_content" placeholder="${trip_entercontent}"> 
 								<span class="input-group-btn">
-								<button class="btn btn-default" type="button" 	onclick="commentInsert()">등록</button>
+								<button class="btn btn-default" type="button" onclick="commentInsert()">등록</button>
 							</span>
 						</div>
 					</form>

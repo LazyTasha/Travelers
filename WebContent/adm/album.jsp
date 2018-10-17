@@ -22,7 +22,7 @@
 						<input type="checkbox" name='check1'>
 						<input type="hidden" value="${photo.photo_id}" name="key">
 						<span class="photo">
-							<img class="img" src="${photo.photo_url}"/>
+							<a href="${photo.photo_url}" target="_blank"><img class="img" src="${photo.photo_url}"/></a>
 						</span>
 					</div>
 				</c:forEach>

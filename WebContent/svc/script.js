@@ -25,19 +25,22 @@ var schedulesizeerror="일정은 최대 "+maxschedule+"개 입니다.";
 var noscheduleerror="일정을 먼저 입력해 주세요";
 var noplaceerror="장소를 먼저 검색해주세요";
 
+var noplaceresult="장소를 찾을 수 없습니다.";
+
 var filesize=5*1024*1024;
+
 
 $(document).ready(function(){
 	var tb_no=$('input[name=tb_no]').val();
 	if(tb_no){
 		commentList(tb_no); //페이지 로딩시 댓글 목록 출력 
-		}
+	}
 	var num=$('label[name=schedule]').length;//일정 개수 
 	if(num){
-		loadCal(num);
+	loadCal(num);
 	}
 });
-
+	
 function erroralert( msg ) {
 	alert( msg );
 	history.back();
@@ -75,8 +78,7 @@ function initMap() {//trip.jsp에서 좌표로 마커 표시
    for(var i=0;i<coord.length;i++){
 	  addMarker(location[i],i,boardmap);  
    }
-   if(isSameCountry()==1)boardmap.setZoom(6);
-   
+   if(isSameCountry()==1)boardmap.setZoom(6); 
 }
 //Adds a marker to the map.
 function addMarker(location, num,boardmap) {
@@ -96,12 +98,11 @@ function addMarker(location, num,boardmap) {
 	       	//input에 주소 붙이기   		
 	       $('#address'+num+'').val(address);
 	     } else {
-	       window.alert('No results found');
+	       window.alert(noplaceresult);
 	     }
 	   } else {
-	     window.alert('Geocoder failed due to: ' + status);
 	   }
-	 });
+	});
 }
 function isSameCountry(){
 	var result=1;
@@ -184,10 +185,9 @@ function geocodeLatLng(latlng,geocoder, map,infowindow) {
        var num=$('#schedulenum').find('input[name=schedulenum]').val();
        updateMarker(marker,num);
      } else {
-       window.alert('No results found');
+       window.alert(noPlaceresult);
      }
    } else {
-     window.alert('Geocoder failed due to: ' + status);
    }
  });
 }
@@ -491,11 +491,20 @@ function sizeOver(size){
 }
 
 ////comment
+
+
 function commentInsert(){ //댓글 등록 버튼 클릭시 
 	 var insertData = $('[name=commentInsertForm]').serialize(); //commentInsertForm의 내용을 가져옴
 	 CmtInsert(insertData); //Insert 함수호출(아래)
 }
 
+
+/*function commentInsertCheck(){
+if(commentInsertForm.c_content.value == ''){
+	 alert("댓글을 입력해주세요!");
+	 return false;
+} 
+}*/
 /////댓글 목록 
 function commentList(tb_no){
 	var SessionID=$("input[name=session]").val();
@@ -519,15 +528,24 @@ function commentList(tb_no){
             $(".commentList").html(commentView);
         },
         error : function(error) {
-            alert("error : " + error + number);
+            alert("댓글을 입력해주세요!");
         }
     });
-}
+	}
+
+
+/*function commentInsertCheck(){
+	if(commentInsertForm.c_content.value == ''){
+		 alert("댓글을 입력해주세요!");
+		 return false;
+	} 
+}*/
 
 //댓글 등록
 function CmtInsert(insertData){
 	var tb_no=$("input[name=tb_no").val();
-    $.ajax({
+	if(commentInsertForm.c_content.value){
+	$.ajax({
         url : 'commentInsert.go',
         type : 'post',
         data : insertData,
@@ -543,8 +561,8 @@ function CmtInsert(insertData){
         alert("error : " + error);
     }
     });
-}
-
+	}
+	}
 //댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
 function commentUpdate(c_id, c_content){
     var commentModify ='';
@@ -760,6 +778,7 @@ function writeCheck(){
 }
 //글 수정
 function tripmodcheck() {
+	if (confirm("글수정을 하시겠습니까?")) {
 	if( ! tripmodform.trip_title.value ) {
 		alert( trip_titleerror );
 		modifyform.trip_title.focus();
@@ -768,7 +787,11 @@ function tripmodcheck() {
 		alert( contenterror );
 		modifyform.content.focus();
 		return false;
-	} 
+	} else {
+		alert("작성을 완료하였습니다");
+		$("#tripmodform").button();
+	}
+}
 }
 
 function goAdminPage(){
