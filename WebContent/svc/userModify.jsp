@@ -82,10 +82,9 @@
 					<div class="col-sm-8">&nbsp; ${userDto.email}</div>
 				</div>
 				<div class="form-group row">
-					<label for="tag" class="control-label col-sm-2">${str_tag}
+					<label for="tag" class="control-label col-sm-2" >${str_tag}
 					</label>
 					<div class="col-sm-8">
-						<div class="btn-group btn-group-sm" role="group" aria-label="...">
 							<c:forEach var="i" items="${tagList}">
 								<c:set var="count" value="0"/>
 								<c:set var="size" value="${userTags.size()}"/>
@@ -97,7 +96,9 @@
 										<c:forEach var="j" items="${userTags}">
 											<c:choose>
 												<c:when test="${i.tag_value==j.tag_value}">
+												 	<div class="btn-group btn-group-sm" role="group" aria-label="...">
 												 	<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}" checked># ${i.tag_value}</button>
+												 	</div>
 												 </c:when>
 												 <c:otherwise>
 												 	<c:choose>
@@ -105,7 +106,9 @@
 												 			<c:set var="count" value="${count=count+1}"/>
 												 		</c:when>
 												 		<c:otherwise>
+												 			<div class="btn-group btn-group-sm" role="group" aria-label="...">
 												 			<button type="button" class="btn btn-default"><input type="checkbox" name ="tags" value="${i.tag_id}"># ${i.tag_value}</button>
+												 			</div>
 												 		</c:otherwise>
 												 	</c:choose>
 												 </c:otherwise>
@@ -116,7 +119,7 @@
 							</c:forEach>
 						</div>
 					</div>
-				</div>
+				
 				<div class="form-group row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">
