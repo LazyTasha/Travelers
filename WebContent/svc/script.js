@@ -760,6 +760,7 @@ function writeCheck(){
 }
 //글 수정
 function tripmodcheck() {
+	if (confirm("글수정을 하시겠습니까?")) {
 	if( ! tripmodform.trip_title.value ) {
 		alert( trip_titleerror );
 		modifyform.trip_title.focus();
@@ -768,7 +769,11 @@ function tripmodcheck() {
 		alert( contenterror );
 		modifyform.content.focus();
 		return false;
-	} 
+	} else {
+		alert("작성을 완료하였습니다");
+		$("#tripmodform").button();
+	}
+}
 }
 
 function goAdminPage(){
