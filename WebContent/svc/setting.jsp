@@ -18,14 +18,12 @@
 <c:set var="EmailId" value="아이디 찾기"/>
 <c:set var="EmailPasswd" value="비밀번호 찾기"/>
 
-
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
 <c:set var="page_album_eng" value="Album"/>
 <c:set var="page_calendar_eng" value="Calendar"/>
 <c:set var="page_write" value="글쓰기"/>
 <c:set var="page_tripMod" value="글수정"/>
-
 
 
 <c:set var="msg_main" value="비회원이시면 회원가입을 해주세요"/>
@@ -59,7 +57,6 @@
 <c:set var="str_name" value="이름"/>
 <c:set var="str_jumin" value="주민등록번호"/>
 <c:set var="str_tel" value="전화번호"/>
-
 
 <c:set var="btn_adm" value="어드민페이지"/>
 <c:set var="btn_user_delete" value="회원탈퇴"/>
