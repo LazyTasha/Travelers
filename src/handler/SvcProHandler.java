@@ -261,8 +261,9 @@ public class SvcProHandler {
 		String subject = "EmailCheck"; // 보내는 제목 설정
 		String fromName = "Admin"; // 보내는 이름 설정
 		String from = "dlagurgur@gmail.com"; // 보내는 사람(구글계정)
-		
 		String email = request.getParameter("email2");
+		int result = userDao.EmailCheck(email);
+		if(result == 1) {
 		UserDataBean userDto = userDao.getUserEmailId(email);
 		String user_id = userDto.getUser_id();
 		String content = "당신의 아이디는 [" + user_id + "]입니다"; // 이메일 내용 설정
@@ -299,7 +300,8 @@ public class SvcProHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		}
+		request.setAttribute("result", result);
 		return new ModelAndView("svc/EmailIdd");
 	}
 	
@@ -311,10 +313,12 @@ public class SvcProHandler {
 		String fromName = "Admin"; // 보내는 이름 설정
 		String from = "dlagurgur@gmail.com"; // 보내는 사람(구글계정)
 		String email = request.getParameter("email2");
+		int result = userDao.EmailCheck(email);
+		if(result == 1) {
 		UserDataBean userDto = userDao.getUserEmailPasswd(email);
 		String user_passwd = userDto.getPasswd();
 		String content = "당신의 비밀번호는 [" + user_passwd + "]입니다"; // 이메일 내용 설정
-		
+	
 		request.setAttribute("email", email);
 
 		try {
@@ -347,7 +351,8 @@ public class SvcProHandler {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		}
+		request.setAttribute("result", result);
 		return new ModelAndView("svc/EmailPasswdd");
 	}
 	
