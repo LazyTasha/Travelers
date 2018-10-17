@@ -27,6 +27,17 @@
 		a.nav-item {
 			color: white !important;
 		}
+		
+		
+		select { 
+		 width: 100px;
+   	 	height: 30px;
+    	padding-left: 10px;
+    	font-size: 18px;
+    	color: #353535;
+    	border: 1px solid #006fff;
+    	border-radius: 3px;
+		}
 	</style>
 </head>
 
@@ -59,8 +70,8 @@
 						<option value="schedule">${search_trip_schedule}</option>
 						<option value="trip_writer">${trip_writer}</option>
 					</select> &nbsp;
-					<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
-					<input type="submit" value="${search_trip}"> &nbsp;|&nbsp;
+					<input type="text" class="form-control" name="keyword" placeholder="${search_guide}"> &nbsp;
+					<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/iconmonstr-magnifier-4-32.png"></button> &nbsp;|&nbsp;
 					<a href="login.go" class="nav-item">${page_login}</a> &nbsp;|&nbsp;
 					<a href="registration.go" class="nav-item">${page_input}</a>
 				</form>
@@ -113,8 +124,8 @@
 						<option value="schedule">${search_trip_schedule}</option>
 						<option value="trip_writer">${trip_writer}</option>
 					</select> &nbsp;
-					<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
-					<input type="submit" value="${search_trip}"> &nbsp;|&nbsp;
+					<input type="text" class="form-control" name="keyword" placeholder="${search_guide}"> &nbsp;
+					<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/iconmonstr-magnifier-4-32.png"></button> &nbsp;|&nbsp;
 						<a href="myPage.go" class="nav-item">${page_mypage2}</a> &nbsp;
 					</form>
 				</c:if>
@@ -124,8 +135,8 @@
 							<option value="schedule">${search_trip_schedule}</option>
 							<option value="trip_writer">${trip_writer}</option>
 						</select> &nbsp;
-						<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
-						<input type="submit" value="${search_trip}"> &nbsp;|&nbsp;
+						<input type="text" class="form-control" name="keyword" placeholder="${search_guide}"> &nbsp;
+						<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/iconmonstr-magnifier-4-32.png"></button> &nbsp;|&nbsp;
 						<a class="nav-item" href="adminTrip.go">${btn_adm}</a> &nbsp; <a
 							class="nav-item" href="adminLogout.go">${btn_logout}</a>
 					</form>

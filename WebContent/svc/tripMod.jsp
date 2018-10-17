@@ -20,7 +20,7 @@
    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <div class="container" style="width:800px;">
-      <form class="form-horizontal" method="post" action="tripModPro.go" name="tripmodform" onsubmit="tripmodcheck()">
+      <form class="form-horizontal" method="post" action="tripModPro.go" name="tripmodform" onsubmit="return tripmodcheck()">
          <h4>${page_tripMod}</h4>
          <hr size="1px" color="black">
          <div class="input-box">

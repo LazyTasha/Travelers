@@ -4,6 +4,13 @@
 	background-color: #232F34;
 	color: white;
 }
+.btn-album{
+	border: #F9AA33 1px !important;
+}
+.btn_album_delete {
+	border: #344955 1px;
+	background-color: white;
+}
 a {
    color: black;
 }
