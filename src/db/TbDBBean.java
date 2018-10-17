@@ -108,9 +108,11 @@ public class TbDBBean {
 			for(int j=0; j<tripIds.size(); j++) {
 				String dest=session.selectOne("db.getDestination", tripIds.get(j));
 				boolean addOrNot=true;
-				for(int c=0; c<locs.length; c++) {
-					if(dest.equals(locs[c])) {
-						addOrNot=false;
+				if (locs.length>0) {
+					for(int c=0; c<locs.length; c++) {
+						if(dest.equals(locs[c]) && locs[c]!=null) {
+							addOrNot=false;
+						}
 					}
 				}
 				if(addOrNot) {
