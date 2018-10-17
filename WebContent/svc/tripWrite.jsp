@@ -27,7 +27,7 @@
                <input type="hidden" name="user_name" value="${userDto.user_name}">
             <div class="form-group row">
             	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
-                	<input type="number" name="trip_m_num" class="col-2" min="0" autofocus required>
+                	<input type="number" name="trip_m_num" class="col-2" min="1" autofocus required>
             </div>
             
             <c:set var="i" value="1"/>  

@@ -483,8 +483,6 @@ public class SvcProHandler {
 	@RequestMapping("/boardAlbumPro.go")
 	public ModelAndView svcAlbumProProcess(HttpServletRequest request, MultipartHttpServletRequest mtrequest)
 			throws HandlerException {
-		int tb_no = Integer.parseInt(request.getParameter("tb_no"));
-		request.setAttribute("tb_no", tb_no);
 
 		String uploadPath = request.getServletContext().getRealPath("/");
 		System.out.println(uploadPath);
@@ -521,7 +519,8 @@ public class SvcProHandler {
 				// db insert
 				albumDto = new AlbumDataBean();
 				albumDto.setPhoto_url(safeDBFile);
-				albumDto.setTb_no(tb_no);
+				int tb_no = Integer.parseInt(request.getParameter("tb_no"));
+				albumDto.setTb_no(Integer.parseInt(request.getParameter("tb_no")));
 				int result = albumDao.addPhoto(albumDto);
 
 			} catch (IllegalStateException e) {

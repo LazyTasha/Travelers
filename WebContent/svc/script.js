@@ -25,6 +25,8 @@ var schedulesizeerror="일정은 최대 "+maxschedule+"개 입니다.";
 var noscheduleerror="일정을 먼저 입력해 주세요";
 var noplaceerror="장소를 먼저 검색해주세요";
 
+var noplaceresult="장소를 찾을 수 없습니다.";
+
 var filesize=5*1024*1024;
 
 $(document).ready(function(){
@@ -75,8 +77,7 @@ function initMap() {//trip.jsp에서 좌표로 마커 표시
    for(var i=0;i<coord.length;i++){
 	  addMarker(location[i],i,boardmap);  
    }
-   if(isSameCountry()==1)boardmap.setZoom(6);
-   
+   if(isSameCountry()==1)boardmap.setZoom(6); 
 }
 //Adds a marker to the map.
 function addMarker(location, num,boardmap) {
@@ -96,12 +97,11 @@ function addMarker(location, num,boardmap) {
 	       	//input에 주소 붙이기   		
 	       $('#address'+num+'').val(address);
 	     } else {
-	       window.alert('No results found');
+	       window.alert(noplaceresult);
 	     }
 	   } else {
-	     window.alert('Geocoder failed due to: ' + status);
 	   }
-	 });
+	});
 }
 function isSameCountry(){
 	var result=1;
@@ -184,10 +184,9 @@ function geocodeLatLng(latlng,geocoder, map,infowindow) {
        var num=$('#schedulenum').find('input[name=schedulenum]').val();
        updateMarker(marker,num);
      } else {
-       window.alert('No results found');
+       window.alert(noPlaceresult);
      }
    } else {
-     window.alert('Geocoder failed due to: ' + status);
    }
  });
 }
