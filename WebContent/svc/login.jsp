@@ -29,7 +29,8 @@
   		
   		<button class="btn btn-lg btn-secondary btn-block" type="submit">${btn_login}</button>
   		<a href="registration.go"><u>${page_input}</u></a>
-  		<a href="EmailId.go"><u>아이디찾기</u></a>
+  		<a href="EmailId.go"><u>${EmailId}</u></a>
+  		<a href="EmailPasswd.go"><u>${EmailPasswd}</u></a>
   		<p class="mt-5 mb-3 text-muted">&copy; 2018-2019</p>	
   	</form>
   </body>

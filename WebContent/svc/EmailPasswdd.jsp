@@ -22,6 +22,6 @@
 <script src="${project}script.js"></script>
 </head>
 <body class="registration">
-아이디를 해당 이메일로 보냈습니다.
+비밀번호를 해당 이메일로 보냈습니다.
 </body>
 </html>

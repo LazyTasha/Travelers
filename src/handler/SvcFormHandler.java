@@ -42,8 +42,13 @@ public class SvcFormHandler {
 	
 	/////////////////////////////////user pages/////////////////////////////////
 	@RequestMapping("/EmailId")
-	public ModelAndView svcConddditionsProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+	public ModelAndView svcEmailIdProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/EmailId");
+	}
+	
+	@RequestMapping("/EmailPasswd")
+	public ModelAndView svcEmailPasswd(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/EmailPasswd");
 	}
 	
 	@RequestMapping("/Conditions")

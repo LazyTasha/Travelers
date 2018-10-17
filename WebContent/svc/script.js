@@ -333,6 +333,13 @@ function EmailIdCheck(email2){
 	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=500, height=200" );
 }
 
+function EmailIdPasswd(email2){
+	var url="EmailPasswdd.go?email2="+email2
+	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=500, height=200" );
+}
+
+
+
 function confirmeMail(authNum){
 	var Email = $('#EmailVlaue').val(); //이메일 인증 창에서 내가 입력한 인증번호 값가져옴
     // 입력한 값이 없거나, 인증코드가 일지하지 않을 경우
@@ -495,10 +502,11 @@ function commentList(tb_no){
         data : {tb_no : tb_no},
         success : function(data){
             var commentView ='';
+            var UserName = 'Ex-User';
             $.each(data, function(key, comment){ 
             	commentView += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
             	commentView += '</div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_name;
-            	if(SessionID == comment.user_id){
+            	if(SessionID == comment.user_id && comment.user_name != UserName){
             	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
             	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a>';
             	}
