@@ -251,7 +251,6 @@ function deletePhoto(tb_no,photo_id,start){
 }
 
 //AJAX 또는 DOM
-
 function passwordCheckFunction() {
 	var userPassword1 = $('#userPassword1').val();
 	var userPassword2 = $('#userPassword2').val();
@@ -527,13 +526,6 @@ function commentList(tb_no){
 	}
 
 
-/*function commentInsertCheck(){
-	if(commentInsertForm.c_content.value == ''){
-		 alert("댓글을 입력해주세요!");
-		 return false;
-	} 
-}*/
-
 //댓글 등록
 function CmtInsert(insertData){
 	var tb_no=$("input[name=tb_no").val();
@@ -554,6 +546,8 @@ function CmtInsert(insertData){
         alert("error : " + error);
     }
     });
+	}else{
+		alert("댓글을 입력해주세요");
 	}
 	}
 //댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
