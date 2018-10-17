@@ -180,4 +180,72 @@ public class TbDBBean {
 		}
 		return tripList;
 	}
+	
+	//search trip by keyword in title and content
+	public List<TbDataBean> findTripByKeyword(String keyword) {
+		List<TbDataBean> foundList=session.selectList("db.findTripByKeyword", keyword);
+		
+		for(TbDataBean tbDto:foundList) {
+			//set Nickname instead of id
+			String user_id=tbDto.getUser_id();
+			String user_name;
+			//if that user left
+			if(user_id==null||user_id.equals("")) {
+				user_name="Ex-User";
+			} else {
+				user_name=(String) session.selectOne("db.getUserName", user_id);
+			}
+			tbDto.setUser_id(user_name);
+			
+			//locations and tags 
+			List <Integer> tripIds=session.selectList("db.getTripIds", tbDto.getTb_no());
+			String[] locs=new String[tripIds.size()];
+			for(int j=0; j<tripIds.size(); j++) {
+				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
+			}
+			tbDto.setLocs(locs);
+			
+			List<TagDataBean> originTags=session.selectList("db.getTripTags", tbDto.getTb_no());
+			String[] tags=new String[originTags.size()];
+			for(int k=0; k<originTags.size(); k++) {
+				tags[k]=originTags.get(k).getTag_value();
+			}
+			tbDto.setTags(tags);
+		}
+		return foundList;
+	}
+	
+	//search trip by user name
+	public List<TbDataBean> findTripByUser(String keyword) {
+		List<TbDataBean> foundList=session.selectList("db.findTripByUser", keyword);
+		
+		for(TbDataBean tbDto:foundList) {
+			//set Nickname instead of id
+			String user_id=tbDto.getUser_id();
+			String user_name;
+			//if that user left
+			if(user_id==null||user_id.equals("")) {
+				user_name="Ex-User";
+			} else {
+				user_name=(String) session.selectOne("db.getUserName", user_id);
+			}
+			tbDto.setUser_id(user_name);
+			
+			//locations and tags 
+			List <Integer> tripIds=session.selectList("db.getTripIds", tbDto.getTb_no());
+			String[] locs=new String[tripIds.size()];
+			for(int j=0; j<tripIds.size(); j++) {
+				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
+			}
+			tbDto.setLocs(locs);
+			
+			List<TagDataBean> originTags=session.selectList("db.getTripTags", tbDto.getTb_no());
+			String[] tags=new String[originTags.size()];
+			for(int k=0; k<originTags.size(); k++) {
+				tags[k]=originTags.get(k).getTag_value();
+			}
+			tbDto.setTags(tags);
+		}
+		return foundList;
+	}
 }

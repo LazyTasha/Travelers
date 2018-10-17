@@ -1,5 +1,6 @@
 package handler;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -165,6 +166,41 @@ public class SvcViewHandler {
 		request.setAttribute("start",start);
 
 		return new ModelAndView("svc/trip");
+	}
+	
+	@RequestMapping("/searchTrip")
+	public ModelAndView svcSearchProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, UnsupportedEncodingException {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		//get the type and keyword of searching
+		String selectedType=request.getParameter("search_type");
+		String keyword=request.getParameter("keyword");
+		request.setAttribute("keyword", keyword);
+		
+		//set List
+		List<TbDataBean> foundList;
+		
+		//find trips for each type
+		if(selectedType.equals("schedule")) {
+			foundList=tbDao.findTripByKeyword(keyword);
+		} else {
+			foundList=tbDao.findTripByUser(keyword);
+		}
+		
+		//count check
+		int count=0;
+		if(foundList.size()>0) {
+			count=foundList.size();
+		}
+		
+		request.setAttribute("foundList", foundList);
+		request.setAttribute("count", count);
+		
+		return new ModelAndView("svc/foundList");
 	}
 	
 	/////////////////////////////////album pages/////////////////////////////////
