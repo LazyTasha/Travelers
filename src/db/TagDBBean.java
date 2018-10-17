@@ -67,6 +67,56 @@ public class TagDBBean {
 	public int getTagId(String tag_value) {
 		return session.selectOne("db.getTagId", tag_value);
 	}
+	public int updateTripTags(int tb_no, List<TagDataBean> tripTags) {
+		int result=1;
+		//set old Trip Tags
+		List<TagDataBean> oldTripTags=getTripTags(tb_no);
+		//setter for query
+		Map<String, Integer> tagSetter;
+		for(int i=0; i<oldTripTags.size(); i++) {
+			//put tag values by tag id
+			oldTripTags.get(i).setTag_value((String)session.selectOne("db.getTagValue", oldTripTags.get(i).getTag_id()));			
+		}
+		//tester to check whether trip already has that tag
+				boolean hasTag=false;
+				//Check if the trip had these tags 
+				for(TagDataBean tb:tripTags) {
+					hasTag=false;
+					for(TagDataBean otb:oldTripTags) {
+						//if user didn't have such like a tag
+						if(otb.getTag_id()==(tb.getTag_id())) {
+							hasTag=true;
+						}
+					}
+					//if user didn't have this tag, insert it!
+					if(!hasTag) {
+						tagSetter=new HashMap<String, Integer>();
+						tagSetter.put("tb_no", tb_no);
+						int tagId= tb.getTag_id();
+						tagSetter.put("tag_id", tagId);
+						result=session.update("db.updateTripTags", tagSetter);
+					}
+				}
+				//user had that tag, but not anymore! 
+				for(TagDataBean otb:oldTripTags) {
+					hasTag=false;
+					for(TagDataBean tb:tripTags) {
+						if(otb.getTag_id()==(tb.getTag_id())) {
+							hasTag=true;
+						}
+					}
+					//there is no such tag what was in old tag list! So delete it!
+					if(!hasTag) {
+						tagSetter=new HashMap<String, Integer>();
+						tagSetter.put("tb_no", tb_no);
+						int tagId=otb.getTag_id();
+						tagSetter.put("tag_id", tagId);
+						result=session.delete("db.deleteTripTag", tagSetter);
+					}
+				}
+		return result;
+	}
+	
 	public int updateUserTags(String user_id, List<TagDataBean> userTags) {
 		int result=1;
 		//set old User Tags

@@ -48,7 +48,7 @@ var boardmarker;
 var boardmap;
 var coord_lats=[];
 var coord_lngs=[];
-var addressList=[];
+var country_codes=[];
 //Map for board
 function initMap() {//trip.jsp에서 좌표로 마커 표시
 	var coord=$('div[name=coord]');
@@ -70,11 +70,13 @@ function initMap() {//trip.jsp에서 좌표로 마커 표시
     var centerLng = centerLngSum / coord.length ;   
 	var center={lat:centerLat,lng:centerLng};
 	  // The map, centered at allPlace
-    	boardmap = new google.maps.Map(
-	      document.getElementById('map'), {zoom: 8, center:center});
+	boardmap = new google.maps.Map(
+      document.getElementById('map'), {zoom: 3, center:center});
    for(var i=0;i<coord.length;i++){
 	  addMarker(location[i],i,boardmap);  
    }
+   if(isSameCountry()==1)boardmap.setZoom(6);
+   
 }
 //Adds a marker to the map.
 function addMarker(location, num,boardmap) {
@@ -84,7 +86,6 @@ function addMarker(location, num,boardmap) {
 	   if (status === 'OK') {
 	     if (results[0]) {
 	    	 var address=results[0].formatted_address;
-	    	 addressList.push(address);
 	       	 boardmarker = new google.maps.Marker({
 	         position: location,
 	         map: boardmap,
@@ -92,8 +93,8 @@ function addMarker(location, num,boardmap) {
 	 	     label:''+num+'',
 	         animation:google.maps.Animation.DROP,
 	       });
-	       	  //div에 주소 붙이기
-	       	 $('#address'+num+'').append(address);
+	       	//div에 주소 붙이기
+	       $('#address'+num+'').append(address);
 	     } else {
 	       window.alert('No results found');
 	     }
@@ -102,6 +103,17 @@ function addMarker(location, num,boardmap) {
 	   }
 	 });
 }
+function isSameCountry(){
+	var result=1;
+	num=$('div[name=coord]').length;
+	for(var i=2;i<=num;i++){
+		if($('#country1').val()!=$('#country'+i+'').val()){
+			result=0;break;
+		}
+	}
+	return result;
+}
+
 //Map for writing
 //지도 주소검색
 var map;
@@ -184,11 +196,9 @@ function updateMarker(marker,num){
 }
 // Removes the markers 
 function deleteMarkers(num) {
-	alert(markers.length)
-  for (var i = 0; i < markers.length-1; i++) {
-	    markers[i].setMap(null);
-	    }
-	markers.pop();
+	 for (var i = 0; i < markers.length-1; i++) {
+		    markers[i].setMap(null);
+		    }	
 }
 //trip view-button event-map
 function showMap(){
@@ -576,12 +586,13 @@ function commentDelete(c_id){
     });
 }
 
-function loadMoreList(last_tb_no) {
+function loadMoreList(last_row) {
 	$.ajax({
-		type : 'post',
-		data : {last_tb_no : last_tb_no},
+		type : 'get',
+		data : {last_row : last_row},
 		url : "loadMoreList.go",
 		success : function(data) {
+			tripListInfo.last_row.value=last_row+1;
 			var listForAppend="";
 			if(data){
 				$.each(data, function(key, additionalList){
@@ -590,29 +601,27 @@ function loadMoreList(last_tb_no) {
 					listForAppend+=			'<div class="card flex-md-row mb-3 shadow-sm h-md-250">';
 					listForAppend+=				'<div class="card-body d-flex flex-column align-items-start">';
 					listForAppend+=					'<strong class="d-inline-block mb-2">';
-					listForAppend+=						'<c:forEach var="j" items="${additionalList.locs}">';
+					listForAppend+=						'<c:forEach var="j" items="'+additionalList.locs+'">';
 					listForAppend+=							'${j}';
 					listForAppend+=						'</c:forEach>';
 					listForAppend+=					'</strong>';
 					listForAppend+=					'<h3 class="mb-0">';
-					listForAppend+=					'<a class="text-dark" href="#">${i.tb_title}</a>';
+					listForAppend+=					'<a class="text-dark" href="#">'+additionalList.tb_title+'</a>';
 					listForAppend+=					'</h3>';
-					listForAppend+=						'<div class="mb-1 text-muted"><i><b>With</b></i>&nbsp; ${i.user_id}</div>';
+					listForAppend+=						'<div class="mb-1 text-muted"><i><b>With</b></i>&nbsp;'+additionalList.user_id+'</div>';
 					listForAppend+=							'<hr size="1px" color="black" noshade>';
-					listForAppend+=							'<p class="card-text mb-auto">${i.tb_content}</p>';
+					listForAppend+=							'<p class="card-text mb-auto">'+additionalList.tb_content+'</p>';
 					listForAppend+=							'<hr style="width: 100%">';
 					listForAppend+=								'<div class="d-flex justify-content-center">';
 					listForAppend+=								'<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;';
-					listForAppend+=								'<div class="p-2">인원:${i.tb_m_num}</div>&nbsp;';
-					listForAppend+=								'<div class="p-2">조회수:${i.tb_v_count}</div>&nbsp;';
+					listForAppend+=								'<div class="p-2">인원:'+additionalList.tb_m_num+'</div>&nbsp;';
+					listForAppend+=								'<div class="p-2">조회수:'+additionalList.tb_v_count+'</div>&nbsp;';
 					listForAppend+=						'</div>';
-					listForAppend+=					'<a href="trip.go?tb_no=${i.tb_no}">Continue reading</a>';
+					listForAppend+=					'<a href="trip.go?tb_no='+additionalList.tb_no+'">Continue reading</a>';
 					listForAppend+=				'</div>';
-					listForAppend+=			'<img class="card-img-right flex-auto d-none d-lg-block" data-src="holder.js/200x250?theme=thumb" alt="Card image cap">';
 					listForAppend+='</div></div></div>';
 	            });
-	            
-	            $(".board-append-list").append(listForAppend);
+	            $("#board-append-list").append(listForAppend);
 			} else {
 				alert('더 이상 불러올 글이 없습니다.');
 			}
@@ -622,12 +631,18 @@ function loadMoreList(last_tb_no) {
 		}
 	});
 }
-//달력 불러오기 
+//달력 불러오기 //순서대로 입력 받기
 function loadCal(num){ 
-	$("#start"+num+"").datepicker(); 
+	if(num==1){
+		$("#start"+num+"").datepicker();
+	}else if(num>1){
+		var beforeStart=$('#start'+(num-1)+'').val();
+		$("#start"+num+"").datepicker({
+			minDate:beforeStart
+		});
+	}
 	 $("#start"+num+"").datepicker("option", "onClose", function ( selectedDate ) {
 	        $("#end"+num+"").datepicker( "option", "minDate", selectedDate );
-	        $("#start"+(num+1)+"").datepicker( "option", "minDate", selectedDate );
 	    });
 	 
 	$("#end"+num+"").datepicker();
@@ -661,9 +676,9 @@ function addSchedule(num){
 			num++;
 			schedule+= 	'<div id="schedule'+num+'" class="form-group row">';	  
 			schedule+= 		'<label for="cal_date" class="col-2 col-form-label">일정 '+num+'</label>';         
-			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" class="col-2" autocomplete="off"/>';
+			schedule+=      	'<input type="text" name="start'+num+'" id="start'+num+'" maxlength="10" value="yyyy-MM-dd" class="col-2" autocomplete="off"/>';
 			schedule+=			'~';
-			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
+			schedule+=			'<input type="text" name="end'+num+'" id="end'+num+'" maxlength="10" value="yyyy-MM-dd" class="col-2" autocomplete="off"/>&nbsp;&nbsp;';
 			schedule+=			'<input name="place'+num+'" id="place'+num+'" type="text" readonly>';
 			schedule+=		'<button id="btn'+num+'" class="btn_plus" type="button" onclick="addSchedule('+num+')">';
 			schedule+=			'<img  class="btn_img" src="/Travelers/svc/img/addbutton.png">';

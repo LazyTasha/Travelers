@@ -71,11 +71,6 @@
 							<div>
 								<div>글쓴이 : ${tbDto.user_id}</div>
 							</div>
-
-							<div>
-								<div>본문 : ${tbDto.tb_content}</div>
-							</div>
-
 							<div>
 								<div>인원 : ${tbDto.tb_v_count}/${tbDto.tb_m_num}</div>
 							</div>
@@ -91,11 +86,14 @@
 										<input type="hidden" name="coord_lat" value="${i.coord_lat}">
 									</div>	
 									<div>나라 이름: ${i.country_name}</div>
+									<input type="hidden" id="country${order}" value="${i.country_name}">
 									<button onclick="attend()">참석</button>
 									<button onclick="attend()">불참</button>
 								</c:forEach>
 							</div>
-
+							<div class="row">
+								${trip_content}<textarea class="col-12" rows="10" readonly>${tbDto.tb_content}</textarea>
+							</div>		
 							<div>
 								<div>
 									카카오톡 :<a href="${tbDto.tb_talk}" target="_blank"> 카카오톡</a>
@@ -129,14 +127,15 @@
 
 				<!--ㅡMap영역  -->
 				<c:if test="${tab eq 0}">
-					<div id="mapTab"></div>
+					<div id="mapTab">
 				</c:if>
 				<c:if test="${tab eq 1}">
-					<div id="mapTab" style="display: none"></div>
+					<div id="mapTab" style="display: none">
 				</c:if>
 				<div id="map">지도</div>
 				<input type="hidden" value="${lat}" id="lat" /> <input
 					type="hidden" value="${lng}" id="lng" />
+					</div>
 			</article>
 
 			<!-- comment -->

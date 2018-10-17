@@ -1,6 +1,6 @@
 package db;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -86,16 +86,18 @@ public class TbDBBean {
 	}
 	
 	public List<TbDataBean> getTripList() {
-		//get 20 latest articles from db
-		List<TripDataBean> originList=session.selectList("db.getTripList");
-		List<TbDataBean> tripList=new ArrayList<TbDataBean>();
+		//get 10 latest articles from db
+		int start=1;
+		int end=10;
 		
-		for(int i=originList.size(); i>0; i--) {
-			TripDataBean tripDto=originList.get(i-1);
-			TbDataBean tbDto=new TbDataBean();
-			tbDto.setTb_no(tripDto.getTb_no());
+		Map<String, Integer> tripReq=new HashMap<String, Integer>();
+		tripReq.put("start", start);
+		tripReq.put("end", end);
+		List<TbDataBean> tripList=session.selectList("db.getTrips", tripReq);
+		
+		for(TbDataBean tbDto:tripList) {
 			//set Nickname instead of id
-			String user_id=tripDto.getUser_id();
+			String user_id=tbDto.getUser_id();
 			String user_name;
 			//if that user left
 			if(user_id==null||user_id.equals("")) {
@@ -104,30 +106,21 @@ public class TbDBBean {
 				user_name=(String) session.selectOne("db.getUserName", user_id);
 			}
 			tbDto.setUser_id(user_name);
-			tbDto.setTb_title(tripDto.getTb_title());
-			tbDto.setTb_content(tripDto.getTb_content());
-			tbDto.setTb_reg_date(tripDto.getTb_reg_date());
-			tbDto.setTb_v_count(tripDto.getTb_v_count());
-			tbDto.setTb_m_num(tripDto.getTb_m_num());
-			tbDto.setTb_notice(tripDto.getTb_notice());
-			tbDto.setTb_talk(tripDto.getTb_talk());
 			
 			//locations and tags 
-			List <Integer> tripIds=session.selectList("db.getTripIds", tripDto.getTb_no());
+			List <Integer> tripIds=session.selectList("db.getTripIds", tbDto.getTb_no());
 			String[] locs=new String[tripIds.size()];
 			for(int j=0; j<tripIds.size(); j++) {
 				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
 			}
 			tbDto.setLocs(locs);
 			
-			List<TagDataBean> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
+			List<TagDataBean> originTags=session.selectList("db.getTripTags", tbDto.getTb_no());
 			String[] tags=new String[originTags.size()];
 			for(int k=0; k<originTags.size(); k++) {
 				tags[k]=originTags.get(k).getTag_value();
 			}
 			tbDto.setTags(tags);
-			//put each TbDataBean into the List!
-			tripList.add(tbDto);
 		}
 		return tripList;
 	}
@@ -149,48 +142,44 @@ public class TbDBBean {
 	
 	//load more Trip articles from db
 	//Loading starts from last number of current page
-	public List<TbDataBean> loadMoreList(int last_tb_no) {
-		List<TripDataBean> originMoreList=session.selectList("db.loadMoreList", last_tb_no);
-		List<TbDataBean> moreList;
-		if(originMoreList==null||originMoreList.size()==0) {
-			moreList=null;
-		} else {
-			moreList=new ArrayList<TbDataBean>(originMoreList.size());
-			moreList=new ArrayList<TbDataBean>(originMoreList.size());
-			for(int i=0; i<originMoreList.size(); i++) {
-				TbDataBean tempTb=new TbDataBean();
-				TripDataBean tripDto=originMoreList.get(i);
-				tempTb.setTb_no(tripDto.getTb_no());
-				tempTb.setUser_id((String) session.selectOne("db.getUserName", tripDto.getUser_id()));
-				tempTb.setTb_title(tripDto.getTb_title());
-				tempTb.setTb_content(tripDto.getTb_content());
-				tempTb.setTb_reg_date(tripDto.getTb_reg_date());
-				tempTb.setTb_v_count(tripDto.getTb_v_count());
-				tempTb.setTb_m_num(tripDto.getTb_m_num());
-				tempTb.setTb_notice(tripDto.getTb_notice());
-				tempTb.setTb_talk(tripDto.getTb_talk());
-				
-				//get location list
-				List <Integer> tripIds=session.selectList("db.getTripIds", tripDto.getTb_no());
-				String[] locs=new String[tripIds.size()];
-				for(int j=0; j<tripIds.size(); j++) {
-					locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
-				}
-				tempTb.setLocs(locs);
-				
-				List<String> originTags=session.selectList("db.getTripTags", tripDto.getTb_no());
-				String[] tags=new String[originTags.size()];
-				for(int k=0; k<originTags.size(); k++) {
-					tags[k]=originTags.get(k);
-				}
-				tempTb.setTags(tags);
-				
-				tempTb.setLocs(locs);
-				tempTb.setTags(tags);
-				
-				moreList.set(i, tempTb);
+	public List<TbDataBean> loadMoreList(int last_row) {
+		int start=last_row;
+		int end=start+5;
+		
+		Map<String, Integer> tripReq=new HashMap<String, Integer>();
+		tripReq.put("start", start);
+		tripReq.put("end", end);
+		
+		System.out.println("추가 리스트 요청까지 잘 옴."+start+"번부터"+end+"번까지 꺼내달라고 함.");
+		List<TbDataBean> tripList=session.selectList("db.getTrips", tripReq);
+		System.out.println("추가 리스트 꺼내옴. 글 수는 "+tripList.size()+"개임.");
+		for(TbDataBean tbDto:tripList) {
+			//set Nickname instead of id
+			String user_id=tbDto.getUser_id();
+			String user_name;
+			//if that user left
+			if(user_id==null||user_id.equals("")) {
+				user_name="Ex-User";
+			} else {
+				user_name=(String) session.selectOne("db.getUserName", user_id);
 			}
+			tbDto.setUser_id(user_name);
+			
+			//locations and tags 
+			List <Integer> tripIds=session.selectList("db.getTripIds", tbDto.getTb_no());
+			String[] locs=new String[tripIds.size()];
+			for(int j=0; j<tripIds.size(); j++) {
+				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
+			}
+			tbDto.setLocs(locs);
+			
+			List<TagDataBean> originTags=session.selectList("db.getTripTags", tbDto.getTb_no());
+			String[] tags=new String[originTags.size()];
+			for(int k=0; k<originTags.size(); k++) {
+				tags[k]=originTags.get(k).getTag_value();
+			}
+			tbDto.setTags(tags);
 		}
-		return moreList;
+		return tripList;
 	}
 }

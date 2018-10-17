@@ -452,11 +452,23 @@ public class SvcProHandler {
 		tbDto.setTb_talk(request.getParameter("tb_talk"));
 		tbDto.setTb_content(request.getParameter("content"));
 
-		// update modified "tripMod" in DB
+		String[] tagValues=request.getParameterValues("tags");
+		
+		//match tag_id & tag_value 
+		List<TagDataBean> tripTags=new ArrayList<TagDataBean>();	
+		for(int i=0; i<tagValues.length; i++) {
+			TagDataBean tempTagBean=new TagDataBean();
+			tempTagBean.setTag_id(Integer.parseInt(tagValues[i]));
+			tempTagBean.setTag_value(tagDao.getTagValue(tempTagBean.getTag_id()));
+			tripTags.add(i, tempTagBean);
+		}
+		
+		//update modified "tripMod" in DB
 		int result = tbDao.updateTb(tbDto);
 		request.setAttribute("result", result);
 		request.setAttribute("tb_no", tb_no);
-
+		result=tagDao.updateTripTags(tb_no, tripTags);
+		
 		return new ModelAndView("svc/tripModPro");
 	}
 
