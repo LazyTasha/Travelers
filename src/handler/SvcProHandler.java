@@ -196,8 +196,8 @@ public class SvcProHandler {
 
 	//// Email
 	@RequestMapping("/emailCheck")
-	public ModelAndView EmailCheckProcess(HttpServletRequest request, String email1) {
-		String to1 = email1; // 인증위해 사용자가 입력한 이메일주소
+	public ModelAndView EmailCheckProcess(HttpServletRequest request, HttpServletResponse response) {
+		
 		String host = "smtp.gmail.com"; // smtp 서버
 		String subject = "EmailCheck"; // 보내는 제목 설정
 		String fromName = "Admin"; // 보내는 이름 설정
@@ -206,6 +206,7 @@ public class SvcProHandler {
 		String content = "Number [" + authNum + "]"; // 이메일 내용 설정
 
 		String email = request.getParameter("email1");
+		System.out.println(email);
 		int result = userDao.EmailCheck(email);
 
 		request.setAttribute("authNum", authNum);
@@ -229,7 +230,7 @@ public class SvcProHandler {
 			});
 
 			Message msg = new MimeMessage(mailSession);
-			InternetAddress[] address = { new InternetAddress(to1) };
+			InternetAddress[] address = { new InternetAddress(email) };
 			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "utf-8", "B")));
 			msg.setRecipients(Message.RecipientType.TO, address);
 			msg.setSubject(subject);
@@ -245,7 +246,7 @@ public class SvcProHandler {
 
 		return new ModelAndView("svc/emailCheck");
 	}
-
+	
 	public static String authNum() { // 난수발생부분
 		StringBuffer buffer = new StringBuffer();
 		for (int i = 0; i <= 4; i++) {
@@ -254,6 +255,56 @@ public class SvcProHandler {
 		}
 		return buffer.toString();
 	}
+	
+	@RequestMapping("/EmailIdd")
+	public ModelAndView EmailIdCheckProcess(HttpServletRequest request, HttpServletResponse response) {
+		String host = "smtp.gmail.com"; // smtp 서버
+		String subject = "EmailCheck"; // 보내는 제목 설정
+		String fromName = "Admin"; // 보내는 이름 설정
+		String from = "dlagurgur@gmail.com"; // 보내는 사람(구글계정)
+		
+		String email = request.getParameter("email2");
+		UserDataBean userDto = userDao.getUserEmailId(email);
+		String user_id = userDto.getUser_id();
+		String content = "당신의 아이디는 [" + user_id + "]입니다"; // 이메일 내용 설정
+		
+		request.setAttribute("email", email);
+
+
+		try {
+			Properties props = new Properties();
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.transport.protocol", "smtp");
+			props.put("mail.smtp.host", host);
+			props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.port", "465");
+			props.put("mail.smtp.user", from);
+			props.put("mail.smtp.auth", "true");
+
+			Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("dlagurgur@gmail.com", "tkdgur0713!@");
+				}
+			});
+
+			Message msg = new MimeMessage(mailSession);
+			InternetAddress[] address = { new InternetAddress(email) };
+			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "utf-8", "B")));
+			msg.setRecipients(Message.RecipientType.TO, address);
+			msg.setSubject(subject);
+			msg.setSentDate(new java.util.Date());
+			msg.setContent(content, "text/html; charset=utf-8");
+
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return new ModelAndView("svc/EmailIdd");
+	}
+	
 
 	///////////////////////////////// board pages/////////////////////////////////
 	@RequestMapping("/tripWritePro")
