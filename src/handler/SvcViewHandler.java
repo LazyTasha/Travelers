@@ -98,7 +98,7 @@ public class SvcViewHandler {
 		int startTrip=0;
 		int endTrip=0;
 		if(tripList.size()>=10) {
-			request.setAttribute("last_row", 10);
+			request.setAttribute("last_row", 11);
 		} else {
 			request.setAttribute("last_row", tripList.size());
 		}
@@ -241,15 +241,15 @@ public class SvcViewHandler {
 			map.put("tb_no", tb_no);
 			List<AlbumDataBean>album=albumDao.getBoardAlbum(map);
 			request.setAttribute("album", album);
-
-			//check user whether user is member or not
-			TbDataBean tbDto=new TbDataBean();
-			user_id=(user_id==null?"":user_id);
-			tbDto.setUser_id(user_id);
-			tbDto.setTb_no(tb_no);
-			boolean isMember=tbDao.isMember(tbDto);
-			request.setAttribute("isMember", isMember);
 		}
+		
+		//check user whether user is member or not
+		TbDataBean tbDto=new TbDataBean();
+		user_id=(user_id==null?"":user_id);
+		tbDto.setUser_id(user_id);
+		tbDto.setTb_no(tb_no);
+		boolean isMember=tbDao.isMember(tbDto);
+		request.setAttribute("isMember", isMember);
 		return new ModelAndView("svc/boardAlbum");
 	}
 	
