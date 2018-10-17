@@ -4,8 +4,10 @@
 	background-color: #232F34;
 	color: white;
 }
-.btn-album{
-	border: #F9AA33 1px !important;
+.btn.btn-album {
+	background-color: white;
+    color: black;
+    border: 2px solid #F9AA33; /* Green */
 }
 .btn_album_delete {
 	border: #344955 1px;

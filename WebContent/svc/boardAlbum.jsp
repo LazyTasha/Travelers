@@ -40,11 +40,7 @@
 		                <div class="d-flex justify-content-between align-items-center">
 		                  <small class="text-muted"><fmt:formatDate value="${photo.alb_reg_date}" pattern="yyyy-MM-dd HH:mm"/></small>
 		                 	<c:if test="${isMember eq true}">	             
-<<<<<<< HEAD
 		                  	<button type="button" class="btn_album_delete"onclick="deletePhoto(${tb_no},${photo.photo_id},${start})"><img src="${project}img/xmark_24px.png"></img></button>
-=======
-		                  	<button type="button" class="btn btn-sm" onclick="deletePhoto(${tb_no},${photo.photo_id},${start})" >${btn_delete}</button>
->>>>>>> master
 		                 	</c:if>
 	                </div>
 	            </div>
