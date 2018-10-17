@@ -197,7 +197,6 @@ public class SvcProHandler {
 	//// Email
 	@RequestMapping("/emailCheck")
 	public ModelAndView EmailCheckProcess(HttpServletRequest request, HttpServletResponse response) {
-		
 		String host = "smtp.gmail.com"; // smtp 서버
 		String subject = "EmailCheck"; // 보내는 제목 설정
 		String fromName = "Admin"; // 보내는 이름 설정
@@ -206,7 +205,6 @@ public class SvcProHandler {
 		String content = "Number [" + authNum + "]"; // 이메일 내용 설정
 
 		String email = request.getParameter("email1");
-		System.out.println(email);
 		int result = userDao.EmailCheck(email);
 
 		request.setAttribute("authNum", authNum);
@@ -271,7 +269,6 @@ public class SvcProHandler {
 		
 		request.setAttribute("email", email);
 
-
 		try {
 			Properties props = new Properties();
 			props.put("mail.smtp.starttls.enable", "true");
@@ -313,14 +310,12 @@ public class SvcProHandler {
 		String subject = "EmailCheck"; // 보내는 제목 설정
 		String fromName = "Admin"; // 보내는 이름 설정
 		String from = "dlagurgur@gmail.com"; // 보내는 사람(구글계정)
-		
 		String email = request.getParameter("email2");
 		UserDataBean userDto = userDao.getUserEmailPasswd(email);
 		String user_passwd = userDto.getPasswd();
 		String content = "당신의 비밀번호는 [" + user_passwd + "]입니다"; // 이메일 내용 설정
 		
 		request.setAttribute("email", email);
-
 
 		try {
 			Properties props = new Properties();
