@@ -110,3 +110,4 @@
 <c:set var="search_guide" value="검색어를 입력하세요"/>
 <c:set var="search_result" value="의 검색 결과입니다."/>
 <c:set var="search_no_result" value="검색 결과가 없습니다."/>
+<c:set var="search_trip_schedule" value="게시물"/>
