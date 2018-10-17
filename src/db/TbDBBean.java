@@ -94,19 +94,13 @@ public class TbDBBean {
 		Map<String, Integer> tripReq=new HashMap<String, Integer>();
 		tripReq.put("start", start);
 		tripReq.put("end", end);
-		List<TbDataBean> tripList=session.selectList("db.getTrips", tripReq);
+		List<TbDataBean> tripList=session.selectList("db.getTrips2", tripReq);
 		
 		for(TbDataBean tbDto:tripList) {
-			//set Nickname instead of id
-			String user_id=tbDto.getUser_id();
-			String user_name;
-			//if that user left
-			if(user_id==null||user_id.equals("")) {
-				user_name="Ex-User";
-			} else {
-				user_name=(String) session.selectOne("db.getUserName", user_id);
+			//null exception
+			if(tbDto.getUser_id().equals("")||tbDto.getUser_id()==null) {
+				tbDto.setUser_id("Ex-User");
 			}
-			tbDto.setUser_id(user_name);
 			
 			//locations and tags 
 			List <Integer> tripIds=session.selectList("db.getTripIds", tbDto.getTb_no());
