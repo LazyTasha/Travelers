@@ -88,10 +88,11 @@
 												<input type="hidden" name="coord_lat" value="${i.coord_lat}">
 												<input type="hidden" value="${i.country_name}">																						
 												<button onclick="attend()" class="btn btn-sm">참석</button>
-												<button onclick="attend()" class="btn btn-sm">불참</button>
+												<button onclick="absent()" class="btn btn-sm">불참</button>
 										</div><!-- 장소 -->
 									</div><!-- column -->
 								</div><!-- row -->
+							<div id="trip_member_list"></div>
 						</div><!-- 일정 Container box-->
 						</c:forEach>
 						
