@@ -109,16 +109,22 @@
 				</ul>
 				<c:if test="${user_level ne 9}">
 					<form class="form-inline mt-2 mt-md-0 login-section">
+						<select name="search_type">
+						<option value="schedule">${trip_schedule}</option>
+						<option value="trip_writer">${trip_writer}</option>
+					</select> &nbsp;
+					<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
+					<input type="submit" value="${search_trip}"> &nbsp;|&nbsp;
 						<a href="myPage.go" class="nav-item">${page_mypage2}</a> &nbsp;
 					</form>
 				</c:if>
 				<c:if test="${user_level eq 9}">
 					<form class="form-inline mt-2 mt-md-0 login-section">
 						<select name="search_type">
-							<option value="trip_schedule">${trip_schedule}</option>
+							<option value="schedule">${trip_schedule}</option>
 							<option value="trip_writer">${trip_writer}</option>
-						</select>
-						<input type="text" name="keyword" placeholder="${search_guide}">
+						</select> &nbsp;
+						<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
 						<input type="submit" value="${search_trip}"> &nbsp;|&nbsp;
 						<a class="nav-item" href="adminTrip.go">${btn_adm}</a> &nbsp; <a
 							class="nav-item" href="adminLogout.go">${btn_logout}</a>
