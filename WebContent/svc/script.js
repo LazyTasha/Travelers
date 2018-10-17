@@ -113,7 +113,10 @@ function isSameCountry(){
 	}
 	return result;
 }
-
+function focusMarker(order,lng,lat){
+	boardmap.setZoom(12);
+	boardmap.setCenter({lat:parseFloat(lat),lng:parseFloat(lng)});
+}
 //Map for writing
 //지도 주소검색
 var map;

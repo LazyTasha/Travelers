@@ -27,7 +27,7 @@ import db.UserDataBean;
 @Controller
 public class AdmListHandler {
 	private static final int pageSize=10;
-	private static final int pageBlock = 2;
+	private static final int pageBlock = 5;
 	
 	// page 이름
 	private static final String tripP="trip";

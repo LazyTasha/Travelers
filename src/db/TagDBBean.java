@@ -21,6 +21,9 @@ public class TagDBBean {
 	public int insertTag(String tag_value) {
 		return session.insert("db.insertTag",tag_value);
 	}
+	public int insertCityTag(String tag_value) {
+		return session.insert("db.insertCityTag",tag_value);
+	}
 	//tag list
 	public  List<TagDataBean> getTags(Map<String, Integer> map){
 		return session.selectList("db.getTags",map);	
