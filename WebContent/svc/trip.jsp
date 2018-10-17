@@ -87,8 +87,8 @@
 												<input type="hidden" name="coord_long" value="${i.coord_long}">
 												<input type="hidden" name="coord_lat" value="${i.coord_lat}">
 												<input type="hidden" value="${i.country_name}">																						
-												<button onclick="attend()" class="btn btn-sm">참석</button>
-												<button onclick="absent()" class="btn btn-sm">불참</button>
+												<button onclick="attend(${i.td_trip_id})" class="btn btn-sm">참석</button>
+												<button onclick="absent(${i.td_trip_id})" class="btn btn-sm">불참</button>
 										</div><!-- 장소 -->
 									</div><!-- column -->
 								</div><!-- row -->
