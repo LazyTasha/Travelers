@@ -56,7 +56,7 @@
 				</ul>
 				<form class="form-inline mt-2 mt-md-0 login-section" name="serch_trip" method="post" action="searchTrip.go" >
 					<select name="search_type">
-						<option value="schedule">${trip_schedule}</option>
+						<option value="schedule">${search_trip_schedule}</option>
 						<option value="trip_writer">${trip_writer}</option>
 					</select> &nbsp;
 					<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
@@ -108,9 +108,9 @@
 					</li>
 				</ul>
 				<c:if test="${user_level ne 9}">
-					<form class="form-inline mt-2 mt-md-0 login-section">
+					<form class="form-inline mt-2 mt-md-0 login-section" name="serch_trip" method="post" action="searchTrip.go" >
 						<select name="search_type">
-						<option value="schedule">${trip_schedule}</option>
+						<option value="schedule">${search_trip_schedule}</option>
 						<option value="trip_writer">${trip_writer}</option>
 					</select> &nbsp;
 					<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
@@ -119,9 +119,9 @@
 					</form>
 				</c:if>
 				<c:if test="${user_level eq 9}">
-					<form class="form-inline mt-2 mt-md-0 login-section">
+					<form class="form-inline mt-2 mt-md-0 login-section" name="serch_trip" method="post" action="searchTrip.go" >
 						<select name="search_type">
-							<option value="schedule">${trip_schedule}</option>
+							<option value="schedule">${search_trip_schedule}</option>
 							<option value="trip_writer">${trip_writer}</option>
 						</select> &nbsp;
 						<input type="text" name="keyword" placeholder="${search_guide}"> &nbsp;
