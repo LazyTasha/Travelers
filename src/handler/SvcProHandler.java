@@ -519,10 +519,10 @@ public class SvcProHandler {
 				// db insert
 				albumDto = new AlbumDataBean();
 				albumDto.setPhoto_url(safeDBFile);
-				int tb_no = Integer.parseInt(request.getParameter("tb_no"));
-				albumDto.setTb_no(Integer.parseInt(request.getParameter("tb_no")));
+				int tb_no=Integer.parseInt(request.getParameter("tb_no"));
+				albumDto.setTb_no(tb_no);
+				request.setAttribute("tb_no",tb_no);
 				int result = albumDao.addPhoto(albumDto);
-
 			} catch (IllegalStateException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

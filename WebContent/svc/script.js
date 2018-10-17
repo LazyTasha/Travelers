@@ -37,7 +37,7 @@ $(document).ready(function(){
 	}
 	var num=$('label[name=schedule]').length;//일정 개수 
 	if(num){
-	oadCal(num);
+	loadCal(num);
 	}
 });
 	
