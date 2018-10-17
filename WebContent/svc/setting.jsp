@@ -18,14 +18,12 @@
 <c:set var="EmailId" value="아이디 찾기"/>
 <c:set var="EmailPasswd" value="비밀번호 찾기"/>
 
-
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
 <c:set var="page_album_eng" value="Album"/>
 <c:set var="page_calendar_eng" value="My Calendar"/>
 <c:set var="page_write" value="글쓰기"/>
 <c:set var="page_tripMod" value="글수정"/>
-
 
 
 <c:set var="msg_main" value="비회원이시면 회원가입을 해주세요"/>
