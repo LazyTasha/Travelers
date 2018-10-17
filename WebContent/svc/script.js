@@ -498,13 +498,6 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 	 CmtInsert(insertData); //Insert 함수호출(아래)
 }
 
-
-/*function commentInsertCheck(){
-if(commentInsertForm.c_content.value == ''){
-	 alert("댓글을 입력해주세요!");
-	 return false;
-} 
-}*/
 /////댓글 목록 
 function commentList(tb_no){
 	var SessionID=$("input[name=session]").val();
