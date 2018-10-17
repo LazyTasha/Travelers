@@ -92,7 +92,7 @@
 										</div><!-- 장소 -->
 									</div><!-- column -->
 								</div><!-- row -->
-							</div><!-- 일정 Container box-->
+						</div><!-- 일정 Container box-->
 						</c:forEach>
 						<div id="trip_member_list">
 							${place_for_member}
