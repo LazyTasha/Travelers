@@ -1,5 +1,6 @@
 package db;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +112,16 @@ public class TbDBBean {
 			List <Integer> tripIds=session.selectList("db.getTripIds", tbDto.getTb_no());
 			String[] locs=new String[tripIds.size()];
 			for(int j=0; j<tripIds.size(); j++) {
-				locs[j]=session.selectOne("db.getDestination", tripIds.get(j));
+				String dest=session.selectOne("db.getDestination", tripIds.get(j));
+				boolean addOrNot=true;
+				for(int c=0; c<locs.length; c++) {
+					if(dest.equals(locs[c])) {
+						addOrNot=false;
+					}
+				}
+				if(addOrNot) {
+					locs[j]=dest;
+				}
 			}
 			tbDto.setLocs(locs);
 			
@@ -247,5 +257,25 @@ public class TbDBBean {
 			tbDto.setTags(tags);
 		}
 		return foundList;
+	}
+	
+	public List<Map<String, String>> getMemInfoList(int tb_no) {
+		List<Map<String, String>> memNumList=new ArrayList<Map<String, String>>();
+		List<Integer> tripIds=session.selectList("db.getTripIds", tb_no);
+		
+		if(tripIds.size()>0) {
+			for(int td_trip_id:tripIds) {
+				Map<String, String> currentTrip=new HashMap<String, String>();
+				int memNum=session.selectOne("db.getMemberCount", td_trip_id);
+				String td_trip_id_string=""+td_trip_id;
+				String memNum_string=""+memNum;
+				
+				currentTrip.put("td_trip_id", td_trip_id_string);
+				currentTrip.put("memNum", memNum_string);
+				memNumList.add(currentTrip);
+			}
+		}
+		
+		return memNumList;
 	}
 }
