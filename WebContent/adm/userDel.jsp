@@ -7,7 +7,6 @@
 	<script type="text/javascript">
 		<!--
 			erroralert(deleteerror);
-			
 		//-->
 	</script>
 </c:if>
