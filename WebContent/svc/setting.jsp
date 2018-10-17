@@ -106,4 +106,4 @@
 <c:set var="trip_go_to_chat" value="채팅하러 가기"/>
 <c:set var="btn_trip_detail" value="번째 여행지"/>
 <c:set var="trip_talk" value="오픈채팅"/>
-
+<c:set var="place_for_member" value="member list"/>

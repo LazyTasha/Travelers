@@ -92,9 +92,14 @@
 										</div><!-- 장소 -->
 									</div><!-- column -->
 								</div><!-- row -->
-							<div id="trip_member_list"></div>
 						</div><!-- 일정 Container box-->
 						</c:forEach>
+						<div id="trip_member_list">
+							${place_for_member}
+						</div>
+						<form name="trip_detail">
+								<input type="hidden" name="user_id" value="${user_id}">
+							</form>
 						
 						<div class="row pt-3 pb-1">								
 								<label class="col-2">${tb_talk}</label>
