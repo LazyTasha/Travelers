@@ -21,7 +21,7 @@
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
 <c:set var="page_album_eng" value="Album"/>
-<c:set var="page_calendar_eng" value="Calendar"/>
+<c:set var="page_calendar_eng" value="My Calendar"/>
 <c:set var="page_write" value="글쓰기"/>
 <c:set var="page_tripMod" value="글수정"/>
 
@@ -91,7 +91,6 @@
 <c:set var="trip_write" value="등록"/>
 <c:set var="trip_location" value="장소"/>
 <c:set var="trip_schedule" value="일정"/>
-<c:set var="trip_content" value="내용을 입력하세요"/>
 <c:set var="trip_entercontent" value="내용을 입력하세요"/>
 
 <c:set var="trip_map" value="지도"/>

@@ -118,7 +118,7 @@
 								</c:choose>
 							</c:forEach>
 						</div>
-					</div>	
+					</div>
 				<div class="form-group row">
 					<div class="col-sm-2"></div>
 					<div class="col-sm-8">

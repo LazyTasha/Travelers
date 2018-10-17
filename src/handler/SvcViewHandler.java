@@ -98,7 +98,7 @@ public class SvcViewHandler {
 		int startTrip=0;
 		int endTrip=0;
 		if(tripList.size()>=10) {
-			request.setAttribute("last_row", 10);
+			request.setAttribute("last_row", 11);
 		} else {
 			request.setAttribute("last_row", tripList.size());
 		}

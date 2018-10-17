@@ -22,36 +22,35 @@
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <!-- Custom styles for boarAlbum template -->
-<link href="style_album.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Work+Sans"
 	rel="stylesheet">
-
+<link rel="stylesheet" href="${project}travelers_style.css">
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="${project}script.js"></script>
 </head>
 
-<body>
+<body class="trip">
 	<div class="container" style="width: 800px;">
 		<div>
-			<div id=button_area>
+			<div id=button_area class="d-flex justify-content-end">
+				<!-- 목록 button -->
+					<div><input type="button" value="${btn_list}"  onclick="location='tripList.go'" class="btn btn-sm">&nbsp;</div>
 				<!--수정/삭제 button -->
 				<c:if test="${isOwner eq 1}">
-					<section>
-						<input type="button" value="${btn_mod}"
-							onclick="modifyBoard(${tb_no})"> <input type="button"
-							value="${btn_delete}" onclick="deleteBoard(${tb_no})">
-					</section>
+					<div>
+						<input type="button" value="${btn_mod}" onclick="modifyBoard(${tb_no})" class="btn btn-sm"> 							
+						<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})" class="btn btn-sm">							
+					</div>
 				</c:if>
 				<c:if test="${user_level eq 9}">
-					<section>
-						<input type="button" value="${btn_delete}"
-							onclick="deleteBoard(${tb_no})"> <input type="button"
-							value="${btn_back_admin}" onclick="goAdminPage()">
-					</section>
+					<div>
+						<input type="button" value="${btn_delete}" onclick="deleteBoard(${tb_no})"> 
+						<input type="button" value="${btn_back_admin}" onclick="goAdminPage()">							
+					</div>
 				</c:if>
 			</div>
 			<!--  -->
-			<br> <input type="hidden" value="${tbDto.tb_notice}" id="notice" />
+			<br><input type="hidden" value="${tbDto.tb_notice}" id="notice" />
 			<!----- 공지 ----->
 			<article>
 				<section>
@@ -61,46 +60,52 @@
 					</c:if>
 
 					<div id="trip_title">
-						<div>
-							<div>
-							<h2>제목 : ${tbDto.tb_title}</h2>
-							</div>
-						</div>
-						
-						<div id="trip_content">
-							<div>
-								<div>글쓴이 : ${tbDto.user_id}</div>
-							</div>
-							<div>
-								<div>인원 : ${tbDto.tb_v_count}/${tbDto.tb_m_num}</div>
-							</div>
-
-							<div>
-
-								<c:forEach var="i" items="${locDtoList}">
-									<c:set var="order" value="${i.coord_order}"/>
-									<div>일정 : ${i.cal_start_date}~${i.cal_end_date}</div>
-									<div name="coord">
-										<div id="address${order}">주소:</div>
-										<input type="hidden" name="coord_long" value="${i.coord_long}">
-										<input type="hidden" name="coord_lat" value="${i.coord_lat}">
-									</div>	
-									<div>나라 이름: ${i.country_name}</div>
-									<input type="hidden" id="country${order}" value="${i.country_name}">
-									<button onclick="attend()">참석</button>
-									<button onclick="attend()">불참</button>
-								</c:forEach>
-							</div>
-							<div class="row">
-								${trip_content}<textarea class="col-12" rows="10" readonly>${tbDto.tb_content}</textarea>
-							</div>		
-							<div>
-								<div>
-									카카오톡 :<a href="${tbDto.tb_talk}" target="_blank"> 카카오톡</a>
+						<div class="row">
+							<input type="text" name="trip_title" class="col-12 form-control form-control-lg" value="${tbDto.tb_title}" readonly="readonly">																			
+						</div>						
+						<div class="row">
+								<div class="text-muted">
+									<i><b>With</b></i>&nbsp; ${tbDto.user_id}
 								</div>
-							</div>
 						</div>
-					</div>
+						<div class="row pt-2 pb-2">
+								<label class="col-2">참여 인원</label>${tbDto.tb_v_count}/${tbDto.tb_m_num}
+						</div>						
+						<c:forEach var="i" items="${locDtoList}">
+						<div class="container" style="width:100%">
+								<div class="row">									
+									<c:set var="order" value="${i.coord_order}"/>
+										<label class="col-2">${trip_schedule}</label>
+										<input type="text" class="col-3" value="${i.cal_start_date}" readonly="readonly"/> 
+										~
+										<input type="text" class="col-3" value="${i.cal_end_date}" readonly="readonly"/>									
+								</div><!-- 날짜 일정 -->										
+								<div class="row">
+									<div class="col-12 offset-2">
+										<div class="loc" name="coord">
+												<input type="text" name="trip_location${order}" id="address${order}" class="col-8 pt-3" readonly="readonly">
+												<input type="hidden" name="coord_long" value="${i.coord_long}">
+												<input type="hidden" name="coord_lat" value="${i.coord_lat}">
+												<input type="hidden" value="${i.country_name}">																						
+												<button onclick="attend()" class="btn btn-sm">참석</button>
+												<button onclick="absent()" class="btn btn-sm">불참</button>
+										</div><!-- 장소 -->
+									</div><!-- column -->
+								</div><!-- row -->
+							<div id="trip_member_list"></div>
+						</div><!-- 일정 Container box-->
+						</c:forEach>
+						
+						<div class="row pt-3 pb-1">								
+								<label class="col-2">${tb_talk}</label>
+								<a href="${tbDto.tb_talk}" target="_blank">${tbDto.tb_talk}</a>								
+						</div>					
+					<div id="trip_content">						
+						<div class="row">
+								<textarea class="col-12" rows="8" readonly>${tbDto.tb_content}</textarea>
+						</div>																						
+					</div><!-- id: trip_content -->
+					</div><!-- id: trip_title -->
 				</section>
 
 
@@ -132,9 +137,9 @@
 				<c:if test="${tab eq 1}">
 					<div id="mapTab" style="display: none">
 				</c:if>
-				<div id="map">지도</div>
-				<input type="hidden" value="${lat}" id="lat" /> <input
-					type="hidden" value="${lng}" id="lng" />
+					<div id="map">지도</div>
+			    	<input type="hidden" value="${lat}" id="lat" /> 
+            <input type="hidden" value="${lng}" id="lng" />
 					</div>
 			</article>
 
@@ -146,7 +151,7 @@
 						<div class="input-group">
 							<input type="hidden" name="tb_no" value="${tb_no}" /> 
 							<input type="hidden" name="session" value="${user_id}" /> 
-								<input type="text" class="input" id="c_content" name="c_content" placeholder="내용을 입력하세요."> 
+								<input type="text" class="input col-11" id="c_content" name="c_content" placeholder="${trip_entercontent}"> 
 								<span class="input-group-btn">
 								<button class="btn btn-default" type="button" 	onclick="commentInsert()">등록</button>
 							</span>
