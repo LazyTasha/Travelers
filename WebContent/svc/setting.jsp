@@ -105,3 +105,8 @@
 <c:set var="btn_trip_detail" value="번째 여행지"/>
 <c:set var="trip_talk" value="오픈채팅"/>
 <c:set var="place_for_member" value="member list"/>
+
+<c:set var="search_trip" value="여행 찾기..."/>
+<c:set var="search_guide" value="검색어를 입력하세요"/>
+<c:set var="search_result" value="의 검색 결과입니다."/>
+<c:set var="search_no_result" value="검색 결과가 없습니다."/>

@@ -62,7 +62,9 @@
 <c:set var="str_tag_add" value="태그 추가"/>
 <c:set var="str_tag_mod" value="태그 수정"/>
 <c:set var="str_mod_tag" value="변경할 내용"/>
-
+<c:set var="str_type" value="태그종류"/>
+<c:set var="str_tag_user" value="사용자 성향"/>
+<c:set var="str_tag_city" value="도시 이름"/>
 
 <c:set var="btn_delete" value="삭제"/>
 <c:set var="btn_modify" value="수정"/>

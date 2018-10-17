@@ -289,6 +289,15 @@
 		select td_trip_id from gg_trip_detail where
 		tb_no=#{tb_no})
 	</select>
+	
+	<select id="findTripByKeyword" parameterType="String" resultType="db.TbDataBean">
+		select * from gg_trip_board where regexp_like(tb_title, #{keyword}) or regexp_like(tb_content, #{keyword})
+	</select>
+	
+	<select id="findTripByUser" parameterType="String" resultType="db.TbDataBean">
+		select * from gg_trip_board where user_id=
+		(select user_id from gg_user where user_name=#{keyword})
+	</select>
 
 	<!--trip DB -->
 	<delete id="deleteCal" parameterType="int"> 

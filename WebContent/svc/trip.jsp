@@ -72,13 +72,13 @@
 								<label class="col-2">참여 인원</label>${tbDto.tb_v_count}/${tbDto.tb_m_num}
 						</div>						
 						<c:forEach var="i" items="${locDtoList}">
-						<div class="container" style="width:100%">
+						<c:set var="order" value="${i.coord_order}"/>
+							<div class="container" style="width:100%" onmouseover="focusMarker(${order},${i.coord_long},${i.coord_lat})">
 								<div class="row">									
-									<c:set var="order" value="${i.coord_order}"/>
-										<label class="col-2">${trip_schedule}</label>
-										<input type="text" class="col-3" value="${i.cal_start_date}" readonly="readonly"/> 
-										~
-										<input type="text" class="col-3" value="${i.cal_end_date}" readonly="readonly"/>									
+									<label class="col-2">${trip_schedule}</label>
+									<input type="text" class="col-3" value="${i.cal_start_date}" readonly="readonly"/> 
+									~
+									<input type="text" class="col-3" value="${i.cal_end_date}" readonly="readonly"/>									
 								</div><!-- 날짜 일정 -->										
 								<div class="row">
 									<div class="col-12 offset-2">
@@ -86,7 +86,7 @@
 												<input type="text" name="trip_location${order}" id="address${order}" class="col-8 pt-3" readonly="readonly">
 												<input type="hidden" name="coord_long" value="${i.coord_long}">
 												<input type="hidden" name="coord_lat" value="${i.coord_lat}">
-												<input type="hidden" value="${i.country_name}">																						
+												<input type="hidden" id="country${order}"value="${i.country_name}">																						
 												<button onclick="attend(${i.td_trip_id})" class="btn btn-sm">참석</button>
 												<button onclick="absent(${i.td_trip_id})" class="btn btn-sm">불참</button>
 										</div><!-- 장소 -->
@@ -112,7 +112,6 @@
 					</div><!-- id: trip_content -->
 					</div><!-- id: trip_title -->
 				</section>
-
 
 				<br>
 				<!--button 영역 -->
@@ -144,8 +143,8 @@
 				</c:if>
 					<div id="map">지도</div>
 			    	<input type="hidden" value="${lat}" id="lat" /> 
-            <input type="hidden" value="${lng}" id="lng" />
-					</div>
+            		<input type="hidden" value="${lng}" id="lng" />
+				</div>
 			</article>
 
 			<!-- comment -->

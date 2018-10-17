@@ -1,5 +1,6 @@
 package handler;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -167,6 +168,41 @@ public class SvcViewHandler {
 		return new ModelAndView("svc/trip");
 	}
 	
+	@RequestMapping("/searchTrip")
+	public ModelAndView svcSearchProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException, UnsupportedEncodingException {
+		try {
+			request.setCharacterEncoding("utf-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+		//get the type and keyword of searching
+		String selectedType=request.getParameter("search_type");
+		String keyword=request.getParameter("keyword");
+		request.setAttribute("keyword", keyword);
+		
+		//set List
+		List<TbDataBean> foundList;
+		
+		//find trips for each type
+		if(selectedType.equals("schedule")) {
+			foundList=tbDao.findTripByKeyword(keyword);
+		} else {
+			foundList=tbDao.findTripByUser(keyword);
+		}
+		
+		//count check
+		int count=0;
+		if(foundList.size()>0) {
+			count=foundList.size();
+		}
+		
+		request.setAttribute("foundList", foundList);
+		request.setAttribute("count", count);
+		
+		return new ModelAndView("svc/foundList");
+	}
+	
 	/////////////////////////////////album pages/////////////////////////////////
 	
 	@RequestMapping("/album")
@@ -241,15 +277,15 @@ public class SvcViewHandler {
 			map.put("tb_no", tb_no);
 			List<AlbumDataBean>album=albumDao.getBoardAlbum(map);
 			request.setAttribute("album", album);
-
-			//check user whether user is member or not
-			TbDataBean tbDto=new TbDataBean();
-			user_id=(user_id==null?"":user_id);
-			tbDto.setUser_id(user_id);
-			tbDto.setTb_no(tb_no);
-			boolean isMember=tbDao.isMember(tbDto);
-			request.setAttribute("isMember", isMember);
 		}
+		
+		//check user whether user is member or not
+		TbDataBean tbDto=new TbDataBean();
+		user_id=(user_id==null?"":user_id);
+		tbDto.setUser_id(user_id);
+		tbDto.setTb_no(tb_no);
+		boolean isMember=tbDao.isMember(tbDto);
+		request.setAttribute("isMember", isMember);
 		return new ModelAndView("svc/boardAlbum");
 	}
 	
