@@ -106,8 +106,8 @@
 								<a href="${tbDto.tb_talk}" target="_blank">${tbDto.tb_talk}</a>								
 						</div>					
 					<div id="trip_content">						
-						<div class="row">
-								<textarea class="col-12" rows="8" readonly>${tbDto.tb_content}</textarea>
+						<div class="row px-3">
+								<textarea class="col-12" rows="8" style="border:dotted 1px grey" readonly>${tbDto.tb_content}</textarea>
 						</div>																						
 					</div><!-- id: trip_content -->
 					</div><!-- id: trip_title -->
@@ -116,8 +116,8 @@
 				<br>
 				<!--button 영역 -->
 				<section>
-					<button onclick="showMap()">지도</button>
-					<button onclick="showAlbum()">사진</button>
+					<button class="btn" onclick="showMap()">지도</button>
+					<button class="btn" onclick="showAlbum()">사진</button>
 				</section>
 
 				<!--boardAlbum영역  -->
@@ -127,8 +127,10 @@
 				<c:if test="${tab eq '1'}">
 					<section id="albumTab">
 				</c:if>
-					<div class="row" id="album">
-						<jsp:include page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}' flush='false' />
+					<div class="row col-12" id="album">
+						<jsp:include
+							page='boardAlbum.go?tb_no=${tb_no}&start=${start}&tab=${tab}'
+							flush='false' />
 					</div>
 				</section>
 
