@@ -593,36 +593,49 @@ function loadMoreList(last_row) {
 		data : {last_row : last_row},
 		url : "loadMoreList.go",
 		success : function(data) {
-			tripListInfo.last_row.value=last_row+1;
-			var listForAppend="";
-			if(data){
+			if(data.length>0){
+				var listForAppend="";
+				var last_row_after=last_row;
 				$.each(data, function(key, additionalList){
+					last_row_after=last_row_after+1;
+					
 					listForAppend+='<div class="row">';
 					listForAppend+=		'<div class="col-md-12">';
 					listForAppend+=			'<div class="card flex-md-row mb-3 shadow-sm h-md-250">';
 					listForAppend+=				'<div class="card-body d-flex flex-column align-items-start">';
 					listForAppend+=					'<strong class="d-inline-block mb-2">';
-					listForAppend+=						'<c:forEach var="j" items="'+additionalList.locs+'">';
-					listForAppend+=							'${j}';
-					listForAppend+=						'</c:forEach>';
+																	if(additionalList.locs) {
+																		$.each(additionalList.locs, function(key, locs) {
+																			additionalList.locs;
+																		});
+																	}
 					listForAppend+=					'</strong>';
 					listForAppend+=					'<h3 class="mb-0">';
-					listForAppend+=					'<a class="text-dark" href="#">'+additionalList.tb_title+'</a>';
+					listForAppend+=						'<a class="text-dark" href="trip.go?tb_no='+additionalList.tb_no+'">'+additionalList.tb_title+'</a>';
 					listForAppend+=					'</h3>';
-					listForAppend+=						'<div class="mb-1 text-muted"><i><b>With</b></i>&nbsp;'+additionalList.user_id+'</div>';
-					listForAppend+=							'<hr size="1px" color="black" noshade>';
-					listForAppend+=							'<p class="card-text mb-auto">'+additionalList.tb_content+'</p>';
-					listForAppend+=							'<hr style="width: 100%">';
-					listForAppend+=								'<div class="d-flex justify-content-center">';
-					listForAppend+=								'<div class="p-2">일정:2019.02.11~2019.02.21</div>&nbsp;';
-					listForAppend+=								'<div class="p-2">인원:'+additionalList.tb_m_num+'</div>&nbsp;';
-					listForAppend+=								'<div class="p-2">조회수:'+additionalList.tb_v_count+'</div>&nbsp;';
+					listForAppend+=					'<div class="mb-1 text-muted text-right">';
+					listForAppend+=						'<i><b>With</b></i>&nbsp;'+additionalList.user_id;
+					listForAppend+=					'</div>';
+					listForAppend+=					'<hr size="1px" color="black" noshade>';
+					listForAppend+=					'<p class="card-text mb-auto">'+additionalList.tb_content+'</p>';
+					listForAppend+=					'<hr style="width: 100%">';
+					listForAppend+=					'<div class="d-flex justify-content-center">';
+					listForAppend+=						'<div class="p-2">인원:'+additionalList.tb_m_num+'</div>&nbsp;';
+					listForAppend+=						'<div class="p-2">조회수:'+additionalList.tb_v_count+'</div>';
+					listForAppend+=						'<div class="p-2">';
+																		$.each(additionalList.tags, function(key, tags) {
+																			additionalList.tags;
+																		});
 					listForAppend+=						'</div>';
-					listForAppend+=					'<a href="trip.go?tb_no='+additionalList.tb_no+'">Continue reading</a>';
+					listForAppend+=					'</div>';
 					listForAppend+=				'</div>';
-					listForAppend+='</div></div></div>';
+					listForAppend+=			'</div>';
+					listForAppend+=		'</div>';
+					listForAppend+=	'</div>';
 	            });
-	            $("#board-append-list").append(listForAppend);
+	            $("#board-list").append(listForAppend);
+	            var newButton='<button type="button" class="btn btn-dark col-md-12" onclick="loadMoreList('+last_row_after+')">Load more...</button>';
+	            $("#loading-button").html(newButton);
 			} else {
 				alert('더 이상 불러올 글이 없습니다.');
 			}

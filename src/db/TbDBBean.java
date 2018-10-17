@@ -144,15 +144,13 @@ public class TbDBBean {
 	//Loading starts from last number of current page
 	public List<TbDataBean> loadMoreList(int last_row) {
 		int start=last_row;
-		int end=start+5;
+		int end=start+4;
 		
 		Map<String, Integer> tripReq=new HashMap<String, Integer>();
 		tripReq.put("start", start);
 		tripReq.put("end", end);
 		
-		System.out.println("추가 리스트 요청까지 잘 옴."+start+"번부터"+end+"번까지 꺼내달라고 함.");
 		List<TbDataBean> tripList=session.selectList("db.getTrips", tripReq);
-		System.out.println("추가 리스트 꺼내옴. 글 수는 "+tripList.size()+"개임.");
 		for(TbDataBean tbDto:tripList) {
 			//set Nickname instead of id
 			String user_id=tbDto.getUser_id();
