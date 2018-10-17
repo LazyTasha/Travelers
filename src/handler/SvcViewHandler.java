@@ -164,6 +164,28 @@ public class SvcViewHandler {
 		String start=request.getParameter("start");
 		if(start==null)start="1";
 		request.setAttribute("start",start);
+		
+		//member Info of each trip
+		List<Map<String, String>> memInfoList=tbDao.getMemInfoList(tb_no);
+		for(Map<String, String> tempMap:memInfoList) {
+			String temp_trip_id=""+tempMap.get("td_trip_id");
+			List<UserDataBean> currendMember=userDao.getCurrentMember(temp_trip_id);
+			String members="";
+			if (currendMember.size()>0) {
+				for(int i=0; i<currendMember.size(); i++) {
+					if (currendMember.size()<=1) {
+						members=members+currendMember.get(i).getUser_name();
+					} else if(currendMember.size()>1 && i==currendMember.size()-1) {
+						members=members+currendMember.get(i).getUser_name();
+					} else {
+						members=members+currendMember.get(i).getUser_name()+" ";
+					}
+				}
+			}
+			tempMap.put("members", members);
+		}
+		
+		request.setAttribute("memInfoList", memInfoList);
 
 		return new ModelAndView("svc/trip");
 	}

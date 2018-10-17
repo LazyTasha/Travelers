@@ -251,7 +251,6 @@ function deletePhoto(tb_no,photo_id,start){
 }
 
 //AJAX 또는 DOM
-
 function passwordCheckFunction() {
 	var userPassword1 = $('#userPassword1').val();
 	var userPassword2 = $('#userPassword2').val();
@@ -498,13 +497,6 @@ function commentInsert(){ //댓글 등록 버튼 클릭시
 	 CmtInsert(insertData); //Insert 함수호출(아래)
 }
 
-
-/*function commentInsertCheck(){
-if(commentInsertForm.c_content.value == ''){
-	 alert("댓글을 입력해주세요!");
-	 return false;
-} 
-}*/
 /////댓글 목록 
 function commentList(tb_no){
 	var SessionID=$("input[name=session]").val();
@@ -517,7 +509,7 @@ function commentList(tb_no){
             var UserName = 'Ex-User';
             $.each(data, function(key, comment){ 
             	commentView += '<div class="commentArea" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-            	commentView += '</div class="commentInfo'+comment.c_id+'">'+'댓글번호 : '+comment.c_id+' / 작성자 : '+comment.user_name;
+            	commentView += '</div class="commentInfo'+comment.c_id+'"><b>'+comment.user_name+'</b>';
             	if(SessionID == comment.user_id && comment.user_name != UserName){
             	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
             	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a>';
@@ -533,13 +525,6 @@ function commentList(tb_no){
     });
 	}
 
-
-/*function commentInsertCheck(){
-	if(commentInsertForm.c_content.value == ''){
-		 alert("댓글을 입력해주세요!");
-		 return false;
-	} 
-}*/
 
 //댓글 등록
 function CmtInsert(insertData){
@@ -561,6 +546,8 @@ function CmtInsert(insertData){
         alert("error : " + error);
     }
     });
+	}else{
+		alert("댓글을 입력해주세요");
 	}
 	}
 //댓글 수정 - 댓글 내용 출력을 input 폼으로 변경 
@@ -800,6 +787,8 @@ function goAdminPage(){
 
 function attend(td_trip_id) {
 	var user_id=trip_detail.user_id.value;
+	var order=$('input[name=order_of_'+td_trip_id+']').val();
+	var m_num=trip_detail.m_num.value;
 	if(user_id) {
 		$.ajax({
 			type : 'post',
@@ -809,12 +798,13 @@ function attend(td_trip_id) {
 			success : function(data) {
 				if(data) {
 					var mList="";
+					var count=data.length;
+					mList+=count+'/'+m_num+', ';
 					$.each(data, function(key, memberList) {
-						mList+='<div class="row">';
-						mList+=memberList.user_name;
-						mList+='</div>'
+						mList+=memberList.user_name+' ';
 		            });
-					$('#trip_member_list').html(mList);
+					$('#trip_member_list_'+order).html(mList);
+					albumPaging();
 				} else {
 					alert('참가하려는 일정에 이상이 있습니다.');
 				}
@@ -828,6 +818,8 @@ function attend(td_trip_id) {
 
 function absent(td_trip_id) {
 	var user_id=trip_detail.user_id.value;
+	var order=$('input[name=order_of_'+td_trip_id+']').val();
+	var m_num=trip_detail.m_num.value;
 	if(user_id) {
 		$.ajax({
 			type : 'post',
@@ -837,12 +829,13 @@ function absent(td_trip_id) {
 			success : function(data) {
 				if(data) {
 					var mList="";
+					var count=data.length;
+					mList+=count+'/'+m_num+', ';
 					$.each(data, function(key, memberList) {
-						mList+='<div class="row">';
-						mList+=memberList.user_name;
-						mList+='</div>';
+						mList+=memberList.user_name+' ';
 		            });
-		            $('#trip_member_list').html(mList);
+		            $('#trip_member_list_'+order).html(mList);
+		            albumPaging();
 				} else {
 					alert('빠지려는 일정에 이상이 있습니다.');
 				}
