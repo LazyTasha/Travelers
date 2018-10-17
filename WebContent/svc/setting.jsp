@@ -15,6 +15,9 @@
 <c:set var="page_modify" value="회원 정보 수정"/>
 <c:set var="page_mypage1" value="회 원 정 보"/>
 <c:set var="page_mypage2" value="회원 정보"/>
+<c:set var="EmailId" value="아이디 찾기"/>
+<c:set var="EmailPasswd" value="비밀번호 찾기"/>
+
 
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>

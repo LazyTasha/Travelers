@@ -51,6 +51,10 @@
 		select user_id from gg_user where email=#{email} 
 	</select>
 	
+	<select id="getUserEmailPasswd" parameterType="String" resultType="db.UserDataBean">
+		select passwd from gg_user where email=#{email} 
+	</select>
+	
 	<update id="modifyUser" parameterType="db.UserDataBean">
 		update gg_user set
 		passwd=#{passwd}, user_name=#{user_name} where

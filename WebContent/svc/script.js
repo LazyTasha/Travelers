@@ -323,6 +323,13 @@ function EmailIdCheck(email2){
 	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=500, height=200" );
 }
 
+function EmailIdPasswd(email2){
+	var url="EmailPasswdd.go?email2="+email2
+	open(url,"emailwindow", "statusbar=no, scrollbar=no, menubar=no,width=500, height=200" );
+}
+
+
+
 function confirmeMail(authNum){
 	var Email = $('#EmailVlaue').val(); //이메일 인증 창에서 내가 입력한 인증번호 값가져옴
     // 입력한 값이 없거나, 인증코드가 일지하지 않을 경우
