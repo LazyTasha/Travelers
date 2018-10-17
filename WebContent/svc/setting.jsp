@@ -15,6 +15,9 @@
 <c:set var="page_modify" value="회원 정보 수정"/>
 <c:set var="page_mypage1" value="회 원 정 보"/>
 <c:set var="page_mypage2" value="회원 정보"/>
+<c:set var="EmailId" value="아이디 찾기"/>
+<c:set var="EmailPasswd" value="비밀번호 찾기"/>
+
 
 <c:set var="page_main_eng" value="Main"/>
 <c:set var="page_board_eng" value="Board"/>
@@ -57,6 +60,7 @@
 <c:set var="str_jumin" value="주민등록번호"/>
 <c:set var="str_tel" value="전화번호"/>
 
+<c:set var="btn_adm" value="어드민페이지"/>
 <c:set var="btn_user_delete" value="회원탈퇴"/>
 <c:set var="btn_login" value="로그인"/> <!-- o -->
 <c:set var="btn_cancel" value="취소"/>

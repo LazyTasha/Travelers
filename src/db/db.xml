@@ -46,7 +46,15 @@
 		select
 		count(*) from gg_user where email=#{email}
 	</select>
-
+	
+	<select id="getUserEmailId" parameterType="String" resultType="db.UserDataBean">
+		select user_id from gg_user where email=#{email} 
+	</select>
+	
+	<select id="getUserEmailPasswd" parameterType="String" resultType="db.UserDataBean">
+		select passwd from gg_user where email=#{email} 
+	</select>
+	
 	<update id="modifyUser" parameterType="db.UserDataBean">
 		update gg_user set
 		passwd=#{passwd}, user_name=#{user_name} where
@@ -94,12 +102,10 @@
 		select * from gg_tag
 	</select>
 
-	<insert id="insertTag" parameterType="String">
-		insert into
-		gg_tag(tag_id,tag_value) values(
-		SEQ_gg_tag_tag_id.nextval,#{tag_value})
+	<insert id="insertTag" parameterType="string">
+		insert into gg_tag(tag_id,tag_value) values(
+			(select max(tag_id) from gg_tag where tag_id &lt;100)+1,#{tag_value}) 
 	</insert>
-
 	<select id="getTCount" resultType="int">
 		select count(*) from gg_tag
 	</select>
@@ -110,8 +116,8 @@
 		select
 		tag_id,tag_value,rownum r from (
 		select tag_id,tag_value from gg_tag
-		order by tag_id desc)
-		order by tag_id desc)where r &gt;= #{start} and r
+		order by tag_id)
+		order by tag_id)where r &gt;= #{start} and r
 		&lt;=#{end}
 	</select>
 
@@ -323,17 +329,9 @@
 		update gg_trip_board set
 		tb_notice=0 where tb_no=#{tb_no}
 	</update>
-
-	<select id="getTripList" resultType="db.TripDataBean">
-			<![CDATA[
-			select * from gg_trip_board where tb_no<=(select max(tb_no) from gg_trip_board) and tb_no>(select (select max(tb_no) from gg_trip_board)-20 from dual) order by tb_no asc
-			]]>
-	</select>
-
-	<select id="loadMoreList" parameterType="int" resultType="db.TripDataBean">
-			<![CDATA[
-			select * from gg_trip_board where tb_no<#{last_tb_no} and tb_no<=(#{last_tb_no}-5) order by tb_no desc
-			]]>
+	
+	<select id="getFirstTbNo" resultType="int">
+		select min(tb_no) from gg_trip_board
 	</select>
 
 	<!--cmt DB -->

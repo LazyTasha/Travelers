@@ -29,6 +29,7 @@
             	<label for="trip_m_num" class="col-2 col-form-label">${trip_m_num}</label>
                 	<input type="number" name="trip_m_num" class="col-2" min="0" autofocus required>
             </div>
+            
             <c:set var="i" value="1"/>  
             <div id="schedule" class="form-group row">	  
                 <label for="cal_date" name="schedule" class="col-2 col-form-label">${trip_schedule} ${i}</label> 
@@ -58,7 +59,7 @@
             <br>
             <hr>
             <div class="form-group row">
-               <textarea name="content" class="col-12" rows="10" placeholder="${trip_entercontent}" autofocus required></textarea>
+               <textarea name="content" class="col-12" rows="10" maxlength="1300" placeholder="${trip_entercontent}" autofocus required></textarea>
             </div>
             <hr>
                 <div class="form-group row">

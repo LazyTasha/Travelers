@@ -137,9 +137,9 @@
 					<div id="mapTab" style="display: none">
 				</c:if>
 					<div id="map">지도</div>
-				<input type="hidden" value="${lat}" id="lat" /> <input
-					type="hidden" value="${lng}" id="lng" />
-				</div>
+			    	<input type="hidden" value="${lat}" id="lat" /> 
+            <input type="hidden" value="${lng}" id="lng" />
+					</div>
 			</article>
 
 			<!-- comment -->

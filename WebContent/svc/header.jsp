@@ -92,7 +92,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">${page_calendar_eng}</a>
-          </li>
+		  <li>
         </ul>
         <c:if test="${user_level ne 9}">
 	        <form class="form-inline mt-2 mt-md-0 login-section">
@@ -102,7 +102,9 @@
         </c:if>
 	        <c:if test="${user_level eq 9}">
 	        	<form class="form-inline mt-2 mt-md-0 login-section">
-	        		<a href="adminLogout.go">${btn_logout}</a>
+	        		 <a class="nav-item" href="adminTrip.go">${btn_adm}</a>
+	        		 &nbsp;
+	        		<a class="nav-item" href="adminLogout.go">${btn_logout}</a>
 	        	</form>
 	        </c:if>
       </div>

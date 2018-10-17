@@ -34,6 +34,14 @@ public class UserDBBean {
 		return session.selectOne( "db.checkId", user_id);
 	}
 	
+	public UserDataBean getUserEmailId(String email) { 
+		return session.selectOne("db.getUserEmailId", email); 
+	} 
+	
+	public UserDataBean getUserEmailPasswd(String email) { 
+		return session.selectOne("db.getUserEmailPasswd", email); 
+	} 
+	
 	public int EmailCheck( String email ) {
 		return session.selectOne( "db.EmailCheck", email);
 	}

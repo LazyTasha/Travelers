@@ -41,6 +41,16 @@ public class SvcFormHandler {
 	private UserDBBean userDao;
 	
 	/////////////////////////////////user pages/////////////////////////////////
+	@RequestMapping("/EmailId")
+	public ModelAndView svcEmailIdProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/EmailId");
+	}
+	
+	@RequestMapping("/EmailPasswd")
+	public ModelAndView svcEmailPasswd(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		return new ModelAndView("svc/EmailPasswd");
+	}
+	
 	@RequestMapping("/Conditions")
 	public ModelAndView svcConditionsProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		return new ModelAndView("svc/Conditions");

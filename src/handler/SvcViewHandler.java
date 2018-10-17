@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,6 +28,7 @@ import db.TripDBBean;
 import db.TripDataBean;
 import db.UserDBBean;
 import db.UserDataBean;
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 @Controller
 public class SvcViewHandler {
@@ -93,16 +95,20 @@ public class SvcViewHandler {
 	public ModelAndView svcListProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
 		UserDataBean userDto=(UserDataBean)request.getAttribute("userDto");
 		List<TbDataBean> tripList=tbDao.getTripList();
-		int last_tb_no=0;
-		if(tripList.size()!=0) {
-			last_tb_no=tripList.get(tripList.size()-1).getTb_no();
+		int startTrip=0;
+		int endTrip=0;
+		if(tripList.size()>=10) {
+			request.setAttribute("last_row", 11);
+		} else {
+			request.setAttribute("last_row", tripList.size());
 		}
+		
 		int count=tbDao.getCount();
 		request.setAttribute("userDto", userDto);
 		request.setAttribute("tripList", tripList);
-		request.setAttribute("last_tb_no", last_tb_no);
+		request.setAttribute("startTrip", startTrip);
+		request.setAttribute("endTrip", endTrip);
 		request.setAttribute("count", count);
-		request.setAttribute("last_tb_no", last_tb_no);
 		return new ModelAndView("svc/tripList");
 	}
 	
@@ -248,11 +254,12 @@ public class SvcViewHandler {
 	}
 	
 	/////////////////////////////////ajax method list/////////////////////////////////
-	@RequestMapping(value="/loadMoreList", produces = "application/json")
+	@RequestMapping(value="/loadMoreList", method = RequestMethod.GET, produces = "application/json")
 	@ResponseBody
-	public List<TbDataBean> loadMoreList(int last_tb_no) {
+	public List<TbDataBean> loadMoreList(int last_row) {
 		//get more 5 trip articles when 'load more' button is pressed
-		List<TbDataBean> additionalList=tbDao.loadMoreList(last_tb_no);
+		List<TbDataBean> additionalList=tbDao.loadMoreList(last_row);
+		
 		return additionalList;
 	}
 }
