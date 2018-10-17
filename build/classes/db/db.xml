@@ -96,6 +96,10 @@
 	<select id="isMember2" parameterType="java.util.Map" resultType="int">
 		select count(*) from gg_member where user_id=#{user_id} and td_trip_id=#{td_trip_id}
 	</select>
+	
+	<select id="getMemberCount" parameterType="int" resultType="int">
+		select count(*) from gg_member where td_trip_id=#{td_trip_id}
+	</select>
 
 	<!-- tag DB -->
 	<select id="getTagList" resultType="java.util.Map">
@@ -297,6 +301,10 @@
 	<select id="findTripByUser" parameterType="String" resultType="db.TbDataBean">
 		select * from gg_trip_board where user_id=
 		(select user_id from gg_user where user_name=#{keyword})
+	</select>
+	
+	<select id="getCountTripIds" parameterType="int" resultType="int">
+		select count(*) from gg_trip_detail where tb_no=#{tb_no}
 	</select>
 
 	<!--trip DB -->

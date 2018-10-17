@@ -85,12 +85,5 @@
 		<!-- board list -->
 	</div>
 	<!-- body box -->
-
-	<!-- Footer -->
-	<footer class="board-footer">
-		<p>
-			<a href="">Back to top</a>
-		</p>
-	</footer>
 </body>
 </html>
