@@ -157,7 +157,7 @@
 							<input type="hidden" name="session" value="${user_id}" /> 
 								<input type="text" class="input col-11" id="c_content" name="c_content" placeholder="${trip_entercontent}"> 
 								<span class="input-group-btn">
-								<button class="btn btn-default" type="button" 	onclick="commentInsert()">등록</button>
+								<button class="btn btn-default" type="button" onclick="commentInsert()">등록</button>
 							</span>
 						</div>
 					</form>
