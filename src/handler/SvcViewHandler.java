@@ -86,6 +86,9 @@ public class SvcViewHandler {
 	
 	@RequestMapping("/myTrip")
 	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		//get user's trip list
+		List<LocDataBean> 
+		
 		return new ModelAndView("svc/myTrip");
 	}
 	
