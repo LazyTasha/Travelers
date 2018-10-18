@@ -101,7 +101,7 @@ public class SvcViewHandler {
 		if(tripList.size()>=10) {
 			request.setAttribute("last_row", 11);
 		} else {
-			request.setAttribute("last_row", tripList.size());
+			request.setAttribute("last_row", tripList.size()+1);
 		}
 		
 		int count=tbDao.getCount();
@@ -167,6 +167,7 @@ public class SvcViewHandler {
 		
 		//member Info of each trip
 		List<Map<String, String>> memInfoList=tbDao.getMemInfoList(tb_no);
+		boolean isMember=false;
 		for(Map<String, String> tempMap:memInfoList) {
 			String temp_trip_id=""+tempMap.get("td_trip_id");
 			List<UserDataBean> currendMember=userDao.getCurrentMember(temp_trip_id);
@@ -180,12 +181,20 @@ public class SvcViewHandler {
 					} else {
 						members=members+currendMember.get(i).getUser_name()+" ";
 					}
+					String id=(String)request.getSession().getAttribute("user_id");
+					if(id!=null) {
+						String name=userDao.getUserName(id);
+						if(name.equals(currendMember.get(i).getUser_name())) {
+							isMember=true;
+						}
+					}
 				}
 			}
 			tempMap.put("members", members);
 		}
 		
 		request.setAttribute("memInfoList", memInfoList);
+		request.setAttribute("isMember", isMember);
 
 		return new ModelAndView("svc/trip");
 	}

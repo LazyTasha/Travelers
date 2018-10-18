@@ -66,7 +66,7 @@
 										&nbsp;
 										<div class="p-2">
 											<c:forEach var="j" items="${i.tags}">
-												<label class="btn taglist"> # ${j} </label>
+												<label class="btn btn-sm taglist"> # ${j} </label>
 											</c:forEach>
 										</div>
 									</div>
