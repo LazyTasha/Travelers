@@ -54,7 +54,9 @@
 			<article>
 				<section>
 					<c:if test="${tbDto.tb_notice == 1}">
-						<img class="mb-4" src="${project}img/logo_c.png" alt="" width="100" height="100">
+						<div style="font-size:32px;">
+							<img class="mb-4" src="${project}img/logo_c.png" alt="" width="40" height="40"> <b>${trip_notice_2}</b>
+						</div>
 					</c:if>
 					<div id="trip_title">
 						<div class="row">
