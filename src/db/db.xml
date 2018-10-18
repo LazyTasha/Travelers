@@ -100,6 +100,18 @@
 	<select id="getMemberCount" parameterType="int" resultType="int">
 		select count(*) from gg_member where td_trip_id=#{td_trip_id}
 	</select>
+	
+	<select id="getMyTrips" parameterType="String" resultType="db.LocDataBean">
+		select ca.cal_start_date, ca.cal_end_date, ca.coord_id, ca.td_trip_id, co.coord_long, co.coord_lat, co.coord_order, co.coord_id, ctr.country_name from
+		(select cal_start_date, cal_end_date, coord_id, td_trip_id from gg_calendar where td_trip_id in
+		(select td_trip_id from gg_trip_detail where tb_no in 
+		(select tb_no from gg_trip_board where user_id=#{user_id}))) ca, 
+		gg_coordinate co, gg_country ctr where ca.coord_id=co.coord_id and co.country_id=ctr.country_id
+	</select>
+	
+	<select id="getTbNo" parameterType="int" resultType="int">
+		select tb_no from gg_trip_detail where td_trip_id=#{td_trip_id}
+	</select>
 
 	<!-- tag DB -->
 	<select id="getTagList" resultType="java.util.Map">
@@ -357,10 +369,10 @@
 	
 	<select id="getTrips2" parameterType="java.util.Map" resultType="db.TbDataBean">
 		<![CDATA[
-			select t.tb_no, t.tb_title, u.user_name user_id, t.tb_content, t.tb_reg_date, t.tb_v_count, t.tb_notice from 
-			(select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,r from 
-			(select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice,rownum r from 
-			(select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_notice
+			select t.tb_no, t.tb_title, u.user_name user_id, t.tb_content, t.tb_reg_date, t.tb_v_count, t.tb_m_num, t.tb_notice from 
+			(select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_m_num,tb_notice,r from 
+			(select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_m_num,tb_notice,rownum r from 
+			(select tb_no,tb_title,user_id,tb_content,tb_reg_date,tb_v_count,tb_m_num,tb_notice
 			from gg_trip_board order by tb_notice desc,tb_reg_date desc)
 			) where r>=#{start} and r<=#{end}) t, gg_user u where t.user_id=u.user_id or t.user_id is null order by
 			tb_notice desc,tb_reg_date desc

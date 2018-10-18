@@ -54,7 +54,9 @@
 			<article>
 				<section>
 					<c:if test="${tbDto.tb_notice == 1}">
-						<img class="mb-4" src="${project}img/logo_c.png" alt="" width="100" height="100">
+						<div style="font-size:32px;">
+							<img class="mb-4" src="${project}img/logo_c.png" alt="" width="40" height="40"> <b>${trip_notice_2}</b>
+						</div>
 					</c:if>
 					<div id="trip_title">
 						<div class="row">
@@ -86,8 +88,6 @@
 											<input type="hidden" name="coord_long" value="${i.coord_long}"> 
 											<input type="hidden" name="coord_lat" value="${i.coord_lat}"> 
 											<input type="hidden" id="country${order}" value="${i.country_name}">
-											<button onclick="attend(${i.td_trip_id})" class="btn btn-sm">참석</button>
-											<button onclick="absent(${i.td_trip_id})" class="btn btn-sm">불참</button>
 										</div>
 										<!-- 장소 -->
 									</div>
@@ -96,6 +96,22 @@
 								<!-- row -->
 								<div class="row">
 									<label class="col-2">${trip_m_num}</label>
+									<div id="trip_button_${i.td_trip_id}">
+										<c:if test="${sessionScope.user_id ne null}">
+											<c:choose>
+												<c:when test="${isOwner eq 1}">
+													&nbsp; 
+												</c:when>
+												<c:when test="${isMember eq true}">
+													<button onclick="absent(${i.td_trip_id})" class="btn btn-sm">불참</button>
+												</c:when>
+												<c:otherwise>
+													<button onclick="attend(${i.td_trip_id})" class="btn btn-sm">참석</button>
+												</c:otherwise>
+											</c:choose>
+										</c:if>
+									</div>
+									 &nbsp; 
 									<div>
 										<c:forEach var="memInfoList" items="${memInfoList}">
 											<c:if test="${i.td_trip_id eq memInfoList.td_trip_id}">

@@ -67,4 +67,8 @@ public class LocDBBean {
 		}
 		return locs;
 	}
+	
+	public List<LocDataBean> getMyTrips(String user_id) {
+		return session.selectList("db.getMyTrips", user_id);
+	}
 }

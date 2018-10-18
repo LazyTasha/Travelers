@@ -111,3 +111,6 @@
 <c:set var="search_result" value="의 검색 결과입니다."/>
 <c:set var="search_no_result" value="검색 결과가 없습니다."/>
 <c:set var="search_trip_schedule" value="게시물"/>
+
+<c:set var="trip_notice_1" value="[공지]"/>
+<c:set var="trip_notice_2" value="공지사항"/>

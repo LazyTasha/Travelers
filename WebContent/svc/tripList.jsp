@@ -46,7 +46,12 @@
 					              	</c:forEach>
 									</strong>
 									<h3 class="mb-0">
-										<a class="text-dark" href="trip.go?tb_no=${i.tb_no}">${i.tb_title}</a>
+										<a class="text-dark" href="trip.go?tb_no=${i.tb_no}">
+										<c:if test="${i.tb_notice eq 1}">
+											 ${trip_notice_1}
+										</c:if>
+										${i.tb_title}
+										</a>
 									</h3>
 									<div class="mb-1 text-muted text-right">
 										<i><b>With</b></i>&nbsp; ${i.user_id}
@@ -61,7 +66,7 @@
 										&nbsp;
 										<div class="p-2">
 											<c:forEach var="j" items="${i.tags}">
-												<label class="btn taglist"> # ${j} </label>
+												<label class="btn btn-sm taglist"> # ${j} </label>
 											</c:forEach>
 										</div>
 									</div>

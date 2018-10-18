@@ -514,7 +514,7 @@ function commentList(tb_no){
             	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
             	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a>';
             	}
-            	commentView += '<div class="commentContent'+comment.c_id+'"> <p> 내용 : '+comment.c_content +'</p>';
+            	commentView += '<div class="commentContent"> <p>'+comment.c_content +'</p>';
             	commentView += '</div></div>'
             });
             $(".commentList").html(commentView);
@@ -630,11 +630,11 @@ function loadMoreList(last_row) {
 					listForAppend+=					'<div class="d-flex justify-content-center">';
 					listForAppend+=						'<div class="p-2">인원:'+additionalList.tb_m_num+'</div>&nbsp;';
 					listForAppend+=						'<div class="p-2">조회수:'+additionalList.tb_v_count+'</div>';
-					listForAppend+=						'<div class="p-2">';
+					listForAppend+=						'<div class="p-2"><label class="btn btn-sm taglist">';
 																		$.each(additionalList.tags, function(key, tags) {
 																			additionalList.tags;
 																		});
-					listForAppend+=						'</div>';
+					listForAppend+=						'</label></div>';
 					listForAppend+=					'</div>';
 					listForAppend+=				'</div>';
 					listForAppend+=			'</div>';
@@ -804,7 +804,10 @@ function attend(td_trip_id) {
 						mList+=memberList.user_name+' ';
 		            });
 					$('#trip_member_list_'+order).html(mList);
-					albumPaging();
+					var buttonDiv='<c:if test="${sessionScope.user_id ne null}">';
+		            buttonDiv+=			'<button onclick="absent('+td_trip_id+')" class="btn btn-sm">불참</button>';
+		            buttonDiv+=	'</c:if>';
+		            $('#trip_button_'+td_trip_id).html(buttonDiv);
 				} else {
 					alert('참가하려는 일정에 이상이 있습니다.');
 				}
@@ -835,7 +838,11 @@ function absent(td_trip_id) {
 						mList+=memberList.user_name+' ';
 		            });
 		            $('#trip_member_list_'+order).html(mList);
-		            albumPaging();
+		            albumPaging(1);
+		            var buttonDiv='<c:if test="${sessionScope.user_id ne null}">';
+		            buttonDiv+=			'<button onclick="attend('+td_trip_id+')" class="btn btn-sm">참석</button>';
+		            buttonDiv+=	'</c:if>';
+		            $('#trip_button_'+td_trip_id).html(buttonDiv);
 				} else {
 					alert('빠지려는 일정에 이상이 있습니다.');
 				}

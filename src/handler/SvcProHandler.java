@@ -768,6 +768,7 @@ public class SvcProHandler {
 		if (memberCheck == 0) {
 			int addMemberResult = userDao.addTripMember(addMemberMap);
 			request.setAttribute("addMemberResult", addMemberResult);
+			request.setAttribute("isMember", true);
 		}
 
 		List<UserDataBean> memberList = userDao.getCurrentMember(td_trip_id);
@@ -789,6 +790,7 @@ public class SvcProHandler {
 		if (memberCheck != 0) {
 			int delMemberResult = userDao.delTripMember(delMemberMap);
 			request.setAttribute("delMemberResult", delMemberResult);
+			request.setAttribute("isMember", false);
 		}
 		List<UserDataBean> memberList = userDao.getCurrentMember(td_trip_id);
 		return memberList;

@@ -86,6 +86,18 @@ public class SvcViewHandler {
 	
 	@RequestMapping("/myTrip")
 	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		String user_id=(String)request.getSession().getAttribute("user_id");
+		//get user's trip list
+		List<LocDataBean> myTrips=locDao.getMyTrips(user_id);
+		//put tb_no... it was too much value...
+		if(myTrips.size()>0) {
+			for(LocDataBean trip:myTrips) {
+				int tb_no=tbDao.getTbNo(trip.getTd_trip_id());
+				trip.setTb_no(tb_no);
+			}
+		}
+		request.setAttribute("myTrips", myTrips);
+		
 		return new ModelAndView("svc/myTrip");
 	}
 	
@@ -101,7 +113,7 @@ public class SvcViewHandler {
 		if(tripList.size()>=10) {
 			request.setAttribute("last_row", 11);
 		} else {
-			request.setAttribute("last_row", tripList.size());
+			request.setAttribute("last_row", tripList.size()+1);
 		}
 		
 		int count=tbDao.getCount();
@@ -167,6 +179,7 @@ public class SvcViewHandler {
 		
 		//member Info of each trip
 		List<Map<String, String>> memInfoList=tbDao.getMemInfoList(tb_no);
+		boolean isMember=false;
 		for(Map<String, String> tempMap:memInfoList) {
 			String temp_trip_id=""+tempMap.get("td_trip_id");
 			List<UserDataBean> currendMember=userDao.getCurrentMember(temp_trip_id);
@@ -180,12 +193,20 @@ public class SvcViewHandler {
 					} else {
 						members=members+currendMember.get(i).getUser_name()+" ";
 					}
+					String id=(String)request.getSession().getAttribute("user_id");
+					if(id!=null) {
+						String name=userDao.getUserName(id);
+						if(name.equals(currendMember.get(i).getUser_name())) {
+							isMember=true;
+						}
+					}
 				}
 			}
 			tempMap.put("members", members);
 		}
 		
 		request.setAttribute("memInfoList", memInfoList);
+		request.setAttribute("isMember", isMember);
 
 		return new ModelAndView("svc/trip");
 	}
