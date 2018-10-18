@@ -514,7 +514,7 @@ function commentList(tb_no){
             	commentView += '<a onclick="commentUpdate('+comment.c_id+',\''+comment.c_content+'\');"> 수정 </a>';
             	commentView += '<a onclick="commentDelete('+comment.c_id+');"> 삭제 </a>';
             	}
-            	commentView += '<div class="commentContent'+comment.c_id+'"> <p> 내용 : '+comment.c_content +'</p>';
+            	commentView += '<div class="commentContent"> <p>'+comment.c_content +'</p>';
             	commentView += '</div></div>'
             });
             $(".commentList").html(commentView);
