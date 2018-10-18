@@ -22,15 +22,12 @@
 		body {
 			min-height: 75rem;
 			padding-top: 4.5rem;
-		}
-		
+		}		
 		a.nav-item {
 			color: white !important;
-		}
-		
-		
+		}			
 		select { 
-		 width: 100px;
+		width: 100px;
    	 	height: 30px;
     	padding-left: 10px;
     	font-size: 18px;
@@ -55,14 +52,12 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active"><a class="nav-link"
-						href="tripList.go">${page_main_eng} <span class="sr-only">(current)</span></a>
+					<li class="nav-item"><a class="nav-link"
+						href="tripList.go">${page_main_eng} <span class="sr-only"></span></a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="tripList.go">${page_board_eng}</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="album.go">${page_album_eng}</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">${page_calendar_eng}</a>
 					</li>
 				</ul>
 				<form class="form-inline mt-2 mt-md-0 login-section" name="serch_trip" method="post" action="searchTrip.go" >
@@ -71,7 +66,7 @@
 						<option value="trip_writer">${trip_writer}</option>
 					</select> &nbsp;
 					<input type="text" class="form-control" name="keyword" placeholder="${search_guide}"> &nbsp;
-					<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/iconmonstr-magnifier-4-32.png"></button> &nbsp;|&nbsp;
+					<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/search-m2-24.png"></button> &nbsp;&nbsp;
 					<a href="login.go" class="nav-item">${page_login}</a> &nbsp;|&nbsp;
 					<a href="registration.go" class="nav-item">${page_input}</a>
 				</form>
@@ -108,14 +103,12 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active"><a class="nav-link"
+					<li class="nav-item"><a class="nav-link"
 						href="tripList.go">${page_main_eng} <span class="sr-only">(current)</span></a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="tripList.go">${page_board_eng}</a>
 					</li>
 					<li class="nav-item"><a class="nav-link" href="album.go">${page_album_eng}</a>
-					</li>
-					<li class="nav-item"><a class="nav-link" href="#">${page_calendar_eng}</a>
 					</li>
 				</ul>
 				<c:if test="${user_level ne 9}">
@@ -125,7 +118,7 @@
 						<option value="trip_writer">${trip_writer}</option>
 					</select> &nbsp;
 					<input type="text" class="form-control" name="keyword" placeholder="${search_guide}"> &nbsp;
-					<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/iconmonstr-magnifier-4-32.png"></button> &nbsp;|&nbsp;
+					<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/search-m2-24.png"></button> &nbsp;|&nbsp;
 						<a href="myPage.go" class="nav-item">${page_mypage2}</a> &nbsp;
 					</form>
 				</c:if>
@@ -136,8 +129,8 @@
 							<option value="trip_writer">${trip_writer}</option>
 						</select> &nbsp;
 						<input type="text" class="form-control" name="keyword" placeholder="${search_guide}"> &nbsp;
-						<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/iconmonstr-magnifier-4-32.png"></button> &nbsp;|&nbsp;
-						<a class="nav-item" href="adminTrip.go">${btn_adm}</a> &nbsp; <a
+						<button type="submit" style="border: none; background: transparent;"><img alt="" src="${project}img/search-m2-24.png"></button> &nbsp;|&nbsp;
+						<a class="nav-item" href="adminTrip.go">${btn_adm}</a> &nbsp;<a
 							class="nav-item" href="adminLogout.go">${btn_logout}</a>
 					</form>
 				</c:if>
