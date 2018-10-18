@@ -100,6 +100,18 @@
 	<select id="getMemberCount" parameterType="int" resultType="int">
 		select count(*) from gg_member where td_trip_id=#{td_trip_id}
 	</select>
+	
+	<select id="getMyTrips" parameterType="String" resultType="db.LocDataBean">
+		select ca.cal_start_date, ca.cal_end_date, ca.coord_id, ca.td_trip_id, co.coord_long, co.coord_lat, co.coord_order, co.coord_id, ctr.country_name from
+		(select cal_start_date, cal_end_date, coord_id, td_trip_id from gg_calendar where td_trip_id in
+		(select td_trip_id from gg_trip_detail where tb_no in 
+		(select tb_no from gg_trip_board where user_id=#{user_id}))) ca, 
+		gg_coordinate co, gg_country ctr where ca.coord_id=co.coord_id and co.country_id=ctr.country_id
+	</select>
+	
+	<select id="getTbNo" parameterType="int" resultType="int">
+		select tb_no from gg_trip_detail where td_trip_id=#{td_trip_id}
+	</select>
 
 	<!-- tag DB -->
 	<select id="getTagList" resultType="java.util.Map">

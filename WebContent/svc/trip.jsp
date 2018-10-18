@@ -96,7 +96,7 @@
 								<!-- row -->
 								<div class="row">
 									<label class="col-2">${trip_m_num}</label>
-									<div id="trip_button">
+									<div id="trip_button_${i.td_trip_id}">
 										<c:if test="${sessionScope.user_id ne null}">
 											<c:choose>
 												<c:when test="${isOwner eq 1}">

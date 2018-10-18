@@ -274,4 +274,8 @@ public class TbDBBean {
 		
 		return memNumList;
 	}
+	
+	public int getTbNo(int td_trip_id) {
+		return session.selectOne("db.getTbNo", td_trip_id);
+	}
 }

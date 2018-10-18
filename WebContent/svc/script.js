@@ -807,7 +807,7 @@ function attend(td_trip_id) {
 					var buttonDiv='<c:if test="${sessionScope.user_id ne null}">';
 		            buttonDiv+=			'<button onclick="absent('+td_trip_id+')" class="btn btn-sm">불참</button>';
 		            buttonDiv+=	'</c:if>';
-		            $('#trip_button').html(buttonDiv);
+		            $('#trip_button_'+td_trip_id).html(buttonDiv);
 				} else {
 					alert('참가하려는 일정에 이상이 있습니다.');
 				}
@@ -842,7 +842,7 @@ function absent(td_trip_id) {
 		            var buttonDiv='<c:if test="${sessionScope.user_id ne null}">';
 		            buttonDiv+=			'<button onclick="attend('+td_trip_id+')" class="btn btn-sm">참석</button>';
 		            buttonDiv+=	'</c:if>';
-		            $('#trip_button').html(buttonDiv);
+		            $('#trip_button_'+td_trip_id).html(buttonDiv);
 				} else {
 					alert('빠지려는 일정에 이상이 있습니다.');
 				}
