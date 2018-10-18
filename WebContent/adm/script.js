@@ -197,12 +197,14 @@ function addRow(){
 	var row=tag.insertRow(tag.rows.length);
 	
 	var cell=[];
-	var n=2;
+	var n=3;
 	for(var i=0;i<n;i++){
 		cell[i]=row.insertCell(i);
 		if(i==0){
 			cell[i].innerHTML="<input type='checkbox' name='check1'>";
 		}else if(i==n-1){
+			cell[i].innerHTML="<select name='tag_type'><option value='1' selected='selected'>사용자성향</option><option value='2'>도시이름</option></select>";
+		}else if(i==n-2){
 			cell[i].innerHTML="<input class='input' type='text' autofocus=''>";
 		}
 	}	
