@@ -86,8 +86,17 @@ public class SvcViewHandler {
 	
 	@RequestMapping("/myTrip")
 	public ModelAndView SvcMyTripProcess(HttpServletRequest request, HttpServletResponse response) throws HandlerException {
+		String user_id=(String)request.getSession().getAttribute("user_id");
 		//get user's trip list
-		List<LocDataBean> 
+		List<LocDataBean> myTrips=locDao.getMyTrips(user_id);
+		//put tb_no... it was too much value...
+		if(myTrips.size()>0) {
+			for(LocDataBean trip:myTrips) {
+				int tb_no=tbDao.getTbNo(trip.getTd_trip_id());
+				trip.setTb_no(tb_no);
+			}
+		}
+		request.setAttribute("myTrips", myTrips);
 		
 		return new ModelAndView("svc/myTrip");
 	}
